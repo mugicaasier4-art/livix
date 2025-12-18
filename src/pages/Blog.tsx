@@ -36,7 +36,7 @@ const Blog = () => {
     <Layout>
       <div className="min-h-screen bg-background">
         {/* Hero Section with Collage Background */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
           {/* Background Collage */}
           <div className="absolute inset-0">
             <img
@@ -48,14 +48,14 @@ const Blog = () => {
           </div>
 
           {/* Content */}
-          <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-20">
+          <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-12">
             {/* 3D Text Title */}
             <div
               className="mb-8"
               style={{ perspective: '1000px' }}
             >
               <h1
-                className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight text-white"
+                className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white"
                 style={{
                   transform: 'rotateX(10deg) rotateY(-5deg)',
                   textShadow: `
