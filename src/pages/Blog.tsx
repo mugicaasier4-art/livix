@@ -7,6 +7,7 @@ import { analytics } from "@/utils/analytics";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { blogPosts, categories, BlogCategory } from "@/data/blogContent";
+import blogHeroCollage from "@/assets/blog/blog-hero-collage.jpg";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory>("all");
@@ -33,27 +34,51 @@ const Blog = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
-        {/* Hero Section - Modern Gradient */}
-        <section className="relative py-16 md:py-24 overflow-hidden">
-          {/* Animated gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+      <div className="min-h-screen bg-background">
+        {/* Hero Section with Collage Background */}
+        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+          {/* Background Collage */}
+          <div className="absolute inset-0">
+            <img
+              src={blogHeroCollage}
+              alt="Estudiantes en pisos compartidos"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+          </div>
 
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6">
-                <TrendingUp className="h-4 w-4" />
-                Lo más leído por estudiantes
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent mb-4">
+          {/* Content */}
+          <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-20">
+            {/* 3D Text Title */}
+            <div
+              className="mb-8"
+              style={{ perspective: '1000px' }}
+            >
+              <h1
+                className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight text-white"
+                style={{
+                  transform: 'rotateX(10deg) rotateY(-5deg)',
+                  textShadow: `
+                    2px 2px 0 #000,
+                    4px 4px 0 #000,
+                    6px 6px 0 #000,
+                    8px 8px 0 #000,
+                    10px 10px 20px rgba(0,0,0,0.6)
+                  `,
+                }}
+              >
                 Blog Livix
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-                Consejos prácticos, guías y recursos para encontrar tu piso ideal
-              </p>
             </div>
+
+            <p className="text-xl md:text-2xl text-foreground/90 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-medium mb-8">
+              Consejos prácticos, guías y recursos para encontrar tu piso ideal y sobrevivir a la vida universitaria.
+            </p>
+
+            <Badge className="bg-primary text-primary-foreground shadow-lg text-base py-1.5 px-4">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Lo más leído por estudiantes
+            </Badge>
           </div>
         </section>
 
