@@ -237,3 +237,212 @@
 .flip-card-back {
   transform: rotateY(180deg);
 }
+
+/* ============================================
+   🎨 PREMIUM ANIMATIONS & EFFECTS
+   ============================================ */
+
+/* Subtle pulse animation for live indicators */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Gradient shift animation - very subtle */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Float animation for cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.hover-float:hover {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Shimmer effect for premium badges */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255,255,255,0.4) 50%, 
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Glow effect on hover */
+.glow-on-hover {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px rgba(var(--primary), 0.3), 0 8px 25px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* Text gradient animation */
+@keyframes text-gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.text-gradient-animated {
+  background: linear-gradient(90deg, 
+    hsl(var(--primary)), 
+    hsl(280 100% 70%), 
+    hsl(var(--primary))
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-gradient 4s ease infinite;
+}
+
+/* Counter animation */
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in 0.5s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Scale up on hover */
+.scale-on-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scale-on-hover:hover {
+  transform: scale(1.02);
+}
+
+/* Premium card hover effect */
+.card-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.card-premium:hover::before {
+  left: 125%;
+}
+
+.card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(280 100% 70%));
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+}
+
+/* Live indicator dot */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: hsl(var(--success));
+  border-radius: 50%;
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Typing cursor effect */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: hsl(var(--primary));
+}
+
