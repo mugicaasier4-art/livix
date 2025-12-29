@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Sparkles } from "lucide-react";
+import { Search, MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { analytics } from "@/utils/analytics";
 import heroImage from "@/assets/hero-students.jpg";
 
 const rotatingTexts = [
-  "Tu próximo piso",
-  "Tu futuro roommate",
-  "Tu comunidad universitaria"
+  "tu próximo piso",
+  "tu roommate ideal",
+  "tu comunidad univ."
 ];
 
 const Hero = () => {
@@ -81,14 +81,15 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight text-white md:text-6xl">
+              Encuentra{' '}
               <span
-                className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
+                className={`inline-block min-w-[280px] md:min-w-[400px] transition-all duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'
                   }`}
               >
                 {rotatingTexts[currentTextIndex]}
               </span>
               <span className="block text-white/90 mt-2">
-                en Zaragoza <Sparkles className="inline h-8 w-8 md:h-10 md:w-10 animate-pulse-soft" />
+                en Zaragoza
               </span>
             </h1>
 

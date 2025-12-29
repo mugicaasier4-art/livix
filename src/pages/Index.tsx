@@ -8,14 +8,10 @@ import PremiumCTA from "@/components/sections/PremiumCTA";
 import ClubCTA from "@/components/sections/ClubCTA";
 import BlogCTA from "@/components/sections/BlogCTA";
 import HomeFAQ from "@/components/sections/HomeFAQ";
-import { ScrollProgress } from "@/components/ui/AnimatedElements";
 
 const Index = () => {
   return (
     <Layout>
-      {/* Scroll progress indicator */}
-      <ScrollProgress />
-
       {/* Hero with rotating text */}
       <Hero />
 
