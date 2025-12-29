@@ -59,6 +59,8 @@ const SupportSubmit = lazy(() => import("./pages/support/Submit"));
 const SupportSuccess = lazy(() => import("./pages/support/Success"));
 const LegalTerms = lazy(() => import("./pages/legal/Terms"));
 const LegalPrivacy = lazy(() => import("./pages/legal/Privacy"));
+const LegalCookies = lazy(() => import("./pages/legal/Cookies"));
+const LegalSecurity = lazy(() => import("./pages/legal/SecurityPolicy"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Settings = lazy(() => import("./pages/Settings"));
@@ -137,6 +139,8 @@ const App = () => (
                                 <Route path="/support/success" element={<SupportSuccess />} />
                                 <Route path="/legal/terms" element={<LegalTerms />} />
                                 <Route path="/legal/privacy" element={<LegalPrivacy />} />
+                                <Route path="/legal/cookies" element={<LegalCookies />} />
+                                <Route path="/legal/security" element={<LegalSecurity />} />
 
                                 {/* Secret Premium Dashboard for Residences */}
                                 <Route path="/residences/admin-portal-x7k9" element={<ResidencesAdminPortal />} />

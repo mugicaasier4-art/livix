@@ -5,15 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Heart, 
-  X, 
-  MapPin, 
-  GraduationCap, 
-  Home, 
-  Users, 
-  Calendar, 
-  MessageCircle, 
+import {
+  Heart,
+  X,
+  MapPin,
+  GraduationCap,
+  Home,
+  Users,
+  Calendar,
+  MessageCircle,
   Settings,
   Sparkles,
   PartyPopper,
@@ -39,6 +39,7 @@ import {
 import { type RoomListing } from "@/data/roomListings";
 import { useRoomListings } from "@/hooks/useRoomListings";
 import RoomListingCard from "@/components/roommates/RoomListingCard";
+import ProfilingConsent from "@/components/roommates/ProfilingConsent";
 import { toast } from "sonner";
 
 interface MatchWithProfile {
@@ -64,51 +65,51 @@ interface MatchWithProfile {
 // Simple compatibility tag calculator - Defensive programming
 const getMatchTags = (candidate: RoommateProfile, myProfile: RoommateProfile | null): string[] => {
   if (!myProfile || !candidate) return [];
-  
+
   const tags: string[] = [];
-  
+
   // Faculty match
   if (candidate.faculty && myProfile.faculty && candidate.faculty === myProfile.faculty) {
     tags.push("🎓 Misma Facultad");
   }
-  
+
   // Budget overlap - defensive null checks
   if (
-    candidate.budget_min != null && 
-    candidate.budget_max != null && 
-    myProfile.budget_min != null && 
+    candidate.budget_min != null &&
+    candidate.budget_max != null &&
+    myProfile.budget_min != null &&
     myProfile.budget_max != null
   ) {
-    const budgetOverlaps = 
-      (candidate.budget_min <= myProfile.budget_max) && 
+    const budgetOverlaps =
+      (candidate.budget_min <= myProfile.budget_max) &&
       (candidate.budget_max >= myProfile.budget_min);
-    
+
     if (budgetOverlaps) {
       tags.push("💶 Presupuesto encaja");
     }
   }
-  
+
   // Smoking compatibility
   if (
-    candidate.smoking_allowed != null && 
-    myProfile.smoking_allowed != null && 
+    candidate.smoking_allowed != null &&
+    myProfile.smoking_allowed != null &&
     candidate.smoking_allowed === myProfile.smoking_allowed
   ) {
     tags.push("🚭 Hábito compatible");
   }
-  
+
   // Pets compatibility
   if (
-    candidate.pets_allowed != null && 
-    myProfile.pets_allowed != null && 
+    candidate.pets_allowed != null &&
+    myProfile.pets_allowed != null &&
     candidate.pets_allowed === myProfile.pets_allowed
   ) {
     tags.push("🐾 Mascotas compatible");
   }
-  
+
   // Location match - defensive check
   if (
-    candidate.preferred_location && 
+    candidate.preferred_location &&
     myProfile.preferred_location &&
     typeof candidate.preferred_location === 'string' &&
     typeof myProfile.preferred_location === 'string'
@@ -117,30 +118,30 @@ const getMatchTags = (candidate: RoommateProfile, myProfile: RoommateProfile | n
     const candidateLocs = candidate.preferred_location.toLowerCase().split(/[,\s]+/);
     const myLocs = myProfile.preferred_location.toLowerCase().split(/[,\s]+/);
     const hasCommonLocation = candidateLocs.some(loc => myLocs.includes(loc));
-    
+
     if (hasCommonLocation) {
       tags.push("📍 Zona común");
     }
   }
-  
+
   // Common interests - defensive check
   if (
-    candidate.interests && 
-    myProfile.interests && 
-    Array.isArray(candidate.interests) && 
+    candidate.interests &&
+    myProfile.interests &&
+    Array.isArray(candidate.interests) &&
     Array.isArray(myProfile.interests) &&
     candidate.interests.length > 0 &&
     myProfile.interests.length > 0
   ) {
-    const commonInterests = candidate.interests.filter(interest => 
+    const commonInterests = candidate.interests.filter(interest =>
       myProfile.interests.includes(interest)
     );
-    
+
     if (commonInterests.length > 0) {
       tags.push(`❤️ ${commonInterests.length} intereses comunes`);
     }
   }
-  
+
   return tags;
 };
 
@@ -160,11 +161,31 @@ const Roommates = () => {
   const [matchesWithProfiles, setMatchesWithProfiles] = useState<MatchWithProfile[]>([]);
   const [loadingProfiles, setLoadingProfiles] = useState(false);
   const { listings: roomListings, isLoading: roomListingsLoading } = useRoomListings();
-  
+
+  // GDPR Profiling Consent State
+  const PROFILING_CONSENT_KEY = 'livix_profiling_consent';
+  const [showProfilingConsent, setShowProfilingConsent] = useState(false);
+  const [hasProfilingConsent, setHasProfilingConsent] = useState(() => {
+    const stored = localStorage.getItem(PROFILING_CONSENT_KEY);
+    return stored === 'true';
+  });
+
+  const handleProfilingConsent = () => {
+    localStorage.setItem(PROFILING_CONSENT_KEY, 'true');
+    setHasProfilingConsent(true);
+    setShowProfilingConsent(false);
+  };
+
+  const handleProfilingDecline = () => {
+    setShowProfilingConsent(false);
+    setSelectedPath('none');
+    toast.info('Necesitas dar consentimiento para usar el matching de roommates');
+  };
+
   // No need to filter here - useRoommateProfiles already excludes liked profiles
   const availableProfiles = profiles;
   const currentProfile = availableProfiles[currentIndex];
-  
+
   // Calculate match tags for current profile
   const matchTags = currentProfile ? getMatchTags(currentProfile, myProfile) : [];
 
@@ -179,10 +200,10 @@ const Roommates = () => {
   useEffect(() => {
     const fetchMatchProfiles = async () => {
       if (!user || matches.length === 0) return;
-      
+
       setLoadingProfiles(true);
       try {
-        const matchedUserIds = matches.map(match => 
+        const matchedUserIds = matches.map(match =>
           match.user_1_id === user.id ? match.user_2_id : match.user_1_id
         );
 
@@ -239,14 +260,14 @@ const Roommates = () => {
 
   const handleLike = async () => {
     if (!currentProfile) return;
-    
+
     try {
       // Store the user name before moving to next profile
       const userName = currentProfile.user?.name || 'Usuario';
-      
+
       // Insert like
       await likeProfile(currentProfile.user_id);
-      
+
       // Check for mutual match - simple query
       const { data: mutualLike, error } = await supabase
         .from('roommate_likes')
@@ -254,17 +275,17 @@ const Roommates = () => {
         .eq('liker_id', currentProfile.user_id)
         .eq('liked_id', user?.id)
         .maybeSingle();
-      
+
       if (error) {
         console.error('Error checking mutual like:', error);
       }
-      
+
       // If it's a match, show celebration modal
       if (mutualLike) {
         setMatchedUserName(userName);
         setShowMatchModal(true);
       }
-      
+
       nextProfile();
     } catch (error) {
       console.error('Error liking profile:', error);
@@ -313,9 +334,15 @@ const Roommates = () => {
             {/* Three main options */}
             <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
               {/* Option 1: Search for Roommate */}
-              <Card 
+              <Card
                 className="group cursor-pointer border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
-                onClick={() => setSelectedPath('search')}
+                onClick={() => {
+                  if (hasProfilingConsent) {
+                    setSelectedPath('search');
+                  } else {
+                    setShowProfilingConsent(true);
+                  }
+                }}
               >
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -335,7 +362,7 @@ const Roommates = () => {
               </Card>
 
               {/* Option 2: Find a Home */}
-              <Card 
+              <Card
                 className="group cursor-pointer border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
                 onClick={() => setSelectedPath('find-home')}
               >
@@ -357,7 +384,7 @@ const Roommates = () => {
               </Card>
 
               {/* Option 3: Publish Room */}
-              <Card 
+              <Card
                 className="group cursor-pointer border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
                 onClick={() => navigate('/roommates/create')}
               >
@@ -385,6 +412,13 @@ const Roommates = () => {
             </div>
           </div>
         </div>
+
+        {/* GDPR Profiling Consent Modal */}
+        <ProfilingConsent
+          isOpen={showProfilingConsent}
+          onConsent={handleProfilingConsent}
+          onDecline={handleProfilingDecline}
+        />
       </Layout>
     );
   }
@@ -403,9 +437,9 @@ const Roommates = () => {
           <div className="container mx-auto px-4">
             {/* Header with back button */}
             <div className="mb-8">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setSelectedPath('none')}
                 className="mb-4 -ml-2"
               >
@@ -428,7 +462,7 @@ const Roommates = () => {
                 Publicar habitación
               </Button>
             </div>
-            
+
             {roomListingsLoading ? (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                 {[1, 2, 3].map((i) => (
@@ -438,9 +472,9 @@ const Roommates = () => {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                 {roomListings.map((listing) => (
-                  <RoomListingCard 
-                    key={listing.id} 
-                    listing={listing} 
+                  <RoomListingCard
+                    key={listing.id}
+                    listing={listing}
                     onContact={handleContact}
                   />
                 ))}
@@ -480,9 +514,9 @@ const Roommates = () => {
         <div className="container mx-auto px-4">
           {/* Header with back button */}
           <div className="mb-8">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setSelectedPath('none')}
               className="mb-4 -ml-2"
             >
@@ -495,7 +529,7 @@ const Roommates = () => {
             <p className="text-lg text-muted-foreground">
               Encuentra roommates compatibles y gestiona tus conexiones
             </p>
-            
+
             {!myProfile && (
               <div className="mt-4">
                 <Badge className="bg-primary/10 text-primary border-primary/20">
@@ -525,171 +559,171 @@ const Roommates = () => {
             </TabsList>
 
             {/* Explore Tab */}
-            <TabsContent value="explore"  className="space-y-8">
+            <TabsContent value="explore" className="space-y-8">
 
               {/* Main Matching Interface */}
               <div className="max-w-md mx-auto">
-              {isLoading ? (
-                <Card>
-                  <CardContent className="p-6 space-y-4">
-                    <Skeleton className="h-96 w-full" />
-                    <Skeleton className="h-8 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                  </CardContent>
-                </Card>
-              ) : !myProfile ? (
-                <Card className="p-12 text-center">
-                  <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-xl font-semibold mb-2">Crea tu perfil primero</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Para ver y conectar con otros estudiantes, necesitas crear tu perfil de roommate
-                  </p>
-                  <Link to="/profile">
-                    <Button>Crear perfil</Button>
-                  </Link>
-                </Card>
-              ) : currentProfile ? (
-                <Card className="overflow-hidden">
-                  <CardHeader className="p-0">
-                    <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/5 relative">
-                      {currentProfile.user?.avatar_url ? (
-                        <img 
-                          src={currentProfile.user.avatar_url} 
-                          alt={currentProfile.user?.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Avatar className="w-32 h-32">
-                            <AvatarFallback className="text-4xl bg-primary/10 text-primary">
-                              {currentProfile.user?.name?.charAt(0) || '?'}
-                            </AvatarFallback>
-                          </Avatar>
-                        </div>
-                      )}
-                      
-                      {currentProfile.user?.is_verified && (
-                        <Badge className="absolute top-4 right-4 bg-success text-success-foreground">
-                          ✓ Verificado
-                        </Badge>
-                      )}
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="p-6 space-y-4">
-                    <div>
-                      <h2 className="text-2xl font-bold text-foreground">
-                        {currentProfile.user?.name}{currentProfile.age && `, ${currentProfile.age}`}
-                      </h2>
-                      <div className="flex items-center gap-2 text-muted-foreground mt-1">
-                        <GraduationCap className="h-4 w-4" />
-                        <span>{currentProfile.faculty || 'Sin especificar'} - {currentProfile.year || 'N/A'}</span>
+                {isLoading ? (
+                  <Card>
+                    <CardContent className="p-6 space-y-4">
+                      <Skeleton className="h-96 w-full" />
+                      <Skeleton className="h-8 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-full" />
+                    </CardContent>
+                  </Card>
+                ) : !myProfile ? (
+                  <Card className="p-12 text-center">
+                    <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                    <h3 className="text-xl font-semibold mb-2">Crea tu perfil primero</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Para ver y conectar con otros estudiantes, necesitas crear tu perfil de roommate
+                    </p>
+                    <Link to="/profile">
+                      <Button>Crear perfil</Button>
+                    </Link>
+                  </Card>
+                ) : currentProfile ? (
+                  <Card className="overflow-hidden">
+                    <CardHeader className="p-0">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/5 relative">
+                        {currentProfile.user?.avatar_url ? (
+                          <img
+                            src={currentProfile.user.avatar_url}
+                            alt={currentProfile.user?.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Avatar className="w-32 h-32">
+                              <AvatarFallback className="text-4xl bg-primary/10 text-primary">
+                                {currentProfile.user?.name?.charAt(0) || '?'}
+                              </AvatarFallback>
+                            </Avatar>
+                          </div>
+                        )}
+
+                        {currentProfile.user?.is_verified && (
+                          <Badge className="absolute top-4 right-4 bg-success text-success-foreground">
+                            ✓ Verificado
+                          </Badge>
+                        )}
                       </div>
-                    </div>
-                    
-                    {/* Compatibility Tags */}
-                    {matchTags.length > 0 && (
-                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Sparkles className="h-4 w-4 text-primary" />
-                          <span className="text-sm font-semibold text-primary">Compatibilidad</span>
+                    </CardHeader>
+
+                    <CardContent className="p-6 space-y-4">
+                      <div>
+                        <h2 className="text-2xl font-bold text-foreground">
+                          {currentProfile.user?.name}{currentProfile.age && `, ${currentProfile.age}`}
+                        </h2>
+                        <div className="flex items-center gap-2 text-muted-foreground mt-1">
+                          <GraduationCap className="h-4 w-4" />
+                          <span>{currentProfile.faculty || 'Sin especificar'} - {currentProfile.year || 'N/A'}</span>
                         </div>
+                      </div>
+
+                      {/* Compatibility Tags */}
+                      {matchTags.length > 0 && (
+                        <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Sparkles className="h-4 w-4 text-primary" />
+                            <span className="text-sm font-semibold text-primary">Compatibilidad</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {matchTags.map((tag, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <p className="text-foreground leading-relaxed">
+                        {currentProfile.bio || 'Sin descripción'}
+                      </p>
+
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-sm">
+                          <MapPin className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-foreground">{currentProfile.preferred_location || 'Sin especificar'}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm">
+                          <Home className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-foreground">
+                            Presupuesto: {currentProfile.budget_min || 0}€ - {currentProfile.budget_max || 0}€
+                          </span>
+                        </div>
+
+                        {currentProfile.move_date && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
+                            <span className="text-foreground">
+                              Mudanza: {new Date(currentProfile.move_date).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {currentProfile.interests && currentProfile.interests.length > 0 && (
                         <div className="flex flex-wrap gap-2">
-                          {matchTags.map((tag, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {tag}
+                          {currentProfile.interests.map((interest, index) => (
+                            <Badge key={index} variant="outline">
+                              {interest}
                             </Badge>
                           ))}
                         </div>
-                      </div>
-                    )}
-                    
-                    <p className="text-foreground leading-relaxed">
-                      {currentProfile.bio || 'Sin descripción'}
-                    </p>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-foreground">{currentProfile.preferred_location || 'Sin especificar'}</span>
-                      </div>
-                      
-                      <div className="flex items-center gap-2 text-sm">
-                        <Home className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-foreground">
-                          Presupuesto: {currentProfile.budget_min || 0}€ - {currentProfile.budget_max || 0}€
-                        </span>
-                      </div>
-                      
-                      {currentProfile.move_date && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-foreground">
-                            Mudanza: {new Date(currentProfile.move_date).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
-                          </span>
-                        </div>
                       )}
-                    </div>
-                    
-                    {currentProfile.interests && currentProfile.interests.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {currentProfile.interests.map((interest, index) => (
-                          <Badge key={index} variant="outline">
-                            {interest}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                  
-                  <div className="p-6 pt-0 flex gap-4 justify-center">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="rounded-full w-16 h-16 p-0"
-                      onClick={handlePass}
-                    >
-                      <X className="h-8 w-8 text-destructive" />
-                    </Button>
-                    
-                    <Button
-                      size="lg"
-                      className="rounded-full w-16 h-16 p-0"
-                      onClick={handleLike}
-                    >
-                      <Heart className="h-8 w-8" />
-                    </Button>
-                  </div>
-                </Card>
-              ) : (
-                <Card className="p-12 text-center">
-                  <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-xl font-semibold mb-2">No hay más perfiles nuevos</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Has visto todos los perfiles disponibles. Vuelve más tarde para ver nuevos estudiantes.
-                  </p>
-                  <div className="flex gap-4 justify-center">
-                    <Button onClick={() => setCurrentIndex(0)} variant="outline">
-                      Ver de nuevo
-                    </Button>
-                    <Link to="/matches">
-                      <Button>
-                        <Heart className="h-4 w-4 mr-2" />
-                        Ver mis matches
+                    </CardContent>
+
+                    <div className="p-6 pt-0 flex gap-4 justify-center">
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="rounded-full w-16 h-16 p-0"
+                        onClick={handlePass}
+                      >
+                        <X className="h-8 w-8 text-destructive" />
                       </Button>
-                    </Link>
+
+                      <Button
+                        size="lg"
+                        className="rounded-full w-16 h-16 p-0"
+                        onClick={handleLike}
+                      >
+                        <Heart className="h-8 w-8" />
+                      </Button>
+                    </div>
+                  </Card>
+                ) : (
+                  <Card className="p-12 text-center">
+                    <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                    <h3 className="text-xl font-semibold mb-2">No hay más perfiles nuevos</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Has visto todos los perfiles disponibles. Vuelve más tarde para ver nuevos estudiantes.
+                    </p>
+                    <div className="flex gap-4 justify-center">
+                      <Button onClick={() => setCurrentIndex(0)} variant="outline">
+                        Ver de nuevo
+                      </Button>
+                      <Link to="/matches">
+                        <Button>
+                          <Heart className="h-4 w-4 mr-2" />
+                          Ver mis matches
+                        </Button>
+                      </Link>
+                    </div>
+                  </Card>
+                )}
+
+                {/* Counter */}
+                {availableProfiles.length > 0 && (
+                  <div className="text-center mt-6 text-sm text-muted-foreground">
+                    Perfil {currentIndex + 1} de {availableProfiles.length}
                   </div>
-                </Card>
-              )}
-              
-              {/* Counter */}
-              {availableProfiles.length > 0 && (
-                <div className="text-center mt-6 text-sm text-muted-foreground">
-                  Perfil {currentIndex + 1} de {availableProfiles.length}
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
               {/* How it works */}
               <div className="py-8 bg-muted/30 rounded-lg">
@@ -697,7 +731,7 @@ const Roommates = () => {
                   <h3 className="text-2xl font-bold text-center mb-8">
                     Cómo funciona
                   </h3>
-                  
+
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="text-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -708,7 +742,7 @@ const Roommates = () => {
                         Completa tu perfil con tus preferencias y estilo de vida
                       </p>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Heart className="h-6 w-6 text-primary" />
@@ -718,7 +752,7 @@ const Roommates = () => {
                         Desliza para indicar interés en perfiles compatibles
                       </p>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                         <MessageCircle className="h-6 w-6 text-primary" />
@@ -778,7 +812,7 @@ const Roommates = () => {
                                 </AvatarFallback>
                               )}
                             </Avatar>
-                            
+
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <CardTitle className="text-xl">{match.profile.name}</CardTitle>
@@ -841,8 +875,8 @@ const Roommates = () => {
                           )}
 
                           <div className="pt-2">
-                            <Button 
-                              className="w-full" 
+                            <Button
+                              className="w-full"
                               onClick={() => handleStartChat(match.user_id)}
                             >
                               <MessageCircle className="h-4 w-4 mr-2" />
@@ -886,7 +920,7 @@ const Roommates = () => {
 
         </div>
       </div>
-      
+
       {/* Match Celebration Modal */}
       <Dialog open={showMatchModal} onOpenChange={setShowMatchModal}>
         <DialogContent className="sm:max-w-md">
@@ -904,9 +938,9 @@ const Roommates = () => {
               ¡Podéis empezar a chatear ahora!
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="flex flex-col gap-3 mt-4">
-            <Button 
+            <Button
               onClick={() => {
                 setShowMatchModal(false);
                 setActiveTab('matches');
@@ -916,7 +950,7 @@ const Roommates = () => {
               <MessageCircle className="h-4 w-4 mr-2" />
               Ver mis matches
             </Button>
-            <Button 
+            <Button
               variant="outline"
               onClick={() => setShowMatchModal(false)}
               className="w-full"

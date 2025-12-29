@@ -76,25 +76,25 @@ export const CookieBanner = () => {
                 {t('cookies.banner_description')}
               </p>
             </div>
-            
+
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Button 
+              <Button
                 onClick={handleAcceptAll}
-                size="sm" 
+                size="sm"
                 className="flex-1"
               >
                 {t('cookies.accept_all')}
               </Button>
-              <Button 
+              <Button
                 onClick={handleRejectAll}
-                variant="outline" 
-                size="sm" 
+                variant="outline"
+                size="sm"
                 className="flex-1"
               >
                 {t('cookies.reject_all')}
               </Button>
             </div>
-            
+
             <div className="flex justify-between items-center text-xs">
               <button
                 onClick={handleOpenSettings}
@@ -102,8 +102,8 @@ export const CookieBanner = () => {
               >
                 {t('cookies.configure')}
               </button>
-              <Link 
-                to="/legal/privacy" 
+              <Link
+                to="/legal/cookies"
                 className="text-muted-foreground hover:text-foreground hover:underline"
               >
                 {t('cookies.learn_more')}
@@ -114,7 +114,7 @@ export const CookieBanner = () => {
       </div>
 
       {showSettings && (
-        <CookieSettings 
+        <CookieSettings
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
           onSave={saveConsent}
