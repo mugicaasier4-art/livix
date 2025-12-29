@@ -531,16 +531,21 @@ const Roommates = () => {
             </p>
 
             {!myProfile && (
-              <div className="mt-4">
-                <Badge className="bg-primary/10 text-primary border-primary/20">
-                  Crea tu perfil para empezar
-                </Badge>
-                <Link to="/onboarding/student">
-                  <Button size="sm" variant="outline" className="ml-3">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Crear perfil
-                  </Button>
-                </Link>
+              <div className="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">Completa tu perfil de roommate</p>
+                    <p className="text-xs text-muted-foreground">Así podremos encontrar compañeros compatibles contigo</p>
+                  </div>
+                  <Link to="/onboarding/student">
+                    <Button size="sm">
+                      Completar
+                    </Button>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -573,15 +578,25 @@ const Roommates = () => {
                     </CardContent>
                   </Card>
                 ) : !myProfile ? (
-                  <Card className="p-12 text-center">
-                    <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                    <h3 className="text-xl font-semibold mb-2">Crea tu perfil primero</h3>
-                    <p className="text-muted-foreground mb-6">
-                      Para ver y conectar con otros estudiantes, necesitas crear tu perfil de roommate
+                  <Card className="p-8 text-center border-dashed border-2">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Users className="h-10 w-10 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">Crea tu perfil de roommate</h3>
+                    <p className="text-muted-foreground mb-4 max-w-sm mx-auto">
+                      Para encontrar compañeros compatibles, necesitamos conocer tus preferencias de convivencia.
                     </p>
-                    <Link to="/profile">
-                      <Button>Crear perfil</Button>
-                    </Link>
+                    <div className="flex flex-col gap-3 max-w-xs mx-auto">
+                      <Link to="/onboarding/student">
+                        <Button className="w-full">
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Crear mi perfil
+                        </Button>
+                      </Link>
+                      <p className="text-xs text-muted-foreground">
+                        Solo te tomará 2 minutos
+                      </p>
+                    </div>
                   </Card>
                 ) : currentProfile ? (
                   <Card className="overflow-hidden">
@@ -697,22 +712,43 @@ const Roommates = () => {
                     </div>
                   </Card>
                 ) : (
-                  <Card className="p-12 text-center">
-                    <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                    <h3 className="text-xl font-semibold mb-2">No hay más perfiles nuevos</h3>
-                    <p className="text-muted-foreground mb-6">
-                      Has visto todos los perfiles disponibles. Vuelve más tarde para ver nuevos estudiantes.
+                  <Card className="p-8 text-center border-dashed border-2">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                      <Search className="h-10 w-10 text-muted-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {profiles.length === 0
+                        ? "Sé el primero en tu zona"
+                        : "Has visto todos los perfiles"}
+                    </h3>
+                    <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
+                      {profiles.length === 0
+                        ? "Todavía no hay otros estudiantes buscando roommate en tu zona. ¡Invita a tus amigos!"
+                        : "Vuelve más tarde para ver nuevos estudiantes o revisa tus matches."}
                     </p>
-                    <div className="flex gap-4 justify-center">
-                      <Button onClick={() => setCurrentIndex(0)} variant="outline">
-                        Ver de nuevo
-                      </Button>
-                      <Link to="/matches">
-                        <Button>
-                          <Heart className="h-4 w-4 mr-2" />
-                          Ver mis matches
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      {profiles.length > 0 && (
+                        <Button onClick={() => setCurrentIndex(0)} variant="outline">
+                          Ver de nuevo
                         </Button>
-                      </Link>
+                      )}
+                      <Button onClick={() => setActiveTab('matches')}>
+                        <Heart className="h-4 w-4 mr-2" />
+                        Ver mis matches ({matches.length})
+                      </Button>
+                    </div>
+                    <div className="mt-6 pt-6 border-t">
+                      <p className="text-sm text-muted-foreground mb-3">¿Conoces a alguien que busca piso?</p>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText(window.location.origin + '/roommates');
+                          toast.success('¡Enlace copiado!');
+                        }}
+                      >
+                        📤 Compartir Livix
+                      </Button>
                     </div>
                   </Card>
                 )}
