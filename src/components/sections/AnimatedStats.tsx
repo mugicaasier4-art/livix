@@ -20,7 +20,7 @@ const AnimatedStats = () => {
         },
         {
             icon: Star,
-            value: 98,
+            value: 97,
             suffix: "%",
             label: "Satisfacción",
             color: "text-warning"
