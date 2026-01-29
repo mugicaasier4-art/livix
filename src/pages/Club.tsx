@@ -48,7 +48,10 @@ const Club = () => {
               alt="Students enjoying leisure activities"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+            {/* Side gradients - white on sides, transparent in middle */}
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background opacity-90" />
+            {/* Bottom gradient - smooth transition to content */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
           </div>
 
           {/* Content */}
