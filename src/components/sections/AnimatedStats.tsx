@@ -6,7 +6,7 @@ const AnimatedStats = () => {
     const stats = [
         {
             icon: Home,
-            value: 150,
+            value: 200,
             suffix: "+",
             label: "Pisos verificados",
             color: "text-primary"
