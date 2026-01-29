@@ -9,7 +9,6 @@ import MapView from "@/components/explore/MapView";
 import SwipeView from "@/components/explore/SwipeView";
 import MobileDrawer from "@/components/explore/MobileDrawer";
 import { ListingComparator } from "@/components/explore/ListingComparator";
-import { PreferencesQuestionnaire } from "@/components/explore/PreferencesQuestionnaire";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,22 +39,6 @@ const Explore = () => {
   // Preferences and Compare hooks
   const { hasCompletedQuestionnaire } = usePreferences();
   const { compareList, isCompareOpen, setIsCompareOpen, removeFromCompare, clearCompare } = useCompare();
-
-  // Questionnaire popup state
-  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
-
-  // Show questionnaire on first visit (after 2 seconds delay)
-  useEffect(() => {
-    const shownKey = `livix_questionnaire_shown_guest`;
-    const hasShown = localStorage.getItem(shownKey);
-
-    if (!hasShown && !hasCompletedQuestionnaire) {
-      const timer = setTimeout(() => {
-        setShowQuestionnaire(true);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [hasCompletedQuestionnaire]);
 
   // Get initial property filter from URL
   const getInitialPropertyFilter = (): PropertyFilter => {
@@ -610,18 +593,6 @@ const Explore = () => {
           propertyFilter={propertyFilter}
           resultsCount={displayListings.length}
         />
-
-        {/* Preferences Questionnaire Popup */}
-        <PreferencesQuestionnaire
-          isOpen={showQuestionnaire}
-          onClose={() => {
-            setShowQuestionnaire(false);
-            localStorage.setItem('livix_questionnaire_shown_guest', 'true');
-          }}
-          onComplete={() => setShowQuestionnaire(false)}
-        />
-
-        {/* Listing Comparator */}
         <ListingComparator
           listings={compareList}
           onRemove={removeFromCompare}

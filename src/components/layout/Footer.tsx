@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Instagram, Twitter, Linkedin, Mail, MapPin } from "lucide-react";
+import { SEOLinks } from "@/components/seo/SEOLinks";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,13 +26,16 @@ const Footer = () => {
 
   return (
     <footer className="bg-muted/50 border-t border-border mt-auto">
+      {/* SEO Internal Linking Grid */}
+      <SEOLinks />
+
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand & Description */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-foreground">LIVIX</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              La plataforma de alojamiento para estudiantes en Zaragoza. 
+              La plataforma de alojamiento para estudiantes en Zaragoza.
               Encuentra tu piso, residencia o compañero de piso ideal.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -75,12 +79,12 @@ const Footer = () => {
           {/* Contact & Social */}
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Contacto</h4>
-            <a 
-              href="mailto:hola@livix.app" 
+            <a
+              href="mailto:info@livix.es"
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Mail className="h-4 w-4" />
-              hola@livix.app
+              info@livix.es
             </a>
             <div className="flex gap-4 pt-2">
               {socialLinks.map((social) => (

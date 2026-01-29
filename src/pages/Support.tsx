@@ -31,10 +31,10 @@ const Support = () => {
       const matchesCategory = !selectedCategory || item.category === selectedCategory;
       const title = language === 'en' ? item.title_en : item.title_es;
       const body = language === 'en' ? item.body_en : item.body_es;
-      const matchesSearch = !searchTerm || 
+      const matchesSearch = !searchTerm ||
         title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         body.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       return matchesCategory && matchesSearch;
     });
   }, [searchTerm, selectedCategory, language]);
@@ -64,7 +64,7 @@ const Support = () => {
           <h1 className="text-3xl font-bold mb-4">
             {t('support.title')}
           </h1>
-          
+
           {/* Search Bar */}
           <div className="relative max-w-md mx-auto mb-8">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -83,9 +83,9 @@ const Support = () => {
               <span className="text-sm text-muted-foreground">
                 {filteredItems.length} resultado{filteredItems.length !== 1 ? 's' : ''}
               </span>
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleClearFilters}
                 className="text-primary hover:text-primary/80"
               >
@@ -107,11 +107,10 @@ const Support = () => {
                   <button
                     key={category.id}
                     onClick={() => handleCategoryFilter(category.id)}
-                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
-                      selectedCategory === category.id
+                    className={`w-full text-left p-3 rounded-lg border transition-colors ${selectedCategory === category.id
                         ? 'bg-primary/10 border-primary text-primary'
                         : 'hover:bg-muted border-transparent'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-sm">{category.name}</span>
@@ -127,7 +126,7 @@ const Support = () => {
 
           {/* FAQ Content */}
           <div className="lg:col-span-3">
-            <FAQAccordion 
+            <FAQAccordion
               items={filteredItems}
               searchTerm={searchTerm}
               selectedCategory={selectedCategory}
@@ -143,9 +142,9 @@ const Support = () => {
           <p className="text-muted-foreground mb-6">
             {t('support.contact_description')}
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
+            <Button
               onClick={() => {
                 analytics.track('support_cta_submit_clicked', { source: 'contact_section' });
                 window.location.href = '/support/submit';
@@ -155,21 +154,21 @@ const Support = () => {
               <MessageCircle className="h-4 w-4" />
               {t('support.open_ticket')}
             </Button>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               onClick={() => {
                 analytics.track('support_email_clicked');
-                window.location.href = 'mailto:support@livix.app';
+                window.location.href = 'mailto:info@livix.es';
               }}
               className="gap-2"
             >
               <Mail className="h-4 w-4" />
               {t('support.email_us')}
             </Button>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               onClick={() => {
                 analytics.track('support_guide_clicked');
                 window.location.href = '/erasmus/guide';

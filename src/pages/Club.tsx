@@ -43,22 +43,22 @@ const Club = () => {
         <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
           {/* Background Collage */}
           <div className="absolute inset-0">
-            <img 
-              src={clubHeroCollage} 
-              alt="Students enjoying leisure activities" 
+            <img
+              src={clubHeroCollage}
+              alt="Students enjoying leisure activities"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
           </div>
-          
+
           {/* Content */}
           <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-20">
             {/* 3D Text Title */}
-            <div 
+            <div
               className="mb-6"
               style={{ perspective: '1000px' }}
             >
-              <h1 
+              <h1
                 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight text-white"
                 style={{
                   transform: 'rotateX(10deg) rotateY(-5deg)',
@@ -74,7 +74,7 @@ const Club = () => {
                 Livix Club
               </h1>
             </div>
-            
+
             <p className="text-xl md:text-2xl text-foreground/90 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-medium mb-8">
               Descuentos exclusivos para estudiantes.
               Ahorra en tu día a día en gimnasios, lavanderías, copisterías y más.
@@ -112,8 +112,8 @@ const Club = () => {
                     className="group relative aspect-square rounded-2xl overflow-hidden border border-border transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-xl"
                   >
                     {/* Background Image */}
-                    <img 
-                      src={sector.image} 
+                    <img
+                      src={sector.image}
                       alt={sector.name}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -222,7 +222,7 @@ const Club = () => {
               Si tienes un negocio en Zaragoza y quieres ofrecer descuentos a nuestra comunidad de estudiantes, contáctanos.
             </p>
             <a
-              href="mailto:partners@livix.app"
+              href="mailto:info@livix.es?subject=Quiero añadir mi negocio a Livix Club"
               className="inline-flex items-center justify-center px-8 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
             >
               Contactar

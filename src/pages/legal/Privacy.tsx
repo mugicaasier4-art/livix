@@ -83,16 +83,8 @@ const Privacy = () => {
                       <div className="flex gap-2">
                         <dt className="font-medium min-w-[120px]">Email:</dt>
                         <dd>
-                          <a href="mailto:privacy@livix.app" className="text-primary hover:underline">
-                            privacy@livix.app
-                          </a>
-                        </dd>
-                      </div>
-                      <div className="flex gap-2">
-                        <dt className="font-medium min-w-[120px]">{language === 'en' ? 'DPO Contact:' : 'Contacto DPO:'}</dt>
-                        <dd>
-                          <a href="mailto:dpo@livix.app" className="text-primary hover:underline">
-                            dpo@livix.app
+                          <a href="mailto:info@livix.es" className="text-primary hover:underline">
+                            info@livix.es
                           </a>
                         </dd>
                       </div>
@@ -393,8 +385,8 @@ const Privacy = () => {
 
               <p className="mt-6">
                 {language === 'en'
-                  ? 'To exercise any of these rights, click on the cards above or contact us at privacy@livix.app. We will respond within 30 days.'
-                  : 'Para ejercer cualquiera de estos derechos, haz clic en las tarjetas de arriba o contáctanos en privacy@livix.app. Responderemos en un plazo de 30 días.'
+                  ? 'To exercise any of these rights, click on the cards above or contact us at info@livix.es. We will respond within 30 days.'
+                  : 'Para ejercer cualquiera de estos derechos, haz clic en las tarjetas de arriba o contáctanos en info@livix.es. Responderemos en un plazo de 30 días.'
                 }
               </p>
 

@@ -17,6 +17,19 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Google & API Credentials
+credentials.json
+token*.json
+client_secret*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

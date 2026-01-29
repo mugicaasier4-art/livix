@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 interface ListingCardProps {
-  id: number;
+  id: number | string;
   image: string;
   title: string;
   location: string;
@@ -37,8 +37,8 @@ const ListingCard = ({
         <div className="flex h-full">
           {/* Image - 60% */}
           <div className="relative w-[60%] aspect-square overflow-hidden flex-shrink-0">
-            <img 
-              src={image} 
+            <img
+              src={image}
               alt={title}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
             />
@@ -58,7 +58,7 @@ const ListingCard = ({
               <Heart className="h-3 w-3" />
             </button>
           </div>
-          
+
           {/* Content - 40% */}
           <CardContent className="w-[40%] p-3 flex flex-col justify-between">
             <div className="space-y-1">
@@ -71,14 +71,14 @@ const ListingCard = ({
 
             <div className="space-y-1">
               <div className="font-bold text-base">€{price}<span className="text-xs font-normal text-muted-foreground">/mes</span></div>
-              
+
               {roommates !== undefined && (
                 <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
                   <Users className="h-2.5 w-2.5" />
                   <span>{roommates || 1} hab</span>
                 </div>
               )}
-              
+
               {amenities.length > 0 && (
                 <div className="flex flex-wrap gap-0.5">
                   {amenities.slice(0, 2).map((amenity) => (

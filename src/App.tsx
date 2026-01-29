@@ -68,9 +68,19 @@ const LandlordSettings = lazy(() => import("./pages/landlord/Settings"));
 const LandlordListings = lazy(() => import("./pages/landlord/Listings"));
 const EditListing = lazy(() => import("./pages/landlord/EditListing"));
 const Analytics = lazy(() => import("./pages/landlord/Analytics"));
+const ListRoom = lazy(() => import("./pages/roommates/ListRoom")); // New Student Listing Flow
 
 // Secret premium dashboard for residences
 const ResidencesAdminPortal = lazy(() => import("./pages/residences/AdminPortal"));
+
+// SEO Landing Pages
+const ResidenciasCity = lazy(() => import("./pages/seo/ResidenciasCity"));
+const HabitacionesCity = lazy(() => import("./pages/seo/HabitacionesCity"));
+const HabitacionesBarrio = lazy(() => import("./pages/seo/HabitacionesBarrio"));
+const PisosCity = lazy(() => import("./pages/seo/PisosCity"));
+const PisosBarrio = lazy(() => import("./pages/seo/PisosBarrio"));
+const CampusLanding = lazy(() => import("./pages/seo/CampusLanding"));
+const ColegiosMayoresCity = lazy(() => import("./pages/seo/ColegiosMayoresCity"));
 
 // QueryClient singleton - created once outside component
 const queryClient = new QueryClient({
@@ -120,6 +130,7 @@ const App = () => (
                                 <Route path="/residences/directory" element={<ResidencesDirectory />} />
                                 <Route path="/residences/:id" element={<ResidenceDetail />} />
                                 <Route path="/roommates" element={<RoommatesFrontpage />} />
+                                <Route path="/publicar-habitacion" element={<ListRoom />} />
                                 <Route path="/roommates/app" element={<RoommatesApp />} />
                                 <Route path="/roommates/listing/:id" element={<RoomListingDetail />} />
                                 <Route path="/matches" element={<RoommatesApp />} />
@@ -141,6 +152,15 @@ const App = () => (
                                 <Route path="/legal/privacy" element={<LegalPrivacy />} />
                                 <Route path="/legal/cookies" element={<LegalCookies />} />
                                 <Route path="/legal/security" element={<LegalSecurity />} />
+
+                                {/* SEO Landing Pages */}
+                                <Route path="/residencias/:city" element={<ResidenciasCity />} />
+                                <Route path="/habitaciones/:city" element={<HabitacionesCity />} />
+                                <Route path="/habitaciones/:city/:barrio" element={<HabitacionesBarrio />} />
+                                <Route path="/pisos/:city" element={<PisosCity />} />
+                                <Route path="/pisos/:city/:barrio" element={<PisosBarrio />} />
+                                <Route path="/campus/:campus" element={<CampusLanding />} />
+                                <Route path="/colegios-mayores/:city" element={<ColegiosMayoresCity />} />
 
                                 {/* Secret Premium Dashboard for Residences */}
                                 <Route path="/residences/admin-portal-x7k9" element={<ResidencesAdminPortal />} />

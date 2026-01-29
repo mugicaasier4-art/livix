@@ -296,7 +296,7 @@ const ClubSector = () => {
               Ayúdanos a ampliar la lista de descuentos para estudiantes.
             </p>
             <a
-              href="mailto:partners@livix.app"
+              href="mailto:info@livix.es?subject=Sugerir un sitio para Livix Club"
               className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
             >
               Sugerir un sitio

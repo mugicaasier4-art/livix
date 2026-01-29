@@ -261,8 +261,8 @@ const Security = () => {
                             </p>
                             <p>
                                 <strong>Email:</strong>{' '}
-                                <a href="mailto:security@livix.app" className="text-primary hover:underline">
-                                    security@livix.app
+                                <a href="mailto:info@livix.es" className="text-primary hover:underline">
+                                    info@livix.es
                                 </a>
                             </p>
                             <p>
@@ -284,8 +284,8 @@ const Security = () => {
                             </p>
                             <p>
                                 <strong>Email:</strong>{' '}
-                                <a href="mailto:dpo@livix.app" className="text-primary hover:underline">
-                                    dpo@livix.app
+                                <a href="mailto:info@livix.es" className="text-primary hover:underline">
+                                    info@livix.es
                                 </a>
                             </p>
                         </section>

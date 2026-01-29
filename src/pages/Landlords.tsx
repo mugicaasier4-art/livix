@@ -237,35 +237,32 @@ const Landlords = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/80 to-system-blue/70" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center text-white">
             <Badge className="mb-6 bg-white/20 text-white border-white/30">
               Para propietarios en Zaragoza
             </Badge>
-            
+
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Alquila tu piso
               <span className="block text-white/90">a estudiantes</span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              Publica tu anuncio gratis y conecta con estudiantes verificados. 
+              Publica tu anuncio gratis y conecta con estudiantes verificados.
               Sin comisiones, sin intermediarios.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/signup">
+              <Link to="/signup?type=landlord&redirect=/ll/create-listing">
                 <Button size="lg" variant="secondary" className="px-8">
                   Crear mi primer anuncio
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="border-white/30 text-black hover:bg-white/10 hover:text-black px-8">
-                Ver demo gratuita
-              </Button>
             </div>
-            
+
             {/* Trust Stats */}
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div>
@@ -522,7 +519,7 @@ const Landlords = () => {
               Datos reales de propietarios que ya gestionan con Livix
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit, index) => (
               <Card key={index} className="text-center border-0 bg-surface-elevated hover:shadow-soft transition-shadow">
@@ -530,15 +527,15 @@ const Landlords = () => {
                   <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto">
                     <benefit.icon className="h-8 w-8 text-primary" />
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-foreground mb-3">
                     {benefit.title}
                   </h3>
-                  
+
                   <p className="text-muted-foreground mb-4 leading-relaxed">
                     {benefit.description}
                   </p>
-                  
+
                   <Badge variant="secondary" className="bg-success/10 text-success border-success/20">
                     {benefit.stat}
                   </Badge>
@@ -560,7 +557,7 @@ const Landlords = () => {
               Sin costes ocultos. Sin comisiones por transacción. Cancela cuando quieras.
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
             {plans.map((plan, index) => (
               <Card key={index} className={`relative ${plan.popular ? 'border-primary ring-2 ring-primary/20 scale-105' : ''}`}>
@@ -571,14 +568,14 @@ const Landlords = () => {
                     </Badge>
                   </div>
                 )}
-                
+
                 <CardContent className="p-8">
                   <div className="text-center mb-8">
                     <h3 className="text-xl font-bold text-foreground mb-2">{plan.name}</h3>
                     <div className="text-3xl font-bold text-foreground mb-2">{plan.price}</div>
                     <p className="text-sm text-muted-foreground">{plan.description}</p>
                   </div>
-                  
+
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center gap-3">
@@ -587,10 +584,10 @@ const Landlords = () => {
                       </li>
                     ))}
                   </ul>
-                  
+
                   <Link to="/signup">
-                    <Button 
-                      className="w-full" 
+                    <Button
+                      className="w-full"
                       variant={plan.popular ? "default" : "outline"}
                     >
                       {plan.cta}
@@ -600,7 +597,7 @@ const Landlords = () => {
               </Card>
             ))}
           </div>
-          
+
           <div className="text-center mt-8">
             <p className="text-sm text-muted-foreground">
               ¿Necesitas más información? {' '}
@@ -623,17 +620,19 @@ const Landlords = () => {
               Únete a cientos de propietarios que ya maximizan sus ingresos con Livix
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/signup">
+              <Link to="/signup?type=landlord&redirect=/ll/create-listing">
                 <Button size="lg" variant="secondary" className="px-8">
                   Crear mi primer anuncio
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:text-white px-8">
-                Hablar con un experto
-              </Button>
+              <a href="mailto:info@livix.es?subject=Consulta de propietario">
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:text-white px-8">
+                  Hablar con un experto
+                </Button>
+              </a>
             </div>
-            
+
             <div className="mt-8 text-sm text-white/80">
               ⚡ Configuración en 5 minutos • 📈 Primer inquilino en 7 días • 🛡️ Sin riesgo, cancela cuando quieras
             </div>

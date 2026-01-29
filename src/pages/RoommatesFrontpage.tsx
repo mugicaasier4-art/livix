@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  MapPin, 
-  GraduationCap, 
+import {
+  MapPin,
+  GraduationCap,
   Calendar,
   MessageCircle,
   Search,
@@ -148,7 +148,7 @@ const FlipCardsRow = ({ profiles, onContact }: FlipCardsRowProps) => {
                 </span>
               </Card>
             </div>
-            
+
             {/* Back - Profile */}
             <div className="flip-card-back">
               <Card className="w-full h-full overflow-hidden">
@@ -186,8 +186,8 @@ const FlipCardsRow = ({ profiles, onContact }: FlipCardsRowProps) => {
                   </div>
 
                   {/* Contact Button */}
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     className="w-full h-8 text-xs"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -210,7 +210,7 @@ const FlipCardsRow = ({ profiles, onContact }: FlipCardsRowProps) => {
 const RoommatesFrontpage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
   // Get first 3 room listings as preview
   const previewListings = roomListings.slice(0, 3);
 
@@ -241,14 +241,14 @@ const RoommatesFrontpage = () => {
         <section className="pt-24 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-32 relative overflow-hidden min-h-[400px] md:min-h-[500px]">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src={roommatesHeroImg} 
-              alt="" 
+            <img
+              src={roommatesHeroImg}
+              alt=""
               className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/40" />
           </div>
-          
+
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 drop-shadow-sm">
               Encuentra tu compañero de piso ideal
@@ -261,7 +261,7 @@ const RoommatesFrontpage = () => {
                 <Search className="h-4 w-4 mr-2" />
                 Buscar compañero
               </Button>
-              <Button size="lg" variant="outline" className="bg-background/90 backdrop-blur-sm" onClick={() => navigate('/roommates/create')}>
+              <Button size="lg" variant="outline" className="bg-background/90 backdrop-blur-sm" onClick={() => navigate('/publicar-habitacion')}>
                 <PlusCircle className="h-4 w-4 mr-2" />
                 Publicar habitación
               </Button>
@@ -285,8 +285,8 @@ const RoommatesFrontpage = () => {
                   Estudiantes que ya tienen piso y buscan un nuevo compañero
                 </p>
               </div>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="hidden md:flex"
                 onClick={() => user ? navigate('/roommates/app?path=find-home') : navigate('/login?redirect=/roommates/app?path=find-home')}
               >
@@ -325,10 +325,10 @@ const RoommatesFrontpage = () => {
                     "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=600",
                     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600",
                   ];
-                  
+
                   return (
-                    <Card 
-                      key={listing.id} 
+                    <Card
+                      key={listing.id}
                       className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group flex-shrink-0 w-72"
                       onClick={() => navigate(`/roommates/listing/${listing.id}`)}
                     >
@@ -402,10 +402,10 @@ const RoommatesFrontpage = () => {
                     "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=600",
                     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600",
                   ];
-                  
+
                   return (
-                    <Card 
-                      key={`dup-${listing.id}`} 
+                    <Card
+                      key={`dup-${listing.id}`}
                       className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group flex-shrink-0 w-72"
                       onClick={() => navigate(`/roommates/listing/${listing.id}`)}
                     >
@@ -457,7 +457,7 @@ const RoommatesFrontpage = () => {
             </div>
 
             <div className="mt-6 text-center md:hidden">
-              <Button 
+              <Button
                 variant="outline"
                 onClick={() => user ? navigate('/roommates/app?path=find-home') : navigate('/login?redirect=/roommates/app?path=find-home')}
               >
@@ -484,8 +484,8 @@ const RoommatesFrontpage = () => {
                   Estudiantes buscando piso para el curso 2026/2027
                 </p>
               </div>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="hidden md:flex"
                 onClick={() => user ? navigate('/roommates/app?path=search') : navigate('/login?redirect=/roommates/app?path=search')}
               >
@@ -498,7 +498,7 @@ const RoommatesFrontpage = () => {
             <FlipCardsRow profiles={mockRoommateProfiles} onContact={handleProfileContact} />
 
             <div className="mt-8 text-center">
-              <Button 
+              <Button
                 onClick={() => user ? navigate('/roommates/app?path=search') : navigate('/login?redirect=/roommates/app?path=search')}
               >
                 Ver más perfiles
@@ -592,7 +592,7 @@ const RoommatesFrontpage = () => {
                 </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button size="lg" onClick={() => navigate('/roommates/create')}>
+                  <Button size="lg" onClick={() => navigate('/publicar-habitacion')}>
                     <PlusCircle className="h-4 w-4 mr-2" />
                     Publicar mi habitación gratis
                   </Button>

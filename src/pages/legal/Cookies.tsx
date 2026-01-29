@@ -263,7 +263,8 @@ const Cookies = () => {
                                 }
                             </p>
                             <p>
-                                <strong>Email:</strong> privacy@livix.app
+                                <strong>Email:</strong>{' '}
+                                <a href="mailto:info@livix.es" className="text-primary hover:underline">info@livix.es</a>
                             </p>
                         </section>
 
