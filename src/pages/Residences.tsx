@@ -55,7 +55,7 @@ const Residences = () => {
       id: 8,
       image: apartment2,
       title: "Residencia Universitas Zaragoza",
-      location: "C/ Baltasar Gracián, 1, Zaragoza", 
+      location: "C/ Baltasar Gracián, 1, Zaragoza",
       price: 393,
       roommates: 0,
       distance: "6 min caminando Campus San Francisco",
@@ -103,39 +103,31 @@ const Residences = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-16 bg-gradient-to-br from-primary to-system-blue overflow-hidden">
-        {/* Decorative Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          {/* Diagonal lines pattern */}
-          <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="diagonal-lines" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="40" y2="40" stroke="white" strokeWidth="1" />
-                <line x1="0" y1="40" x2="40" y2="0" stroke="white" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#diagonal-lines)" />
-          </svg>
-        </div>
-        
+        {/* Background Image - Low opacity to blend with the blue background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 mix-blend-overlay"
+          style={{ backgroundImage: "url('/students-residences-bg.jpg')" }}
+        ></div>
+
         {/* Subtle gradient overlays */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
-        
+
         <div className="container relative mx-auto px-4 z-10">
           <div className="max-w-3xl mx-auto text-center text-white">
             <h1 className="text-4xl font-bold md:text-6xl mb-6">
               Residencias universitarias
               <span className="block text-white/90">verificadas</span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-white/90 mb-8">
-              Descubre las mejores residencias universitarias en Zaragoza. 
+              Descubre las mejores residencias universitarias en Zaragoza.
               Ambiente estudiantil, servicios completos y ubicaciones perfectas.
             </p>
-            
-            <Button 
-              size="lg" 
-              variant="secondary" 
+
+            <Button
+              size="lg"
+              variant="secondary"
               className="px-8"
               onClick={() => navigate('/residences/directory')}
             >
@@ -160,8 +152,8 @@ const Residences = () => {
             <Link to="/residences/res-nodis" className="block">
               <Card className="overflow-hidden border-2 border-accent shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
                 <div className="relative">
-                  <img 
-                    src={residences[0].image} 
+                  <img
+                    src={residences[0].image}
                     alt="Residencia destacada"
                     className="w-full h-[280px] object-cover"
                   />
@@ -175,7 +167,7 @@ const Residences = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <CardContent className="p-5 bg-surface-elevated">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="flex items-center gap-1 bg-primary/10 px-3 py-1 rounded-lg">
@@ -188,7 +180,7 @@ const Residences = () => {
                   <h3 className="text-xl font-bold text-foreground mb-2">
                     {residences[0].title}
                   </h3>
-                  
+
                   <div className="flex items-center gap-2 mb-3">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star key={star} className="w-5 h-5 fill-[#FFC107] text-foreground" strokeWidth={1} />
@@ -219,7 +211,7 @@ const Residences = () => {
             <h3 className="text-2xl font-bold text-foreground md:text-3xl mb-8 text-center">
               Residencias Premium
             </h3>
-            
+
             {isMobile ? (
               /* Mobile: Vertical list with horizontal cards */
               <div className="space-y-4">
@@ -232,8 +224,8 @@ const Residences = () => {
                         <div className="flex h-full">
                           {/* Image - 60% */}
                           <div className="relative w-[60%] aspect-square overflow-hidden flex-shrink-0">
-                            <img 
-                              src={residence.images?.[0] || apartment1} 
+                            <img
+                              src={residence.images?.[0] || apartment1}
                               alt={residence.name}
                               className="w-full h-full object-cover"
                             />
@@ -242,7 +234,7 @@ const Residences = () => {
                               Premium
                             </Badge>
                           </div>
-                          
+
                           {/* Content - 40% */}
                           <div className="w-[40%] p-3 space-y-2 flex flex-col justify-between">
                             <div className="space-y-1">
@@ -251,8 +243,8 @@ const Residences = () => {
                               </h4>
                               <div className="flex items-center gap-0.5">
                                 {[1, 2, 3, 4, 5].map((star) => (
-                                  <Star 
-                                    key={star} 
+                                  <Star
+                                    key={star}
                                     className={`w-2.5 h-2.5 text-foreground ${star <= Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`}
                                     strokeWidth={1.5}
                                   />
@@ -263,7 +255,7 @@ const Residences = () => {
                                 <span className="truncate">{residence.address}</span>
                               </div>
                             </div>
-                            
+
                             <div className="space-y-1.5">
                               <div className="font-bold text-base">
                                 €{residence.priceRange.min}<span className="text-xs font-normal text-muted-foreground">/mes</span>
@@ -276,7 +268,7 @@ const Residences = () => {
                                 ))}
                               </div>
                             </div>
-                            
+
                             <Button size="sm" className="w-full h-7 text-xs">
                               Ver
                             </Button>
@@ -294,44 +286,44 @@ const Residences = () => {
                     .filter(r => r.verified && r.status === 'active')
                     .slice(0, 6)
                     .map((residence) => (
-                    <CarouselItem key={`carousel-${residence.id}`} className="pl-2 md:pl-4 basis-1/3">
-                      <Link to={`/residences/${residence.id}`} className="block h-full">
-                        <Card className="overflow-hidden border-2 hover:border-primary transition-colors h-full cursor-pointer">
-                          <div className="relative">
-                            <img 
-                              src={residence.images?.[0] || apartment1} 
-                              alt={residence.name}
-                              className="w-full h-[180px] object-cover"
-                            />
-                            <Badge className="absolute top-2 left-2 bg-foreground text-background text-xs border-0 shadow-md">
-                              <Crown className="h-3 w-3 mr-1" />
-                              Premium
-                            </Badge>
-                          </div>
-                          
-                          <CardContent className="p-3">
-                            <h4 className="text-sm font-bold text-foreground mb-2 line-clamp-2">
-                              {residence.name}
-                            </h4>
-                            
-                            <div className="flex items-center gap-0.5 mb-1">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <Star 
-                                  key={star} 
-                                  className={`w-3 h-3 text-foreground ${star <= Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`}
-                                  strokeWidth={1.5}
-                                />
-                              ))}
+                      <CarouselItem key={`carousel-${residence.id}`} className="pl-2 md:pl-4 basis-1/3">
+                        <Link to={`/residences/${residence.id}`} className="block h-full">
+                          <Card className="overflow-hidden border-2 hover:border-primary transition-colors h-full cursor-pointer">
+                            <div className="relative">
+                              <img
+                                src={residence.images?.[0] || apartment1}
+                                alt={residence.name}
+                                className="w-full h-[180px] object-cover"
+                              />
+                              <Badge className="absolute top-2 left-2 bg-foreground text-background text-xs border-0 shadow-md">
+                                <Crown className="h-3 w-3 mr-1" />
+                                Premium
+                              </Badge>
                             </div>
-                            
-                            <div className="text-sm font-bold text-primary mt-2">
-                              Desde {residence.priceRange.min}€/mes
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    </CarouselItem>
-                  ))}
+
+                            <CardContent className="p-3">
+                              <h4 className="text-sm font-bold text-foreground mb-2 line-clamp-2">
+                                {residence.name}
+                              </h4>
+
+                              <div className="flex items-center gap-0.5 mb-1">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <Star
+                                    key={star}
+                                    className={`w-3 h-3 text-foreground ${star <= Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`}
+                                    strokeWidth={1.5}
+                                  />
+                                ))}
+                              </div>
+
+                              <div className="text-sm font-bold text-primary mt-2">
+                                Desde {residence.priceRange.min}€/mes
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      </CarouselItem>
+                    ))}
                 </CarouselContent>
                 <CarouselPrevious className="-left-4" />
                 <CarouselNext className="-right-4" />
@@ -349,7 +341,7 @@ const Residences = () => {
               ¿Por qué elegir una residencia?
             </h2>
           </div>
-          
+
           <div className="grid gap-6 md:grid-cols-3">
             {features.map((feature, index) => (
               <Card key={index} className="text-center border-0 bg-surface-elevated">
@@ -357,11 +349,11 @@ const Residences = () => {
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mx-auto">
                     <feature.icon className="h-6 w-6 text-primary" />
                   </div>
-                  
+
                   <h3 className="text-lg font-bold text-foreground mb-2">
                     {feature.title}
                   </h3>
-                  
+
                   <p className="text-sm text-muted-foreground">
                     {feature.description}
                   </p>
@@ -383,13 +375,13 @@ const Residences = () => {
               Descubre todas las opciones disponibles
             </p>
           </div>
-          
+
           <Tabs defaultValue="residencias" className="w-full">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
               <TabsTrigger value="residencias">Residencias</TabsTrigger>
               <TabsTrigger value="colegios">Colegios Mayores</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="residencias">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {allResidences
@@ -398,8 +390,8 @@ const Residences = () => {
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <div className="relative">
-                          <img 
-                            src={residence.images?.[0] || apartment1} 
+                          <img
+                            src={residence.images?.[0] || apartment1}
                             alt={residence.name}
                             className="w-full h-[200px] object-cover"
                           />
@@ -414,22 +406,22 @@ const Residences = () => {
                             </Badge>
                           )}
                         </div>
-                        
+
                         <CardContent className="p-4">
                           <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">
                             {residence.name}
                           </h3>
-                          
+
                           <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
                             <MapPin className="w-4 h-4" />
                             <span className="line-clamp-1">{residence.address}</span>
                           </div>
-                          
+
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-1">
-                              {Array.from({length: 5}).map((_, i) => (
-                                <Star 
-                                  key={i} 
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <Star
+                                  key={i}
                                   className={`w-3.5 h-3.5 text-foreground ${i < Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`}
                                   strokeWidth={1.5}
                                 />
@@ -445,7 +437,7 @@ const Residences = () => {
                               <div className="text-xs text-muted-foreground">desde/mes</div>
                             </div>
                           </div>
-                          
+
                           <div className="flex flex-wrap gap-1 mb-3">
                             {residence.services.slice(0, 3).map((service, idx) => (
                               <Badge key={idx} variant="secondary" className="text-xs">
@@ -453,7 +445,7 @@ const Residences = () => {
                               </Badge>
                             ))}
                           </div>
-                          
+
                           <Button className="w-full" variant="outline" size="sm">
                             Ver detalles
                           </Button>
@@ -463,7 +455,7 @@ const Residences = () => {
                   ))}
               </div>
             </TabsContent>
-            
+
             <TabsContent value="colegios">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {allResidences
@@ -472,8 +464,8 @@ const Residences = () => {
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <div className="relative">
-                          <img 
-                            src={residence.images?.[0] || apartment2} 
+                          <img
+                            src={residence.images?.[0] || apartment2}
                             alt={residence.name}
                             className="w-full h-[200px] object-cover"
                           />
@@ -488,23 +480,23 @@ const Residences = () => {
                             </Badge>
                           )}
                         </div>
-                        
+
                         <CardContent className="p-4">
                           <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">
                             {residence.name}
                           </h3>
-                          
+
                           <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
                             <MapPin className="w-4 h-4" />
                             <span className="line-clamp-1">{residence.address}</span>
                           </div>
-                          
+
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-1">
-                              {Array.from({length: 5}).map((_, i) => (
-                                <Star 
-                                  key={i} 
-                                  className={`w-3.5 h-3.5 ${i < Math.floor(residence.rating) ? 'fill-[#FFC107] text-[#FFC107]' : 'text-muted'}`} 
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3.5 h-3.5 ${i < Math.floor(residence.rating) ? 'fill-[#FFC107] text-[#FFC107]' : 'text-muted'}`}
                                 />
                               ))}
                               <span className="text-sm text-muted-foreground ml-1">
@@ -518,7 +510,7 @@ const Residences = () => {
                               <div className="text-xs text-muted-foreground">desde/mes</div>
                             </div>
                           </div>
-                          
+
                           <div className="flex flex-wrap gap-1 mb-3">
                             {residence.services.slice(0, 3).map((service, idx) => (
                               <Badge key={idx} variant="secondary" className="text-xs">
@@ -526,7 +518,7 @@ const Residences = () => {
                               </Badge>
                             ))}
                           </div>
-                          
+
                           <Button className="w-full" variant="outline" size="sm">
                             Ver detalles
                           </Button>
@@ -537,10 +529,10 @@ const Residences = () => {
               </div>
             </TabsContent>
           </Tabs>
-          
+
           <div className="mt-12 text-center">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => navigate('/residences/directory')}
             >
