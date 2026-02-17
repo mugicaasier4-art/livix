@@ -20,6 +20,7 @@ export interface StoredConversation {
     participantId: string;
     type: ConversationType;
     messages: ChatMessage[];
+    unreadCount: number;
 }
 
 const STORAGE_KEY = 'livix_chat_store';
@@ -96,13 +97,33 @@ export function addMessage(
             participantId,
             type,
             messages: [],
+            unreadCount: 0,
         };
     }
 
     _conversations[participantId].messages.push(msg);
+
+    // If message is received (not from me), increment unread count
+    if (!fromMe) {
+        _conversations[participantId].unreadCount = (_conversations[participantId].unreadCount || 0) + 1;
+    }
     _persist();
     _notify();
     return msg;
+}
+
+/** Mark a conversation as read */
+export function markAsRead(participantId: string) {
+    if (_conversations[participantId] && _conversations[participantId].unreadCount > 0) {
+        _conversations[participantId].unreadCount = 0;
+        _persist();
+        _notify();
+    }
+}
+
+/** Get total unread conversations count (chats with > 0 unread messages) */
+export function getTotalUnreadCount(): number {
+    return Object.values(_conversations).filter((c) => (c.unreadCount || 0) > 0).length;
 }
 
 /** Ensure a conversation entry exists (useful for creating empty convos) */
@@ -115,6 +136,7 @@ export function ensureConversation(
             participantId,
             type,
             messages: [],
+            unreadCount: 0,
         };
         _persist();
         _notify();
@@ -131,10 +153,11 @@ export function seedLandlordConversations() {
     const alreadySeeded = localStorage.getItem('livix_chat_seeded');
     if (alreadySeeded) return;
 
-    const landlordConversations: { id: string; type: ConversationType; messages: ChatMessage[] }[] = [
+    const landlordConversations: { id: string; type: ConversationType; messages: ChatMessage[]; unreadCount: number }[] = [
         {
             id: 'landlord-carlos-lopez',
             type: 'landlord',
+            unreadCount: 0,
             messages: [
                 {
                     id: 'lm-1',
@@ -165,6 +188,7 @@ export function seedLandlordConversations() {
         {
             id: 'landlord-inmobiliaria-garcia',
             type: 'landlord',
+            unreadCount: 2,
             messages: [
                 {
                     id: 'lm-5',
@@ -187,6 +211,7 @@ export function seedLandlordConversations() {
             participantId: conv.id,
             type: conv.type,
             messages: conv.messages,
+            unreadCount: conv.unreadCount,
         };
     }
 

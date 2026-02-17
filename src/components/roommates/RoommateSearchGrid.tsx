@@ -621,9 +621,9 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                         >
                             <Inbox className="h-4 w-4" />
                             <span className="hidden sm:inline font-medium text-xs">Mis mensajes</span>
-                            {conversationsList.length > 0 && (
-                                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center px-1">
-                                    {conversationsList.length}
+                            {conversationsList.filter((c) => c.unreadCount > 0).length > 0 && (
+                                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center px-1 animate-pulse">
+                                    {conversationsList.filter((c) => c.unreadCount > 0).length}
                                 </span>
                             )}
                         </Button>
@@ -711,10 +711,15 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                                                     </p>
                                                 )}
                                             </div>
-
-                                            <Badge className="bg-primary/10 text-primary border-0 text-[10px]">
-                                                {conv.messageCount}
-                                            </Badge>
+                                            {conv.unreadCount > 0 ? (
+                                                <Badge className="bg-red-500 text-white border-0 text-[10px] h-5 w-5 flex items-center justify-center rounded-full">
+                                                    {conv.unreadCount}
+                                                </Badge>
+                                            ) : (
+                                                <Badge className="bg-primary/10 text-primary border-0 text-[10px]">
+                                                    {conv.messageCount}
+                                                </Badge>
+                                            )}
                                         </button>
                                     ))}
                                 </div>

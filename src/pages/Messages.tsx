@@ -15,6 +15,8 @@ import {
   addMessage,
   subscribe,
   seedLandlordConversations,
+  markAsRead,
+  getTotalUnreadCount,
   type ChatMessage,
   type StoredConversation,
   type ConversationType,
@@ -227,9 +229,16 @@ const Messages = () => {
             <div className="p-4 bg-gradient-to-r from-primary via-blue-500 to-blue-600">
               <div className="flex items-center justify-between mb-3">
                 <h1 className="text-xl font-black text-white">Mis mensajes</h1>
-                <Badge className="bg-white/20 text-white border-0 text-xs">
-                  {conversations.length} conversación{conversations.length !== 1 ? 'es' : ''}
-                </Badge>
+                <div className="flex gap-2">
+                  {getTotalUnreadCount() > 0 && (
+                    <Badge className="bg-red-500 text-white border-0 text-xs animate-pulse">
+                      {getTotalUnreadCount()} nuevos
+                    </Badge>
+                  )}
+                  <Badge className="bg-white/20 text-white border-0 text-xs">
+                    {conversations.length} chats
+                  </Badge>
+                </div>
               </div>
 
               {/* Search */}
@@ -305,7 +314,10 @@ const Messages = () => {
                   return (
                     <button
                       key={c.id}
-                      onClick={() => setActiveId(c.id)}
+                      onClick={() => {
+                        setActiveId(c.id);
+                        markAsRead(c.id);
+                      }}
                       className={cn(
                         "w-full flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 transition-all text-left border-b border-border/15",
                         isActive && "bg-primary/5 border-l-[3px] border-l-primary"
@@ -359,10 +371,12 @@ const Messages = () => {
                         )}
                       </div>
 
-                      {/* Message count badge */}
-                      <Badge className="bg-primary/10 text-primary border-0 text-[10px] flex-shrink-0">
-                        {c.conv.messages.length}
-                      </Badge>
+                      {/* Message count badge - Only show if unread > 0 */}
+                      {c.conv.unreadCount > 0 && (
+                        <Badge className="bg-red-500 text-white border-0 text-[10px] flex-shrink-0 h-5 w-5 flex items-center justify-center rounded-full">
+                          {c.conv.unreadCount}
+                        </Badge>
+                      )}
                     </button>
                   );
                 })

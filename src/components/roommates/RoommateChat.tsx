@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import {
     getMessages,
     addMessage,
+    markAsRead,
     subscribe,
     activeConversationCount,
     type ChatMessage,
@@ -34,6 +35,7 @@ const RoommateChat = ({ profile, onBack }: RoommateChatProps) => {
 
     // Subscribe to store changes (e.g. if another view adds messages)
     useEffect(() => {
+        markAsRead(profile.id);
         const unsub = subscribe(() => {
             setMessages(getMessages(profile.id));
         });
@@ -201,6 +203,7 @@ export interface ConversationSummary {
     profile: MockRoommate;
     lastMessage: ChatMessage | null;
     messageCount: number;
+    unreadCount: number;
 }
 
 export { activeConversationCount as getActiveCount };
@@ -220,6 +223,7 @@ export const getConversations = (
                 profile,
                 lastMessage: msgs[msgs.length - 1] || null,
                 messageCount: msgs.length,
+                unreadCount: conv.unreadCount || 0,
             };
         })
         .filter(Boolean) as ConversationSummary[];
