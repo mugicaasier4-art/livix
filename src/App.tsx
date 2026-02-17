@@ -34,6 +34,7 @@ const ResidencesDirectory = lazy(() => import("./pages/residences/Directory"));
 const ResidenceDetail = lazy(() => import("./pages/residences/ResidenceDetail"));
 const RoommatesFrontpage = lazy(() => import("./pages/RoommatesFrontpage"));
 const RoommatesApp = lazy(() => import("./pages/Roommates"));
+const RoommateSearchPage = lazy(() => import("./pages/roommates/SearchGridPage"));
 const RoomListingDetail = lazy(() => import("./pages/RoomListingDetail"));
 const CreateRoomListing = lazy(() => import("./pages/CreateRoomListing"));
 const EditRoomListing = lazy(() => import("./pages/EditRoomListing"));
@@ -130,6 +131,7 @@ const App = () => (
                                 <Route path="/residences/directory" element={<ResidencesDirectory />} />
                                 <Route path="/residences/:id" element={<ResidenceDetail />} />
                                 <Route path="/roommates" element={<RoommatesFrontpage />} />
+                                <Route path="/roommates/search" element={<RoommateSearchPage />} />
                                 <Route path="/publicar-habitacion" element={<ListRoom />} />
                                 <Route path="/roommates/app" element={<RoommatesApp />} />
                                 <Route path="/roommates/listing/:id" element={<RoomListingDetail />} />
@@ -184,14 +186,10 @@ const App = () => (
                                   </ProtectedRoute>
                                 } />
                                 <Route path="/messages" element={
-                                  <ProtectedRoute>
-                                    <Messages />
-                                  </ProtectedRoute>
+                                  <Messages />
                                 } />
                                 <Route path="/messages/:threadId" element={
-                                  <ProtectedRoute>
-                                    <Messages />
-                                  </ProtectedRoute>
+                                  <Messages />
                                 } />
 
                                 {/* Protected Routes - User */}

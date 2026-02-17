@@ -41,6 +41,7 @@ import { useRoomListings } from "@/hooks/useRoomListings";
 import RoomListingCard from "@/components/roommates/RoomListingCard";
 import ProfilingConsent from "@/components/roommates/ProfilingConsent";
 import { toast } from "sonner";
+import RoommateSearchGrid from "@/components/roommates/RoommateSearchGrid";
 
 interface MatchWithProfile {
   user_id: string;
@@ -419,6 +420,15 @@ const Roommates = () => {
           onConsent={handleProfilingConsent}
           onDecline={handleProfilingDecline}
         />
+      </Layout>
+    );
+  }
+
+  // Search Roommates View - Grid/Directory
+  if (selectedPath === 'search') {
+    return (
+      <Layout>
+        <RoommateSearchGrid onBack={() => setSelectedPath('none')} />
       </Layout>
     );
   }

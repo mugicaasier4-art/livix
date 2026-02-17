@@ -257,7 +257,7 @@ const RoommatesFrontpage = () => {
               Conecta con otros estudiantes que buscan piso en Zaragoza para el curso 26/27
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button size="lg" onClick={() => user ? navigate('/roommates/app') : navigate('/login?redirect=/roommates/app')}>
+              <Button size="lg" onClick={() => navigate('/roommates/search')}>
                 <Search className="h-4 w-4 mr-2" />
                 Buscar compañero
               </Button>
@@ -487,7 +487,7 @@ const RoommatesFrontpage = () => {
               <Button
                 variant="ghost"
                 className="hidden md:flex"
-                onClick={() => user ? navigate('/roommates/app?path=search') : navigate('/login?redirect=/roommates/app?path=search')}
+                onClick={() => navigate('/roommates/search')}
               >
                 Explorar perfiles
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -499,7 +499,7 @@ const RoommatesFrontpage = () => {
 
             <div className="mt-8 text-center">
               <Button
-                onClick={() => user ? navigate('/roommates/app?path=search') : navigate('/login?redirect=/roommates/app?path=search')}
+                onClick={() => navigate('/roommates/search')}
               >
                 Ver más perfiles
                 <ArrowRight className="h-4 w-4 ml-1" />
