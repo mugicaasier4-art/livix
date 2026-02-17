@@ -26,7 +26,6 @@ import NotFound from "./pages/NotFound";
 // Lazy loaded - non-critical pages
 const Bookings = lazy(() => import("./pages/Bookings"));
 const Messages = lazy(() => import("./pages/Messages"));
-const TestMessages = lazy(() => import("./pages/TestMessages"));
 const Applications = lazy(() => import("./pages/landlord/Applications"));
 const Landlords = lazy(() => import("./pages/Landlords"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
@@ -191,9 +190,6 @@ const App = () => (
                                 } />
                                 <Route path="/messages/:threadId" element={
                                   <Messages />
-                                } />
-                                <Route path="/test-messages" element={
-                                  <TestMessages />
                                 } />
 
                                 {/* Protected Routes - User */}

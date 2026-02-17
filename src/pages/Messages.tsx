@@ -216,9 +216,9 @@ const Messages = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50/60 via-background to-indigo-50/40">
       <Header />
 
-      <div className="h-[calc(100dvh-64px)] flex flex-col pt-16">
+      <div className="h-[calc(100dvh-64px)] flex flex-col">
         {/* ── Split pane container ── */}
-        <div className="flex-1 flex overflow-hidden max-w-7xl mx-auto w-full border-x border-border/30 bg-background shadow-xl">
+        <div className="flex-1 flex overflow-hidden w-full bg-background">
 
           {/* ═══ LEFT PANE: Conversations list ═══ */}
           <div className={cn(
