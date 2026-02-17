@@ -26,9 +26,10 @@ const Blog = () => {
     eventos: PartyPopper,
   };
 
-  const filteredPosts = selectedCategory === "all"
-    ? blogPosts
-    : blogPosts.filter(post => post.category === selectedCategory);
+  const filteredPosts = (selectedCategory === "all"
+    ? [...blogPosts]
+    : blogPosts.filter(post => post.category === selectedCategory)
+  ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const [featuredPost, ...otherPosts] = filteredPosts;
 

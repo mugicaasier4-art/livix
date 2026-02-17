@@ -31,7 +31,7 @@ export const blogPosts: BlogPost[] = [
     id: 1,
     title: "Guía completa para encontrar piso de estudiante en Zaragoza",
     excerpt: "Todo lo que necesitas saber para encontrar el alojamiento perfecto durante tus estudios universitarios.",
-    date: "2024-03-15",
+    date: "2026-01-22",
     author: "Equipo Livix",
     category: "pisos",
     image: pisosEstudiante,
@@ -91,7 +91,7 @@ Con paciencia y siguiendo estos consejos, encontrarás el piso perfecto para tu 
     id: 2,
     title: "Las mejores zonas para vivir cerca de la Universidad de Zaragoza",
     excerpt: "Descubre los barrios más populares entre estudiantes y sus ventajas.",
-    date: "2024-03-12",
+    date: "2026-01-14",
     author: "Laura Pérez",
     category: "pisos",
     image: zonasUniversidad,
@@ -143,7 +143,7 @@ Si estudias en San Francisco, el Centro o la Magdalena son ideales. Para Río Eb
     id: 3,
     title: "Checklist: Qué revisar antes de alquilar una habitación",
     excerpt: "Lista completa de aspectos importantes a verificar antes de firmar un contrato de alquiler.",
-    date: "2024-03-08",
+    date: "2026-01-06",
     author: "David Ruiz",
     category: "pisos",
     image: checklistAlquiler,
@@ -206,7 +206,7 @@ Antes de firmar cualquier contrato, asegúrate de revisar todos estos puntos.
     id: 4,
     title: "Cómo aprobar tus exámenes: Técnicas de estudio efectivas",
     excerpt: "Métodos probados para estudiar mejor y conseguir mejores resultados académicos.",
-    date: "2024-03-10",
+    date: "2026-01-10",
     author: "María García",
     category: "estudiante",
     image: tecnicasEstudio,
@@ -267,7 +267,7 @@ Recuerda: la consistencia supera a la intensidad.`
     id: 5,
     title: "Gestión del tiempo: Equilibra estudios y vida social",
     excerpt: "Consejos prácticos para organizar tu agenda y disfrutar de la vida universitaria.",
-    date: "2024-03-06",
+    date: "2026-01-02",
     author: "Ana Torres",
     category: "estudiante",
     image: gestionTiempo,
@@ -319,7 +319,7 @@ No puedes hacerlo todo. Aprende a:
     id: 6,
     title: "10 apps imprescindibles para estudiantes",
     excerpt: "Las mejores aplicaciones móviles que todo estudiante debería tener instaladas.",
-    date: "2024-03-03",
+    date: "2025-12-25",
     author: "Javier Sánchez",
     category: "estudiante",
     image: appsEstudiantes,
@@ -388,7 +388,7 @@ La app oficial del transporte.
     id: 7,
     title: "Cómo ahorrar dinero siendo estudiante",
     excerpt: "Trucos y consejos para estirar tu presupuesto mensual sin renunciar a nada importante.",
-    date: "2024-03-05",
+    date: "2025-12-29",
     author: "Carlos Martínez",
     category: "consejos",
     image: ahorrarDinero,
@@ -454,7 +454,7 @@ Antes de una compra no esencial:
     id: 8,
     title: "Recetas rápidas y económicas para estudiantes",
     excerpt: "Platos fáciles de preparar que no arruinarán tu presupuesto ni tu tiempo.",
-    date: "2024-03-01",
+    date: "2025-12-21",
     author: "Elena Rodríguez",
     category: "consejos",
     image: recetasEstudiantes,
@@ -513,7 +513,7 @@ No necesitas ser chef para comer bien. Estas recetas son perfectas para principi
     id: 9,
     title: "Guía de bienestar mental para universitarios",
     excerpt: "Cómo cuidar tu salud mental durante la etapa universitaria y gestionar el estrés.",
-    date: "2024-02-28",
+    date: "2025-12-17",
     author: "Dr. Pablo Jiménez",
     category: "consejos",
     image: bienestarMental,
@@ -588,7 +588,7 @@ Recuerda: pedir ayuda no es debilidad, es inteligencia.`
     id: 10,
     title: "Fiestas universitarias: Calendario de eventos en Zaragoza",
     excerpt: "Los mejores eventos y fiestas para estudiantes durante este semestre.",
-    date: "2024-02-25",
+    date: "2025-12-13",
     author: "Sara Fernández",
     category: "eventos",
     image: fiestasUniversitarias,
@@ -657,7 +657,7 @@ Zaragoza tiene una vida nocturna vibrante. Aquí tienes el calendario de eventos
     id: 11,
     title: "Deportes y actividades: Únete a clubs universitarios",
     excerpt: "Descubre los diferentes clubs deportivos y de ocio disponibles en la universidad.",
-    date: "2024-02-20",
+    date: "2025-12-09",
     author: "Miguel Ángel López",
     category: "eventos",
     image: deportesClubs,
@@ -725,7 +725,7 @@ La universidad ofrece mucho más que clases. Descubre cómo aprovechar al máxim
     id: 12,
     title: "Festivales y conciertos en Zaragoza para estudiantes",
     excerpt: "No te pierdas los mejores eventos culturales con descuentos para estudiantes.",
-    date: "2024-02-15",
+    date: "2025-12-05",
     author: "Andrea Gómez",
     category: "eventos",
     image: festivalesConciertos,
@@ -784,7 +784,7 @@ Zaragoza es una ciudad cultural con eventos para todos los gustos. Y con carné 
     id: 13,
     title: "Guía legal del alquiler: Derechos y obligaciones del inquilino",
     excerpt: "Todo lo que necesitas saber sobre contratos de alquiler, fianzas y tus derechos como estudiante inquilino.",
-    date: "2024-03-20",
+    date: "2026-02-08",
     author: "Abogado Juan Pérez",
     category: "legalidad",
     image: checklistAlquiler,
@@ -850,7 +850,7 @@ Es la ley que regula todos los alquileres de vivienda en España.
     id: 14,
     title: "Cómo reclamar tu fianza: Pasos y plazos legales",
     excerpt: "Guía completa sobre el proceso de devolución de fianza y qué hacer si el propietario no la devuelve.",
-    date: "2024-03-18",
+    date: "2026-01-30",
     author: "Equipo Legal Livix",
     category: "legalidad",
     image: pisosEstudiante,
@@ -918,7 +918,7 @@ Envía un burofax indicando:
     id: 15,
     title: "Contratos de alquiler: Qué debe incluir y qué evitar",
     excerpt: "Cláusulas importantes, cláusulas abusivas y consejos para firmar tu contrato con seguridad.",
-    date: "2024-03-16",
+    date: "2026-01-26",
     author: "Laura Sánchez",
     category: "legalidad",
     image: zonasUniversidad,
@@ -997,7 +997,7 @@ Todo contrato debe incluir:
     id: 16,
     title: "Becas MEC 2024-2025: Requisitos y cómo solicitarlas",
     excerpt: "Guía actualizada sobre las becas del Ministerio de Educación, requisitos, plazos y documentación necesaria.",
-    date: "2024-03-22",
+    date: "2026-02-12",
     author: "Departamento de Becas",
     category: "becas",
     image: gestionTiempo,
@@ -1085,7 +1085,7 @@ Las becas del Ministerio de Educación son la principal ayuda para estudiantes u
     id: 17,
     title: "Ayudas al alquiler para estudiantes en Aragón",
     excerpt: "Todas las ayudas y subvenciones disponibles para estudiantes que alquilan vivienda en Zaragoza.",
-    date: "2024-03-19",
+    date: "2026-02-04",
     author: "Equipo Livix",
     category: "becas",
     image: ahorrarDinero,
@@ -1156,7 +1156,7 @@ Además de las becas MEC, existen ayudas específicas para alquiler en Aragón.
     id: 18,
     title: "Programas Erasmus+: Cómo solicitar y maximizar tu beca",
     excerpt: "Consejos para conseguir financiación para tu experiencia Erasmus y gestionar tu presupuesto.",
-    date: "2024-03-14",
+    date: "2026-01-18",
     author: "Oficina Erasmus",
     category: "becas",
     image: appsEstudiantes,
@@ -1229,6 +1229,209 @@ El programa Erasmus+ es una oportunidad única. Aquí tienes todo lo que necesit
 | Beca MEC Erasmus | Variable | Umbral de renta |
 | Gobierno de Aragón | 200€/mes | Residencia en Aragón |
 | Santander | Variable | Convocatoria propia |`
+  },
+  {
+    id: 19,
+    title: "Cómo optimizar tu LinkedIn siendo estudiante universitario en Zaragoza",
+    excerpt: "Guía práctica para crear un perfil de LinkedIn que destaque. Aprende qué publicar, con qué frecuencia y qué buscan realmente las empresas en los perfiles de universitarios.",
+    date: "2026-02-18",
+    author: "Equipo Livix",
+    category: "estudiante",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop&q=80",
+    readTime: 10,
+    content: `## Por qué necesitas LinkedIn si eres universitario en Zaragoza
+
+Si estás estudiando en la Universidad de Zaragoza, el campus de San Francisco o Río Ebro, probablemente pienses que LinkedIn es "para gente con trabajo". Error. **El 87% de los reclutadores en España usan LinkedIn como primera fuente** para buscar talento joven, y muchas empresas aragonesas ya filtran candidatos por su perfil antes de abrir el CV.
+
+Tener un buen perfil de LinkedIn mientras estudias no es opcional: es tu carta de presentación digital. Y lo mejor es que puedes empezar a construirlo hoy, sin experiencia laboral formal.
+
+## Tu perfil de LinkedIn paso a paso
+
+### 1. Foto profesional (pero cercana)
+
+Los perfiles con foto reciben **hasta 36 veces más visitas**. No necesitas un estudio fotográfico:
+
+- Tu cara debe ocupar el **60% del encuadre**
+- Fondo neutro o limpio (una pared blanca, la biblioteca del campus)
+- Luz natural, mejor por la mañana
+- Sonríe de forma natural
+- Viste como irías a una entrevista informal (no hace falta traje)
+
+> 💡 **Truco Zaragoza**: La iluminación natural de la Biblioteca María Moliner o el hall del edificio Betancourt son perfectas para una foto profesional gratis.
+
+### 2. Banner personalizado
+
+El banner es lo primero que se ve. Usa Canva (gratis) para crear uno que incluya:
+- Tu nombre o área de especialización
+- El logo de tu universidad (con permiso)
+- Un diseño limpio y profesional
+
+### 3. Titular (Headline): No pongas solo "Estudiante"
+
+El titular es tu anzuelo. Tienes **220 caracteres** para brillar. Fórmula ganadora:
+
+**[Lo que estudias] + [Lo que te apasiona] + [El valor que aportas]**
+
+Ejemplos reales:
+- ❌ "Estudiante en la Universidad de Zaragoza"
+- ✅ "Estudiante de ADE | Apasionado del Marketing Digital | Prácticas en ecommerce | Zaragoza"
+- ✅ "Ingeniería Informática @ Unizar | Desarrollador Python & Data Science | Buscando prácticas"
+- ✅ "Derecho + Criminología | Voluntariado en mediación | Zaragoza"
+
+### 4. Sección "Acerca de" (About): Tu mini elevator pitch
+
+Escribe en primera persona, con naturalidad. Estructura ideal:
+
+1. **Quién eres** (1-2 líneas)
+2. **Qué te motiva** (2-3 líneas)
+3. **Qué has hecho** (habilidades, proyectos, voluntariado)
+4. **Qué buscas** (prácticas, colaboraciones, networking)
+5. **Call to action** ("Escríbeme si...")
+
+> Incluye **palabras clave** de tu sector: si estudias marketing, usa "SEO", "redes sociales", "analítica web". Si estudias ingeniería, menciona "Python", "gestión de proyectos", "Lean Manufacturing".
+
+### 5. Experiencia: No solo trabajos pagados
+
+Aquí es donde muchos universitarios se bloquean. Pero LinkedIn valora **todo tipo de experiencia**:
+
+| Tipo de experiencia | Ejemplo |
+|--------------------|---------|
+| Prácticas | Prácticas en Departamento de Marketing |
+| Voluntariado | Cruz Roja Zaragoza, voluntariado en eventos |
+| Trabajos parciales | Camarero en La Senda (trabajo en equipo, atención al cliente) |
+| Proyectos académicos | TFG sobre inteligencia artificial aplicada a salud |
+| Asociaciones | Delegado de curso, asociación de debate UNIZAR |
+| Freelance | Diseño de logos para pequeños negocios |
+
+**Clave**: Usa **verbos de acción** y **cuantifica resultados**:
+- ❌ "Hice prácticas en marketing"
+- ✅ "Gestioné campañas de email marketing con un **incremento del 23% en tasa de apertura**"
+
+### 6. Habilidades y validaciones
+
+Añade **mínimo 10 habilidades** relevantes. Los perfiles con 5+ habilidades reciben **17 veces más visitas**.
+
+Habilidades que las empresas de Zaragoza buscan en 2026:
+
+- **Técnicas**: Excel avanzado, Python, SQL, Figma, Google Analytics
+- **Idiomas**: Inglés B2+, Francés, Alemán
+- **Soft skills**: Trabajo en equipo, comunicación, resolución de problemas
+- **Certificaciones**: Google Ads, HubSpot, Scrum
+
+Pide a profesores y compañeros que **validen tus habilidades**. Es gratis y suma mucho.
+
+### 7. Sección "Destacados" (Featured)
+
+Esta sección es tu portfolio visual. Sube:
+- Presentaciones de proyectos universitarios
+- Artículos que hayas escrito
+- Certificados de cursos online
+- Tu TFG o trabajos destacados
+- Vídeos de presentaciones
+
+### 8. Recomendaciones
+
+Pide recomendaciones breves a:
+- Profesores con los que hayas trabajado
+- Supervisores de prácticas
+- Compañeros de proyectos grupales
+
+Una recomendación auténtica vale más que 100 conexiones.
+
+## Qué publicar en LinkedIn siendo universitario
+
+No necesitas inventar contenido. Comparte lo que ya estás viviendo:
+
+### Contenido que funciona
+
+1. **Reflexiones sobre lo que aprendes**: "Hoy en clase de Economía descubrimos que..." 
+2. **Logros académicos**: "He terminado mi primer proyecto en Python y estas son las 3 cosas que he aprendido"
+3. **Eventos y conferencias**: "Acabo de asistir a [charla/congreso] en Zaragoza y me quedo con..."
+4. **Voluntariado y extracurriculares**: "3 meses colaborando con [ONG] me han enseñado que..."
+5. **Opiniones sobre tu sector**: Comenta noticias relevantes de tu industria
+6. **Recursos útiles**: Comparte herramientas, libros o cursos que te hayan servido
+
+### Contenido que NO funciona
+
+- ❌ Posts genéricos sin aportar valor
+- ❌ Copiar y pegar frases motivacionales
+- ❌ Quejarse de los exámenes
+- ❌ Contenido personal (eso es para Instagram)
+- ❌ "Palabra-ensalada" de buzzwords sin sustancia
+
+## ¿Con qué frecuencia publicar?
+
+La frecuencia ideal para un estudiante universitario:
+
+| Nivel | Frecuencia | Resultado esperado |
+|-------|-----------|--------------------|
+| **Mínimo** | 1-2 veces/mes | Mantienes visibilidad |
+| **Recomendado** | 2-3 veces/semana | Crecimiento constante |
+| **Avanzado** | 4-5 veces/semana | Máximo alcance |
+
+### La regla de oro
+**Calidad > Cantidad**. Es mejor 1 post bueno a la semana que 5 posts vacíos.
+
+### Si no tienes tiempo para publicar...
+Comenta en posts de otros. **Un buen comentario** (no un simple "Gran post 👏") te da visibilidad sin crear contenido desde cero. Dedica 10-15 minutos al día a interactuar.
+
+## Qué buscan las empresas en tu perfil
+
+Hemos hablado con reclutadores de empresas aragonesas y nacionales. Esto es lo que realmente miran:
+
+### Lo primero que revisan
+1. **Titular y foto**: ¿Se ve profesional? ¿Dice algo interesante?
+2. **Sección "Acerca de"**: ¿Transmite motivación y claridad?
+3. **Experiencias relevantes**: Aunque sean prácticas o voluntariado
+4. **Habilidades técnicas**: ¿Tiene las skills que necesitamos?
+5. **Actividad reciente**: ¿Está activo? ¿Comparte contenido de valor?
+
+### Señales que enamoran a los reclutadores
+- ✅ Perfil completo (LinkedIn te dice tu nivel de completitud)
+- ✅ Publicaciones que demuestran curiosidad y proactividad
+- ✅ Recomendaciones de profesores/supervisores
+- ✅ Certificaciones online relevantes
+- ✅ URL personalizada (linkedin.com/in/tunombre)
+- ✅ Mínimo 50 conexiones de calidad
+
+### Red flags que asustan a los reclutadores
+- 🚩 Perfil sin foto
+- 🚩 Titular genérico ("Estudiante")
+- 🚩 Cero actividad o perfil abandonado
+- 🚩 Inconsistencias con el CV
+- 🚩 Faltas de ortografía
+
+## Plan de acción: Tu LinkedIn en 7 días
+
+Sigue este plan si empiezas desde cero:
+
+| Día | Tarea |
+|-----|-------|
+| **Lunes** | Sube foto profesional + banner. Personaliza tu URL |
+| **Martes** | Escribe tu titular con la fórmula y redacta el "Acerca de" |
+| **Miércoles** | Añade experiencias (prácticas, voluntariado, proyectos) |
+| **Jueves** | Lista 10+ habilidades y pide 3 validaciones |
+| **Viernes** | Conecta con 20 personas (compañeros, profes, alumni) |
+| **Sábado** | Sube algo a "Destacados" (TFG, certificado, presentación) |
+| **Domingo** | Publica tu primer post: preséntate y cuenta qué buscas |
+
+## Recursos gratuitos para mejorar tu perfil
+
+- **LinkedIn Learning**: Gratis con correo @unizar.es
+- **Canva**: Para crear banners y diseños
+- **Coursera/edX**: Certificados de universidades top
+- **Google Skillshop**: Certificaciones de Google gratuitas
+- **HubSpot Academy**: Marketing, ventas y servicio al cliente
+
+## Resumen: Las 5 claves
+
+1. **Completa tu perfil al 100%**: Cada sección cuenta
+2. **Sé específico en tu titular**: Di qué haces y qué buscas
+3. **Publica con consistencia**: Mínimo 2-3 veces por semana
+4. **Interactúa con otros**: Comenta, comparte, conecta
+5. **Mantente auténtico**: Las empresas valoran la genuinidad
+
+Tu LinkedIn no se construye en un día, pero empezar hoy te pone por delante del 90% de tus compañeros. Y recuerda: en Livix no solo te ayudamos a encontrar piso en Zaragoza, también queremos que tu experiencia universitaria sea completa. 🚀`
   }
 ];
 
