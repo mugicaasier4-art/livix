@@ -61,7 +61,7 @@ const LifeGraph = ({ data, size = 220 }: LifeGraphProps) => {
 
         const cx = size / 2;
         const cy = size / 2;
-        const maxR = size / 2 - 28;
+        const maxR = size / 2 - 40;
 
         const labels = ["Limpieza", "Ruido", "Visitas", "Estudios", "Fiesta"];
         const values = [data.limpieza, data.ruido, data.visitas, data.estudios, data.fiesta];
@@ -177,14 +177,7 @@ const ProfileCard = ({ profile, compatibility, isLiked, onLike, onClick }: Profi
                 "border-border/40 hover:border-primary/30"
             )}
         >
-            {/* Compatibility badge */}
-            {compatibility >= 80 && (
-                <div className="absolute top-3 right-12 z-10">
-                    <Badge className="bg-green-500/90 text-white border-0 text-[10px] font-bold px-2 py-0.5 shadow-sm backdrop-blur-sm">
-                        {compatibility}% Compatible
-                    </Badge>
-                </div>
-            )}
+
 
             {/* ❤️ Heart button */}
             <button
@@ -494,6 +487,9 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [openProfile, setOpenProfile] = useState<MockRoommate | null>(null);
     const [likedProfiles, setLikedProfiles] = useState<Set<string>>(new Set());
 
+    // User's own profile stats (editable)
+    const [userStats, setUserStats] = useState<LifeGraphData>({ ...myLifeGraph });
+
     // Messaging state
     const [chatProfile, setChatProfile] = useState<MockRoommate | null>(null);
     const [showConversations, setShowConversations] = useState(false);
@@ -525,7 +521,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     useEffect(() => {
         let result = mockRoommates.map(p => ({
             ...p,
-            _compat: calculateCompatibility(myLifeGraph, p.lifeGraph),
+            _compat: calculateCompatibility(userStats, p.lifeGraph),
         }));
 
         if (searchTerm) {
@@ -556,7 +552,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
         result.sort((a, b) => b._compat - a._compat);
 
         setFilteredProfiles(result);
-    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm]);
+    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm, userStats]);
 
     const handleLike = useCallback((id: string) => {
         setLikedProfiles(prev => {
@@ -746,10 +742,51 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                             {/* ── Left Sidebar: Filtros ── */}
                             <aside className="w-72 flex-shrink-0 hidden lg:block">
                                 <div className="sticky top-[140px] space-y-6">
+
+                                    {/* ── User Profile Stats (Spider Filters) ── */}
+                                    <div className="bg-white rounded-[2rem] p-6 shadow-lg shadow-primary/5 border border-border/40">
+                                        <h2 className="font-bold text-base text-foreground mb-4 flex items-center gap-2">
+                                            <Sparkles className="w-4 h-4 text-primary" />
+                                            Tu Perfil Ideal
+                                        </h2>
+                                        <p className="text-xs text-muted-foreground mb-4">
+                                            Ajusta tus preferencias para encontrar a tu roommate gemelo.
+                                        </p>
+
+                                        {/* Dynamic Graph */}
+                                        <div className="mb-6 -mx-2">
+                                            <LifeGraph data={userStats} size={200} />
+                                        </div>
+
+                                        {/* Sliders */}
+                                        <div className="space-y-5">
+                                            {(['limpieza', 'ruido', 'visitas', 'estudios', 'fiesta'] as (keyof LifeGraphData)[]).map((key) => (
+                                                <div key={key} className="space-y-2">
+                                                    <div className="flex justify-between items-center">
+                                                        <Label className="text-xs font-bold capitalize text-muted-foreground">
+                                                            {key}
+                                                        </Label>
+                                                        <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                                                            {userStats[key]}/5
+                                                        </span>
+                                                    </div>
+                                                    <Slider
+                                                        value={[userStats[key]]}
+                                                        min={1}
+                                                        max={5}
+                                                        step={1}
+                                                        onValueChange={(val) => setUserStats(prev => ({ ...prev, [key]: val[0] }))}
+                                                        className="py-1"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
                                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/30">
                                         <h2 className="font-bold text-base text-foreground mb-6 flex items-center gap-2">
                                             <SlidersHorizontal className="w-4 h-4 text-primary" />
-                                            Filtros Inteligentes
+                                            Otros Filtros
                                         </h2>
 
                                         <div className="space-y-7">
