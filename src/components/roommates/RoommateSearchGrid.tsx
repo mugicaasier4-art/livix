@@ -19,6 +19,8 @@ import {
     PawPrint,
     Home,
     Inbox,
+    LayoutGrid,
+    RectangleHorizontal,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,6 +34,14 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import RoommateChat, { getConversations, type ConversationSummary } from "./RoommateChat";
 import { subscribe as subscribeChatStore } from "@/stores/chatStore";
+import RoommateSwipeView from "./RoommateSwipeView";
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetDescription,
+} from "@/components/ui/sheet";
 
 interface RoommateSearchGridProps {
     onBack: () => void;
@@ -486,6 +496,11 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [filteredProfiles, setFilteredProfiles] = useState<(MockRoommate & { _compat: number })[]>([]);
     const [openProfile, setOpenProfile] = useState<MockRoommate | null>(null);
     const [likedProfiles, setLikedProfiles] = useState<Set<string>>(new Set());
+    const [matches, setMatches] = useState<Set<string>>(new Set()); // Mutual matches
+
+    // Sheet States
+    const [showLikesSheet, setShowLikesSheet] = useState(false);
+    const [showMatchesSheet, setShowMatchesSheet] = useState(false);
 
     // User's own profile stats (editable)
     const [userStats, setUserStats] = useState<LifeGraphData>({ ...myLifeGraph });
@@ -494,6 +509,9 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [chatProfile, setChatProfile] = useState<MockRoommate | null>(null);
     const [showConversations, setShowConversations] = useState(false);
     const [conversationsList, setConversationsList] = useState<ConversationSummary[]>([]);
+
+    // View Mode State
+    const [viewMode, setViewMode] = useState<'grid' | 'swipe'>('grid');
 
     const refreshConversations = useCallback(() => {
         setConversationsList(getConversations(mockRoommates));
@@ -558,14 +576,36 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
         setLikedProfiles(prev => {
             const next = new Set(prev);
             if (next.has(id)) {
+                // If unliking, remove from matches too if present
                 next.delete(id);
+                setMatches(prevMatches => {
+                    const nextMatches = new Set(prevMatches);
+                    nextMatches.delete(id);
+                    return nextMatches;
+                });
                 toast.info("Like retirado");
             } else {
                 next.add(id);
                 const profile = mockRoommates.find(p => p.id === id);
-                toast.success(`¡Match enviado a ${profile?.name}!`, {
-                    description: "Te notificaremos si hay match mutuo ❤️",
-                });
+
+                // Simulate a mutual match (50% chance for demo purposes)
+                const isMatch = Math.random() > 0.5;
+
+                if (isMatch) {
+                    setMatches(prevMatches => new Set(prevMatches).add(id));
+                    toast.success(`¡Es un MATCH con ${profile?.name}! 🎉`, {
+                        description: "Ahora podéis chatear. Ve a la sección de Matches.",
+                        action: {
+                            label: "Ver Matches",
+                            onClick: () => setShowMatchesSheet(true),
+                        },
+                        duration: 5000,
+                    });
+                } else {
+                    toast.success(`¡Match enviado a ${profile?.name}!`, {
+                        description: "Te notificaremos si hay match mutuo ❤️",
+                    });
+                }
             }
             return next;
         });
@@ -599,6 +639,22 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                             <span className="hidden sm:inline font-medium text-xs">Volver</span>
                         </Button>
 
+                        {/* Likes Sent Button (Left) */}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setShowLikesSheet(true)}
+                            className="flex items-center gap-2 hover:bg-red-50 hover:text-red-500 transition-colors rounded-full"
+                        >
+                            <Heart className={cn("h-4 w-4", likedProfiles.size > 0 && "fill-current")} />
+                            <span className="hidden md:inline font-medium text-xs">Likes Enviados</span>
+                            {likedProfiles.size > 0 && (
+                                <Badge className="bg-red-500 text-white h-5 min-w-[20px] px-1 text-[10px] pointer-events-none">
+                                    {likedProfiles.size}
+                                </Badge>
+                            )}
+                        </Button>
+
                         <div className="relative flex-1 max-w-xl mx-auto">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -624,12 +680,42 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                             )}
                         </Button>
 
-                        <div className="text-right hidden md:block">
-                            <h1 className="text-sm font-bold text-foreground">Buscar Compañero</h1>
-                            <p className="text-[10px] text-muted-foreground font-medium">
-                                {filteredProfiles.length} perfiles • ordenados por compatibilidad
-                            </p>
+                        <div className="flex items-center gap-1 bg-muted/50 p-1 rounded-lg border border-border/40">
+                            <Button
+                                variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
+                                size="sm"
+                                onClick={() => setViewMode('grid')}
+                                className={cn("h-7 px-2 text-xs", viewMode === 'grid' && "bg-white shadow-sm text-primary")}
+                            >
+                                <LayoutGrid className="w-3.5 h-3.5 mr-1.5" />
+                                Grid
+                            </Button>
+                            <Button
+                                variant={viewMode === 'swipe' ? 'secondary' : 'ghost'}
+                                size="sm"
+                                onClick={() => setViewMode('swipe')}
+                                className={cn("h-7 px-2 text-xs", viewMode === 'swipe' && "bg-white shadow-sm text-primary")}
+                            >
+                                <RectangleHorizontal className="w-3.5 h-3.5 mr-1.5" />
+                                Swipe
+                            </Button>
                         </div>
+
+                        {/* Matches Button (Right) */}
+                        <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() => setShowMatchesSheet(true)}
+                            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white border-0 hover:opacity-90 transition-all shadow-md rounded-full px-4"
+                        >
+                            <Sparkles className="h-3.5 w-3.5 mr-2" />
+                            <span className="font-bold text-xs">Matches</span>
+                            {matches.size > 0 && (
+                                <Badge className="ml-2 bg-white text-purple-600 h-5 min-w-[20px] px-1 text-[10px] pointer-events-none">
+                                    {matches.size}
+                                </Badge>
+                            )}
+                        </Button>
                     </div>
                 </div>
 
@@ -735,219 +821,232 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                     </div>
                 )}
 
-                {/* ── Normal Grid View ── */}
+                {/* ── Normal Grid View vs Swipe View ── */}
                 {!chatProfile && !showConversations && (
                     <div className="container mx-auto px-4 py-8">
-                        <div className="flex gap-8">
-                            {/* ── Left Sidebar: Filtros ── */}
-                            <aside className="w-72 flex-shrink-0 hidden lg:block">
-                                <div className="sticky top-[140px] space-y-6">
+                        {viewMode === 'swipe' ? (
+                            <div className="max-w-md mx-auto py-8">
+                                <RoommateSwipeView
+                                    profiles={filteredProfiles}
+                                    onLike={handleLike}
+                                    onPass={(id) => {
+                                        // Optional: handle pass logic (e.g. remove from list visually)
+                                        setFilteredProfiles(prev => prev.filter(p => p.id !== id));
+                                    }}
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex gap-8">
+                                {/* ── Left Sidebar: Filtros ── */}
+                                <aside className="w-72 flex-shrink-0 hidden lg:block">
+                                    <div className="sticky top-[140px] space-y-6">
 
-                                    {/* ── User Profile Stats (Spider Filters) ── */}
-                                    <div className="bg-white rounded-[2rem] p-6 shadow-lg shadow-primary/5 border border-border/40">
-                                        <h2 className="font-bold text-base text-foreground mb-4 flex items-center gap-2">
-                                            <Sparkles className="w-4 h-4 text-primary" />
-                                            Tu Perfil Ideal
-                                        </h2>
-                                        <p className="text-xs text-muted-foreground mb-4">
-                                            Ajusta tus preferencias para encontrar a tu roommate gemelo.
-                                        </p>
+                                        {/* ── User Profile Stats (Spider Filters) ── */}
+                                        <div className="bg-white rounded-[2rem] p-6 shadow-lg shadow-primary/5 border border-border/40">
+                                            <h2 className="font-bold text-base text-foreground mb-4 flex items-center gap-2">
+                                                <Sparkles className="w-4 h-4 text-primary" />
+                                                Tu Perfil Ideal
+                                            </h2>
+                                            <p className="text-xs text-muted-foreground mb-4">
+                                                Ajusta tus preferencias para encontrar a tu roommate gemelo.
+                                            </p>
 
-                                        {/* Dynamic Graph */}
-                                        <div className="mb-6 -mx-2">
-                                            <LifeGraph data={userStats} size={200} />
+                                            {/* Dynamic Graph */}
+                                            <div className="mb-6 -mx-2">
+                                                <LifeGraph data={userStats} size={200} />
+                                            </div>
+
+                                            {/* Sliders */}
+                                            <div className="space-y-5">
+                                                {(['limpieza', 'ruido', 'visitas', 'estudios', 'fiesta'] as (keyof LifeGraphData)[]).map((key) => (
+                                                    <div key={key} className="space-y-2">
+                                                        <div className="flex justify-between items-center">
+                                                            <Label className="text-xs font-bold capitalize text-muted-foreground">
+                                                                {key}
+                                                            </Label>
+                                                            <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                                                                {userStats[key]}/5
+                                                            </span>
+                                                        </div>
+                                                        <Slider
+                                                            value={[userStats[key]]}
+                                                            min={1}
+                                                            max={5}
+                                                            step={1}
+                                                            onValueChange={(val) => setUserStats(prev => ({ ...prev, [key]: val[0] }))}
+                                                            className="py-1"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
 
-                                        {/* Sliders */}
-                                        <div className="space-y-5">
-                                            {(['limpieza', 'ruido', 'visitas', 'estudios', 'fiesta'] as (keyof LifeGraphData)[]).map((key) => (
-                                                <div key={key} className="space-y-2">
-                                                    <div className="flex justify-between items-center">
-                                                        <Label className="text-xs font-bold capitalize text-muted-foreground">
-                                                            {key}
-                                                        </Label>
-                                                        <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                                                            {userStats[key]}/5
-                                                        </span>
+                                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/30">
+                                            <h2 className="font-bold text-base text-foreground mb-6 flex items-center gap-2">
+                                                <SlidersHorizontal className="w-4 h-4 text-primary" />
+                                                Otros Filtros
+                                            </h2>
+
+                                            <div className="space-y-7">
+                                                {/* Zone Tags */}
+                                                <div className="space-y-3">
+                                                    <Label className="text-sm font-semibold text-foreground">
+                                                        Zona Deseada
+                                                    </Label>
+                                                    <p className="text-xs text-muted-foreground -mt-1">
+                                                        (e.g., Delicias, Universidad, Centro)
+                                                    </p>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {["Delicias", "Actur", "Universidad", "Centro"].map(zone => (
+                                                            <button
+                                                                key={zone}
+                                                                onClick={() => toggleZone(zone)}
+                                                                className={cn(
+                                                                    "text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
+                                                                    selectedZones.includes(zone)
+                                                                        ? "bg-primary text-white border-primary"
+                                                                        : "bg-muted/40 text-foreground border-border/40 hover:border-primary/30"
+                                                                )}
+                                                            >
+                                                                {zone}
+                                                            </button>
+                                                        ))}
                                                     </div>
-                                                    <Slider
-                                                        value={[userStats[key]]}
-                                                        min={1}
-                                                        max={5}
-                                                        step={1}
-                                                        onValueChange={(val) => setUserStats(prev => ({ ...prev, [key]: val[0] }))}
-                                                        className="py-1"
-                                                    />
                                                 </div>
+
+                                                {/* Verified Toggle */}
+                                                <div className="space-y-3">
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <Label className="text-sm font-semibold text-foreground">
+                                                                Solo Verificados
+                                                            </Label>
+                                                            <p className="text-xs text-muted-foreground">
+                                                                (con tick azul)
+                                                            </p>
+                                                        </div>
+                                                        <Switch
+                                                            checked={verifiedOnly}
+                                                            onCheckedChange={setVerifiedOnly}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Cleanliness Level */}
+                                                <div className="space-y-3">
+                                                    <Label className="text-sm font-semibold text-foreground">
+                                                        Nivel de Limpieza
+                                                    </Label>
+                                                    <p className="text-xs text-muted-foreground -mt-1">
+                                                        (Relajado - Estándar - Maniático)
+                                                    </p>
+                                                    <div className="flex items-center gap-3">
+                                                        <SlidersHorizontal className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
+                                                        <Slider
+                                                            min={1}
+                                                            max={5}
+                                                            step={1}
+                                                            value={cleanlinessLevel}
+                                                            onValueChange={setCleanlinessLevel}
+                                                            className="py-1"
+                                                        />
+                                                        <Sparkles className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
+                                                    </div>
+                                                </div>
+
+                                                {/* Biorhythm */}
+                                                <div className="space-y-3">
+                                                    <Label className="text-sm font-semibold text-foreground">
+                                                        Biorritmos
+                                                    </Label>
+                                                    <p className="text-xs text-muted-foreground -mt-1">
+                                                        (Madrugador - Nocturno)
+                                                    </p>
+                                                    <div className="flex items-center gap-3">
+                                                        <Sun className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                                                        <Slider
+                                                            min={1}
+                                                            max={5}
+                                                            step={1}
+                                                            value={biorhythm}
+                                                            onValueChange={setBiorhythm}
+                                                            className="py-1"
+                                                        />
+                                                        <Moon className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Liked count */}
+                                        {likedProfiles.size > 0 && (
+                                            <div className="bg-red-50 border border-red-100 rounded-2xl p-4 text-center">
+                                                <div className="flex items-center justify-center gap-2 text-red-600">
+                                                    <Heart className="w-4 h-4 fill-red-500" />
+                                                    <span className="font-bold text-sm">{likedProfiles.size} likes enviados</span>
+                                                </div>
+                                                <p className="text-[10px] text-red-400 mt-1">Esperando match mutuo</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </aside>
+
+                                {/* ── Center: Profile Cards Grid ── */}
+                                <main className="flex-1 min-w-0">
+                                    <div className="mb-6 flex items-center justify-between">
+                                        <div>
+                                            <h2 className="text-lg font-bold text-foreground">
+                                                Perfiles
+                                            </h2>
+                                            <p className="text-[11px] text-muted-foreground">
+                                                Ordenados por compatibilidad con tu perfil ✨
+                                            </p>
+                                        </div>
+                                        <span className="text-xs text-muted-foreground font-medium">
+                                            {filteredProfiles.length} resultados
+                                        </span>
+                                    </div>
+
+                                    {filteredProfiles.length === 0 ? (
+                                        <div className="flex flex-col items-center justify-center py-32 bg-white rounded-2xl border border-dashed border-border/50 text-center px-4">
+                                            <div className="w-20 h-20 bg-muted/50 rounded-full flex items-center justify-center mb-6">
+                                                <Search className="h-10 w-10 text-muted-foreground/30" />
+                                            </div>
+                                            <h3 className="text-xl font-bold mb-2">No hay coincidencias</h3>
+                                            <p className="text-muted-foreground max-w-xs mx-auto text-sm leading-relaxed">
+                                                Intenta ajustar los filtros para encontrar otros perfiles.
+                                            </p>
+                                            <Button
+                                                variant="outline"
+                                                className="mt-8 rounded-full px-8"
+                                                onClick={() => {
+                                                    setSearchTerm("");
+                                                    setSelectedZones([]);
+                                                    setVerifiedOnly(false);
+                                                    setCleanlinessLevel([3]);
+                                                    setBiorhythm([3]);
+                                                }}
+                                            >
+                                                Limpiar filtros
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                                            {filteredProfiles.map((profile) => (
+                                                <ProfileCard
+                                                    key={profile.id}
+                                                    profile={profile}
+                                                    compatibility={profile._compat}
+                                                    isLiked={likedProfiles.has(profile.id)}
+                                                    onLike={handleLike}
+                                                    onClick={() => setOpenProfile(profile)}
+                                                />
                                             ))}
                                         </div>
-                                    </div>
-
-                                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/30">
-                                        <h2 className="font-bold text-base text-foreground mb-6 flex items-center gap-2">
-                                            <SlidersHorizontal className="w-4 h-4 text-primary" />
-                                            Otros Filtros
-                                        </h2>
-
-                                        <div className="space-y-7">
-                                            {/* Zone Tags */}
-                                            <div className="space-y-3">
-                                                <Label className="text-sm font-semibold text-foreground">
-                                                    Zona Deseada
-                                                </Label>
-                                                <p className="text-xs text-muted-foreground -mt-1">
-                                                    (e.g., Delicias, Universidad, Centro)
-                                                </p>
-                                                <div className="flex flex-wrap gap-1.5">
-                                                    {["Delicias", "Actur", "Universidad", "Centro"].map(zone => (
-                                                        <button
-                                                            key={zone}
-                                                            onClick={() => toggleZone(zone)}
-                                                            className={cn(
-                                                                "text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
-                                                                selectedZones.includes(zone)
-                                                                    ? "bg-primary text-white border-primary"
-                                                                    : "bg-muted/40 text-foreground border-border/40 hover:border-primary/30"
-                                                            )}
-                                                        >
-                                                            {zone}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Verified Toggle */}
-                                            <div className="space-y-3">
-                                                <div className="flex items-center justify-between">
-                                                    <div>
-                                                        <Label className="text-sm font-semibold text-foreground">
-                                                            Solo Verificados
-                                                        </Label>
-                                                        <p className="text-xs text-muted-foreground">
-                                                            (con tick azul)
-                                                        </p>
-                                                    </div>
-                                                    <Switch
-                                                        checked={verifiedOnly}
-                                                        onCheckedChange={setVerifiedOnly}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {/* Cleanliness Level */}
-                                            <div className="space-y-3">
-                                                <Label className="text-sm font-semibold text-foreground">
-                                                    Nivel de Limpieza
-                                                </Label>
-                                                <p className="text-xs text-muted-foreground -mt-1">
-                                                    (Relajado - Estándar - Maniático)
-                                                </p>
-                                                <div className="flex items-center gap-3">
-                                                    <SlidersHorizontal className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
-                                                    <Slider
-                                                        min={1}
-                                                        max={5}
-                                                        step={1}
-                                                        value={cleanlinessLevel}
-                                                        onValueChange={setCleanlinessLevel}
-                                                        className="py-1"
-                                                    />
-                                                    <Sparkles className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
-                                                </div>
-                                            </div>
-
-                                            {/* Biorhythm */}
-                                            <div className="space-y-3">
-                                                <Label className="text-sm font-semibold text-foreground">
-                                                    Biorritmos
-                                                </Label>
-                                                <p className="text-xs text-muted-foreground -mt-1">
-                                                    (Madrugador - Nocturno)
-                                                </p>
-                                                <div className="flex items-center gap-3">
-                                                    <Sun className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                                                    <Slider
-                                                        min={1}
-                                                        max={5}
-                                                        step={1}
-                                                        value={biorhythm}
-                                                        onValueChange={setBiorhythm}
-                                                        className="py-1"
-                                                    />
-                                                    <Moon className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Liked count */}
-                                    {likedProfiles.size > 0 && (
-                                        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 text-center">
-                                            <div className="flex items-center justify-center gap-2 text-red-600">
-                                                <Heart className="w-4 h-4 fill-red-500" />
-                                                <span className="font-bold text-sm">{likedProfiles.size} likes enviados</span>
-                                            </div>
-                                            <p className="text-[10px] text-red-400 mt-1">Esperando match mutuo</p>
-                                        </div>
                                     )}
-                                </div>
-                            </aside>
-
-                            {/* ── Center: Profile Cards Grid ── */}
-                            <main className="flex-1 min-w-0">
-                                <div className="mb-6 flex items-center justify-between">
-                                    <div>
-                                        <h2 className="text-lg font-bold text-foreground">
-                                            Perfiles
-                                        </h2>
-                                        <p className="text-[11px] text-muted-foreground">
-                                            Ordenados por compatibilidad con tu perfil ✨
-                                        </p>
-                                    </div>
-                                    <span className="text-xs text-muted-foreground font-medium">
-                                        {filteredProfiles.length} resultados
-                                    </span>
-                                </div>
-
-                                {filteredProfiles.length === 0 ? (
-                                    <div className="flex flex-col items-center justify-center py-32 bg-white rounded-2xl border border-dashed border-border/50 text-center px-4">
-                                        <div className="w-20 h-20 bg-muted/50 rounded-full flex items-center justify-center mb-6">
-                                            <Search className="h-10 w-10 text-muted-foreground/30" />
-                                        </div>
-                                        <h3 className="text-xl font-bold mb-2">No hay coincidencias</h3>
-                                        <p className="text-muted-foreground max-w-xs mx-auto text-sm leading-relaxed">
-                                            Intenta ajustar los filtros para encontrar otros perfiles.
-                                        </p>
-                                        <Button
-                                            variant="outline"
-                                            className="mt-8 rounded-full px-8"
-                                            onClick={() => {
-                                                setSearchTerm("");
-                                                setSelectedZones([]);
-                                                setVerifiedOnly(false);
-                                                setCleanlinessLevel([3]);
-                                                setBiorhythm([3]);
-                                            }}
-                                        >
-                                            Limpiar filtros
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                                        {filteredProfiles.map((profile) => (
-                                            <ProfileCard
-                                                key={profile.id}
-                                                profile={profile}
-                                                compatibility={profile._compat}
-                                                isLiked={likedProfiles.has(profile.id)}
-                                                onLike={handleLike}
-                                                onClick={() => setOpenProfile(profile)}
-                                            />
-                                        ))}
-                                    </div>
-                                )}
-                            </main>
-                        </div>
+                                </main>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -963,6 +1062,120 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                     onMessage={handleOpenChat}
                 />
             )}
+            {/* ── Likes Sent Sheet (Left) ── */}
+            <Sheet open={showLikesSheet} onOpenChange={setShowLikesSheet}>
+                <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-auto">
+                    <SheetHeader className="mb-6">
+                        <SheetTitle className="flex items-center gap-2 text-xl font-bold">
+                            <Heart className="w-5 h-5 text-red-500 fill-current" />
+                            Likes Enviados ({likedProfiles.size})
+                        </SheetTitle>
+                        <SheetDescription>
+                            Personas a las que has enviado una solicitud de conexión.
+                        </SheetDescription>
+                    </SheetHeader>
+
+                    <div className="space-y-4">
+                        {likedProfiles.size === 0 ? (
+                            <div className="text-center py-12 text-muted-foreground">
+                                <Heart className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                                <p>Aún no has dado ningún like.</p>
+                                <Button
+                                    variant="link"
+                                    onClick={() => setShowLikesSheet(false)}
+                                    className="mt-2"
+                                >
+                                    Empezar a explorar
+                                </Button>
+                            </div>
+                        ) : (
+                            Array.from(likedProfiles).map(id => {
+                                const profile = mockRoommates.find(p => p.id === id);
+                                if (!profile) return null;
+                                return (
+                                    <div key={id} className="flex items-center gap-3 p-3 rounded-xl border hover:shadow-sm transition-all">
+                                        <div className="w-12 h-12 rounded-full overflow-hidden border">
+                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-sm">{profile.name}, {profile.age}</h4>
+                                            <p className="text-xs text-muted-foreground">{profile.studies}</p>
+                                        </div>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-8 w-8 text-muted-foreground hover:text-red-500"
+                                            onClick={() => handleLike(id)}
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </Button>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* ── Matches Sheet (Right) ── */}
+            <Sheet open={showMatchesSheet} onOpenChange={setShowMatchesSheet}>
+                <SheetContent side="right" className="w-[400px] sm:w-[540px] overflow-y-auto">
+                    <SheetHeader className="mb-6">
+                        <SheetTitle className="flex items-center gap-2 text-xl font-bold text-purple-600">
+                            <Sparkles className="w-5 h-5 fill-current" />
+                            Mis Matches ({matches.size})
+                        </SheetTitle>
+                        <SheetDescription>
+                            ¡Es recíproco! Estas personas también te han dado like.
+                        </SheetDescription>
+                    </SheetHeader>
+
+                    <div className="space-y-4">
+                        {matches.size === 0 ? (
+                            <div className="text-center py-12 text-muted-foreground">
+                                <Sparkles className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                                <p>Aún no tienes matches.</p>
+                                <p className="text-sm mt-1">Sigue dando likes para aumentar tus posibilidades.</p>
+                            </div>
+                        ) : (
+                            Array.from(matches).map(id => {
+                                const profile = mockRoommates.find(p => p.id === id);
+                                if (!profile) return null;
+                                return (
+                                    <div key={id} className="group relative overflow-hidden flex items-center gap-4 p-4 rounded-xl border-2 border-purple-100 bg-purple-50/30 hover:bg-purple-50 hover:border-purple-200 transition-all">
+                                        <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
+                                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-base text-foreground">{profile.name}</h4>
+                                            <p className="text-xs text-muted-foreground font-medium flex items-center gap-1">
+                                                <GraduationCap className="w-3 h-3" />
+                                                {profile.studies}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-2">
+                                            <Button
+                                                size="sm"
+                                                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-4 h-8 text-xs font-bold shadow-sm"
+                                                onClick={() => {
+                                                    setShowMatchesSheet(false);
+                                                    handleOpenChat(profile);
+                                                }}
+                                            >
+                                                <MessageCircle className="w-3.5 h-3.5 mr-1.5" />
+                                                Chat
+                                            </Button>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
         </>
     );
 };
