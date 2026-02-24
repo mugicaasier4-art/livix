@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  ArrowLeft, MapPin, Phone, Mail, Globe, Star, 
+import {
+  ArrowLeft, MapPin, Phone, Mail, Globe, Star,
   Building2, Shield, Heart, Share2, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { residences } from '@/data/residences';
@@ -29,7 +29,7 @@ const ResidenceDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const residence = residences.find(r => r.id === id);
-  
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -41,8 +41,8 @@ const ResidenceDetail = () => {
   });
 
   // Use residence images or fallback to defaults
-  const images = residence?.images && residence.images.length > 0 
-    ? residence.images 
+  const images = residence?.images && residence.images.length > 0
+    ? residence.images
     : [apartment1, apartment2, apartment3];
 
   // Scroll to top on mount
@@ -53,7 +53,7 @@ const ResidenceDetail = () => {
   // Auto-play carousel
   useEffect(() => {
     if (!isAutoPlaying || images.length <= 1) return;
-    
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }, 4000);
@@ -131,7 +131,7 @@ const ResidenceDetail = () => {
 
   const genderLabel = residence.gender === 'mixto' ? 'Mixto' : residence.gender === 'femenino' ? 'Femenino' : 'Masculino';
 
-  const mapCenter = residence.coordinates 
+  const mapCenter = residence.coordinates
     ? { lat: residence.coordinates[0], lng: residence.coordinates[1] }
     : GOOGLE_MAPS_CONFIG.defaultCenter;
 
@@ -142,9 +142,9 @@ const ResidenceDetail = () => {
         <div className="bg-background border-b sticky top-16 z-20">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="gap-2"
                 onClick={() => navigate(-1)}
               >
@@ -171,12 +171,12 @@ const ResidenceDetail = () => {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 py-6 sm:py-8 pb-32 sm:pb-8">
+          <div className="grid gap-6 md:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
               {/* Image Gallery with Auto-Carousel */}
-              <div 
+              <div
                 className="relative rounded-xl overflow-hidden bg-muted aspect-[16/9] group"
                 onMouseEnter={() => setIsAutoPlaying(false)}
                 onMouseLeave={() => setIsAutoPlaying(true)}
@@ -203,16 +203,16 @@ const ResidenceDetail = () => {
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
                   onClick={prevImage}
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
-                
+
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
                   onClick={nextImage}
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -267,7 +267,7 @@ const ResidenceDetail = () => {
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <h1 className="text-3xl font-bold">{residence.name}</h1>
                 </div>
-                
+
                 <div className="flex items-center gap-2 flex-wrap mb-4">
                   {residence.status === 'active' && residence.reviewCount > 0 && (
                     <div className="flex items-center gap-1">
@@ -278,7 +278,7 @@ const ResidenceDetail = () => {
                       </span>
                     </div>
                   )}
-                  
+
                   <Badge variant="secondary">{getTypeLabel(residence.type)}</Badge>
                   <Badge variant="outline">{genderLabel}</Badge>
                   {residence.verified && <Badge variant="default">Verificada</Badge>}
@@ -313,7 +313,7 @@ const ResidenceDetail = () => {
                     <CardTitle>Servicios incluidos</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {residence.services.map((service, idx) => (
                         <div key={idx} className="flex items-center gap-2">
                           <Shield className="h-4 w-4 text-primary" />
@@ -389,8 +389,8 @@ const ResidenceDetail = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-32 space-y-4">
+            <div className="hidden md:block space-y-6">
+              <div className="sticky top-24 space-y-4">
                 {/* Price Card */}
                 <Card>
                   <CardContent className="p-6">
@@ -408,8 +408,8 @@ const ResidenceDetail = () => {
 
                     <div className="space-y-3">
                       {residence.phone.length > 0 && (
-                        <Button 
-                          className="w-full gap-2" 
+                        <Button
+                          className="w-full gap-2"
                           size="lg"
                           asChild
                         >
@@ -419,10 +419,10 @@ const ResidenceDetail = () => {
                           </a>
                         </Button>
                       )}
-                      
+
                       {residence.email && (
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           className="w-full gap-2"
                           asChild
                         >
@@ -434,8 +434,8 @@ const ResidenceDetail = () => {
                       )}
 
                       {residence.website && (
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           className="w-full gap-2"
                           asChild
                         >
@@ -462,7 +462,7 @@ const ResidenceDetail = () => {
                           <span>Teléfono</span>
                         </div>
                         {residence.phone.map((phone, idx) => (
-                          <a 
+                          <a
                             key={idx}
                             href={`tel:${phone}`}
                             className="block text-sm text-muted-foreground hover:text-primary pl-6"
@@ -479,7 +479,7 @@ const ResidenceDetail = () => {
                           <Mail className="h-4 w-4 text-muted-foreground" />
                           <span>Email</span>
                         </div>
-                        <a 
+                        <a
                           href={`mailto:${residence.email}`}
                           className="block text-sm text-muted-foreground hover:text-primary pl-6 break-all"
                         >
@@ -494,7 +494,7 @@ const ResidenceDetail = () => {
                           <Globe className="h-4 w-4 text-muted-foreground" />
                           <span>Sitio web</span>
                         </div>
-                        <a 
+                        <a
                           href={residence.website}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -535,9 +535,9 @@ const ResidenceDetail = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">Estado</span>
                       <span className="font-medium">
-                        {residence.status === 'active' ? 'Activa' : 
-                         residence.status === 'coming_soon' ? 'Próximamente' : 
-                         'En construcción'}
+                        {residence.status === 'active' ? 'Activa' :
+                          residence.status === 'coming_soon' ? 'Próximamente' :
+                            'En construcción'}
                       </span>
                     </div>
                     {residence.verified && (
@@ -553,6 +553,21 @@ const ResidenceDetail = () => {
                 </Card>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Sticky CTA */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+          <div className="flex gap-3">
+            <Button className="flex-1 gap-2" size="lg" onClick={() => window.open(residence.website, '_blank')}>
+              <Globe className="h-5 w-5" />
+              Más información
+            </Button>
+            {residence.phone && residence.phone.length > 0 && (
+              <Button variant="outline" size="icon" className="h-11 w-11 shrink-0" onClick={() => window.open(`tel:${residence.phone[0]}`)}>
+                <Phone className="h-5 w-5" />
+              </Button>
+            )}
           </div>
         </div>
       </div>

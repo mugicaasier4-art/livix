@@ -157,7 +157,7 @@ const Residences = () => {
                     alt="Residencia destacada"
                     className="w-full h-[280px] object-cover"
                   />
-                  <div className="absolute top-4 left-4 right-4 flex flex-col sm:flex-row sm:justify-between gap-2">
+                  <div className="absolute top-4 left-4 right-4 flex flex-col sm:flex-row sm:justify-between">
                     <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold border-0 shadow-md w-fit">
                       <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
                       Residencia Destacada
@@ -221,9 +221,9 @@ const Residences = () => {
                   .map((residence) => (
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="flex h-full">
+                        <div className="grid grid-cols-5 h-full">
                           {/* Image - 60% */}
-                          <div className="relative w-[60%] aspect-square overflow-hidden flex-shrink-0">
+                          <div className="h-64 md:h-full md:min-h-[400px] md:col-span-2 relative basis-2/5 shrink-0">
                             <img
                               src={residence.images?.[0] || apartment1}
                               alt={residence.name}
@@ -236,7 +236,7 @@ const Residences = () => {
                           </div>
 
                           {/* Content - 40% */}
-                          <div className="w-[40%] p-3 space-y-2 flex flex-col justify-between">
+                          <CardContent className="p-6 md:p-8 md:col-span-3 flex flex-col justify-center basis-3/5">
                             <div className="space-y-1">
                               <h4 className="font-semibold text-xs leading-tight line-clamp-2">
                                 {residence.name}
@@ -272,7 +272,7 @@ const Residences = () => {
                             <Button size="sm" className="w-full h-7 text-xs">
                               Ver
                             </Button>
-                          </div>
+                          </CardContent>
                         </div>
                       </Card>
                     </Link>

@@ -87,10 +87,10 @@ const ResidencesDirectory = () => {
       <div className="min-h-screen bg-background">
         {/* Header */}
         <div className="bg-white border-b sticky top-16 z-30">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="container mx-auto px-4 py-3 sm:py-6">
+            <div className="flex items-start justify-between mb-4 gap-2">
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Directorio de Residencias</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-foreground">Directorio de Residencias</h1>
                 <p className="text-sm text-muted-foreground mt-1">
                   {filteredResidences.length} residencias en Zaragoza
                 </p>
@@ -221,10 +221,10 @@ const ResidencesDirectory = () => {
               </Button>
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-3 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredResidences.map(residence => (
-                <Card 
-                  key={residence.id} 
+                <Card
+                  key={residence.id}
                   className="hover:shadow-lg transition-all cursor-pointer hover:scale-105"
                   onClick={() => navigate(`/residences/${residence.id}`)}
                 >
@@ -242,6 +242,9 @@ const ResidencesDirectory = () => {
                             <span className="text-xs text-muted-foreground">
                               ({residence.reviewCount})
                             </span>
+                            <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white border-0 shadow-md">
+                              Destacada
+                            </Badge>
                           </div>
                         )}
                       </div>

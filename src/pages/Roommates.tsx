@@ -320,10 +320,10 @@ const Roommates = () => {
   if (selectedPath === 'none') {
     return (
       <Layout>
-        <div className="min-h-screen bg-background py-12">
+        <div className="min-h-screen bg-background py-6 md:py-12">
           <div className="container mx-auto px-4">
             {/* Header */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 md:mb-12">
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
                 Compañeros
               </h1>
@@ -443,10 +443,10 @@ const Roommates = () => {
 
     return (
       <Layout>
-        <div className="min-h-screen bg-background py-8">
+        <div className="min-h-screen bg-background py-4 md:py-8">
           <div className="container mx-auto px-4">
             {/* Header with back button */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <Button
                 variant="ghost"
                 size="sm"
@@ -465,10 +465,10 @@ const Roommates = () => {
             </div>
 
             {/* Room Listings Grid */}
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-muted-foreground">{roomListings.length} habitaciones disponibles</span>
-              <Button onClick={() => navigate('/roommates/create')}>
-                <PlusCircle className="h-4 w-4 mr-2" />
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <span className="text-muted-foreground text-sm sm:text-base">{roomListings.length} habitaciones disponibles</span>
+              <Button onClick={() => navigate('/roommates/create')} className="w-full sm:w-auto">
+                <PlusCircle className="h-4 w-4 mr-2 shrink-0" />
                 Publicar habitación
               </Button>
             </div>
