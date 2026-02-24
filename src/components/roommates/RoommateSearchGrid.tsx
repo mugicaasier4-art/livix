@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { MockRoommate, mockRoommates, myLifeGraph, calculateCompatibility, type LifeGraphData } from "@/data/mockRoommates";
+import CreateLifeProfile, { getSavedLifeProfile } from "./CreateLifeProfile";
 import {
     Search,
     MapPin,
@@ -492,6 +493,9 @@ const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMes
 // ──────────────────────────────────────────────
 
 const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
+    // ── Life Profile Gate ──
+    const [hasLifeProfile, setHasLifeProfile] = useState<boolean>(() => getSavedLifeProfile() !== null);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredProfiles, setFilteredProfiles] = useState<(MockRoommate & { _compat: number })[]>([]);
     const [openProfile, setOpenProfile] = useState<MockRoommate | null>(null);
@@ -502,8 +506,8 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [showLikesSheet, setShowLikesSheet] = useState(false);
     const [showMatchesSheet, setShowMatchesSheet] = useState(false);
 
-    // User's own profile stats (editable)
-    const [userStats, setUserStats] = useState<LifeGraphData>({ ...myLifeGraph });
+    // User's own profile stats (editable) — use saved profile if available
+    const [userStats, setUserStats] = useState<LifeGraphData>(() => getSavedLifeProfile() ?? { ...myLifeGraph });
 
     // Messaging state
     const [chatProfile, setChatProfile] = useState<MockRoommate | null>(null);
@@ -622,6 +626,33 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const getCompat = (profileId: string): number => {
         return filteredProfiles.find(p => p.id === profileId)?._compat ?? 0;
     };
+
+    // ── If no life profile yet, show the gate page ──
+    if (!hasLifeProfile) {
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background">
+                <div className="sticky top-[64px] z-30 bg-white/80 backdrop-blur-xl border-b border-border/30 px-4 py-3">
+                    <div className="container mx-auto">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={onBack}
+                            className="flex items-center gap-2 hover:bg-primary/10 hover:text-primary transition-colors rounded-full"
+                        >
+                            <ArrowLeft className="h-4 w-4" />
+                            <span className="font-medium text-xs">Volver</span>
+                        </Button>
+                    </div>
+                </div>
+                <CreateLifeProfile
+                    onComplete={(profile) => {
+                        setUserStats(profile);
+                        setHasLifeProfile(true);
+                    }}
+                />
+            </div>
+        );
+    }
 
     return (
         <>
