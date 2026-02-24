@@ -14,13 +14,14 @@ import {
   ArrowLeft, Heart, Share2, Flag, Calendar, MapPin, Users,
   Wifi, Car, Utensils, Thermometer, Wind, Shield,
   ChevronLeft, ChevronRight, Eye, Clock, Star,
-  Crown, CheckCircle, FileText, GraduationCap, Loader2, Home
+  Crown, CheckCircle, FileText, GraduationCap, Loader2, Home, Lock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/contexts/I18nContext';
 import { analytics } from '@/utils/analytics';
 import { trackListingView } from '@/hooks/useAnalytics';
 import PaywallModal from '@/components/common/PaywallModal';
+import RegisterGateModal from '@/components/auth/RegisterGateModal';
 import { zaragozaListings, type Listing } from '@/data/listings';
 import { ReviewsList } from '@/components/reviews/ReviewsList';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
@@ -105,6 +106,7 @@ const ListingDetail = () => {
   const [showVisitModal, setShowVisitModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showRegisterGate, setShowRegisterGate] = useState(false);
   const { canUserReview } = useReviews(id);
   const [canReview, setCanReview] = useState(false);
   const { scheduleVisit, isLoading: isSchedulingVisit } = useVisits();
@@ -421,8 +423,22 @@ const ListingDetail = () => {
                   <img
                     src={mockListing.images[currentImageIndex]}
                     alt={mockListing.title}
-                    className="w-full h-full object-cover"
+                    className={cn("w-full h-full object-cover", !user && "blur-lg")}
                   />
+
+                  {/* Registration overlay for non-logged-in users */}
+                  {!user && (
+                    <div
+                      className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 cursor-pointer z-10"
+                      onClick={() => setShowRegisterGate(true)}
+                    >
+                      <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 text-center shadow-xl">
+                        <Lock className="h-8 w-8 text-primary mx-auto mb-3" />
+                        <p className="font-semibold text-foreground">Regístrate para ver las fotos</p>
+                        <p className="text-sm text-muted-foreground mt-1">Es gratis y rápido</p>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Navigation */}
                   {mockListing.images.length > 1 && (
@@ -471,13 +487,19 @@ const ListingDetail = () => {
                         <img
                           src={image}
                           alt={`Vista ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          className={cn("w-full h-full object-cover", !user && "blur-md")}
                         />
                       </button>
                     ))}
                   </div>
                 )}
               </div>
+
+              <RegisterGateModal
+                open={showRegisterGate}
+                onOpenChange={setShowRegisterGate}
+                context="ver las fotos de este piso"
+              />
 
               {/* Description */}
               <Card>

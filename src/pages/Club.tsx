@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Card } from "@/components/ui/card";
@@ -5,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Sparkles, Music, PartyPopper } from "lucide-react";
 import clubHeroCollage from "@/assets/club-hero-collage.jpg";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import RegisterGateModal from "@/components/auth/RegisterGateModal";
 
 // Import sector images
 import deporteImg from "@/assets/club/deporte.jpg";
@@ -35,6 +38,8 @@ const discountSectors: DiscountSector[] = [
 
 const Club = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [showGate, setShowGate] = useState(false);
 
   return (
     <Layout>
@@ -111,7 +116,10 @@ const Club = () => {
                 {discountSectors.map((sector) => (
                   <button
                     key={sector.id}
-                    onClick={() => navigate(`/club/${sector.id}`)}
+                    onClick={() => {
+                      if (!user) { setShowGate(true); return; }
+                      navigate(`/club/${sector.id}`);
+                    }}
                     className="group relative aspect-square rounded-2xl overflow-hidden border border-border transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-xl"
                   >
                     {/* Background Image */}
@@ -233,6 +241,12 @@ const Club = () => {
           </div>
         </section>
       </div>
+
+      <RegisterGateModal
+        open={showGate}
+        onOpenChange={setShowGate}
+        context="acceder a descuentos exclusivos para estudiantes"
+      />
     </Layout>
   );
 };

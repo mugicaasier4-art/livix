@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Building, Users, Shield, Wifi, Car, Utensils, ArrowRight, Star, MapPin, Crown } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import RegisterGateModal from "@/components/auth/RegisterGateModal";
 import apartment1 from "@/assets/apartment-1.jpg";
 import apartment2 from "@/assets/apartment-2.jpg";
 import apartment3 from "@/assets/apartment-3.jpg";
@@ -23,6 +25,16 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Residences = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const [showGate, setShowGate] = useState(false);
+
+  const handleResidenceClick = (e: React.MouseEvent, path: string) => {
+    if (!user) {
+      e.preventDefault();
+      setShowGate(true);
+      return;
+    }
+  };
   const residences = [
     {
       id: 7,
@@ -149,7 +161,7 @@ const Residences = () => {
 
           {/* Featured Card */}
           <div className="max-w-3xl mx-auto mb-12">
-            <Link to="/residences/res-nodis" className="block">
+            <Link to="/residences/res-nodis" className="block" onClick={(e) => handleResidenceClick(e, '/residences/res-nodis')}>
               <Card className="overflow-hidden border-2 border-accent shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
                 <div className="relative">
                   <img
@@ -219,7 +231,7 @@ const Residences = () => {
                   .filter(r => r.verified && r.status === 'active')
                   .slice(0, 6)
                   .map((residence) => (
-                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
+                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                         <div className="grid grid-cols-5 h-full">
                           {/* Image - 60% */}
@@ -287,7 +299,7 @@ const Residences = () => {
                     .slice(0, 6)
                     .map((residence) => (
                       <CarouselItem key={`carousel-${residence.id}`} className="pl-2 md:pl-4 basis-1/3">
-                        <Link to={`/residences/${residence.id}`} className="block h-full">
+                        <Link to={`/residences/${residence.id}`} className="block h-full" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
                           <Card className="overflow-hidden border-2 hover:border-primary transition-colors h-full cursor-pointer">
                             <div className="relative">
                               <img
@@ -387,7 +399,7 @@ const Residences = () => {
                 {allResidences
                   .filter(r => r.type === 'residencia_privada' || r.type === 'residencia_publica')
                   .map((residence) => (
-                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
+                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <div className="relative">
                           <img
@@ -461,7 +473,7 @@ const Residences = () => {
                 {allResidences
                   .filter(r => r.type.includes('colegio_mayor'))
                   .map((residence) => (
-                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block">
+                    <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <div className="relative">
                           <img
@@ -559,6 +571,11 @@ const Residences = () => {
           </div>
         </div>
       </section>
+      <RegisterGateModal
+        open={showGate}
+        onOpenChange={setShowGate}
+        context="ver los detalles de esta residencia"
+      />
     </Layout>
   );
 };

@@ -28,6 +28,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { roomListings } from "@/data/roomListings";
 import RoomListingCard from "@/components/roommates/RoomListingCard";
+import RegisterGateModal from "@/components/auth/RegisterGateModal";
 import { toast } from "sonner";
 import type { RoomListing } from "@/data/roomListings";
 
@@ -210,13 +211,14 @@ const FlipCardsRow = ({ profiles, onContact }: FlipCardsRowProps) => {
 const RoommatesFrontpage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [showGate, setShowGate] = useState(false);
 
   // Get first 3 room listings as preview
   const previewListings = roomListings.slice(0, 3);
 
   const handleContact = (listing: RoomListing) => {
     if (!user) {
-      navigate('/login?redirect=/roommates');
+      setShowGate(true);
       return;
     }
     toast.success(`Solicitud enviada a ${listing.contact.name}`, {
@@ -226,7 +228,7 @@ const RoommatesFrontpage = () => {
 
   const handleProfileContact = (profileName: string) => {
     if (!user) {
-      navigate('/login?redirect=/roommates');
+      setShowGate(true);
       return;
     }
     toast.success(`Mensaje enviado a ${profileName}`, {
@@ -257,7 +259,10 @@ const RoommatesFrontpage = () => {
               Conecta con otros estudiantes que buscan piso en Zaragoza para el curso 26/27
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button size="lg" onClick={() => navigate('/roommates/search')}>
+              <Button size="lg" onClick={() => {
+                if (!user) { setShowGate(true); return; }
+                navigate('/roommates/search');
+              }}>
                 <Search className="h-4 w-4 mr-2" />
                 Buscar compañero
               </Button>
@@ -288,7 +293,10 @@ const RoommatesFrontpage = () => {
               <Button
                 variant="ghost"
                 className="hidden md:flex"
-                onClick={() => user ? navigate('/roommates/app?path=find-home') : navigate('/login?redirect=/roommates/app?path=find-home')}
+                onClick={() => {
+                  if (!user) { setShowGate(true); return; }
+                  navigate('/roommates/app?path=find-home');
+                }}
               >
                 Ver todas
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -459,7 +467,10 @@ const RoommatesFrontpage = () => {
             <div className="mt-6 text-center md:hidden">
               <Button
                 variant="outline"
-                onClick={() => user ? navigate('/roommates/app?path=find-home') : navigate('/login?redirect=/roommates/app?path=find-home')}
+                onClick={() => {
+                  if (!user) { setShowGate(true); return; }
+                  navigate('/roommates/app?path=find-home');
+                }}
               >
                 Ver todas las habitaciones
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -487,7 +498,10 @@ const RoommatesFrontpage = () => {
               <Button
                 variant="ghost"
                 className="hidden md:flex"
-                onClick={() => navigate('/roommates/search')}
+                onClick={() => {
+                  if (!user) { setShowGate(true); return; }
+                  navigate('/roommates/search');
+                }}
               >
                 Explorar perfiles
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -499,7 +513,10 @@ const RoommatesFrontpage = () => {
 
             <div className="mt-8 text-center">
               <Button
-                onClick={() => navigate('/roommates/search')}
+                onClick={() => {
+                  if (!user) { setShowGate(true); return; }
+                  navigate('/roommates/search');
+                }}
               >
                 Ver más perfiles
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -620,6 +637,12 @@ const RoommatesFrontpage = () => {
           </div>
         </section>
       </div>
+
+      <RegisterGateModal
+        open={showGate}
+        onOpenChange={setShowGate}
+        context="encontrar tu compañero de piso ideal"
+      />
     </Layout>
   );
 };
