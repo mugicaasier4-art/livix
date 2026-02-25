@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -41,7 +41,9 @@ const signupSchema = z.object({
 type SignupForm = z.infer<typeof signupSchema>;
 
 const Signup = () => {
-  const [role, setRole] = useState<UserRole>('student');
+  const [searchParams] = useSearchParams();
+  const typeParam = searchParams.get('type');
+  const [role, setRole] = useState<UserRole>(typeParam === 'landlord' ? 'landlord' : 'student');
   const { signup, isLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -183,8 +185,8 @@ const Signup = () => {
                       <div
                         key={option.value}
                         className={`relative cursor-pointer rounded-lg border p-4 transition-colors ${role === option.value
-                            ? 'border-primary bg-primary/5'
-                            : 'border-border hover:bg-muted/50'
+                          ? 'border-primary bg-primary/5'
+                          : 'border-border hover:bg-muted/50'
                           }`}
                         onClick={() => setRole(option.value)}
                       >
@@ -198,8 +200,8 @@ const Signup = () => {
                             <div className="text-xs text-muted-foreground">{option.description}</div>
                           </div>
                           <div className={`h-4 w-4 rounded-full border-2 ${role === option.value
-                              ? 'border-primary bg-primary'
-                              : 'border-muted-foreground'
+                            ? 'border-primary bg-primary'
+                            : 'border-muted-foreground'
                             }`}>
                             {role === option.value && (
                               <div className="h-full w-full rounded-full bg-white scale-50" />

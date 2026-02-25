@@ -343,7 +343,7 @@ const Landlords = () => {
                           <span className="text-foreground">Dashboard de análisis avanzado y reportes personalizados</span>
                         </li>
                       </ul>
-                      <Link to="/signup">
+                      <Link to="/signup?type=landlord">
                         <Button size="lg">
                           Solicitar demo
                           <ArrowRight className="ml-2 h-4 w-4" />
@@ -408,7 +408,7 @@ const Landlords = () => {
                           <span className="text-foreground">Panel de control para servicios y espacios comunes</span>
                         </li>
                       </ul>
-                      <Link to="/signup">
+                      <Link to="/signup?type=landlord">
                         <Button size="lg">
                           Hablar con un experto
                           <ArrowRight className="ml-2 h-4 w-4" />
@@ -473,7 +473,7 @@ const Landlords = () => {
                           <span className="text-foreground">Sin comisiones sobre el alquiler</span>
                         </li>
                       </ul>
-                      <Link to="/signup">
+                      <Link to="/signup?type=landlord">
                         <Button size="lg">
                           Empezar gratis
                           <ArrowRight className="ml-2 h-4 w-4" />
@@ -585,7 +585,7 @@ const Landlords = () => {
                     ))}
                   </ul>
 
-                  <Link to="/signup">
+                  <Link to="/signup?type=landlord">
                     <Button
                       className="w-full"
                       variant={plan.popular ? "default" : "outline"}
