@@ -1,6 +1,7 @@
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { MockRoommate, mockRoommates, myLifeGraph, calculateCompatibility, type LifeGraphData } from "@/data/mockRoommates";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { MockRoommate, myLifeGraph, calculateCompatibility, type LifeGraphData } from "@/data/mockRoommates";
+import { usePublicRoommateProfiles, type PublicRoommateProfile } from "@/hooks/usePublicRoommateProfiles";
 import CreateLifeProfile, { getSavedLifeProfile } from "./CreateLifeProfile";
 import {
     Search,
@@ -43,6 +44,45 @@ import {
     SheetTitle,
     SheetDescription,
 } from "@/components/ui/sheet";
+import { Loader2 } from "lucide-react";
+
+// ── Convert Supabase profile to MockRoommate shape ──
+const defaultAvatars = [
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1521119989659-a83eee488058?w=400&h=400&fit=crop',
+];
+
+function dbToMockRoommate(p: PublicRoommateProfile): MockRoommate {
+    const hash = p.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const lp = p.lifestyle_preferences as Record<string, number> | null;
+    return {
+        id: p.id,
+        name: p.name,
+        age: p.age || 20,
+        gender: 'Otro',
+        studies: p.faculty,
+        university: 'UNIZAR',
+        bio: p.bio,
+        location: p.preferred_location || 'Zaragoza',
+        interests: p.interests || [],
+        image: p.avatar_url || defaultAvatars[hash % defaultAvatars.length],
+        verified: p.is_verified,
+        moveDate: p.move_date,
+        smoking: p.smoking_allowed ? 'Fumador' : 'No fumador',
+        pets: p.pets_allowed ? 'Tiene mascota' : 'Sin mascotas',
+        tags: (p.interests || []).slice(0, 3),
+        lifeGraph: {
+            limpieza: lp?.limpieza ?? 3,
+            fiesta: lp?.fiesta ?? 3,
+            estudios: lp?.estudios ?? 3,
+            visitas: lp?.visitas ?? 3,
+            ruido: lp?.ruido ?? 3,
+        },
+    };
+}
 
 interface RoommateSearchGridProps {
     onBack: () => void;
@@ -493,6 +533,10 @@ const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMes
 // ──────────────────────────────────────────────
 
 const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
+    // ── Fetch real profiles from Supabase ──
+    const { profiles: dbProfiles, isLoading: profilesLoading } = usePublicRoommateProfiles();
+    const realProfiles = useMemo(() => dbProfiles.map(dbToMockRoommate), [dbProfiles]);
+
     // ── Life Profile Gate ──
     const [hasLifeProfile, setHasLifeProfile] = useState<boolean>(() => getSavedLifeProfile() !== null);
 
@@ -518,8 +562,8 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [viewMode, setViewMode] = useState<'grid' | 'swipe'>('grid');
 
     const refreshConversations = useCallback(() => {
-        setConversationsList(getConversations(mockRoommates));
-    }, []);
+        setConversationsList(getConversations(realProfiles));
+    }, [realProfiles]);
 
     useEffect(() => {
         refreshConversations();
@@ -541,7 +585,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
 
     // ── Calculate compatibility + sort + filter ──
     useEffect(() => {
-        let result = mockRoommates.map(p => ({
+        let result = realProfiles.map(p => ({
             ...p,
             _compat: calculateCompatibility(userStats, p.lifeGraph),
         }));
@@ -574,7 +618,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
         result.sort((a, b) => b._compat - a._compat);
 
         setFilteredProfiles(result);
-    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm, userStats]);
+    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm, userStats, realProfiles]);
 
     const handleLike = useCallback((id: string) => {
         setLikedProfiles(prev => {
@@ -590,7 +634,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                 toast.info("Like retirado");
             } else {
                 next.add(id);
-                const profile = mockRoommates.find(p => p.id === id);
+                const profile = realProfiles.find(p => p.id === id);
 
                 // Simulate a mutual match (50% chance for demo purposes)
                 const isMatch = Math.random() > 0.5;
@@ -650,6 +694,18 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                         setHasLifeProfile(true);
                     }}
                 />
+            </div>
+        );
+    }
+
+    // ── If still loading, show spinner ──
+    if (profilesLoading) {
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
+                    <p className="text-muted-foreground font-medium">Cargando perfiles...</p>
+                </div>
             </div>
         );
     }
@@ -1026,7 +1082,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                             </div>
                         ) : (
                             Array.from(likedProfiles).map(id => {
-                                const profile = mockRoommates.find(p => p.id === id);
+                                const profile = realProfiles.find(p => p.id === id);
                                 if (!profile) return null;
                                 return (
                                     <div key={id} className="flex items-center gap-3 p-3 rounded-xl border hover:shadow-sm transition-all">
@@ -1075,7 +1131,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                             </div>
                         ) : (
                             Array.from(matches).map(id => {
-                                const profile = mockRoommates.find(p => p.id === id);
+                                const profile = realProfiles.find(p => p.id === id);
                                 if (!profile) return null;
                                 return (
                                     <div key={id} className="group relative overflow-hidden flex items-center gap-4 p-4 rounded-xl border-2 border-purple-100 bg-purple-50/30 hover:bg-purple-50 hover:border-purple-200 transition-all">
