@@ -19,7 +19,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { residences as allResidences } from "@/data/residences";
+import { useResidences } from "@/hooks/useResidences";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Residences = () => {
@@ -27,6 +27,7 @@ const Residences = () => {
   const isMobile = useIsMobile();
   const { user } = useAuth();
   const [showGate, setShowGate] = useState(false);
+  const { residences: allResidences } = useResidences();
 
   const handleResidenceClick = (e: React.MouseEvent, path: string) => {
     if (!user) {
@@ -35,63 +36,6 @@ const Residences = () => {
       return;
     }
   };
-  const residences = [
-    {
-      id: 7,
-      image: apartment1,
-      title: "Residencia Nodis Zaragoza",
-      location: "Vía Univérsitas, 26, Zaragoza",
-      price: 547,
-      roommates: 0,
-      distance: "7-11 min caminando UNIZAR",
-      verified: true,
-      amenities: ["WiFi alta velocidad", "Gimnasio", "Smart TV", "Kitchenette", "Baño privado", "Parking"],
-      matchScore: 92,
-      description: "Residencia moderna y premium en el corazón de la zona universitaria, muy cerca del Campus de San Francisco. Ofrece estudios individuales y dobles con diseño vanguardista.",
-      services: [
-        "Limpieza mensual con cambio de sábanas",
-        "Recepción 24h y videovigilancia",
-        "Gimnasio y sala de estudio",
-        "Food lab (cocina compartida)",
-        "Terraza exterior y sala de juegos",
-        "Lavandería self-service",
-        "Programa de actividades"
-      ],
-      roomTypes: [
-        { type: "Estudio básico", price: "Desde 547€", description: "Kitchenette, baño privado" },
-        { type: "Estudio doble (Twin)", price: "Desde 566€", description: "2 personas, kitchenette, baño privado" },
-        { type: "Estudio individual", price: "Desde 751€", description: "1 persona, kitchenette, baño privado" }
-      ]
-    },
-    {
-      id: 8,
-      image: apartment2,
-      title: "Residencia Universitas Zaragoza",
-      location: "C/ Baltasar Gracián, 1, Zaragoza",
-      price: 393,
-      roommates: 0,
-      distance: "6 min caminando Campus San Francisco",
-      verified: true,
-      amenities: ["WiFi gratis", "Comedor", "Sala TV", "Cocina compartida", "Lavandería", "Salas estudio"],
-      matchScore: 88,
-      description: "Residencia universitaria mixta en pleno centro, junto al campus Plaza San Francisco. 120 habitaciones con ambiente familiar y trato cercano.",
-      services: [
-        "Limpieza diaria zonas comunes",
-        "Mesa de estudio en cada habitación",
-        "Comedor con comida casera",
-        "Salas de televisión y salón",
-        "Taquillas para menaje de cocina",
-        "Servicio de ropa de cama",
-        "Conexión tranvía a Campus Río Ebro"
-      ],
-      roomTypes: [
-        { type: "Individual derecho cocina", price: "Desde 393€", description: "Cocina compartida, baño compartido" },
-        { type: "Individual con baño + cocina", price: "Desde 508€", description: "Baño privado, cocina compartida" },
-        { type: "Individual pensión completa", price: "Desde 608€", description: "Pensión completa, baño compartido" },
-        { type: "Individual baño + pensión", price: "Desde 817€", description: "Baño privado, pensión completa" }
-      ]
-    }
-  ];
 
   const features = [
     {
@@ -160,12 +104,13 @@ const Residences = () => {
           </div>
 
           {/* Featured Card */}
+          {allResidences[0] && (
           <div className="max-w-3xl mx-auto mb-12">
-            <Link to="/residences/res-nodis" className="block" onClick={(e) => handleResidenceClick(e, '/residences/res-nodis')}>
+            <Link to={`/residences/${allResidences[0].id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${allResidences[0].id}`)}>
               <Card className="overflow-hidden border-2 border-accent shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
                 <div className="relative">
                   <img
-                    src={residences[0].image}
+                    src={allResidences[0].images?.[0] || apartment1}
                     alt="Residencia destacada"
                     className="w-full h-[280px] object-cover"
                   />
@@ -190,7 +135,7 @@ const Residences = () => {
                   </div>
 
                   <h3 className="text-xl font-bold text-foreground mb-2">
-                    {residences[0].title}
+                    {allResidences[0].name}
                   </h3>
 
                   <div className="flex items-center gap-2 mb-3">
@@ -217,6 +162,7 @@ const Residences = () => {
               </Card>
             </Link>
           </div>
+          )}
 
           {/* Premium Residences - Mobile: List, Desktop: Carousel */}
           <div className="mb-8">
