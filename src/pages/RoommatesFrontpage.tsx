@@ -34,65 +34,6 @@ import { toast } from "sonner";
 import type { RoomListing } from "@/data/roomListings";
 import { usePublicRoommateProfiles, type PublicRoommateProfile } from "@/hooks/usePublicRoommateProfiles";
 
-// Fallback mock profiles (shown when no real profiles exist in the DB)
-const fallbackProfiles = [
-  {
-    id: "mock-1",
-    name: "Lucía",
-    age: 21,
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
-    faculty: "Medicina",
-    year: "3º",
-    message: "¡Hola! Me mudo a Zaragoza el curso que viene para empezar 3º de Medicina. Busco compañeras de piso. ¿Alguien se anima? 🏠",
-    traits: ["Ordenada", "Madrugadora", "Tranquila"],
-    moveDate: "Septiembre 2026"
-  },
-  {
-    id: "mock-2",
-    name: "Pablo",
-    age: 20,
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-    faculty: "Ingeniería Informática",
-    year: "2º",
-    message: "Busco piso para el 26/27. Soy de Huesca. Me gustan los videojuegos pero también salir los fines de semana 👨‍💻",
-    traits: ["Deportista", "Gamer", "Flexible"],
-    moveDate: "Septiembre 2026"
-  },
-  {
-    id: "mock-3",
-    name: "Emma",
-    age: 22,
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
-    faculty: "Erasmus - Business",
-    year: "Erasmus",
-    message: "Hi! I'm coming to Zaragoza from Germany for my Erasmus year 26/27. I'm very social and love cooking 🇩🇪🇪🇸",
-    traits: ["Sociable", "Cocinera", "Viajera"],
-    moveDate: "September 2026"
-  },
-  {
-    id: "mock-4",
-    name: "Carlos",
-    age: 23,
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
-    faculty: "Derecho",
-    year: "4º",
-    message: "Último año de carrera. Trabajo los fines de semana así que estoy poco en casa. Muy flexible con horarios 📚",
-    traits: ["Limpio", "Nocturno", "Independiente"],
-    moveDate: "Septiembre 2026"
-  },
-  {
-    id: "mock-5",
-    name: "Marina",
-    age: 19,
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
-    faculty: "ADE",
-    year: "1º",
-    message: "¡Mi primer año en la uni! Vengo de Teruel y busco compañeras para compartir piso 💕",
-    traits: ["Fiestera", "Organizada", "Activa"],
-    moveDate: "Septiembre 2026"
-  }
-];
-
 // Convert a real DB profile into the format used by flip cards
 function dbProfileToFlipCard(p: PublicRoommateProfile) {
   const defaultAvatars = [
@@ -239,10 +180,8 @@ const RoommatesFrontpage = () => {
   const [showGate, setShowGate] = useState(false);
   const { profiles: dbProfiles, isLoading: profilesLoading } = usePublicRoommateProfiles();
 
-  // Convert DB profiles for flip cards, use fallback if empty
-  const flipCardProfiles: FlipCardProfile[] = dbProfiles.length > 0
-    ? dbProfiles.slice(0, 5).map(dbProfileToFlipCard)
-    : fallbackProfiles;
+  // Only show real DB profiles, no mock fallback
+  const flipCardProfiles: FlipCardProfile[] = dbProfiles.slice(0, 5).map(dbProfileToFlipCard);
 
   // Get first 3 room listings as preview
   const previewListings = roomListings.slice(0, 3);

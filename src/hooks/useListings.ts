@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-import { zaragozaListings } from '@/data/listings';
 
 export interface Listing {
   id: string;
@@ -97,98 +96,19 @@ export const useListings = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
-      // Use mock data if database is empty
-      if (!data || data.length === 0) {
-        const mockListings: Listing[] = zaragozaListings.map(listing => ({
-          id: String(listing.id),
-          landlord_id: 'mock-landlord',
-          title: listing.title,
-          description: `Piso en ${listing.location}`,
-          address: listing.location,
-          city: 'Zaragoza',
-          price: listing.price,
-          available_from: new Date().toISOString().split('T')[0],
-          available_to: null,
-          property_type: 'apartment',
-          bedrooms: listing.roommates + 1,
-          bathrooms: 1,
-          area_sqm: null,
-          room_area_sqm: null,
-          floor: null,
-          has_elevator: false,
-          is_furnished: listing.furnished || false,
-          allows_pets: false,
-          has_parking: listing.amenities?.includes('Parking') || false,
-          has_wifi: listing.amenities?.includes('WiFi') || false,
-          has_heating: false,
-          has_ac: listing.amenities?.includes('AC') || false,
-          has_washing_machine: listing.amenities?.includes('Lavadora') || false,
-          utilities_included: listing.allInclusive || false,
-          min_stay_months: null,
-          max_occupants: listing.roommates,
-          latitude: listing.coordinates[1],
-          longitude: listing.coordinates[0],
-          images: [listing.image],
-          is_active: true,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          smoking_allowed: listing.smokingAllowed || false,
-          gender_preference: listing.genderPreference || 'any'
-        }));
-        setListings(mockListings);
-      } else {
-        // Ensure all listings have the new fields with defaults
-        const normalizedData = data.map(listing => ({
-          ...listing,
-          room_area_sqm: listing.room_area_sqm ?? null,
-          smoking_allowed: listing.smoking_allowed ?? false,
-          gender_preference: listing.gender_preference ?? 'any'
-        }));
-        setListings(normalizedData);
-      }
+
+      const normalizedData = (data || []).map(listing => ({
+        ...listing,
+        room_area_sqm: listing.room_area_sqm ?? null,
+        smoking_allowed: listing.smoking_allowed ?? false,
+        gender_preference: listing.gender_preference ?? 'any'
+      }));
+      setListings(normalizedData);
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error('Error fetching listings:', error);
       }
-      // Use mock data as fallback on error
-      const mockListings: Listing[] = zaragozaListings.map(listing => ({
-        id: String(listing.id),
-        landlord_id: 'mock-landlord',
-        title: listing.title,
-        description: `Piso en ${listing.location}`,
-        address: listing.location,
-        city: 'Zaragoza',
-        price: listing.price,
-        available_from: new Date().toISOString().split('T')[0],
-        available_to: null,
-        property_type: 'apartment',
-        bedrooms: listing.roommates + 1,
-        bathrooms: 1,
-        area_sqm: null,
-        room_area_sqm: null,
-        floor: null,
-        has_elevator: false,
-        is_furnished: listing.furnished || false,
-        allows_pets: false,
-        has_parking: listing.amenities?.includes('Parking') || false,
-        has_wifi: listing.amenities?.includes('WiFi') || false,
-        has_heating: false,
-        has_ac: listing.amenities?.includes('AC') || false,
-        has_washing_machine: listing.amenities?.includes('Lavadora') || false,
-        utilities_included: listing.allInclusive || false,
-        min_stay_months: null,
-        max_occupants: listing.roommates,
-        latitude: listing.coordinates[1],
-        longitude: listing.coordinates[0],
-        images: [listing.image],
-        is_active: true,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        smoking_allowed: listing.smokingAllowed || false,
-        gender_preference: listing.genderPreference || 'any'
-      }));
-      setListings(mockListings);
+      setListings([]);
     } finally {
       setIsLoading(false);
     }
