@@ -10,10 +10,76 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
+      application_analytics: {
+        Row: {
+          applicant_age: number | null
+          applicant_faculty: string | null
+          applicant_id: string | null
+          applicant_is_erasmus: boolean | null
+          applicant_previous_applications: number | null
+          application_id: string | null
+          applications_to_same_listing: number | null
+          created_at: string | null
+          days_since_listing_published: number | null
+          id: string
+          listing_id: string | null
+          listing_owner_id: string | null
+          listing_price: number | null
+          listing_type: string | null
+          message_length: number | null
+          proposed_duration_months: number | null
+          proposed_move_in_date: string | null
+          response_time_hours: number | null
+          status: string | null
+        }
+        Insert: {
+          applicant_age?: number | null
+          applicant_faculty?: string | null
+          applicant_id?: string | null
+          applicant_is_erasmus?: boolean | null
+          applicant_previous_applications?: number | null
+          application_id?: string | null
+          applications_to_same_listing?: number | null
+          created_at?: string | null
+          days_since_listing_published?: number | null
+          id?: string
+          listing_id?: string | null
+          listing_owner_id?: string | null
+          listing_price?: number | null
+          listing_type?: string | null
+          message_length?: number | null
+          proposed_duration_months?: number | null
+          proposed_move_in_date?: string | null
+          response_time_hours?: number | null
+          status?: string | null
+        }
+        Update: {
+          applicant_age?: number | null
+          applicant_faculty?: string | null
+          applicant_id?: string | null
+          applicant_is_erasmus?: boolean | null
+          applicant_previous_applications?: number | null
+          application_id?: string | null
+          applications_to_same_listing?: number | null
+          created_at?: string | null
+          days_since_listing_published?: number | null
+          id?: string
+          listing_id?: string | null
+          listing_owner_id?: string | null
+          listing_price?: number | null
+          listing_type?: string | null
+          message_length?: number | null
+          proposed_duration_months?: number | null
+          proposed_move_in_date?: string | null
+          response_time_hours?: number | null
+          status?: string | null
+        }
+        Relationships: []
+      }
       application_documents: {
         Row: {
           application_id: string
@@ -263,6 +329,96 @@ export type Database = {
           },
         ]
       }
+      club_benefits: {
+        Row: {
+          address: string | null
+          category: string
+          created_at: string
+          description: string
+          discount_code: string | null
+          discount_text: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          partner_name: string
+          phone: string | null
+          priority: number | null
+          sector: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          category: string
+          created_at?: string
+          description: string
+          discount_code?: string | null
+          discount_text?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          partner_name: string
+          phone?: string | null
+          priority?: number | null
+          sector?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          discount_code?: string | null
+          discount_text?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          partner_name?: string
+          phone?: string | null
+          priority?: number | null
+          sector?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      comparison_analytics: {
+        Row: {
+          action_taken: string | null
+          created_at: string | null
+          id: string
+          listing_ids: string[] | null
+          listing_prices: number[] | null
+          listing_types: string[] | null
+          selected_listing_id: string | null
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          action_taken?: string | null
+          created_at?: string | null
+          id?: string
+          listing_ids?: string[] | null
+          listing_prices?: number[] | null
+          listing_types?: string[] | null
+          selected_listing_id?: string | null
+          session_id: string
+          user_id?: string | null
+        }
+        Update: {
+          action_taken?: string | null
+          created_at?: string | null
+          id?: string
+          listing_ids?: string[] | null
+          listing_prices?: number[] | null
+          listing_types?: string[] | null
+          selected_listing_id?: string | null
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string | null
@@ -341,75 +497,77 @@ export type Database = {
           },
         ]
       }
-      listing_likes: {
-        Row: {
-          created_at: string
-          id: string
-          listing_id: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          listing_id: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          listing_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "listing_likes_listing_id_fkey"
-            columns: ["listing_id"]
-            isOneToOne: false
-            referencedRelation: "listings"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       listing_views: {
         Row: {
+          added_to_compare: boolean | null
+          added_to_favorites: boolean | null
+          clicked_apply: boolean | null
+          clicked_contact: boolean | null
+          clicked_gallery: boolean | null
+          clicked_map: boolean | null
           created_at: string | null
+          device_type: string | null
+          from_search_query: string | null
           id: string
-          listing_id: string
-          referrer: string | null
-          session_id: string | null
-          user_agent: string | null
-          viewed_at: string
-          viewer_id: string | null
+          listing_id: string | null
+          listing_owner_id: string | null
+          listing_price: number | null
+          listing_type: string | null
+          position_in_results: number | null
+          scroll_depth_percent: number | null
+          session_id: string
+          shared_listing: boolean | null
+          time_on_page_seconds: number | null
+          user_id: string | null
+          view_source: string | null
         }
         Insert: {
+          added_to_compare?: boolean | null
+          added_to_favorites?: boolean | null
+          clicked_apply?: boolean | null
+          clicked_contact?: boolean | null
+          clicked_gallery?: boolean | null
+          clicked_map?: boolean | null
           created_at?: string | null
+          device_type?: string | null
+          from_search_query?: string | null
           id?: string
-          listing_id: string
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          viewed_at?: string
-          viewer_id?: string | null
+          listing_id?: string | null
+          listing_owner_id?: string | null
+          listing_price?: number | null
+          listing_type?: string | null
+          position_in_results?: number | null
+          scroll_depth_percent?: number | null
+          session_id: string
+          shared_listing?: boolean | null
+          time_on_page_seconds?: number | null
+          user_id?: string | null
+          view_source?: string | null
         }
         Update: {
+          added_to_compare?: boolean | null
+          added_to_favorites?: boolean | null
+          clicked_apply?: boolean | null
+          clicked_contact?: boolean | null
+          clicked_gallery?: boolean | null
+          clicked_map?: boolean | null
           created_at?: string | null
+          device_type?: string | null
+          from_search_query?: string | null
           id?: string
-          listing_id?: string
-          referrer?: string | null
-          session_id?: string | null
-          user_agent?: string | null
-          viewed_at?: string
-          viewer_id?: string | null
+          listing_id?: string | null
+          listing_owner_id?: string | null
+          listing_price?: number | null
+          listing_type?: string | null
+          position_in_results?: number | null
+          scroll_depth_percent?: number | null
+          session_id?: string
+          shared_listing?: boolean | null
+          time_on_page_seconds?: number | null
+          user_id?: string | null
+          view_source?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "listing_views_listing_id_fkey"
-            columns: ["listing_id"]
-            isOneToOne: false
-            referencedRelation: "listings"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       listings: {
         Row: {
@@ -540,6 +698,78 @@ export type Database = {
           },
         ]
       }
+      market_intel: {
+        Row: {
+          active_listings: number | null
+          avg_price: number | null
+          city: string | null
+          conversion_rate: number | null
+          date: string
+          deactivated_listings: number | null
+          id: string
+          max_price: number | null
+          median_price: number | null
+          min_price: number | null
+          neighborhood: string | null
+          new_listings: number | null
+          searches_with_results: number | null
+          searches_without_results: number | null
+          top_amenities_searched: Json | null
+          top_budget_ranges: Json | null
+          top_faculties_searching: Json | null
+          total_applications: number | null
+          total_searches: number | null
+          total_views: number | null
+          unique_searchers: number | null
+        }
+        Insert: {
+          active_listings?: number | null
+          avg_price?: number | null
+          city?: string | null
+          conversion_rate?: number | null
+          date: string
+          deactivated_listings?: number | null
+          id?: string
+          max_price?: number | null
+          median_price?: number | null
+          min_price?: number | null
+          neighborhood?: string | null
+          new_listings?: number | null
+          searches_with_results?: number | null
+          searches_without_results?: number | null
+          top_amenities_searched?: Json | null
+          top_budget_ranges?: Json | null
+          top_faculties_searching?: Json | null
+          total_applications?: number | null
+          total_searches?: number | null
+          total_views?: number | null
+          unique_searchers?: number | null
+        }
+        Update: {
+          active_listings?: number | null
+          avg_price?: number | null
+          city?: string | null
+          conversion_rate?: number | null
+          date?: string
+          deactivated_listings?: number | null
+          id?: string
+          max_price?: number | null
+          median_price?: number | null
+          min_price?: number | null
+          neighborhood?: string | null
+          new_listings?: number | null
+          searches_with_results?: number | null
+          searches_without_results?: number | null
+          top_amenities_searched?: Json | null
+          top_budget_ranges?: Json | null
+          top_faculties_searching?: Json | null
+          total_applications?: number | null
+          total_searches?: number | null
+          total_views?: number | null
+          unique_searchers?: number | null
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -625,6 +855,48 @@ export type Database = {
         }
         Relationships: []
       }
+      price_tracking: {
+        Row: {
+          id: string
+          listing_id: string | null
+          listing_type: string | null
+          market_avg_price: number | null
+          market_median_price: number | null
+          owner_id: string | null
+          percentile_in_market: number | null
+          previous_price: number | null
+          price: number | null
+          price_change_percent: number | null
+          recorded_at: string | null
+        }
+        Insert: {
+          id?: string
+          listing_id?: string | null
+          listing_type?: string | null
+          market_avg_price?: number | null
+          market_median_price?: number | null
+          owner_id?: string | null
+          percentile_in_market?: number | null
+          previous_price?: number | null
+          price?: number | null
+          price_change_percent?: number | null
+          recorded_at?: string | null
+        }
+        Update: {
+          id?: string
+          listing_id?: string | null
+          listing_type?: string | null
+          market_avg_price?: number | null
+          market_median_price?: number | null
+          owner_id?: string | null
+          percentile_in_market?: number | null
+          previous_price?: number | null
+          price?: number | null
+          price_change_percent?: number | null
+          recorded_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -702,6 +974,171 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      residence_analytics: {
+        Row: {
+          application_rate_vs_market: number | null
+          applications_by_faculty: Json | null
+          applications_from_erasmus: number | null
+          applications_received: number | null
+          competitors_compared_with: Json | null
+          contact_clicks: number | null
+          ctr_vs_market: number | null
+          date: string
+          gallery_clicks: number | null
+          id: string
+          impressions: number | null
+          map_clicks: number | null
+          phone_reveals: number | null
+          residence_id: string
+          times_added_to_compare: number | null
+          times_won_comparison: number | null
+          unique_viewers: number | null
+          viewer_avg_age: number | null
+          viewer_budget_distribution: Json | null
+          viewer_faculty_distribution: Json | null
+          viewer_gender_distribution: Json | null
+          viewer_nationality_distribution: Json | null
+          views: number | null
+          website_clicks: number | null
+        }
+        Insert: {
+          application_rate_vs_market?: number | null
+          applications_by_faculty?: Json | null
+          applications_from_erasmus?: number | null
+          applications_received?: number | null
+          competitors_compared_with?: Json | null
+          contact_clicks?: number | null
+          ctr_vs_market?: number | null
+          date: string
+          gallery_clicks?: number | null
+          id?: string
+          impressions?: number | null
+          map_clicks?: number | null
+          phone_reveals?: number | null
+          residence_id: string
+          times_added_to_compare?: number | null
+          times_won_comparison?: number | null
+          unique_viewers?: number | null
+          viewer_avg_age?: number | null
+          viewer_budget_distribution?: Json | null
+          viewer_faculty_distribution?: Json | null
+          viewer_gender_distribution?: Json | null
+          viewer_nationality_distribution?: Json | null
+          views?: number | null
+          website_clicks?: number | null
+        }
+        Update: {
+          application_rate_vs_market?: number | null
+          applications_by_faculty?: Json | null
+          applications_from_erasmus?: number | null
+          applications_received?: number | null
+          competitors_compared_with?: Json | null
+          contact_clicks?: number | null
+          ctr_vs_market?: number | null
+          date?: string
+          gallery_clicks?: number | null
+          id?: string
+          impressions?: number | null
+          map_clicks?: number | null
+          phone_reveals?: number | null
+          residence_id?: string
+          times_added_to_compare?: number | null
+          times_won_comparison?: number | null
+          unique_viewers?: number | null
+          viewer_avg_age?: number | null
+          viewer_budget_distribution?: Json | null
+          viewer_faculty_distribution?: Json | null
+          viewer_gender_distribution?: Json | null
+          viewer_nationality_distribution?: Json | null
+          views?: number | null
+          website_clicks?: number | null
+        }
+        Relationships: []
+      }
+      residences: {
+        Row: {
+          address: string
+          capacity: number | null
+          city: string
+          coordinates: number[] | null
+          created_at: string | null
+          description: string | null
+          email: string | null
+          gender: string
+          highlight: string | null
+          id: string
+          images: string[] | null
+          is_premium: boolean | null
+          name: string
+          phone: string[] | null
+          postal_code: string | null
+          price_max: number | null
+          price_min: number | null
+          rating: number | null
+          review_count: number | null
+          services: string[] | null
+          status: string | null
+          type: string
+          updated_at: string | null
+          verified: boolean | null
+          website: string | null
+        }
+        Insert: {
+          address: string
+          capacity?: number | null
+          city?: string
+          coordinates?: number[] | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          gender?: string
+          highlight?: string | null
+          id?: string
+          images?: string[] | null
+          is_premium?: boolean | null
+          name: string
+          phone?: string[] | null
+          postal_code?: string | null
+          price_max?: number | null
+          price_min?: number | null
+          rating?: number | null
+          review_count?: number | null
+          services?: string[] | null
+          status?: string | null
+          type: string
+          updated_at?: string | null
+          verified?: boolean | null
+          website?: string | null
+        }
+        Update: {
+          address?: string
+          capacity?: number | null
+          city?: string
+          coordinates?: number[] | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          gender?: string
+          highlight?: string | null
+          id?: string
+          images?: string[] | null
+          is_premium?: boolean | null
+          name?: string
+          phone?: string[] | null
+          postal_code?: string | null
+          price_max?: number | null
+          price_min?: number | null
+          rating?: number | null
+          review_count?: number | null
+          services?: string[] | null
+          status?: string | null
+          type?: string
+          updated_at?: string | null
+          verified?: boolean | null
+          website?: string | null
+        }
+        Relationships: []
       }
       reviews: {
         Row: {
@@ -947,6 +1384,87 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      search_analytics: {
+        Row: {
+          all_inclusive_preferred: boolean | null
+          amenities_searched: string[] | null
+          browser: string | null
+          budget_max: number | null
+          budget_min: number | null
+          city: string | null
+          coordinates: unknown
+          created_at: string | null
+          device_type: string | null
+          filters_applied: Json | null
+          gender_preference: string | null
+          id: string
+          is_anonymous: boolean | null
+          max_distance_km: number | null
+          near_faculty: string | null
+          neighborhood: string | null
+          property_type_searched: string | null
+          referrer_source: string | null
+          results_count: number | null
+          results_shown: Json | null
+          roommates_preference: number | null
+          search_query: string | null
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          all_inclusive_preferred?: boolean | null
+          amenities_searched?: string[] | null
+          browser?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          city?: string | null
+          coordinates?: unknown
+          created_at?: string | null
+          device_type?: string | null
+          filters_applied?: Json | null
+          gender_preference?: string | null
+          id?: string
+          is_anonymous?: boolean | null
+          max_distance_km?: number | null
+          near_faculty?: string | null
+          neighborhood?: string | null
+          property_type_searched?: string | null
+          referrer_source?: string | null
+          results_count?: number | null
+          results_shown?: Json | null
+          roommates_preference?: number | null
+          search_query?: string | null
+          session_id: string
+          user_id?: string | null
+        }
+        Update: {
+          all_inclusive_preferred?: boolean | null
+          amenities_searched?: string[] | null
+          browser?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          city?: string | null
+          coordinates?: unknown
+          created_at?: string | null
+          device_type?: string | null
+          filters_applied?: Json | null
+          gender_preference?: string | null
+          id?: string
+          is_anonymous?: boolean | null
+          max_distance_km?: number | null
+          near_faculty?: string | null
+          neighborhood?: string | null
+          property_type_searched?: string | null
+          referrer_source?: string | null
+          results_count?: number | null
+          results_shown?: Json | null
+          roommates_preference?: number | null
+          search_query?: string | null
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       squad_members: {
         Row: {
@@ -1201,6 +1719,111 @@ export type Database = {
           has_made_first_application?: boolean | null
           has_viewed_welcome?: boolean | null
           id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_profiles_analytics: {
+        Row: {
+          age: number | null
+          avg_session_duration_seconds: number | null
+          budget_flexibility: string | null
+          budget_max: number | null
+          budget_min: number | null
+          cleanliness_level: number | null
+          created_at: string | null
+          current_housing_status: string | null
+          degree: string | null
+          faculty: string | null
+          gender: string | null
+          guests_frequency: string | null
+          has_applied: boolean | null
+          has_booked: boolean | null
+          is_erasmus: boolean | null
+          language: string | null
+          nationality: string | null
+          noise_level: string | null
+          pets_allowed: boolean | null
+          preferred_amenities: string[] | null
+          preferred_neighborhoods: string[] | null
+          preferred_property_type: string | null
+          sleep_schedule: string | null
+          smoking_allowed: boolean | null
+          social_level: string | null
+          study_year: number | null
+          total_applications: number | null
+          total_listings_viewed: number | null
+          total_searches: number | null
+          university: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          age?: number | null
+          avg_session_duration_seconds?: number | null
+          budget_flexibility?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          cleanliness_level?: number | null
+          created_at?: string | null
+          current_housing_status?: string | null
+          degree?: string | null
+          faculty?: string | null
+          gender?: string | null
+          guests_frequency?: string | null
+          has_applied?: boolean | null
+          has_booked?: boolean | null
+          is_erasmus?: boolean | null
+          language?: string | null
+          nationality?: string | null
+          noise_level?: string | null
+          pets_allowed?: boolean | null
+          preferred_amenities?: string[] | null
+          preferred_neighborhoods?: string[] | null
+          preferred_property_type?: string | null
+          sleep_schedule?: string | null
+          smoking_allowed?: boolean | null
+          social_level?: string | null
+          study_year?: number | null
+          total_applications?: number | null
+          total_listings_viewed?: number | null
+          total_searches?: number | null
+          university?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          age?: number | null
+          avg_session_duration_seconds?: number | null
+          budget_flexibility?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          cleanliness_level?: number | null
+          created_at?: string | null
+          current_housing_status?: string | null
+          degree?: string | null
+          faculty?: string | null
+          gender?: string | null
+          guests_frequency?: string | null
+          has_applied?: boolean | null
+          has_booked?: boolean | null
+          is_erasmus?: boolean | null
+          language?: string | null
+          nationality?: string | null
+          noise_level?: string | null
+          pets_allowed?: boolean | null
+          preferred_amenities?: string[] | null
+          preferred_neighborhoods?: string[] | null
+          preferred_property_type?: string | null
+          sleep_schedule?: string | null
+          smoking_allowed?: boolean | null
+          social_level?: string | null
+          study_year?: number | null
+          total_applications?: number | null
+          total_listings_viewed?: number | null
+          total_searches?: number | null
+          university?: string | null
           updated_at?: string | null
           user_id?: string
         }
