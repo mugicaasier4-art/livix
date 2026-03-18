@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+    <!-- ============================================== -->
+    <!-- Homepage                                       -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Livix - Alojamiento universitario inteligente en Zaragoza</image:title>
+            <image:caption>Marketplace de alojamiento para estudiantes universitarios en Zaragoza. Pisos, habitaciones y residencias verificadas.</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://livix.es/favicon.png</image:loc>
+            <image:title>Livix logo - Alojamiento universitario</image:title>
+            <image:caption>Logo oficial de Livix, plataforma de alojamiento para estudiantes en España.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Explorar alojamientos                          -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/explore</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Explorar pisos y habitaciones para estudiantes en Zaragoza</image:title>
+            <image:caption>Busca y compara alojamiento universitario en Zaragoza: habitaciones, pisos compartidos y residencias con precios verificados.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Residencias universitarias                     -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/residences</loc>
+        <image:image>
+            <image:loc>https://livix.es/students-residences-bg.jpg</image:loc>
+            <image:title>Residencias universitarias en Zaragoza para estudiantes</image:title>
+            <image:caption>Directorio de residencias universitarias en Zaragoza. Compara precios, ubicaciones y servicios para estudiantes.</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Livix - Residencias universitarias Zaragoza</image:title>
+            <image:caption>Encuentra la mejor residencia universitaria en Zaragoza con Livix.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Directorio de residencias                      -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/residences/directory</loc>
+        <image:image>
+            <image:loc>https://livix.es/students-residences-bg.jpg</image:loc>
+            <image:title>Directorio completo de residencias de estudiantes en Zaragoza</image:title>
+            <image:caption>Listado completo de residencias universitarias y colegios mayores en Zaragoza con precios actualizados.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Buscar compañero de piso                       -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/roommates</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Buscar compañero de piso en Zaragoza - Livix Roommates</image:title>
+            <image:caption>Encuentra compañeros de piso compatibles en Zaragoza con el sistema de matching inteligente de Livix.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Club de descuentos                             -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/club</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Livix Club - Descuentos exclusivos para estudiantes en Zaragoza</image:title>
+            <image:caption>Club de descuentos para estudiantes universitarios: restauración, ocio, transporte, tecnología, deporte y más en Zaragoza.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Publicar habitación (propietarios)             -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/publicar-habitacion</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Publicar habitación para estudiantes en Zaragoza - Livix</image:title>
+            <image:caption>Publica tu habitación o piso para estudiantes en Zaragoza. Propietarios verificados, gestión sencilla y visibilidad garantizada.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Propietarios / Landlords                       -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/landlords</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Livix para propietarios - Alquila a estudiantes de forma segura</image:title>
+            <image:caption>Plataforma para propietarios que quieren alquilar a estudiantes universitarios en Zaragoza de forma segura y eficiente.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Cómo funciona                                  -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/how-it-works</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Cómo funciona Livix - Alojamiento universitario paso a paso</image:title>
+            <image:caption>Descubre cómo encontrar alojamiento universitario en Zaragoza con Livix: busca, compara y reserva en tres sencillos pasos.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Sobre nosotros                                 -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/about</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Sobre Livix - Equipo y misión del marketplace de alojamiento estudiantil</image:title>
+            <image:caption>Conoce al equipo de Livix, startup de Zaragoza que transforma la búsqueda de alojamiento universitario en España.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Precios                                        -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/pricing</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Planes y precios de Livix - Alojamiento universitario</image:title>
+            <image:caption>Planes de suscripción para estudiantes y propietarios en Livix. Desde gratis hasta Premium por 9,99 euros al mes.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Erasmus                                        -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/erasmus</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Alojamiento Erasmus en Zaragoza - Livix</image:title>
+            <image:caption>Encuentra alojamiento para estudiantes Erasmus en Zaragoza. Guías, pisos verificados y soporte en varios idiomas.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/erasmus/guide</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Guía Erasmus Zaragoza - Todo lo que necesitas saber</image:title>
+            <image:caption>Guía completa para estudiantes Erasmus en Zaragoza: alojamiento, transporte, universidades y vida estudiantil.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/erasmus/housing</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Alojamiento Erasmus en Zaragoza - Pisos y habitaciones</image:title>
+            <image:caption>Busca pisos y habitaciones para tu Erasmus en Zaragoza. Alojamiento verificado y a precios para estudiantes.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog principal                                 -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Blog Livix - Guías y consejos para estudiantes en Zaragoza</image:title>
+            <image:caption>Blog sobre vida universitaria en Zaragoza: guías de barrios, consejos de alquiler, coste de vida y más para estudiantes.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 1: Guía completa estudiantes         -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/1</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Guía completa para estudiantes en Zaragoza 2025-2026</image:title>
+            <image:caption>Todo sobre vivir en Zaragoza como estudiante: universidades, transporte, coste de vida, ocio y alojamiento universitario.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 2: Mejores barrios                   -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/2</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Los 6 mejores barrios para estudiantes en Zaragoza</image:title>
+            <image:caption>Análisis de Delicias, Actur, Centro, Romareda, Las Fuentes y San José: precios de alquiler, transporte y ambiente para universitarios.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 3: Residencia vs piso compartido     -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/3</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Residencia universitaria o piso compartido en Zaragoza</image:title>
+            <image:caption>Comparativa detallada de residencia vs piso compartido para estudiantes en Zaragoza: pros, contras y precios actualizados.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 4: Coste de vida                     -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/4</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Coste de vida para estudiantes en Zaragoza - Guía actualizada</image:title>
+            <image:caption>Desglose de gastos mensuales de un estudiante en Zaragoza: alquiler, comida, transporte, ocio y trucos para ahorrar dinero.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 5: Evitar estafas alquiler           -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/5</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Cómo evitar estafas al alquilar piso como estudiante</image:title>
+            <image:caption>Las 10 señales de alarma al alquilar piso en Zaragoza. Guía de seguridad para estudiantes que buscan alojamiento.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Blog Post 6: Alquilar habitación paso a paso   -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/blog/6</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Cómo alquilar una habitación en Zaragoza paso a paso</image:title>
+            <image:caption>Guía práctica para alquilar tu primera habitación en Zaragoza: desde la búsqueda hasta la firma del contrato de alquiler.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Residencias Zaragoza              -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/residencias/zaragoza</loc>
+        <image:image>
+            <image:loc>https://livix.es/students-residences-bg.jpg</image:loc>
+            <image:title>Residencias universitarias en Zaragoza - Comparador de precios</image:title>
+            <image:caption>Directorio y comparador de residencias universitarias en Zaragoza: precios, ubicaciones, servicios y opiniones de estudiantes.</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Livix - Residencias universitarias Zaragoza</image:title>
+            <image:caption>Encuentra y compara residencias universitarias en Zaragoza con Livix.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Habitaciones Zaragoza             -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en Zaragoza - Alquiler universitario</image:title>
+            <image:caption>Encuentra habitaciones en pisos compartidos para estudiantes en Zaragoza. Precios desde 250 euros al mes, verificadas por Livix.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Pisos Zaragoza                    -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/pisos/zaragoza</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos para estudiantes en Zaragoza - Alquiler compartido</image:title>
+            <image:caption>Pisos compartidos para estudiantes universitarios en Zaragoza. Busca por barrio, precio y cercanía al campus.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Colegios mayores Zaragoza         -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/colegios-mayores/zaragoza</loc>
+        <image:image>
+            <image:loc>https://livix.es/students-residences-bg.jpg</image:loc>
+            <image:title>Colegios mayores en Zaragoza para estudiantes universitarios</image:title>
+            <image:caption>Guía de colegios mayores en Zaragoza: Cerbuna, Virgen del Carmen y más. Precios, plazas y opiniones de residentes.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Habitaciones por barrio            -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/delicias</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en Delicias, Zaragoza</image:title>
+            <image:caption>Alquiler de habitaciones en el barrio Delicias de Zaragoza. La zona más económica para estudiantes universitarios desde 250 euros.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/actur</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en Actur, Zaragoza</image:title>
+            <image:caption>Alquiler de habitaciones cerca del Campus Río Ebro en el barrio Actur de Zaragoza. Ideal para estudiantes de ingenierías.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/centro</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en el Centro de Zaragoza</image:title>
+            <image:caption>Habitaciones en el centro histórico de Zaragoza para universitarios. Cerca del Campus San Francisco y de todo el ocio.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/las-fuentes</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en Las Fuentes, Zaragoza</image:title>
+            <image:caption>Alquiler de habitaciones en Las Fuentes, Zaragoza. Barrio auténtico con precios asequibles para estudiantes.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/romareda</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en Romareda, Zaragoza</image:title>
+            <image:caption>Habitaciones junto al Campus San Francisco en el barrio Romareda de Zaragoza. Zona tranquila y residencial para estudiantes.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/san-jose</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Habitaciones para estudiantes en San José, Zaragoza</image:title>
+            <image:caption>Alquiler de habitaciones para estudiantes en San José, Zaragoza. Buen equilibrio entre precio y servicios.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Pisos por barrio                   -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/delicias</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en Delicias, Zaragoza</image:title>
+            <image:caption>Pisos para compartir entre estudiantes en el barrio Delicias de Zaragoza. Los precios más económicos de la ciudad.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/actur</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en Actur, Zaragoza</image:title>
+            <image:caption>Pisos compartidos cerca del Campus Río Ebro en Actur, Zaragoza. Barrio moderno ideal para estudiantes de ingeniería.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/centro</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en el Centro de Zaragoza</image:title>
+            <image:caption>Pisos compartidos en el centro de Zaragoza para estudiantes universitarios. Ambiente animado y todo a pie.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/las-fuentes</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en Las Fuentes, Zaragoza</image:title>
+            <image:caption>Pisos para compartir en Las Fuentes, Zaragoza. Opción económica a 15 minutos del centro para estudiantes.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/romareda</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en Romareda, Zaragoza</image:title>
+            <image:caption>Pisos compartidos en Romareda junto al Campus San Francisco. Zona tranquila perfecta para estudiantes en Zaragoza.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/san-jose</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Pisos compartidos para estudiantes en San José, Zaragoza</image:title>
+            <image:caption>Pisos para compartir en San José, Zaragoza. Buen equilibrio precio-calidad para estudiantes universitarios.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- SEO Landing: Campus                             -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/campus/san-francisco</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Alojamiento cerca del Campus San Francisco - Universidad de Zaragoza</image:title>
+            <image:caption>Pisos y habitaciones para estudiantes cerca del Campus San Francisco de la Universidad de Zaragoza. Barrios recomendados y precios.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/campus/rio-ebro</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Alojamiento cerca del Campus Río Ebro - Universidad de Zaragoza</image:title>
+            <image:caption>Pisos y habitaciones para estudiantes de ingeniería cerca del Campus Río Ebro en el barrio Actur de Zaragoza.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://livix.es/campus/usj</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Alojamiento cerca de la Universidad San Jorge (USJ) - Zaragoza</image:title>
+            <image:caption>Alojamiento para estudiantes de la Universidad San Jorge en Zaragoza. Pisos y transporte hasta el campus USJ.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================== -->
+    <!-- Soporte                                        -->
+    <!-- ============================================== -->
+    <url>
+        <loc>https://livix.es/support</loc>
+        <image:image>
+            <image:loc>https://livix.es/og-livix.jpg</image:loc>
+            <image:title>Centro de ayuda y soporte - Livix</image:title>
+            <image:caption>Soporte y ayuda para estudiantes y propietarios en la plataforma Livix de alojamiento universitario.</image:caption>
+        </image:image>
+    </url>
+
+</urlset>

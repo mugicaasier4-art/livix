@@ -30,28 +30,42 @@ const PisosBarrio = () => {
     );
 
     const title = `Pisos en ${barrioData.name}, ${city?.charAt(0).toUpperCase()}${city?.slice(1)} | Livix`;
-    const description = `Alquiler de pisos para estudiantes en ${barrioData.name}. ${barrioData.metaDescription}`;
+    const description = `Alquiler de pisos completos para estudiantes en ${barrioData.name}, ${normalizedCity === 'zaragoza' ? 'Zaragoza' : normalizedCity}. Compara precios desde ${barrioData.avgPrice}. Pisos verificados cerca de la universidad.`;
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": title,
-        "description": description,
-        "numberOfItems": filteredListings.length,
-        "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-                "@type": "Apartment",
-                "name": listing.title,
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Zaragoza",
-                    "streetAddress": listing.address
+    const structuredData: object[] = [
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": title,
+            "description": description,
+            "numberOfItems": filteredListings.length,
+            "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": "Apartment",
+                    "name": listing.title,
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Zaragoza",
+                        "streetAddress": listing.address
+                    }
                 }
-            }
-        }))
-    };
+            }))
+        },
+        ...(barrioData.faqs?.length ? [{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": barrioData.faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        }] : [])
+    ];
 
     const otherBarrios = getBarriosByCity(normalizedCity).filter(b => b.slug !== barrio);
 

@@ -21,7 +21,9 @@ const ColegiosMayoresCity = () => {
     const title = `Colegios Mayores en ${cityData.name} | Mejores Opciones | Livix`;
     const description = `Lista de los mejores Colegios Mayores en ${cityData.name}. Compara precios, instalaciones y ambiente. Encuentra tu plaza para el próximo curso.`;
 
-    const structuredData = {
+    const faqs = cityData.faqsColegiosMayores || cityData.faqs || [];
+
+    const itemListSchema = {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": title,
@@ -41,6 +43,21 @@ const ColegiosMayoresCity = () => {
             }
         }))
     };
+
+    const faqSchema = faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
+    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
 
     return (
         <Layout>
@@ -114,6 +131,23 @@ const ColegiosMayoresCity = () => {
                         <p className="text-muted-foreground">No hay información disponible de Colegios Mayores en esta ciudad todavía.</p>
                     </div>
                 )}
+
+                <div className="mt-8 p-6 bg-muted/30 rounded-lg">
+                    <h2 className="text-lg font-semibold mb-3">Otras opciones de alojamiento en {cityData.name}</h2>
+                    <div className="flex flex-wrap gap-3">
+                        <Link to={`/habitaciones/${normalizedCity}`} className="text-primary hover:underline">
+                            Habitaciones en {cityData.name}
+                        </Link>
+                        <span className="text-muted-foreground">&bull;</span>
+                        <Link to={`/pisos/${normalizedCity}`} className="text-primary hover:underline">
+                            Pisos en {cityData.name}
+                        </Link>
+                        <span className="text-muted-foreground">&bull;</span>
+                        <Link to={`/residencias/${normalizedCity}`} className="text-primary hover:underline">
+                            Residencias en {cityData.name}
+                        </Link>
+                    </div>
+                </div>
             </div>
         </Layout>
     );

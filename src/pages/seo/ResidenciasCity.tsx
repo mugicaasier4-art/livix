@@ -1,4 +1,5 @@
 import { useParams, Navigate, Link } from "react-router-dom";
+import DOMPurify from 'dompurify';
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSEO } from "@/components/seo/BreadcrumbSEO";
@@ -29,7 +30,7 @@ const ResidenciasCity = () => {
     const title = `Residencias de Estudiantes en ${cityData.name} | Livix`;
     const description = `Mejores residencias universitarias en ${cityData.name}. Compara precios, servicios y ubicación. Reserva online sin comisiones.`;
 
-    const structuredData = {
+    const itemListSchema = {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": title,
@@ -50,6 +51,23 @@ const ResidenciasCity = () => {
         }))
     };
 
+    const faqsToUse = cityData.faqsResidencias || cityData.faqs;
+
+    const faqSchema = faqsToUse.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqsToUse.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
+    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
+
     return (
         <Layout>
             <SEOHead
@@ -63,6 +81,7 @@ const ResidenciasCity = () => {
             <div className="container mx-auto px-4 py-8">
                 <BreadcrumbSEO items={[
                     { label: 'Inicio', path: '/' },
+                    { label: 'Residencias', path: '/residences' },
                     { label: `Residencias en ${cityData.name}`, path: `/residencias/${normalizedCity}` }
                 ]} />
 
@@ -70,7 +89,7 @@ const ResidenciasCity = () => {
                     <h1 className="text-3xl font-bold mb-4">Residencias de Estudiantes en {cityData.name}</h1>
                     <div
                         className="text-lg text-muted-foreground max-w-2xl prose prose-neutral dark:prose-invert"
-                        dangerouslySetInnerHTML={{ __html: cityData.longDescription }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(cityData.longDescription) }}
                     />
                 </header>
 
@@ -128,11 +147,11 @@ const ResidenciasCity = () => {
                 </section>
 
                 {/* FAQs Section */}
-                {cityData.faqs.length > 0 && (
+                {faqsToUse.length > 0 && (
                     <section className="mt-16 bg-muted/30 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold mb-6">Preguntas Frecuentes sobre Residencias en {cityData.name}</h2>
+                        <h2 className="text-2xl font-bold mb-6">Preguntas frecuentes sobre residencias en {cityData.name}</h2>
                         <div className="space-y-4">
-                            {cityData.faqs.map((faq, index) => (
+                            {faqsToUse.map((faq, index) => (
                                 <div key={index} className="bg-background rounded-lg p-4 border shadow-sm">
                                     <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
                                     <p className="text-muted-foreground">{faq.answer}</p>

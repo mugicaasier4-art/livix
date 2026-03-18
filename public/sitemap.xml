@@ -1,42 +1,270 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Páginas principales -->
     <url>
         <loc>https://livix.es/</loc>
+        <lastmod>2026-03-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://livix.es/explore</loc>
+        <lastmod>2026-03-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://livix.es/about</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/pricing</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://livix.es/residences</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/residences/directory</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/roommates</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/roommates/search</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/club</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/publicar-habitacion</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/support</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- Contenido -->
+    <url>
+        <loc>https://livix.es/blog</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/1</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/2</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/3</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/4</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/5</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/6</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Erasmus -->
+    <url>
+        <loc>https://livix.es/erasmus</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/erasmus/guide</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/erasmus/housing</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Páginas informativas -->
+    <url>
+        <loc>https://livix.es/how-it-works</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/landlords</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- SEO Landing Pages: Ciudad -->
+    <url>
+        <loc>https://livix.es/residencias/zaragoza</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/pisos/zaragoza</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/colegios-mayores/zaragoza</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- SEO Landing Pages: Barrios - Habitaciones -->
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/delicias</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/actur</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/centro</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/las-fuentes</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/romareda</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/habitaciones/zaragoza/san-jose</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- SEO Landing Pages: Barrios - Pisos -->
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/delicias</loc>
+        <lastmod>2026-03-08</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://livix.es/roommates</loc>
-        <changefreq>daily</changefreq>
+        <loc>https://livix.es/pisos/zaragoza/actur</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
-    <url><loc>https://livix.es/residencias/zaragoza</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/colegios-mayores/zaragoza</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/delicias</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/delicias</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/actur</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/actur</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/centro</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/centro</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/las-fuentes</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/las-fuentes</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/romareda</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/romareda</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/san-jose</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/san-jose</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/san-francisco</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/rio-ebro</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/usj</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/centro</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/las-fuentes</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/romareda</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/pisos/zaragoza/san-jose</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- SEO Landing Pages: Campus -->
+    <url>
+        <loc>https://livix.es/campus/san-francisco</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/campus/rio-ebro</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/campus/usj</loc>
+        <lastmod>2026-03-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

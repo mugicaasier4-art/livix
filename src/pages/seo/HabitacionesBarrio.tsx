@@ -33,26 +33,40 @@ const HabitacionesBarrio = () => {
     const title = barrioData.title;
     const description = barrioData.metaDescription;
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": barrioData.h1,
-        "description": description,
-        "numberOfItems": filteredListings.length,
-        "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-                "@type": "Accommodation",
-                "name": listing.title,
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Zaragoza",
-                    "streetAddress": listing.address
+    const structuredData: object[] = [
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": barrioData.h1,
+            "description": description,
+            "numberOfItems": filteredListings.length,
+            "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": "Accommodation",
+                    "name": listing.title,
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Zaragoza",
+                        "streetAddress": listing.address
+                    }
                 }
-            }
-        }))
-    };
+            }))
+        },
+        ...(barrioData.faqs?.length ? [{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": barrioData.faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        }] : [])
+    ];
 
     const otherBarrios = getBarriosByCity(normalizedCity).filter(b => b.slug !== barrio);
 

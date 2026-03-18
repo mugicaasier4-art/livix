@@ -1,4 +1,5 @@
 import { useParams, Navigate, Link } from "react-router-dom";
+import DOMPurify from 'dompurify';
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSEO } from "@/components/seo/BreadcrumbSEO";
@@ -31,7 +32,9 @@ const PisosCity = () => {
     const title = `Alquiler de Pisos en ${cityData.name} para Estudiantes | Livix`;
     const description = `Pisos para estudiantes en ${cityData.name}. Encuentra tu piso compartido ideal cerca de la universidad. Alquiler seguro y sin sorpresas.`;
 
-    const structuredData = {
+    const faqs = cityData.faqsPisos || cityData.faqs || [];
+
+    const itemListSchema = {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": title,
@@ -52,6 +55,21 @@ const PisosCity = () => {
         }))
     };
 
+    const faqSchema = faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
+    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
+
     return (
         <Layout>
             <SEOHead
@@ -64,6 +82,7 @@ const PisosCity = () => {
             <div className="container mx-auto px-4 py-8">
                 <BreadcrumbSEO items={[
                     { label: 'Inicio', path: '/' },
+                    { label: 'Pisos', path: '/pisos' },
                     { label: `Pisos en ${cityData.name}`, path: `/pisos/${normalizedCity}` }
                 ]} />
 
@@ -72,6 +91,12 @@ const PisosCity = () => {
                     <p className="text-lg text-muted-foreground max-w-2xl">
                         {cityData.introText} Alquila un piso completo para compartir con tus amigos.
                     </p>
+                    {cityData.longDescription && (
+                        <div
+                            className="mt-6 text-muted-foreground max-w-3xl prose prose-neutral dark:prose-invert"
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(cityData.longDescription) }}
+                        />
+                    )}
                 </header>
 
                 {/* Barrios Links */}
@@ -126,6 +151,39 @@ const PisosCity = () => {
                         </Link>
                     </div>
                 )}
+
+                {/* FAQs Section */}
+                {faqs.length > 0 && (
+                    <section className="mt-12 bg-muted/30 rounded-2xl p-8">
+                        <h2 className="text-2xl font-bold mb-6">Preguntas frecuentes sobre pisos en {cityData.name}</h2>
+                        <div className="space-y-4">
+                            {faqs.map((faq, index) => (
+                                <div key={index} className="bg-background rounded-lg p-4 border shadow-sm">
+                                    <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                                    <p className="text-muted-foreground">{faq.answer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Cross-Linking Section */}
+                <div className="mt-8 p-6 bg-muted/30 rounded-lg">
+                    <h2 className="text-lg font-semibold mb-3">Otras opciones de alojamiento en {cityData.name}</h2>
+                    <div className="flex flex-wrap gap-3">
+                        <Link to={`/habitaciones/${normalizedCity}`} className="text-primary hover:underline">
+                            Habitaciones en {cityData.name}
+                        </Link>
+                        <span className="text-muted-foreground">&bull;</span>
+                        <Link to={`/residencias/${normalizedCity}`} className="text-primary hover:underline">
+                            Residencias en {cityData.name}
+                        </Link>
+                        <span className="text-muted-foreground">&bull;</span>
+                        <Link to={`/colegios-mayores/${normalizedCity}`} className="text-primary hover:underline">
+                            Colegios Mayores en {cityData.name}
+                        </Link>
+                    </div>
+                </div>
             </div>
         </Layout>
     );

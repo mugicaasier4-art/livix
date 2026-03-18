@@ -1,8 +1,37 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /unauthorized
+Disallow: /residences/admin-portal-x7k9
 
 User-agent: Bingbot
 Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /unauthorized
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +41,15 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+
+Sitemap: https://livix.es/sitemap.xml
+Sitemap: https://livix.es/image-sitemap.xml

@@ -34,26 +34,40 @@ const CampusLanding = () => {
             campusData.nearbyBarrios.some(slug => textToCheck.includes(slug));
     });
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": campusData.h1,
-        "description": campusData.metaDescription,
-        "numberOfItems": filteredListings.length,
-        "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-                "@type": "Accommodation",
-                "name": listing.title,
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": campusData.city,
-                    "streetAddress": listing.address
+    const structuredData: object[] = [
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": campusData.h1,
+            "description": campusData.metaDescription,
+            "numberOfItems": filteredListings.length,
+            "itemListElement": filteredListings.slice(0, 10).map((listing, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": "Accommodation",
+                    "name": listing.title,
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": campusData.city,
+                        "streetAddress": listing.address
+                    }
                 }
-            }
-        }))
-    };
+            }))
+        },
+        ...(campusData.faqs?.length ? [{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": campusData.faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        }] : [])
+    ];
 
     return (
         <Layout>

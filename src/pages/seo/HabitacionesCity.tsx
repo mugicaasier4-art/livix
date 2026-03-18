@@ -1,4 +1,5 @@
 import { useParams, Navigate, Link } from "react-router-dom";
+import DOMPurify from 'dompurify';
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSEO } from "@/components/seo/BreadcrumbSEO";
@@ -34,7 +35,7 @@ const HabitacionesCity = () => {
     const title = `Habitaciones en Alquiler en ${cityData.name} | Estudiantes | Livix`;
     const description = `Busca habitaciones para estudiantes en ${cityData.name}. Pisos compartidos cerca de tu universidad. Reserva segura y 100% online.`;
 
-    const structuredData = {
+    const itemListSchema = {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": title,
@@ -54,6 +55,21 @@ const HabitacionesCity = () => {
             }
         }))
     };
+
+    const faqSchema = faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
+    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
 
     return (
         <Layout>
@@ -75,7 +91,7 @@ const HabitacionesCity = () => {
                     <h1 className="text-3xl font-bold mb-4">Habitaciones en Alquiler en {cityData.name}</h1>
                     <div
                         className="text-lg text-muted-foreground max-w-2xl prose prose-neutral dark:prose-invert"
-                        dangerouslySetInnerHTML={{ __html: cityData.longDescription }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(cityData.longDescription) }}
                     />
                 </header>
 

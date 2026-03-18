@@ -36,7 +36,7 @@ export const SEOLinks = () => {
                     <div className="space-y-3">
                         <h5 className="font-medium text-foreground/80">Habitaciones por Barrio</h5>
                         <ul className="space-y-2">
-                            {Object.values(barrios).slice(0, 5).map(b => (
+                            {Object.values(barrios).map(b => (
                                 <li key={b.slug}>
                                     <Link to={`/habitaciones/${b.city}/${b.slug}`} className="text-muted-foreground hover:text-primary">
                                         Habitaciones en {b.name}
@@ -50,7 +50,7 @@ export const SEOLinks = () => {
                     <div className="space-y-3">
                         <h5 className="font-medium text-foreground/80">Pisos por Barrio</h5>
                         <ul className="space-y-2">
-                            {Object.values(barrios).slice(0, 5).map(b => (
+                            {Object.values(barrios).map(b => (
                                 <li key={b.slug}>
                                     <Link to={`/pisos/${b.city}/${b.slug}`} className="text-muted-foreground hover:text-primary">
                                         Pisos en {b.name}
