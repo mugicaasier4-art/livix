@@ -30,10 +30,12 @@ CREATE TABLE IF NOT EXISTS public.residences (
 -- Enable RLS
 ALTER TABLE public.residences ENABLE ROW LEVEL SECURITY;
 
--- Policies
+-- Policies (idempotent)
+DROP POLICY IF EXISTS "Residences are viewable by everyone" ON public.residences;
 CREATE POLICY "Residences are viewable by everyone"
   ON public.residences FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Admins can manage residences" ON public.residences;
 CREATE POLICY "Admins can manage residences"
   ON public.residences FOR ALL USING (
     EXISTS (

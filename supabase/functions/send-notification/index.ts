@@ -1,8 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://livix-main.vercel.app",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface NotificationRequest {
@@ -106,17 +107,21 @@ async function checkNotificationAuthorization(
   return false;
 }
 
+// HTML escape helper to prevent XSS in email templates
+const escapeHtml = (str: string | undefined | null): string =>
+  (str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c));
+
 const emailTemplates: Record<string, (data: Record<string, unknown>) => { subject: string; html: string }> = {
   application_received: (data) => ({
-    subject: `Nueva solicitud para ${data.listingTitle}`,
+    subject: `Nueva solicitud para ${escapeHtml(data.listingTitle as string)}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">¡Nueva solicitud recibida!</h2>
         <p>Has recibido una nueva solicitud para tu anuncio:</p>
         <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0;">
-          <strong>${data.listingTitle}</strong>
-          <p style="margin: 8px 0 0 0; color: #666;">De: ${data.studentName}</p>
-          <p style="margin: 4px 0 0 0; color: #666;">Entrada: ${data.moveInDate}</p>
+          <strong>${escapeHtml(data.listingTitle as string)}</strong>
+          <p style="margin: 8px 0 0 0; color: #666;">De: ${escapeHtml(data.studentName as string)}</p>
+          <p style="margin: 4px 0 0 0; color: #666;">Entrada: ${escapeHtml(data.moveInDate as string)}</p>
         </div>
         <a href="${data.actionUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
           Ver solicitud
@@ -130,7 +135,7 @@ const emailTemplates: Record<string, (data: Record<string, unknown>) => { subjec
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Actualización de tu solicitud</h2>
-        <p>Tu solicitud para <strong>${data.listingTitle}</strong> ha sido ${
+        <p>Tu solicitud para <strong>${escapeHtml(data.listingTitle as string)}</strong> ha sido ${
           data.status === 'approved' ? '✅ aprobada' : 
           data.status === 'rejected' ? '❌ rechazada' : 'actualizada'
         }.</p>
@@ -147,13 +152,13 @@ const emailTemplates: Record<string, (data: Record<string, unknown>) => { subjec
   }),
   
   message: (data) => ({
-    subject: `Nuevo mensaje de ${data.senderName}`,
+    subject: `Nuevo mensaje de ${escapeHtml(data.senderName as string)}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Tienes un nuevo mensaje</h2>
         <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0;">
-          <p style="margin: 0;"><strong>${data.senderName}</strong></p>
-          <p style="margin: 8px 0 0 0; color: #666;">${data.preview}</p>
+          <p style="margin: 0;"><strong>${escapeHtml(data.senderName as string)}</strong></p>
+          <p style="margin: 8px 0 0 0; color: #666;">${escapeHtml(data.preview as string)}</p>
         </div>
         <a href="${data.actionUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
           Responder
@@ -163,16 +168,16 @@ const emailTemplates: Record<string, (data: Record<string, unknown>) => { subjec
   }),
   
   visit_scheduled: (data) => ({
-    subject: `Visita programada: ${data.listingTitle}`,
+    subject: `Visita programada: ${escapeHtml(data.listingTitle as string)}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Visita confirmada</h2>
         <p>Se ha programado una visita para:</p>
         <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0;">
-          <strong>${data.listingTitle}</strong>
-          <p style="margin: 8px 0 0 0;">📅 ${data.date}</p>
-          <p style="margin: 4px 0 0 0;">🕐 ${data.time}</p>
-          <p style="margin: 4px 0 0 0;">📍 ${data.address}</p>
+          <strong>${escapeHtml(data.listingTitle as string)}</strong>
+          <p style="margin: 8px 0 0 0;">📅 ${escapeHtml(data.date as string)}</p>
+          <p style="margin: 4px 0 0 0;">🕐 ${escapeHtml(data.time as string)}</p>
+          <p style="margin: 4px 0 0 0;">📍 ${escapeHtml(data.address as string)}</p>
         </div>
         <a href="${data.actionUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
           Ver detalles
@@ -182,14 +187,14 @@ const emailTemplates: Record<string, (data: Record<string, unknown>) => { subjec
   }),
   
   review: (data) => ({
-    subject: `Nueva reseña para ${data.listingTitle}`,
+    subject: `Nueva reseña para ${escapeHtml(data.listingTitle as string)}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Has recibido una reseña</h2>
         <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0;">
-          <strong>${data.listingTitle}</strong>
-          <p style="margin: 8px 0 0 0;">⭐ ${data.rating}/5</p>
-          <p style="margin: 8px 0 0 0; color: #666;">"${data.comment}"</p>
+          <strong>${escapeHtml(data.listingTitle as string)}</strong>
+          <p style="margin: 8px 0 0 0;">⭐ ${escapeHtml(String(data.rating))}/5</p>
+          <p style="margin: 8px 0 0 0; color: #666;">"${escapeHtml(data.comment as string)}"</p>
         </div>
         <a href="${data.actionUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
           Responder
@@ -199,14 +204,14 @@ const emailTemplates: Record<string, (data: Record<string, unknown>) => { subjec
   }),
   
   custom: (data) => ({
-    subject: data.subject as string,
+    subject: escapeHtml(data.subject as string),
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">${data.title}</h2>
-        <p>${data.message}</p>
+        <h2 style="color: #1a1a1a;">${escapeHtml(data.title as string)}</h2>
+        <p>${escapeHtml(data.message as string)}</p>
         ${data.actionUrl ? `
-          <a href="${data.actionUrl}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
-            ${data.actionText || 'Ver más'}
+          <a href="${escapeHtml(data.actionUrl as string)}" style="display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+            ${escapeHtml((data.actionText as string) || 'Ver más')}
           </a>
         ` : ''}
       </div>
@@ -250,10 +255,27 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { userId, type, data }: NotificationRequest = await req.json();
+    const body = await req.json();
+    const { userId, type, data }: NotificationRequest = body;
 
-    if (!userId || !type) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), {
+    // Input validation
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const VALID_TYPES = ["application_received", "application_status", "message", "visit_scheduled", "review", "custom"];
+
+    if (!userId || typeof userId !== "string" || !UUID_REGEX.test(userId)) {
+      return new Response(JSON.stringify({ error: "Invalid userId: must be a valid UUID" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!type || !VALID_TYPES.includes(type)) {
+      return new Response(JSON.stringify({ error: `Invalid type: must be one of ${VALID_TYPES.join(", ")}` }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!data || typeof data !== "object") {
+      return new Response(JSON.stringify({ error: "Missing or invalid data object" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -298,43 +320,65 @@ Deno.serve(async (req) => {
       p_related_id: data.relatedId as string || null,
     });
 
-    // Send email if API key is configured
+    // Send email if API key is configured (with retry for transient errors)
     if (resendApiKey) {
       const template = emailTemplates[type];
       if (template) {
         const { subject, html } = template(data);
-        
-        const emailResponse = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${resendApiKey}`,
-          },
-          body: JSON.stringify({
-            from: "Livix <noreply@livix.app>",
-            to: [profile.email],
-            subject,
-            html: `
-              <!DOCTYPE html>
-              <html>
-                <head>
-                  <meta charset="utf-8">
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                </head>
-                <body style="margin: 0; padding: 20px; background: #f9f9f9;">
-                  ${html}
-                  <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #999; font-size: 12px;">
-                    <p>Este email fue enviado por Livix.</p>
-                    <p>Si no deseas recibir estos emails, puedes configurar tus preferencias en tu perfil.</p>
-                  </div>
-                </body>
-              </html>
-            `,
-          }),
-        });
 
-        if (!emailResponse.ok) {
-          console.error("Email send failed:", await emailResponse.text());
+        const emailPayload = {
+          from: "Livix <noreply@livix.app>",
+          to: [profile.email],
+          subject,
+          html: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              </head>
+              <body style="margin: 0; padding: 20px; background: #f9f9f9;">
+                ${html}
+                <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #999; font-size: 12px;">
+                  <p>Este email fue enviado por Livix.</p>
+                  <p>Si no deseas recibir estos emails, puedes configurar tus preferencias en tu perfil.</p>
+                </div>
+              </body>
+            </html>
+          `,
+        };
+
+        // Retry with exponential backoff for 5xx errors
+        let emailSent = false;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const emailResponse = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${resendApiKey}`,
+            },
+            body: JSON.stringify(emailPayload),
+          });
+
+          if (emailResponse.ok) {
+            emailSent = true;
+            break;
+          }
+
+          // Don't retry client errors (4xx)
+          if (emailResponse.status < 500) {
+            console.error("Email send failed (client error):", await emailResponse.text());
+            break;
+          }
+
+          // Wait before retrying (1s, 2s, 4s)
+          if (attempt < 2) {
+            await new Promise(r => setTimeout(r, Math.pow(2, attempt) * 1000));
+          }
+        }
+
+        if (!emailSent) {
+          console.error("Email send failed after retries for user:", userId);
         }
       }
     } else {

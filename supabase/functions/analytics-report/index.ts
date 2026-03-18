@@ -1,8 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://livix-main.vercel.app",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface AnalyticsReport {
@@ -77,6 +78,22 @@ Deno.serve(async (req) => {
     // Parse request body for date range
     const body = await req.json().catch(() => ({}));
     const now = new Date();
+
+    // Validate date inputs
+    const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?Z?)?$/;
+    if (body.startDate && (typeof body.startDate !== "string" || !ISO_DATE_REGEX.test(body.startDate) || isNaN(Date.parse(body.startDate)))) {
+      return new Response(JSON.stringify({ error: "Invalid startDate: must be a valid ISO date string" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (body.endDate && (typeof body.endDate !== "string" || !ISO_DATE_REGEX.test(body.endDate) || isNaN(Date.parse(body.endDate)))) {
+      return new Response(JSON.stringify({ error: "Invalid endDate: must be a valid ISO date string" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const startDate = body.startDate || new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
     const endDate = body.endDate || now.toISOString();
 

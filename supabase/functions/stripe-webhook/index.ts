@@ -1,8 +1,12 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+// stripe-webhook is called server-to-server by Stripe (no browser Origin header).
+// The wildcard origin is intentional for this endpoint; restrict user-facing
+// endpoints (send-notification, analytics-report) to https://livix.es instead.
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, stripe-signature",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 Deno.serve(async (req) => {
@@ -72,16 +76,56 @@ Deno.serve(async (req) => {
     const event = JSON.parse(body);
     console.log("Stripe event:", event.type);
 
+    // Idempotency check - prevent duplicate processing
+    const eventId = event.id;
+    const { data: existingEvent } = await supabase
+      .from('webhook_events')
+      .select('id')
+      .eq('stripe_event_id', eventId)
+      .maybeSingle();
+
+    if (existingEvent) {
+      console.log(`Event ${eventId} already processed, skipping`);
+      return new Response(JSON.stringify({ received: true, duplicate: true }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Record event as being processed
+    await supabase
+      .from('webhook_events')
+      .insert({ stripe_event_id: eventId, event_type: event.type, processed_at: new Date().toISOString() });
+
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
         const userId = session.metadata?.user_id;
-        const planType = session.metadata?.plan_type || "premium";
-        
+        const VALID_PLAN_TYPES = ['free', 'basic', 'premium'];
+        const rawPlanType = session.metadata?.plan_type;
+        const planType = rawPlanType && VALID_PLAN_TYPES.includes(rawPlanType) ? rawPlanType : 'premium';
+
         if (userId) {
-          // Create or update subscription
-          const expiresAt = new Date();
-          expiresAt.setMonth(expiresAt.getMonth() + 1);
+          // Create or update subscription - try to get actual end date from Stripe
+          let expiresAt = new Date();
+          expiresAt.setMonth(expiresAt.getMonth() + 1); // fallback
+
+          if (session.subscription) {
+            try {
+              const subResponse = await fetch(
+                `https://api.stripe.com/v1/subscriptions/${session.subscription}`,
+                { headers: { "Authorization": `Bearer ${stripeSecretKey}` } }
+              );
+              if (subResponse.ok) {
+                const subscription = await subResponse.json();
+                if (subscription.current_period_end) {
+                  expiresAt = new Date(subscription.current_period_end * 1000);
+                }
+              }
+            } catch {
+              console.error("Failed to fetch subscription details, using 30-day fallback");
+            }
+          }
 
           await supabase.rpc("upsert_subscription", {
             p_user_id: userId,
