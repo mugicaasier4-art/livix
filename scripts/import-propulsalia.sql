@@ -93,7 +93,7 @@ BEGIN
     'Avenida de la Ilustración, Montecanal', 
     'Zaragoza', 
     2000, 
-    'apartment', -- NOTE: changed from 'house' to 'apartment' to bypass check_property_type constraint
+    'house',
     5, 
     4, -- 3 baños + 1 aseo
     330,
