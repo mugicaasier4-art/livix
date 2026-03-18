@@ -15,4 +15,19 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "ES2020",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          supabase: ["@supabase/supabase-js"],
+          charts: ["recharts"],
+          motion: ["framer-motion"],
+          utils: ["date-fns", "dompurify"],
+          icons: ["lucide-react"],
+        },
+      },
+    },
+  },
 }));

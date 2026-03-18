@@ -2,7 +2,8 @@ import { Suspense, lazy } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { BookingProvider } from "@/contexts/BookingContext";
@@ -15,6 +16,7 @@ import { CompareProvider } from "@/contexts/CompareContext";
 import { PreferencesProvider } from "@/contexts/PreferencesContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ScrollToTop from "@/components/ScrollToTop";
+import { ErrorBoundary, RouteErrorFallback } from "@/components/ErrorBoundary";
 
 // Eager loaded - critical path pages
 import Index from "./pages/Index";
@@ -24,10 +26,14 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 
 // Lazy loaded - non-critical pages
+const Pricing = lazy(() => import("./pages/Pricing"));
 const Bookings = lazy(() => import("./pages/Bookings"));
 const Messages = lazy(() => import("./pages/Messages"));
 const Applications = lazy(() => import("./pages/landlord/Applications"));
 const Landlords = lazy(() => import("./pages/Landlords"));
+const Propietarios = lazy(() => import("./pages/Propietarios"));
+const Estudiantes = lazy(() => import("./pages/Estudiantes"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Residences = lazy(() => import("./pages/Residences"));
 const ResidencesDirectory = lazy(() => import("./pages/residences/Directory"));
@@ -100,7 +106,28 @@ const PageLoader = () => (
   </div>
 );
 
+// Page transition wrapper
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.15 }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
+  <ErrorBoundary>
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
       <AuthProvider>
@@ -116,6 +143,8 @@ const App = () => (
                       <OnboardingProvider>
                         <CompareProvider>
                           <PreferencesProvider>
+                            <PageTransition>
+                            <ErrorBoundary fallback={<RouteErrorFallback />}>
                             <Suspense fallback={<PageLoader />}>
                               <Routes>
                                 {/* Public Routes - Eager Loaded */}
@@ -125,6 +154,8 @@ const App = () => (
                                 <Route path="/signup" element={<Signup />} />
 
                                 {/* Public Routes - Lazy Loaded */}
+                                <Route path="/pricing" element={<Pricing />} />
+                                <Route path="/about" element={<AboutUs />} />
                                 <Route path="/listing/:id" element={<ListingDetail />} />
                                 <Route path="/how-it-works" element={<HowItWorks />} />
                                 <Route path="/residences" element={<Residences />} />
@@ -144,6 +175,8 @@ const App = () => (
                                 <Route path="/erasmus/guide" element={<ErasmusGuide />} />
                                 <Route path="/erasmus/housing" element={<ErasmusHousing />} />
                                 <Route path="/landlords" element={<Landlords />} />
+                                <Route path="/propietarios" element={<Propietarios />} />
+                                <Route path="/estudiantes" element={<Estudiantes />} />
                                 <Route path="/forgot-password" element={<ForgotPassword />} />
                                 <Route path="/reset-password" element={<ResetPassword />} />
                                 <Route path="/unauthorized" element={<Unauthorized />} />
@@ -186,10 +219,14 @@ const App = () => (
                                   </ProtectedRoute>
                                 } />
                                 <Route path="/messages" element={
-                                  <Messages />
+                                  <ProtectedRoute>
+                                    <Messages />
+                                  </ProtectedRoute>
                                 } />
                                 <Route path="/messages/:threadId" element={
-                                  <Messages />
+                                  <ProtectedRoute>
+                                    <Messages />
+                                  </ProtectedRoute>
                                 } />
 
                                 {/* Protected Routes - User */}
@@ -280,6 +317,8 @@ const App = () => (
                                 <Route path="*" element={<NotFound />} />
                               </Routes>
                             </Suspense>
+                            </ErrorBoundary>
+                            </PageTransition>
                           </PreferencesProvider>
                         </CompareProvider>
                       </OnboardingProvider>
@@ -293,6 +332,7 @@ const App = () => (
       </AuthProvider>
     </I18nProvider>
   </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

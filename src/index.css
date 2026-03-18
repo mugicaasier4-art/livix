@@ -20,10 +20,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
 
-    /* System blue accent - Apple system blue */
-    --primary: 213 94% 68%;
+    /* System blue accent - Apple system blue (WCAG AA compliant) */
+    --primary: 213 80% 45%;
     --primary-foreground: 0 0% 100%;
-    --system-blue: 213 94% 68%;
+    --system-blue: 213 80% 45%;
 
     /* Secondary grays - Apple system grays */
     --secondary: 0 0% 96%;
@@ -445,4 +445,8 @@
   animation: blink 1s step-end infinite;
   color: hsl(var(--primary));
 }
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 

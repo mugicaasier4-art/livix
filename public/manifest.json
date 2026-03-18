@@ -1,0 +1,21 @@
+{
+  "name": "Livix - Alojamiento Universitario",
+  "short_name": "Livix",
+  "description": "Encuentra pisos, habitaciones y residencias para estudiantes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5DB4EE",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["lifestyle", "education"],
+  "lang": "es",
+  "scope": "/"
+}

@@ -72,7 +72,8 @@ def export_to_excel():
                 for cell in column:
                     try:
                         if len(str(cell.value)) > max_length: max_length = len(str(cell.value))
-                    except: pass
+                    except (TypeError, AttributeError):
+                        pass
                 sheet.column_dimensions[column_letter].width = min(max_length + 2, 60)
 
     # Move to Downloads

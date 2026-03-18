@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "=== Verificacion Backend Livix ==="
+echo ""
+echo "1. TypeScript check..."
+npx tsc --noEmit && echo "TypeScript OK" || echo "TypeScript errors"
+echo ""
+echo "2. Tests unitarios..."
+npm run test -- --run && echo "Tests OK" || echo "Tests failed"
+echo ""
+echo "3. Recordatorio de pasos manuales:"
+echo "   - supabase start (para tests de integracion)"
+echo "   - supabase db reset (para aplicar migraciones)"
+echo "   - stripe listen (para tests de webhook)"

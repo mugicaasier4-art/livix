@@ -21,6 +21,11 @@ dist-ssr
 credentials.json
 token*.json
 client_secret*.json
+*.key
+*.pem
+
+# Temporary files
+.tmp/
 
 # Python
 __pycache__/
@@ -29,6 +34,17 @@ __pycache__/
 .venv/
 venv/
 ENV/
+
+# Vercel local
+.vercel/
+
+# Supabase temp
+supabase/.temp/
+
+# Utility scripts (not part of the app)
+clear_mock_data.py
+concat.py
+gen_final_sql.py
 
 # Editor directories and files
 .vscode/*

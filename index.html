@@ -3,23 +3,131 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#5DB4EE" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Livix" />
+    <link rel="preconnect" href="https://xeyfrydlojosratstsfk.supabase.co" />
+    <link rel="dns-prefetch" href="https://xeyfrydlojosratstsfk.supabase.co" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <title>Livix - Alojamiento universitario inteligente</title>
-    <meta name="description" content="Conectamos estudiantes universitarios con alojamientos verificados. Matching con IA, proceso seguro y rápido. Encuentra tu hogar perfecto como estudiante." />
+
+    <title>Livix - Alojamiento universitario inteligente en Zaragoza</title>
+    <meta name="description" content="Encuentra pisos, habitaciones y residencias para estudiantes en Zaragoza. Alojamiento universitario verificado con matching IA. Compara y reserva online." />
     <meta name="author" content="Livix" />
-    <meta name="keywords" content="alojamiento estudiantes, piso universitario, habitación estudiantes, Zaragoza, alquiler estudiantes" />
+    <meta name="keywords" content="alojamiento estudiantes zaragoza, piso universitario zaragoza, habitación estudiantes, residencias estudiantes zaragoza, alquiler estudiantes" />
 
-    <meta property="og:title" content="Livix - Alojamiento universitario inteligente" />
-    <meta property="og:description" content="Plataforma que conecta estudiantes universitarios con alojamientos verificados mediante IA" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Livix - Alojamiento universitario inteligente en Zaragoza" />
+    <meta property="og:description" content="Encuentra pisos, habitaciones y residencias para estudiantes en Zaragoza. Compara precios y reserva online." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://livix.es/" />
+    <meta property="og:site_name" content="Livix" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:image" content="https://livix.es/og-livix.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="es" href="https://livix.es/" />
+    <link rel="alternate" hreflang="en" href="https://livix.es/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://livix.es/" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@livix" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:site" content="@livix_es" />
+    <meta name="twitter:title" content="Livix - Alojamiento universitario inteligente" />
+    <meta name="twitter:description" content="Pisos, habitaciones y residencias para estudiantes en Zaragoza. Compara y reserva online." />
+    <meta name="twitter:image" content="https://livix.es/og-livix.jpg" />
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Livix",
+      "url": "https://livix.es",
+      "logo": "https://livix.es/logo.png",
+      "description": "Marketplace de alojamiento universitario en España. Conectamos estudiantes con pisos, habitaciones y residencias verificadas.",
+      "sameAs": [
+        "https://www.instagram.com/livix.es",
+        "https://www.linkedin.com/company/livix",
+        "https://twitter.com/livix"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Zaragoza",
+        "addressRegion": "Aragón",
+        "addressCountry": "ES"
+      },
+      "foundingDate": "2024",
+      "availableLanguage": ["Spanish", "English", "French"],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "soporte@livix.es",
+        "availableLanguage": ["Spanish", "English"]
+      }
+    }
+    </script>
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Livix",
+      "description": "Marketplace de alojamiento universitario en Zaragoza. Pisos, habitaciones y residencias para estudiantes.",
+      "url": "https://livix.es",
+      "logo": "https://livix.es/favicon.png",
+      "image": "https://livix.es/og-livix.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle María de Luna, 11",
+        "addressLocality": "Zaragoza",
+        "postalCode": "50018",
+        "addressRegion": "Aragón",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "41.6836",
+        "longitude": "-0.8885"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "priceRange": "€€",
+      "sameAs": ["https://www.instagram.com/livix.es/", "https://www.linkedin.com/company/livix-es/"]
+    }
+    </script>
+
+    <!-- WebSite + SearchAction Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Livix",
+      "url": "https://livix.es",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://livix.es/explore?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
 
   <body>

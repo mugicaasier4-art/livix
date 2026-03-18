@@ -1,7 +1,8 @@
 import os
+import json
 import csv
-import pickle
 from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
@@ -11,9 +12,9 @@ def get_service():
     creds = None
     token_path = 'token_sheets.json'
     if os.path.exists(token_path):
-        with open(token_path, 'rb') as token:
-            creds = pickle.load(token)
-    
+        with open(token_path, 'r') as token:
+            creds = Credentials.from_authorized_user_info(json.load(token), SCOPES)
+
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -21,8 +22,8 @@ def get_service():
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
-        with open(token_path, 'wb') as token:
-            pickle.dump(creds, token)
+        with open(token_path, 'w') as token:
+            token.write(creds.to_json())
 
     return build('sheets', 'v4', credentials=creds)
 
