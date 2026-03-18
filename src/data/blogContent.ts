@@ -4,13 +4,8 @@ import zonasUniversidad from "@/assets/blog/zonas-universidad.jpg";
 import checklistAlquiler from "@/assets/blog/checklist-alquiler.jpg";
 import tecnicasEstudio from "@/assets/blog/tecnicas-estudio.jpg";
 import gestionTiempo from "@/assets/blog/gestion-tiempo.jpg";
-import appsEstudiantes from "@/assets/blog/apps-estudiantes.jpg";
 import ahorrarDinero from "@/assets/blog/ahorrar-dinero.jpg";
-import recetasEstudiantes from "@/assets/blog/recetas-estudiantes.jpg";
-import bienestarMental from "@/assets/blog/bienestar-mental.jpg";
-import fiestasUniversitarias from "@/assets/blog/fiestas-universitarias.jpg";
 import deportesClubs from "@/assets/blog/deportes-clubs.jpg";
-import festivalesConciertos from "@/assets/blog/festivales-conciertos.jpg";
 
 export type BlogCategory = "all" | "pisos" | "estudiante" | "consejos" | "eventos" | "legalidad" | "becas";
 
