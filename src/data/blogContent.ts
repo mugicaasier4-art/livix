@@ -1015,6 +1015,1786 @@ Si tu español es básico, pide ayuda a tu buddy Erasmus o a la oficina de relac
 9. Establece reglas de convivencia con tus compañeros
 
 Alquilar tu primera habitación es un paso importante hacia la independencia. Con organización y precaución, encontrarás el piso perfecto para tu etapa universitaria en Zaragoza.`
+  },
+  {
+    id: 7,
+    title: "Residencia universitaria vs piso compartido en Zaragoza: guía completa",
+    excerpt: "Comparamos en detalle residencias universitarias y pisos compartidos en Zaragoza: precios, servicios, estilo de vida y cuál te conviene según tu perfil.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "pisos",
+    image: pisosEstudiante,
+    readTime: 10,
+    content: `Elegir entre una residencia universitaria en Zaragoza y un piso compartido es una de las decisiones más importantes que tomarás como estudiante. Ambas opciones tienen ventajas claras, pero también inconvenientes que conviene conocer antes de comprometerte con un contrato o una reserva.
+
+En esta guía completa analizamos cada alternativa en profundidad para que puedas decidir con datos reales y criterios objetivos. Si ya tienes claro que prefieres piso, puedes explorar directamente las [habitaciones disponibles en Zaragoza](/habitaciones/zaragoza).
+
+## Qué es una residencia universitaria en Zaragoza
+
+Una residencia universitaria en Zaragoza es un centro de alojamiento diseñado específicamente para estudiantes. Ofrece habitación (individual o doble), pensión completa o media pensión, zonas comunes de estudio, lavandería y, en muchos casos, actividades culturales y deportivas organizadas.
+
+Zaragoza cuenta con varias residencias universitarias, tanto públicas como privadas. Las más conocidas son el Colegio Mayor Pedro Cerbuna, la Residencia Pignatelli, Santa Isabel, Campus Aura y las residencias de la red Resa. Cada una tiene su perfil de precios, servicios y ambiente.
+
+### Características principales de las residencias
+
+- **Pensión incluida**: la mayoría ofrece desayuno, comida y cena, lo que elimina la preocupación de cocinar y hacer la compra.
+- **Limpieza**: el servicio de limpieza de habitaciones suele estar incluido, al menos una vez por semana.
+- **Zonas comunes**: bibliotecas, salas de estudio, gimnasios, salas de TV y espacios de coworking.
+- **Actividades**: muchas residencias organizan excursiones, torneos deportivos, charlas y fiestas temáticas.
+- **Seguridad**: control de acceso 24 horas y recepción permanente.
+
+## Qué implica vivir en un piso compartido
+
+Un piso compartido significa alquilar una habitación dentro de un apartamento donde convives con otros estudiantes (normalmente entre 2 y 5 compañeros). Tú te encargas de cocinar, limpiar, hacer la compra y gestionar los suministros.
+
+En Zaragoza, los [pisos compartidos para estudiantes](/pisos/zaragoza) se concentran en barrios como Delicias, Centro, Actur, Romareda y San José. La oferta es muy amplia, especialmente entre mayo y septiembre, que es cuando se firman la mayoría de contratos para el curso siguiente.
+
+### Características principales de los pisos compartidos
+
+- **Libertad total**: tú decides tus horarios de comida, visitas, horarios de sueño y rutina diaria.
+- **Cocina propia**: puedes cocinar lo que quieras, cuando quieras. Esto puede ahorrar dinero si compras y cocinas con inteligencia.
+- **Responsabilidad compartida**: la limpieza, las facturas y el mantenimiento del piso recaen sobre los inquilinos.
+- **Elección de compañeros**: puedes buscar compañeros de piso compatibles a través de herramientas como el [buscador de roommates de Livix](/roommates).
+- **Flexibilidad de ubicación**: puedes elegir barrio, planta, orientación y tamaño de habitación según tus prioridades.
+
+## Comparativa de precios: residencia universitaria vs piso compartido en Zaragoza
+
+El precio es, para muchos estudiantes, el factor decisivo. Veamos los números reales del curso 2025-2026 en Zaragoza:
+
+| Concepto | Residencia universitaria | Piso compartido |
+|----------|-------------------------|-----------------|
+| Habitación individual | 650-1.100€/mes | 280-420€/mes |
+| Habitación doble | 500-800€/mes | 200-350€/mes |
+| Comida incluida | Sí (pensión completa) | No (50-150€/mes en compra) |
+| Suministros (luz, agua, internet) | Incluidos | 40-80€/mes por persona |
+| Limpieza | Incluida | Por tu cuenta |
+| **Coste total mensual estimado** | **650-1.100€** | **370-650€** |
+
+### Desglose detallado del coste en piso compartido
+
+Si optas por un piso compartido en Zaragoza, tu presupuesto mensual se repartirá aproximadamente así:
+
+- **Alquiler de habitación**: 280-420€ dependiendo del barrio y las condiciones del piso.
+- **Suministros**: 40-80€ por persona al mes (agua, luz, gas e internet a partes iguales).
+- **Alimentación**: 100-200€ si cocinas en casa. Puede subir si comes fuera con frecuencia.
+- **Productos de limpieza y hogar**: 10-20€/mes.
+
+En total, un estudiante en piso compartido gasta entre 430 y 720€ mensuales todo incluido.
+
+### Desglose detallado del coste en residencia universitaria en Zaragoza
+
+En una residencia universitaria en Zaragoza, el precio mensual ya incluye prácticamente todo:
+
+- **Cuota mensual**: 650-1.100€ dependiendo de la residencia y el tipo de habitación.
+- **Incluye**: alojamiento, pensión completa (o media pensión), limpieza, WiFi, zonas comunes.
+- **Extras opcionales**: lavandería (algunos cobran aparte), actividades especiales, parking.
+
+La diferencia de precio entre ambas opciones puede rondar los 200-500€ mensuales. A lo largo de un curso completo (10 meses), eso supone entre 2.000 y 5.000€ de diferencia.
+
+## Estilo de vida: diferencias clave
+
+### Independencia y autonomía
+
+En un piso compartido ganas independencia total. Nadie te dice a qué hora cenar, cuándo puedes recibir visitas o qué normas de convivencia seguir (más allá de las que acordéis entre compañeros). Si valoras tu libertad y quieres aprender a gestionar un hogar, el piso compartido es una escuela de vida.
+
+En una residencia universitaria en Zaragoza, las normas están predefinidas. Hay horarios de comedor, normas de convivencia establecidas por la dirección y limitaciones sobre visitas nocturnas en algunas residencias. A cambio, no tienes que preocuparte de nada logístico.
+
+### Vida social
+
+Las residencias fomentan activamente la vida social. Compartes espacios con decenas o cientos de estudiantes, hay actividades organizadas y es muy fácil hacer amigos desde el primer día. Para estudiantes que llegan nuevos a Zaragoza (especialmente Erasmus), esto puede ser una ventaja enorme.
+
+En un piso compartido, tu círculo social depende más de ti. Convives con 2-4 personas y el resto de amistades las haces en clase, actividades extraescolares o salidas. Si eres sociable, no tendrás problema; si eres más introvertido, la residencia puede facilitarte las cosas.
+
+### Estudio y concentración
+
+Las residencias suelen tener bibliotecas y salas de estudio con horarios amplios, lo que facilita la concentración. Algunas incluso ofrecen tutorías o apoyo académico.
+
+En un piso compartido, tu capacidad de estudio depende de tus compañeros. Si compartes piso con personas ruidosas o con horarios muy distintos, puede afectar a tu rendimiento. Por eso es tan importante elegir bien a tus [compañeros de piso](/roommates).
+
+### Alimentación
+
+La comida de residencia es cómoda pero monótona. Comes lo que hay, cuando hay. Si tienes dietas especiales, alergias o simplemente eres exigente con la comida, puede ser frustrante.
+
+En un piso, cocinas lo que quieras. Puedes comer sano, variado y adaptado a tus gustos. Eso sí, requiere tiempo, organización y cierta habilidad en la cocina.
+
+## ¿Quién debería elegir residencia universitaria en Zaragoza?
+
+La residencia universitaria en Zaragoza es la mejor opción si:
+
+- **Vienes de fuera y no conoces a nadie** en Zaragoza. La residencia te da un entorno social instantáneo.
+- **Es tu primer año fuera de casa** y prefieres una transición suave, sin tener que preocuparte de cocinar, limpiar o gestionar facturas.
+- **Eres estudiante Erasmus** y tu estancia es de un semestre o un curso. La residencia simplifica enormemente la logística.
+- **Tu presupuesto lo permite** y valoras la comodidad por encima del ahorro.
+- **Necesitas un entorno estructurado** para estudiar, con horarios fijos y bibliotecas accesibles.
+- **No quieres complicaciones burocráticas**: sin contratos de alquiler, sin fianzas, sin trámites con propietarios.
+
+## ¿Quién debería elegir piso compartido?
+
+El piso compartido en Zaragoza es mejor si:
+
+- **Quieres ahorrar dinero**. La diferencia de 200-500€/mes es significativa a lo largo de un curso.
+- **Ya conoces gente en Zaragoza** o tienes amigos con los que compartir piso.
+- **Valoras tu independencia** y quieres vivir sin horarios ni normas impuestas.
+- **Te gusta cocinar** o tienes necesidades alimentarias específicas.
+- **Llevas varios años en Zaragoza** y ya sabes cómo funciona la ciudad.
+- **Quieres elegir barrio y ubicación** concreta según tu facultad. Explora las opciones en [pisos en Zaragoza](/pisos/zaragoza).
+
+## Cómo encontrar la mejor opción para ti
+
+### Si eliges residencia
+
+1. Reserva con antelación: las plazas en residencias populares como Cerbuna o Campus Aura se agotan en primavera.
+2. Visita la residencia antes de reservar si es posible.
+3. Pregunta por el tipo de pensión (completa, media pensión, solo alojamiento).
+4. Consulta la política de cancelación y las condiciones del contrato.
+5. Revisa las opiniones de otros estudiantes.
+
+Puedes ver las [residencias disponibles en Zaragoza](/residencias/zaragoza) en Livix.
+
+### Si eliges piso compartido
+
+1. Empieza a buscar en mayo-junio para tener más opciones.
+2. Define tu presupuesto máximo (alquiler + suministros + comida).
+3. Elige barrio según la distancia a tu campus.
+4. Busca compañeros de piso compatibles en el [buscador de roommates](/roommates).
+5. Lee el contrato con atención antes de firmar.
+6. Documenta el estado del piso al entrar.
+
+En [Livix](/explore) puedes filtrar por precio, barrio, número de habitaciones y distancia a tu facultad.
+
+## Modelo híbrido: residencia el primer año, piso después
+
+Muchos estudiantes optan por un modelo mixto: viven en una residencia universitaria en Zaragoza durante el primer curso para adaptarse a la ciudad y hacer amigos, y a partir del segundo año se mudan a un piso compartido con los amigos que han hecho en la residencia.
+
+Este enfoque combina las ventajas de ambas opciones: la seguridad y el entorno social del primer año en residencia, y el ahorro y la independencia del piso compartido en los cursos siguientes.
+
+## Conclusión
+
+No hay una opción universalmente mejor. La elección entre residencia universitaria en Zaragoza y piso compartido depende de tu presupuesto, tu personalidad, tu situación social y tus prioridades. Lo importante es que tomes la decisión con información real y no por inercia o presión.
+
+Si necesitas ayuda para encontrar alojamiento en Zaragoza, ya sea residencia o piso compartido, en [Livix](/explore) tienes todas las opciones reunidas en un solo lugar, con filtros inteligentes y verificación de anuncios para que tu búsqueda sea segura y eficiente.`
+  },
+  {
+    id: 8,
+    title: "Guía Erasmus Zaragoza 2026: alojamiento, trámites y vida universitaria",
+    excerpt: "Todo lo que necesitas como estudiante Erasmus en Zaragoza: cómo encontrar alojamiento, tramitar el NIE, presupuesto mensual y consejos para disfrutar al máximo tu experiencia.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "estudiante",
+    image: zonasUniversidad,
+    readTime: 12,
+    content: `Si has sido seleccionado para hacer tu Erasmus en Zaragoza, enhorabuena. Has elegido (o te ha tocado) una de las mejores ciudades universitarias de España para estudiantes internacionales. Zaragoza combina un coste de vida asequible, una vida social intensa, una gastronomía excelente y una ubicación estratégica entre Madrid y Barcelona.
+
+Pero antes de disfrutar de todo eso, hay que resolver la logística. Esta guía cubre paso a paso todo lo que necesitas saber sobre Erasmus en Zaragoza: alojamiento, trámites administrativos, presupuesto, transporte y vida social.
+
+## Paso 1: Aceptación y documentación inicial
+
+Una vez que tu universidad de origen confirma tu plaza Erasmus en la Universidad de Zaragoza (Unizar), debes completar varios trámites antes de viajar:
+
+### Documentos que necesitas preparar
+
+- **Learning Agreement**: el acuerdo de estudios firmado por tu universidad de origen y Unizar. Define qué asignaturas cursarás y cómo se convalidarán.
+- **Carta de aceptación de Unizar**: la recibirás por email una vez que tu nominación sea procesada.
+- **Tarjeta Sanitaria Europea (TSE)**: si eres ciudadano de la UE, solicítala en tu país antes de viajar. Es gratuita y cubre asistencia sanitaria en España.
+- **Seguro médico privado**: si vienes de fuera de la UE o quieres cobertura extra, contrata un seguro que cubra tu estancia completa.
+- **Pasaporte o DNI europeo**: vigente durante toda tu estancia.
+- **Fotos de carnet**: lleva varias, las necesitarás para el NIE y la tarjeta universitaria.
+
+### Plazos importantes
+
+| Trámite | Plazo recomendado |
+|---------|-------------------|
+| Aceptar la plaza | Inmediatamente tras la asignación |
+| Learning Agreement | 2-3 meses antes de viajar |
+| Buscar alojamiento | 3-4 meses antes (mayo-junio para septiembre) |
+| Solicitar TSE | 1-2 meses antes |
+| Reservar vuelo/tren | 1-2 meses antes |
+
+## Paso 2: Encontrar alojamiento Erasmus en Zaragoza
+
+El alojamiento es la principal preocupación de todo estudiante Erasmus en Zaragoza. Las opciones principales son:
+
+### Residencia universitaria
+
+Las residencias son la opción más cómoda para Erasmus porque lo incluyen todo (alojamiento, comida, limpieza, WiFi) y no necesitas buscar compañeros de piso ni gestionar contratos complicados. El precio oscila entre 650 y 1.100€/mes según la residencia y el tipo de habitación.
+
+Consulta las [residencias universitarias disponibles en Zaragoza](/residencias/zaragoza) para comparar precios y servicios.
+
+### Piso compartido
+
+La opción más popular entre estudiantes Erasmus en Zaragoza que quieren ahorrar dinero y vivir una experiencia más auténtica. Una habitación en piso compartido cuesta entre 250 y 420€/mes, a lo que hay que sumar suministros (40-80€) y alimentación.
+
+Busca [habitaciones para Erasmus en Zaragoza](/habitaciones/zaragoza) en Livix, donde puedes filtrar por precio, barrio y duración del contrato.
+
+### Estudio o apartamento individual
+
+Si prefieres vivir solo, puedes encontrar estudios desde 450€/mes, aunque la oferta es más limitada y los precios más altos. Esta opción es menos común entre Erasmus.
+
+### Consejos clave para el alojamiento Erasmus en Zaragoza
+
+- **Reserva con antelación**: no esperes a llegar a Zaragoza para buscar. Los mejores pisos se alquilan en mayo-julio.
+- **Cuidado con las estafas**: nunca pagues una fianza antes de ver el piso o firmar contrato. Si alguien te pide dinero por adelantado sin contrato, desconfía.
+- **Contrato de temporada**: como Erasmus, tu estancia es temporal (5-10 meses). Busca contratos de temporada que se ajusten a tus fechas exactas.
+- **Barrios recomendados**: Centro, Delicias, Actur (si estudias en el Campus Río Ebro) y Romareda son los más populares entre Erasmus.
+- **Usa plataformas fiables**: en [Livix](/explore) todos los anuncios son verificados, lo que reduce el riesgo de estafas.
+
+## Paso 3: Tramitar el NIE (Número de Identidad de Extranjero)
+
+Si tu estancia Erasmus en Zaragoza supera los 3 meses (lo habitual), necesitas el NIE. Es un trámite obligatorio para ciudadanos de la UE y del EEE.
+
+### Qué necesitas para el NIE
+
+- Formulario EX-18 rellenado (descárgalo de la web de extranjería).
+- Pasaporte o DNI europeo original y copia.
+- Carta de aceptación de la Universidad de Zaragoza.
+- Certificado de matrícula (lo obtienes al matricularte en Unizar).
+- Justificante de medios económicos: extracto bancario reciente que demuestre que puedes mantenerte (normalmente se pide un mínimo de unos 600€/mes).
+- Seguro médico: TSE o seguro privado.
+- Tasa 012: aproximadamente 12€. Se paga en un banco con el modelo 790.
+
+### Dónde y cómo tramitarlo
+
+1. **Pide cita previa** en la Oficina de Extranjería de Zaragoza (Paseo María Agustín). Hazlo online en la web sede.administracionespublicas.gob.es. Las citas se agotan rápido, así que intenta reservar desde tu país antes de llegar.
+2. **Acude a la cita** con toda la documentación original y copias.
+3. **Recoge el certificado**: normalmente te lo dan en el momento o en pocos días.
+
+### Consejo importante
+
+No dejes el NIE para última hora. Sin él, no podrás abrir una cuenta bancaria española, firmar ciertos contratos ni acceder a algunos servicios. Solicita la cita lo antes posible, incluso antes de llegar a Zaragoza.
+
+## Paso 4: Presupuesto mensual Erasmus en Zaragoza
+
+Zaragoza es una de las ciudades más baratas de España para estudiantes Erasmus. Aquí tienes un presupuesto realista:
+
+| Concepto | Coste mensual (€) |
+|----------|-------------------|
+| Alojamiento (habitación compartida) | 280-400 |
+| Suministros (parte proporcional) | 40-70 |
+| Alimentación (cocinando en casa) | 120-200 |
+| Transporte (abono joven) | 20-35 |
+| Ocio y salidas | 80-150 |
+| Teléfono móvil | 10-20 |
+| Material académico | 20-40 |
+| **Total estimado** | **570-915** |
+
+### La beca Erasmus cubre parte
+
+La beca Erasmus+ estándar para España ronda los 300-400€/mes (varía según tu país de origen y tu universidad). Complementada con ahorros o ayuda familiar, Zaragoza es perfectamente asequible.
+
+### Trucos para ahorrar como Erasmus en Zaragoza
+
+- **Cocina en casa**: comer en restaurantes cada día dispara el presupuesto. Aprende 5-10 recetas básicas y compra en mercados como el Mercado Central.
+- **Abono transporte joven**: el bus y el tranvía tienen tarifas reducidas para menores de 30 años.
+- **Bici**: Zaragoza tiene una red excelente de carril bici. El servicio Bizi Zaragoza es muy económico.
+- **Descuentos de estudiante**: museos, cines, gimnasios y muchos restaurantes ofrecen precios reducidos con carnet de estudiante.
+- **Compra en grupo**: comparte gastos de alimentación y limpieza con tus compañeros de piso.
+
+## Paso 5: Vida universitaria en Unizar como Erasmus
+
+### Matriculación y orientación
+
+Al llegar a Zaragoza, tu primer paso es acudir a la Oficina de Relaciones Internacionales de Unizar (edificio Interfacultades). Allí te darán:
+
+- Tu certificado de llegada (lo necesita tu universidad de origen).
+- Información sobre matriculación.
+- Acceso al programa de mentores/buddy.
+- Información sobre cursos de español.
+
+### Cursos de español
+
+Unizar ofrece cursos intensivos de español para Erasmus a precios reducidos. Si tu nivel de español es bajo, apúntate al curso intensivo de septiembre (antes de que empiecen las clases). Hablar español, aunque sea a nivel básico, mejorará enormemente tu experiencia Erasmus en Zaragoza.
+
+### El sistema de buddy
+
+Unizar tiene un programa de mentores donde un estudiante español te acompaña durante tus primeras semanas. Tu buddy te ayudará con trámites, te enseñará la ciudad y te presentará a otros estudiantes. Apúntate desde la web de relaciones internacionales.
+
+### Asociaciones Erasmus
+
+- **ESN Zaragoza (Erasmus Student Network)**: la asociación más activa. Organiza fiestas, viajes, intercambios de idiomas y actividades culturales. Su tarjeta ESNcard te da descuentos en viajes (Ryanair, FlixBus) y en locales de Zaragoza.
+- **AEGEE Zaragoza**: otra asociación estudiantil europea con actividades y eventos regulares.
+
+## Paso 6: Vida social y ocio en Zaragoza
+
+### Zonas de fiesta
+
+- **El Tubo**: el corazón de las tapas y la vida nocturna en el centro. Calles estrechas llenas de bares y restaurantes.
+- **Zona Romareda/Plaza San Francisco**: bares frecuentados por universitarios, especialmente jueves noche (el jueves es la noche de fiesta estudiantil en Zaragoza).
+- **La Magdalena**: barrio alternativo con bares con música en vivo, terrazas y ambiente bohemio.
+
+### Tapas y gastronomía
+
+Zaragoza tiene una cultura de tapas increíble. En muchos bares del Tubo, con cada caña (1,50-2€) te ponen una tapa gratis. Esto hace que salir de cañas sea una forma barata y deliciosa de socializar.
+
+Platos que debes probar: ternasco de Aragón, migas, borraja con patatas, huevos rotos y las famosas frutas de Aragón.
+
+### Excursiones desde Zaragoza
+
+La ubicación de Zaragoza es perfecta para escapadas de fin de semana:
+
+- **Barcelona**: 1h 15min en AVE.
+- **Madrid**: 1h 15min en AVE.
+- **Pirineos**: 2-3h en coche o bus. Esquí en invierno, senderismo en verano.
+- **Huesca y Teruel**: ciudades aragonesas con encanto a menos de 2 horas.
+- **Monasterio de Piedra**: parque natural espectacular a 1h 30min.
+
+## Paso 7: Contactos útiles para Erasmus en Zaragoza
+
+| Servicio | Contacto |
+|----------|----------|
+| Oficina de Relaciones Internacionales Unizar | relint@unizar.es |
+| ESN Zaragoza | Instagram: @esnzaragoza |
+| Emergencias | 112 |
+| Policía Nacional (NIE) | Cita previa online |
+| Centro de Salud (asignación médico) | Salud Informa: 976 713 700 |
+
+## Checklist final para tu Erasmus en Zaragoza
+
+1. Firma el Learning Agreement y acepta tu plaza.
+2. Busca alojamiento Erasmus en Zaragoza con al menos 3 meses de antelación en [Livix](/explore).
+3. Solicita la Tarjeta Sanitaria Europea.
+4. Prepara toda la documentación para el NIE.
+5. Reserva tu vuelo o tren.
+6. Pide cita para el NIE antes de llegar (si es posible).
+7. Al llegar: ve a la Oficina de Relaciones Internacionales.
+8. Matricúlate y apúntate al curso de español.
+9. Tramita el NIE.
+10. Únete a ESN Zaragoza y al programa de buddy.
+11. Abre una cuenta bancaria si tu estancia supera 6 meses.
+12. Disfruta de Zaragoza.
+
+Zaragoza es una ciudad que enamora a los Erasmus. El tamaño perfecto para moverse a pie, la gente acogedora, la comida increíble y el coste de vida razonable hacen que muchos estudiantes internacionales consideren volver después de su intercambio. Tu experiencia Erasmus en Zaragoza puede ser la mejor etapa de tu vida universitaria si llegas preparado.
+
+¿Necesitas encontrar alojamiento Erasmus en Zaragoza? En [Livix](/explore) tienes cientos de opciones verificadas de [habitaciones](/habitaciones/zaragoza), [pisos](/pisos/zaragoza) y [residencias](/residencias/zaragoza) para encontrar tu hogar temporal en la capital aragonesa.`
+  },
+  {
+    id: 9,
+    title: "Precio de habitación en Zaragoza por barrios: mapa actualizado 2026",
+    excerpt: "Descubre cuánto cuesta una habitación en cada barrio de Zaragoza en 2026. Datos actualizados de precios, comparativas y consejos para encontrar la mejor relación calidad-precio.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "pisos",
+    image: pisosEstudiante,
+    readTime: 8,
+    content: `¿Cuánto cuesta una habitación en Zaragoza? Es la primera pregunta que se hace cualquier estudiante que busca piso. La respuesta depende, sobre todo, del barrio. En Zaragoza los precios de habitación varían significativamente de una zona a otra, y conocer estas diferencias puede ahorrarte cientos de euros al año.
+
+En este artículo te mostramos el precio de habitación en Zaragoza desglosado por barrios, con datos actualizados a marzo de 2026.
+
+## Panorama general del precio de habitación en Zaragoza
+
+El precio medio de una habitación en Zaragoza en 2026 se sitúa entre 280 y 380€ al mes. Esto convierte a Zaragoza en una de las ciudades universitarias más asequibles de España, significativamente más barata que Madrid (400-600€), Barcelona (450-700€) o Valencia (350-500€).
+
+Sin embargo, dentro de Zaragoza hay diferencias importantes según el barrio, el estado del piso, la cercanía al transporte público y si los gastos están incluidos o no.
+
+### Factores que influyen en el precio de habitación en Zaragoza
+
+Antes de entrar en el desglose por barrios, estos son los principales factores que hacen que una habitación sea más cara o más barata:
+
+- **Ubicación**: cercanía al centro y a los campus universitarios.
+- **Estado del piso**: reformado vs sin reformar. Un piso reformado puede costar 50-100€ más por habitación.
+- **Tamaño de la habitación**: las habitaciones de más de 12m² tienen prima.
+- **Exterior vs interior**: las habitaciones exteriores con luz natural son más caras.
+- **Gastos incluidos o no**: algunos anuncios incluyen agua, luz e internet; otros no. Siempre pregunta.
+- **Número de compañeros**: a más compañeros en el piso, menor suele ser el alquiler individual (pero también menos espacio común).
+- **Amueblada o no**: la mayoría de habitaciones para estudiantes en Zaragoza vienen amuebladas.
+
+## Precio de habitación en Zaragoza por barrios
+
+### Delicias: 250-350€/mes
+
+Delicias es el barrio más poblado de Zaragoza y uno de los más buscados por estudiantes por su excelente relación calidad-precio. Está bien conectado por bus y tranvía, tiene una oferta comercial enorme (supermercados, tiendas, bares) y la vida de barrio es muy activa.
+
+**Ventajas**: precio asequible, buena conexión con transporte público, mucha oferta de pisos, ambiente multicultural y animado. Muchos estudiantes de la Universidad San Jorge eligen Delicias por la conexión directa en bus.
+
+**Inconvenientes**: algunas zonas pueden ser ruidosas, y la distancia al Campus San Francisco es de unos 20-25 minutos andando o 10 en bus.
+
+**Precio medio 2026**: 290€/mes para una habitación estándar en piso compartido.
+
+### Actur - Rey Fernando: 280-380€/mes
+
+El Actur es la zona natural para estudiantes del Campus Río Ebro (ingenierías). Es un barrio moderno, planificado, con amplias avenidas, parques y el centro comercial Grancasa. El tranvía lo conecta con el centro en 15 minutos.
+
+**Ventajas**: cercanía al Campus Río Ebro (5-10 minutos andando), barrio seguro y limpio, buena oferta de servicios, tranvía directo al centro.
+
+**Inconvenientes**: algo alejado del centro para la vida nocturna, los pisos son relativamente nuevos y por eso algo más caros que en Delicias.
+
+**Precio medio 2026**: 320€/mes.
+
+### Centro (Casco Histórico y alrededores): 320-420€/mes
+
+Vivir en el centro de Zaragoza es la opción más cara pero también la más cómoda. Estás a pie de todo: el Campus San Francisco queda a 5-10 minutos andando, tienes El Tubo para salir de tapas, la Basílica del Pilar, tiendas, mercados y vida cultural a tu puerta.
+
+**Ventajas**: ubicación inmejorable, todo a pie, máxima vida social y cultural, cercanía al Campus San Francisco.
+
+**Inconvenientes**: el precio de habitación en Zaragoza centro es el más alto. Muchos edificios son antiguos y pueden no estar reformados. El ruido nocturno es mayor, especialmente en calles cercanas al Tubo.
+
+**Precio medio 2026**: 360€/mes.
+
+### Las Fuentes: 200-300€/mes
+
+Las Fuentes es el barrio más barato de Zaragoza para alquilar habitación. Situado al este del centro, junto al río Ebro, es un barrio tradicional con mucha personalidad.
+
+**Ventajas**: los precios más bajos de Zaragoza, cercanía al centro (15-20 minutos andando), buena conexión en bus, ambiente de barrio tranquilo.
+
+**Inconvenientes**: menos oferta de ocio que otras zonas, algunos pisos necesitan reforma, percepción de inseguridad en ciertas calles (aunque en general es un barrio tranquilo).
+
+**Precio medio 2026**: 240€/mes. Esto convierte a Las Fuentes en la mejor opción si tu prioridad es el ahorro.
+
+### Romareda: 300-400€/mes
+
+Romareda es uno de los barrios más demandados por estudiantes de Medicina, Ciencias y Derecho por su cercanía al Campus San Francisco y al Hospital Clínico. Es una zona residencial de nivel medio-alto, tranquila y con buenos servicios.
+
+**Ventajas**: cercanía al Campus San Francisco (10-15 minutos andando), barrio tranquilo ideal para estudiar, zonas verdes (Parque Grande), buena calidad de los pisos.
+
+**Inconvenientes**: el precio de habitación en Zaragoza-Romareda es relativamente alto, menor vida nocturna, menos oferta comercial que el centro.
+
+**Precio medio 2026**: 340€/mes.
+
+### San José: 250-350€/mes
+
+San José es un barrio amplio al sur del centro, con buena conexión en bus y un ambiente familiar. Tiene una oferta razonable de pisos compartidos y precios intermedios.
+
+**Ventajas**: buena relación calidad-precio, cercanía al Parque Grande y a Romareda, barrio tranquilo, bien comunicado.
+
+**Inconvenientes**: algo alejado de ambos campus (20-30 minutos andando al Campus San Francisco), menos vida estudiantil que otras zonas.
+
+**Precio medio 2026**: 290€/mes.
+
+## Tabla resumen: precio de habitación en Zaragoza 2026
+
+| Barrio | Rango de precios | Precio medio | Cercanía campus | Valoración estudiantes |
+|--------|-----------------|--------------|-----------------|----------------------|
+| Las Fuentes | 200-300€ | 240€ | Media | Ideal para ahorrar |
+| Delicias | 250-350€ | 290€ | Media | Mejor relación calidad-precio |
+| San José | 250-350€ | 290€ | Media-baja | Tranquilo y económico |
+| Actur | 280-380€ | 320€ | Alta (Río Ebro) | Perfecto para ingenierías |
+| Romareda | 300-400€ | 340€ | Alta (San Francisco) | Tranquilo y bien ubicado |
+| Centro | 320-420€ | 360€ | Máxima (San Francisco) | La mejor ubicación |
+
+## Cuándo suben y bajan los precios
+
+El precio de habitación en Zaragoza no es estable durante todo el año. Sigue un patrón estacional claro:
+
+- **Septiembre-octubre**: pico máximo de precios. La demanda es altísima porque empieza el curso y todos los estudiantes buscan piso a la vez. Los mejores pisos ya están cogidos.
+- **Noviembre-enero**: los precios se estabilizan. Quedan habitaciones disponibles, a veces con mejores precios porque los propietarios quieren llenar el piso completo.
+- **Febrero**: segundo pico menor por los estudiantes del segundo semestre y los Erasmus que llegan en febrero.
+- **Junio-agosto**: los precios bajan. Muchos estudiantes dejan el piso en junio y los propietarios necesitan nuevos inquilinos para septiembre. Es el mejor momento para negociar.
+
+**Consejo**: si puedes, empieza a buscar tu habitación en mayo o junio. Tendrás más opciones, podrás negociar mejor el precio y evitarás el estrés de septiembre.
+
+## Gastos adicionales que debes contemplar
+
+El precio de habitación en Zaragoza que aparece en los anuncios no siempre incluye todos los gastos. Asegúrate de preguntar qué está incluido:
+
+| Gasto | Coste mensual estimado |
+|-------|----------------------|
+| Agua | 8-15€/persona |
+| Luz | 15-30€/persona |
+| Gas (calefacción) | 10-25€/persona (en invierno sube) |
+| Internet | 8-12€/persona |
+| Comunidad | Normalmente incluida en el alquiler |
+| **Total suministros** | **40-80€/persona** |
+
+En invierno, el gasto de calefacción puede dispararse si el piso no tiene buena eficiencia energética. Pregunta siempre por el tipo de calefacción (gas natural es más barato que eléctrica) y por el certificado energético del piso.
+
+## Dónde buscar habitación al mejor precio
+
+Para encontrar las mejores ofertas de habitación en Zaragoza, te recomendamos:
+
+1. **Usar plataformas especializadas**: en [Livix](/explore) puedes filtrar por barrio, precio y tipo de alojamiento. Todos los anuncios están verificados.
+2. **Buscar compañeros primero**: si encuentras compañeros de piso compatibles en el [buscador de roommates](/roommates), podéis alquilar un piso entero y dividir gastos, lo que suele salir más barato que alquilar habitaciones sueltas.
+3. **Comparar siempre**: mira al menos 5-10 anuncios antes de decidirte. El mismo barrio puede tener diferencias de 100€ entre pisos.
+4. **Negociar**: si el piso lleva tiempo anunciado o estás dispuesto a firmar un contrato largo, puedes negociar el precio con el propietario.
+5. **Considerar barrios alternativos**: si Las Fuentes o Delicias te quedan bien de transporte, puedes ahorrar 50-100€/mes respecto al centro.
+
+Explora ahora las [habitaciones disponibles en Zaragoza](/habitaciones/zaragoza) y los [pisos para estudiantes](/pisos/zaragoza) en Livix para encontrar tu próximo hogar.`
+  },
+  {
+    id: 10,
+    title: "Las 10 mejores residencias universitarias en Zaragoza (ranking 2026)",
+    excerpt: "Ranking actualizado de las mejores residencias universitarias en Zaragoza: precios, servicios, ubicación y opiniones de estudiantes para ayudarte a elegir.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "pisos",
+    image: zonasUniversidad,
+    readTime: 10,
+    content: `Elegir residencia universitaria en Zaragoza es una decisión que marcará tu experiencia como estudiante. No todas las residencias son iguales: los precios, los servicios, la ubicación y el ambiente varían enormemente de una a otra.
+
+En este ranking 2026 analizamos las mejores residencias de Zaragoza para que puedas comparar y elegir con criterio. Hemos evaluado cada residencia en función de precio, ubicación, instalaciones, servicios incluidos y opiniones de estudiantes actuales y antiguos.
+
+## Criterios de evaluación
+
+Para elaborar este ranking de las mejores residencias en Zaragoza hemos tenido en cuenta:
+
+- **Precio**: relación calidad-precio mensual.
+- **Ubicación**: cercanía a los campus universitarios y al transporte público.
+- **Instalaciones**: calidad de las habitaciones, zonas comunes, gimnasio, biblioteca.
+- **Servicios**: pensión alimenticia, limpieza, lavandería, WiFi, actividades.
+- **Opiniones**: valoración media de estudiantes que han vivido allí.
+
+## 1. Colegio Mayor Pedro Cerbuna
+
+**La residencia pública de referencia en Zaragoza**
+
+El Colegio Mayor Pedro Cerbuna es la residencia universitaria más emblemática de Zaragoza. Pertenece a la Universidad de Zaragoza y está situada en pleno Campus San Francisco, lo que la convierte en la opción más cómoda para estudiantes de Derecho, Economía, Filosofía, Ciencias y Medicina.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Colegio Mayor público (Unizar) |
+| Ubicación | Campus San Francisco |
+| Precio mensual | 700-850€ (pensión completa) |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa (desayuno, comida y cena) |
+| Plazas | ~200 |
+
+**Puntos fuertes**: ubicación inmejorable en el campus, precio competitivo al ser público, excelente ambiente académico, programa cultural intenso con conferencias y actividades, biblioteca propia.
+
+**Puntos débiles**: las instalaciones son funcionales pero no lujosas (es un edificio público), las plazas se agotan rápido y hay lista de espera, las habitaciones son más pequeñas que en residencias privadas.
+
+**Ideal para**: estudiantes que priorizan ubicación y precio, y quieren un ambiente académico serio.
+
+### Cómo solicitar plaza
+
+La solicitud se realiza a través de la web de la Universidad de Zaragoza. El plazo suele abrirse en primavera (marzo-mayo) y se adjudica por expediente académico y criterios socioeconómicos. Es imprescindible solicitarlo con antelación.
+
+## 2. Residencia Campus Aura
+
+**La opción premium más moderna**
+
+Campus Aura es una de las mejores residencias privadas de Zaragoza. Inaugurada recientemente, ofrece instalaciones de última generación y un concepto de residencia más cercano al modelo anglosajón.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Zona Actur, cerca del Campus Río Ebro |
+| Precio mensual | 850-1.100€ |
+| Habitaciones | Individuales y estudios |
+| Pensión | Media pensión o completa |
+| Plazas | ~300 |
+
+**Puntos fuertes**: instalaciones nuevas y modernas, habitaciones amplias con baño privado, gimnasio completo, salas de estudio equipadas, lavandería, zona de coworking, actividades sociales organizadas.
+
+**Puntos débiles**: el precio más alto de Zaragoza, ubicación alejada del centro y del Campus San Francisco (aunque bien conectada por tranvía).
+
+**Ideal para**: estudiantes de ingenierías en el Campus Río Ebro que buscan comodidad premium, y estudiantes internacionales que quieren una experiencia todo incluido.
+
+## 3. Residencia Pignatelli
+
+**Tradición y buena ubicación**
+
+La Residencia Pignatelli es una de las más veteranas de Zaragoza. Ubicada cerca del centro, combina una localización privilegiada con un ambiente familiar y acogedor.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Centro, cerca de Plaza Aragón |
+| Precio mensual | 750-950€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~120 |
+
+**Puntos fuertes**: ubicación céntrica excelente, cercanía al Campus San Francisco (10 minutos andando), ambiente familiar con pocos residentes, trato personalizado, buena cocina casera.
+
+**Puntos débiles**: instalaciones menos modernas que las residencias nuevas, habitaciones algo pequeñas, menos actividades organizadas que otras residencias.
+
+**Ideal para**: estudiantes que valoran la cercanía al centro y un ambiente más íntimo y tranquilo.
+
+## 4. Residencia Santa Isabel
+
+**Ambiente familiar y precio competitivo**
+
+Santa Isabel es una residencia con larga trayectoria en Zaragoza, conocida por su buen ambiente y su trato cercano a los residentes.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Barrio Santa Isabel / Actur |
+| Precio mensual | 650-800€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~100 |
+
+**Puntos fuertes**: uno de los precios más competitivos entre las mejores residencias de Zaragoza, ambiente familiar, buena comida casera, personal cercano y atento.
+
+**Puntos débiles**: instalaciones correctas pero no lujosas, ubicación algo periférica (necesitas transporte para llegar al Campus San Francisco).
+
+**Ideal para**: estudiantes con presupuesto ajustado que quieren residencia con pensión completa sin pagar 1.000€ al mes.
+
+## 5. Resa Zaragoza (Residencias Universitarias Resa)
+
+**La cadena nacional con estándares homogéneos**
+
+Resa es la mayor red de residencias universitarias de España. Su residencia en Zaragoza ofrece la fiabilidad y los estándares de servicio de una gran cadena, con la ventaja de su experiencia gestionando alojamiento estudiantil.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada (cadena nacional) |
+| Ubicación | Varía según sede |
+| Precio mensual | 750-1.000€ |
+| Habitaciones | Individuales con baño |
+| Pensión | Flexible (con o sin pensión) |
+| Plazas | ~200 |
+
+**Puntos fuertes**: gestión profesional, habitaciones con baño privado, flexibilidad en el régimen de comidas, app propia para gestiones, programa de actividades Resa+.
+
+**Puntos débiles**: puede resultar impersonal respecto a residencias más pequeñas, precio elevado, las instalaciones varían según la sede.
+
+**Ideal para**: estudiantes que buscan un estándar de calidad garantizado y flexibilidad en los servicios.
+
+## 6. Residencia Universitaria Inmaculada
+
+**Opción céntrica y económica**
+
+La Residencia Inmaculada ofrece una buena relación calidad-precio en una ubicación céntrica.
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada (religiosa) |
+| Ubicación | Centro |
+| Precio mensual | 600-750€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~80 |
+
+**Puntos fuertes**: precio muy competitivo para su ubicación céntrica, ambiente tranquilo y ordenado, buena comida, ideal para estudiar.
+
+**Puntos débiles**: normas de convivencia más estrictas (horarios, visitas), instalaciones antiguas, ambiente menos social que otras residencias.
+
+**Ideal para**: estudiantes que priorizan tranquilidad, ahorro y cercanía al centro.
+
+## 7. Residencia Moncayo
+
+**Buena opción intermedia**
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Zona universitaria |
+| Precio mensual | 700-900€ |
+| Habitaciones | Individuales |
+| Pensión | Completa |
+| Plazas | ~90 |
+
+**Puntos fuertes**: buen equilibrio entre precio, ubicación y servicios. Ambiente estudiantil consolidado, buenas salas de estudio.
+
+**Puntos débiles**: instalaciones algo datadas, menos actividades organizadas que las residencias más grandes.
+
+## 8. Colegio Mayor Santa María del Pilar
+
+**Para quien busca tradición y vida colegial**
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Colegio Mayor |
+| Ubicación | Zona centro-universidad |
+| Precio mensual | 750-900€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~110 |
+
+**Puntos fuertes**: fuerte vida colegial con actividades culturales, deportivas y sociales. Buen ambiente entre residentes, tradición universitaria.
+
+**Puntos débiles**: normas de convivencia definidas, puede no encajar con todos los perfiles de estudiante.
+
+**Ideal para**: estudiantes que buscan una experiencia universitaria clásica con vida comunitaria activa.
+
+## 9. Residencia José Camón Aznar
+
+**Opción discreta y funcional**
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Centro |
+| Precio mensual | 650-850€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~70 |
+
+**Puntos fuertes**: buena ubicación, precio razonable, ambiente tranquilo. Adecuada para estudiantes que necesitan concentración.
+
+**Puntos débiles**: menor visibilidad y menos actividades sociales, instalaciones funcionales sin lujos.
+
+## 10. Residencia San Agustín
+
+**Económica y bien ubicada**
+
+| Característica | Detalle |
+|---------------|---------|
+| Tipo | Residencia privada |
+| Ubicación | Zona centro |
+| Precio mensual | 600-750€ |
+| Habitaciones | Individuales y dobles |
+| Pensión | Completa |
+| Plazas | ~60 |
+
+**Puntos fuertes**: uno de los precios más bajos entre las mejores residencias de Zaragoza, ubicación céntrica, ambiente tranquilo.
+
+**Puntos débiles**: instalaciones más antiguas, menor oferta de actividades, residencia pequeña.
+
+**Ideal para**: estudiantes con presupuesto limitado que quieren vivir en el centro con pensión completa.
+
+## Tabla comparativa: mejores residencias en Zaragoza 2026
+
+| Residencia | Precio/mes | Ubicación | Pensión | Puntuación |
+|-----------|-----------|-----------|---------|------------|
+| Pedro Cerbuna | 700-850€ | Campus S. Francisco | Completa | 9/10 |
+| Campus Aura | 850-1.100€ | Actur | Flexible | 8.5/10 |
+| Pignatelli | 750-950€ | Centro | Completa | 8/10 |
+| Santa Isabel | 650-800€ | Actur | Completa | 8/10 |
+| Resa Zaragoza | 750-1.000€ | Varía | Flexible | 7.5/10 |
+| Inmaculada | 600-750€ | Centro | Completa | 7.5/10 |
+| Moncayo | 700-900€ | Zona univ. | Completa | 7/10 |
+| Sta. María del Pilar | 750-900€ | Centro-univ. | Completa | 7/10 |
+| José Camón Aznar | 650-850€ | Centro | Completa | 7/10 |
+| San Agustín | 600-750€ | Centro | Completa | 7/10 |
+
+## ¿Residencia o piso compartido?
+
+Antes de reservar plaza en una de las mejores residencias de Zaragoza, considera si realmente es la mejor opción para ti. Una habitación en [piso compartido en Zaragoza](/habitaciones/zaragoza) cuesta entre 250 y 420€/mes, significativamente menos que cualquier residencia, aunque tendrás que cocinar y gestionar los gastos del hogar.
+
+Si quieres una comparación detallada, lee nuestra [guía de residencia vs piso compartido](/blog/7).
+
+## Cómo reservar plaza
+
+La mayoría de residencias abren su plazo de reserva entre marzo y mayo para el curso siguiente. Las plazas en las mejores residencias de Zaragoza se agotan rápido, así que no dejes la reserva para septiembre.
+
+### Pasos generales
+
+1. **Investiga**: compara precios, servicios y ubicaciones en esta guía y en las webs de cada residencia.
+2. **Visita**: si estás en Zaragoza o puedes acercarte, visita la residencia antes de reservar. Muchas ofrecen visitas guiadas.
+3. **Solicita plaza**: rellena el formulario de solicitud en la web de la residencia o contacta por teléfono/email.
+4. **Pago de reserva**: normalmente hay que pagar una matrícula o reserva (100-500€) que se descuenta de la primera mensualidad.
+5. **Documentación**: DNI/pasaporte, certificado de matrícula universitaria y, en algunos casos, expediente académico.
+
+## Alternativas: busca tu alojamiento ideal
+
+Si después de revisar este ranking de las mejores residencias en Zaragoza decides que prefieres un piso compartido, o si las residencias están completas, no te preocupes. En [Livix](/explore) encontrarás cientos de [habitaciones](/habitaciones/zaragoza), [pisos](/pisos/zaragoza) y [residencias](/residencias/zaragoza) verificadas para estudiantes en Zaragoza.
+
+También puedes usar nuestro [buscador de compañeros de piso](/roommates) para encontrar roommates compatibles y alquilar un piso entero entre varios, que suele ser la opción más económica.`
+  },
+  {
+    id: 11,
+    title: "Colegio Mayor Pedro Cerbuna en Zaragoza: guía completa 2026",
+    excerpt: "Todo sobre el Colegio Mayor Pedro Cerbuna: habitaciones, precios, proceso de admisión, actividades y vida diaria junto al Campus San Francisco.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "estudiante",
+    image: tecnicasEstudio,
+    readTime: 10,
+    content: `El **Colegio Mayor Pedro Cerbuna** es la residencia universitaria más emblemática de Zaragoza y una de las más antiguas de España. Situado junto al [Campus San Francisco](/campus/san-francisco), lleva décadas acogiendo a estudiantes de toda España y del extranjero que buscan mucho más que un lugar donde dormir: una experiencia universitaria completa.
+
+Si estás valorando alojarte en el **Colegio Mayor Pedro Cerbuna** durante tu etapa universitaria, esta guía te ofrece toda la información que necesitas para tomar una decisión informada en 2026.
+
+## Historia y tradición del Colegio Mayor Pedro Cerbuna
+
+El Colegio Mayor Pedro Cerbuna debe su nombre al obispo y mecenas aragonés que refundó la Universidad de Zaragoza en 1583. Este centro lleva activo desde mediados del siglo XX y pertenece a la propia Universidad de Zaragoza, lo que le otorga un carácter público y una vinculación directa con la vida académica de Unizar.
+
+A lo largo de las décadas, el **Colegio Mayor Pedro Cerbuna** ha formado a generaciones de profesionales aragoneses y ha sido cuna de debates intelectuales, actividades culturales y amistades que duran toda la vida. Su modelo educativo va más allá del alojamiento: apuesta por la formación integral del estudiante.
+
+### Valores del centro
+
+- **Excelencia académica**: se fomenta el rendimiento y se organizan tutorías y grupos de estudio
+- **Convivencia**: la vida en comunidad es el pilar fundamental
+- **Cultura y deporte**: programación constante de actividades para colegiales
+- **Compromiso social**: voluntariado y proyectos solidarios
+
+## Ubicación: junto al Campus San Francisco
+
+Una de las mayores ventajas del **Colegio Mayor Pedro Cerbuna** es su ubicación privilegiada. Se encuentra en la calle Violante de Hungría, literalmente a dos minutos andando del [Campus San Francisco](/campus/san-francisco), el campus más céntrico de la Universidad de Zaragoza.
+
+### Qué tienes cerca
+
+- **[Campus San Francisco](/campus/san-francisco)**: Facultades de Derecho, Economía, Filosofía y Letras, Ciencias, Medicina — a menos de 5 minutos a pie
+- **Centro de la ciudad**: Gran Vía, Paseo Independencia y la zona comercial están a 10-15 minutos andando
+- **Transporte**: parada de tranvía a 5 minutos, múltiples líneas de autobús urbano
+- **Servicios**: supermercados, farmacias, copisterías y cafeterías universitarias en el entorno inmediato
+- **Parque Grande José Antonio Labordeta**: a 10 minutos, ideal para correr o pasear
+
+Si estudias en el Campus San Francisco, el **Colegio Mayor Pedro Cerbuna** es posiblemente la opción de alojamiento más cómoda que existe. Te levantas, desayunas y en cinco minutos estás en clase.
+
+## Habitaciones y tipos de alojamiento
+
+El Colegio Mayor Pedro Cerbuna ofrece diferentes tipos de habitación para adaptarse a distintas necesidades y presupuestos:
+
+### Habitación individual estándar
+- Cama, escritorio, armario, estantería
+- Baño compartido en planta
+- La opción más económica
+- Ideal si buscas lo esencial y no te importa compartir baño
+
+### Habitación individual con baño
+- Mismas prestaciones que la estándar pero con baño privado
+- Mayor demanda, se agota antes
+- Recomendada si valoras la intimidad
+
+### Habitación doble
+- Dos camas, dos escritorios, baño compartido o privado según disponibilidad
+- Precio más reducido por persona
+- Buena opción si vienes con un amigo o quieres ahorrar
+
+### Instalaciones comunes
+- **Salas de estudio**: abiertas hasta altas horas, con ambiente de silencio
+- **Biblioteca**: con fondos propios y acceso a la red de bibliotecas de Unizar
+- **Salón de actos**: para conferencias, debates y proyecciones
+- **Sala de TV y ocio**: para desconectar entre clases
+- **Lavandería**: con lavadoras y secadoras de autoservicio
+- **Zonas deportivas**: acceso a instalaciones deportivas universitarias cercanas
+- **Wi-Fi**: conexión en todo el edificio
+
+## Precios y tarifas 2025-2026
+
+Los precios del **Colegio Mayor Pedro Cerbuna** son competitivos dentro del mercado de residencias universitarias en Zaragoza, especialmente considerando que es un centro público:
+
+| Tipo de habitación | Precio mensual aprox. | Incluye |
+|---|---|---|
+| Individual estándar | 650-750 EUR | Pensión completa, Wi-Fi, limpieza |
+| Individual con baño | 750-850 EUR | Pensión completa, Wi-Fi, limpieza |
+| Doble (por persona) | 550-650 EUR | Pensión completa, Wi-Fi, limpieza |
+
+**Qué incluye el precio:**
+- Pensión completa (desayuno, comida y cena)
+- Limpieza de zonas comunes y habitación
+- Wi-Fi de alta velocidad
+- Acceso a todas las instalaciones y actividades
+- Seguro de responsabilidad civil
+- Calefacción y aire acondicionado
+
+Estos precios pueden variar cada curso. Consulta siempre la web oficial de la Universidad de Zaragoza para la tarifa actualizada.
+
+### Comparativa con otras opciones
+
+Para poner estos precios en contexto, una [habitación en un piso compartido en Zaragoza](/habitaciones/zaragoza) cuesta entre 250 y 400 EUR al mes, pero a eso hay que sumar comida (150-200 EUR), suministros (50-80 EUR) y otros gastos. En total, vivir por tu cuenta puede salir por 500-700 EUR mensuales, mientras que en el **Colegio Mayor Pedro Cerbuna** tienes todo incluido desde 650 EUR aproximadamente.
+
+Si buscas comparar con otras [residencias en Zaragoza](/residencias/zaragoza), el Cerbuna suele ser más económico que las residencias privadas.
+
+## Proceso de admisión: cómo solicitar plaza
+
+Acceder al **Colegio Mayor Pedro Cerbuna** requiere seguir un proceso de solicitud con plazos definidos. La demanda suele superar la oferta, así que conviene prepararse con antelación.
+
+### Requisitos generales
+
+1. **Estar matriculado** (o pre-matriculado) en la Universidad de Zaragoza
+2. **Expediente académico**: se valora la nota media. Los estudiantes de nuevo ingreso presentan la nota de acceso
+3. **Situación económica**: se tienen en cuenta los ingresos familiares
+4. **Distancia geográfica**: se prioriza a estudiantes cuyo domicilio familiar está lejos de Zaragoza
+5. **Participación**: se valora positivamente la implicación en actividades del colegio mayor (para renovaciones)
+
+### Calendario orientativo
+
+- **Marzo-abril**: apertura del plazo de solicitudes para el curso siguiente
+- **Mayo-junio**: resolución provisional de admitidos
+- **Julio**: formalización de matrícula y pago de reserva
+- **Septiembre**: incorporación al colegio mayor
+
+### Documentación necesaria
+
+- Formulario de solicitud cumplimentado
+- Fotocopia del DNI o pasaporte
+- Certificado académico o nota de selectividad
+- Declaración de la renta familiar
+- Certificado de empadronamiento
+- Fotografía tamaño carnet
+
+### Consejo clave
+
+Presenta la solicitud lo antes posible dentro del plazo. Las plazas son limitadas y la lista de espera puede ser larga. Si no consigues plaza en el Cerbuna, valora otras [residencias en Zaragoza](/residencias/zaragoza) o busca [habitaciones en pisos compartidos](/habitaciones/zaragoza) como alternativa.
+
+## Vida diaria en el Colegio Mayor Pedro Cerbuna
+
+Vivir en un colegio mayor no es solo dormir y estudiar. El **Colegio Mayor Pedro Cerbuna** ofrece una experiencia de comunidad que difícilmente encontrarás en un piso compartido.
+
+### Un día típico
+
+- **7:30 - 9:30**: Desayuno en el comedor (buffet con opciones variadas)
+- **9:00 - 14:00**: Clases en el [Campus San Francisco](/campus/san-francisco), a 5 minutos andando
+- **14:00 - 15:30**: Comida en el comedor del colegio
+- **16:00 - 20:00**: Estudio en sala, actividades deportivas o culturales
+- **20:30 - 21:30**: Cena
+- **21:30 en adelante**: Tiempo libre, socialización, estudio nocturno
+
+### Plan de comidas
+
+El servicio de comedor es uno de los grandes atractivos. La comida es casera, variada y equilibrada:
+
+- **Desayuno**: buffet libre con café, zumo, tostadas, cereales, fruta
+- **Comida**: primer plato, segundo plato, postre y pan. Siempre hay opción de ensalada
+- **Cena**: más ligera, con opciones calientes y frías
+
+Se contemplan dietas especiales (celíacos, vegetarianos, intolerancias) previa comunicación al servicio de comedor. Los fines de semana el horario de desayuno se amplía.
+
+### Normas de convivencia
+
+Como en cualquier colegio mayor, existen normas básicas:
+
+- Horarios de silencio a partir de las 23:00
+- Política de visitas con horario establecido
+- Prohibido fumar dentro del edificio
+- Respeto a las zonas comunes
+- Normas especiales en período de exámenes (silencio reforzado)
+
+## Actividades culturales y deportivas
+
+El programa de actividades es uno de los sellos distintivos del **Colegio Mayor Pedro Cerbuna**. Cada curso se organiza un calendario completo que incluye:
+
+### Actividades culturales
+- **Ciclos de conferencias**: profesores, profesionales y figuras públicas dan charlas sobre temas de actualidad
+- **Debates y mesas redondas**: sobre política, ciencia, sociedad y cultura
+- **Cine fórum**: proyecciones seguidas de coloquio
+- **Talleres**: fotografía, teatro, escritura creativa, idiomas
+- **Visitas culturales**: museos, exposiciones, viajes organizados por Aragón
+
+### Actividades deportivas
+- **Torneos internos**: fútbol sala, baloncesto, pádel, ajedrez
+- **Competiciones intercolegiales**: contra otros colegios mayores y residencias
+- **Acceso a instalaciones deportivas** de la Universidad de Zaragoza (piscina, gimnasio, pistas de atletismo)
+
+### Vida social
+- **Fiestas colegiales**: las celebraciones tradicionales del colegio son momentos icónicos del curso
+- **Cena de gala**: al menos una vez al año, con dress code formal
+- **Eventos de bienvenida**: para integrar a los nuevos colegiales cada septiembre
+- **Red de antiguos colegiales**: networking con exalumnos que ya están en el mercado laboral
+
+## Ventajas de vivir en el Colegio Mayor Pedro Cerbuna
+
+**Proximidad absoluta al campus**: si estudias en el [Campus San Francisco](/campus/san-francisco), no hay opción más cerca. Olvídate del transporte.
+
+**Todo incluido**: comida, limpieza, suministros, Wi-Fi. No tienes que preocuparte por cocinar, limpiar ni pagar facturas.
+
+**Ambiente académico**: estar rodeado de estudiantes motivados mejora tu rendimiento. Las salas de estudio con ambiente de silencio son un recurso valiosísimo en época de exámenes.
+
+**Red de contactos**: los lazos que se crean en un colegio mayor duran toda la vida. Muchos colegiales mantienen relación profesional y personal décadas después.
+
+**Seguridad**: recepción 24h, control de acceso, ambiente supervisado. Ideal si es tu primer año fuera de casa y tus padres buscan tranquilidad.
+
+**Formación integral**: las actividades culturales y deportivas complementan tu formación académica de un modo que un piso compartido no puede ofrecer.
+
+## Desventajas y aspectos a considerar
+
+**Menos libertad**: las normas de horarios, visitas y convivencia pueden resultar restrictivas si valoras mucho tu independencia.
+
+**Espacio limitado**: las habitaciones son funcionales pero no grandes. Si necesitas mucho espacio o tienes muchas pertenencias, puede quedarse corto.
+
+**Precio**: aunque es competitivo si calculas el todo incluido, el desembolso mensual es superior al de una habitación en piso compartido.
+
+**Lista de espera**: la alta demanda puede dificultar el acceso, especialmente para estudiantes de nuevo ingreso sin expediente previo.
+
+**Cierre en vacaciones**: durante Navidad, Semana Santa y verano, el colegio mayor cierra. Necesitas tener alternativa para esos períodos.
+
+**Comida sin flexibilidad total**: aunque el menú es variado, no cocinas tú. Si te gusta cocinar o tienes preferencias muy específicas, puede ser una limitación.
+
+## Alternativas al Colegio Mayor Pedro Cerbuna
+
+Si no consigues plaza o prefieres otras opciones, Zaragoza ofrece alternativas de alojamiento:
+
+- **[Otros colegios mayores en Zaragoza](/colegios-mayores/zaragoza)**: como el Colegio Mayor Virgen del Carmen o el Santa Isabel
+- **[Residencias universitarias](/residencias/zaragoza)**: privadas, con servicios similares pero generalmente más caras
+- **[Pisos compartidos](/pisos/zaragoza)**: la opción más popular entre estudiantes. Mayor libertad y generalmente más económicos
+- **[Habitaciones individuales](/habitaciones/zaragoza)**: si prefieres alquilar solo una habitación en un piso ya establecido
+
+En [Livix](/explore) puedes comparar todas las opciones de alojamiento universitario en Zaragoza y filtrar por precio, zona, tipo de alojamiento y servicios incluidos.
+
+## Opiniones de estudiantes que han vivido en el Cerbuna
+
+Las experiencias de quienes han pasado por el **Colegio Mayor Pedro Cerbuna** suelen coincidir en varios puntos:
+
+### Lo que más valoran
+- La cercanía al campus y al centro de la ciudad
+- El ambiente de estudio durante los exámenes
+- Las amistades y la vida comunitaria
+- No tener que preocuparse por cocinar ni limpiar
+- Las actividades culturales y deportivas
+
+### Lo que menos les convence
+- Los horarios de comedor (poco flexibles)
+- Las normas de visitas nocturnas
+- El tamaño de algunas habitaciones
+- La calidad variable del Wi-Fi en horas punta
+
+La mayoría de excolegiales recomiendan la experiencia, especialmente para el primer año de universidad, cuando la adaptación a la vida fuera de casa es más intensa.
+
+## Preguntas frecuentes
+
+### ¿Puedo alojarme solo un semestre?
+Generalmente las plazas se adjudican por curso completo, pero conviene consultarlo directamente con la administración del colegio mayor.
+
+### ¿Hay plazas para estudiantes de máster o doctorado?
+Sí, aunque la prioridad suele ser para estudiantes de grado. Los postgraduados pueden solicitar plaza si hay disponibilidad.
+
+### ¿Aceptan estudiantes Erasmus?
+El **Colegio Mayor Pedro Cerbuna** acoge estudiantes internacionales, incluidos Erasmus. Es una excelente opción para quienes llegan a Zaragoza sin conocer la ciudad.
+
+### ¿Se puede aparcar cerca?
+Hay aparcamiento público en la zona, pero no plazas reservadas para colegiales. La ubicación céntrica hace que no necesites coche.
+
+## Cómo tomar la decisión
+
+Si estás dudando entre el **Colegio Mayor Pedro Cerbuna** y un piso compartido, hazte estas preguntas:
+
+1. **¿Es tu primer año fuera de casa?** Si sí, el colegio mayor facilita mucho la transición
+2. **¿Valoras más la comodidad o la independencia?** Todo incluido vs. gestionar tu propia casa
+3. **¿Tu presupuesto permite 650-850 EUR/mes?** Si no, un [piso compartido](/pisos/zaragoza) será más económico
+4. **¿Estudias en el Campus San Francisco?** Si sí, la ubicación es imbatible
+5. **¿Quieres participar en actividades y conocer gente?** El colegio mayor está diseñado para ello
+
+Sea cual sea tu elección, lo importante es que investigues bien antes de decidir. Explora todas las opciones de [alojamiento universitario en Zaragoza](/explore) y empieza a buscar con tiempo. Las mejores plazas — tanto en colegios mayores como en pisos — vuelan en primavera.`
+  },
+  {
+    id: 12,
+    title: "Vivir en el barrio del Actur como estudiante en Zaragoza",
+    excerpt: "Guía completa del Actur: precios de alquiler, transporte a la universidad, servicios, ocio y todo lo que necesitas saber para vivir en este barrio.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "consejos",
+    image: gestionTiempo,
+    readTime: 8,
+    content: `El Actur es uno de los barrios más populares entre estudiantes universitarios en Zaragoza, y no es casualidad. Su cercanía al Campus Río Ebro, su excelente conexión por tranvía y sus precios de alquiler razonables lo convierten en una de las mejores zonas para **vivir en Actur Zaragoza** durante la etapa universitaria.
+
+En esta guía te contamos todo lo que necesitas saber sobre **vivir en Actur Zaragoza** como estudiante: desde los precios reales de alquiler hasta los mejores sitios para comer, hacer deporte y salir de fiesta.
+
+## Dónde está el Actur y por qué gusta a los estudiantes
+
+El Actur (oficialmente Actur-Rey Fernando) es un barrio amplio y moderno situado al norte del centro de Zaragoza, al otro lado del río Ebro. Se desarrolló principalmente en las décadas de 1970 y 1980, lo que le da un aspecto urbanístico ordenado con avenidas anchas, bloques de viviendas bien distribuidos y abundantes zonas verdes.
+
+### Datos clave del barrio
+- **Población**: aproximadamente 60.000 habitantes, uno de los barrios más poblados de Zaragoza
+- **Carácter**: residencial, familiar y tranquilo
+- **Ambiente estudiantil**: alto, gracias a la cercanía del Campus Río Ebro
+- **Seguridad**: buena reputación, barrio tranquilo con poca conflictividad
+
+Para los estudiantes, **vivir en Actur Zaragoza** significa estar cerca de clase sin renunciar a servicios ni a buenas comunicaciones con el centro.
+
+## Conexiones de transporte a las universidades
+
+Uno de los mayores atractivos del Actur para estudiantes es su red de transporte.
+
+### Al Campus Río Ebro (ingenierías, arquitectura)
+- **A pie**: 10-20 minutos dependiendo de la zona del Actur
+- **Tranvía**: 5-10 minutos. La línea 1 del tranvía atraviesa el Actur y llega directamente al campus
+- **Bicicleta**: 5-10 minutos por carril bici
+
+### Al Campus San Francisco (derecho, economía, medicina)
+- **Tranvía**: 15-20 minutos en línea directa desde el Actur al centro
+- **Autobús**: líneas 33, 42 y Ci2 conectan con el [Campus San Francisco](/campus/san-francisco)
+- **Bicicleta**: 15-20 minutos por carril bici junto al Ebro
+
+### Al centro de Zaragoza
+- **Tranvía**: 10-15 minutos hasta Plaza España o Paseo Independencia
+- **A pie**: 25-35 minutos cruzando el Puente de Santiago o el Puente de Piedra
+
+El tranvía es el medio de transporte estrella si vives en el Actur. Con el abono joven (menos de 30 EUR/mes), tienes movilidad total por toda la ciudad.
+
+## Precios de alquiler en el Actur para estudiantes
+
+Los precios para **vivir en Actur Zaragoza** son bastante competitivos comparados con zonas más céntricas como Casco Antiguo o Delicias.
+
+### Habitaciones en pisos compartidos
+
+| Tipo de habitación | Precio mensual |
+|---|---|
+| Habitación individual (piso compartido) | 280-350 EUR |
+| Habitación individual con baño | 320-380 EUR |
+| Habitación doble (por persona) | 200-260 EUR |
+
+### Pisos completos
+
+| Tipo de piso | Precio mensual |
+|---|---|
+| Estudio / 1 dormitorio | 450-550 EUR |
+| Piso 2 dormitorios | 550-700 EUR |
+| Piso 3 dormitorios | 650-850 EUR |
+| Piso 4 dormitorios | 750-950 EUR |
+
+Estos precios suelen incluir gastos comunes de la comunidad, pero **no** suministros (agua, luz, gas, internet), que suelen añadir entre 50 y 80 EUR por persona al mes.
+
+Comparado con el centro, **vivir en Actur Zaragoza** puede ahorrarte entre 30 y 80 EUR al mes en alquiler, lo que compensa con creces el coste del transporte.
+
+Busca pisos disponibles en el Actur en [pisos para estudiantes en Zaragoza](/pisos/zaragoza) o encuentra [habitaciones sueltas en el Actur](/habitaciones/zaragoza).
+
+## Supermercados y compra diaria
+
+El Actur está muy bien abastecido para la compra del día a día:
+
+- **Mercadona**: varios establecimientos repartidos por el barrio. El más conocido está en Avenida de Ranillas
+- **Lidl**: buena opción para compras económicas
+- **Eroski**: supermercado de tamaño medio con productos variados
+- **Carrefour Express**: para compras rápidas cerca de casa
+- **Fruterías y panaderías de barrio**: precios más bajos que los supermercados para fruta, verdura y pan fresco
+
+### Consejo de ahorro
+Haz la compra grande una vez por semana en Mercadona o Lidl y complementa con fruterías de barrio para productos frescos. Un estudiante puede comer bien en Zaragoza por 150-200 EUR al mes cocinando en casa.
+
+## Gimnasios y deporte
+
+Si te gusta mantenerte en forma, **vivir en Actur Zaragoza** tiene muchas ventajas:
+
+### Gimnasios
+- **Gimnasio Municipal Alberto Maestro**: piscina cubierta, sala de musculación, clases dirigidas. Tarifa joven reducida
+- **Altafit**: cadena low cost con buenas instalaciones, desde 30 EUR/mes
+- **Distrito Fitness**: gimnasio de barrio con buen ambiente y precios competitivos
+
+### Instalaciones deportivas
+- **Pabellón Príncipe Felipe**: uno de los mayores centros deportivos de Aragón, en el recinto de la Expo. Piscina olímpica, pistas de atletismo, rocódromo
+- **Carril bici del Ebro**: la ribera del Ebro es perfecta para correr, ir en bici o patinar. El recorrido desde el Actur hasta el centro por la orilla del río es espectacular
+- **Campos de fútbol y pistas polideportivas**: distribuidos por todo el barrio, muchos de acceso libre
+
+### Instalaciones deportivas de la Universidad
+Los estudiantes de Unizar tienen acceso al **Servicio de Actividades Deportivas (SAD)** con piscina, gimnasio, pistas de tenis y pádel a precios muy reducidos. Las instalaciones del Campus Río Ebro quedan a un paseo desde el Actur.
+
+## Restaurantes y bares para estudiantes
+
+El Actur tiene una oferta gastronómica variada y con buenos precios, muy orientada al público joven y familiar.
+
+### Para comer barato
+- **Menús del día**: varios bares y restaurantes ofrecen menú completo (primer plato, segundo, postre y bebida) por 10-13 EUR. Busca por las calles María Zambrano y Alejandría
+- **Kebabs y comida rápida**: opciones económicas por 4-6 EUR en la zona de Pablo Neruda
+- **Bocadillerías**: bocadillos generosos por 3-5 EUR
+
+### Para salir a cenar
+- **Pizzerías**: varias opciones con precios de 8-12 EUR por pizza
+- **Restaurantes asiáticos**: woks y japoneses con menú por 10-15 EUR
+- **Bares de tapas**: la tradición zaragozana del tapeo también llega al Actur. Cañas con tapa por 2-3 EUR
+
+### Cafeterías para estudiar
+- **Cafeterías con Wi-Fi**: varias opciones en la zona del Centro Comercial Grancasa donde puedes estudiar con un café
+- **Biblioteca del barrio**: la Biblioteca Manuel Alvar es un excelente espacio de estudio gratuito
+
+## Vida nocturna y ocio
+
+Si te preocupa que **vivir en Actur Zaragoza** signifique renunciar a la vida nocturna, tranquilo: aunque el barrio no es la zona de fiesta de Zaragoza, las conexiones son excelentes.
+
+### En el propio Actur
+- Bares con ambiente joven en la zona de Pablo Neruda y Avenida de Ranillas
+- El Centro Comercial Grancasa tiene cines, bolera y restaurantes
+- Terrazas junto al Ebro en verano (zona Expo)
+
+### Salir por el centro
+- El tranvía funciona hasta pasada la medianoche entre semana y hasta más tarde los fines de semana
+- La zona de marcha (El Tubo, Plaza España, Calle Contamina) está a 15 minutos en tranvía
+- El búho (autobús nocturno) tiene paradas en el Actur
+- Un taxi desde el centro al Actur cuesta aproximadamente 7-10 EUR
+
+### Planes de fin de semana
+- **Parque del Agua Luis Buñuel**: el gran pulmón verde del Actur. Tiene lagos, playas artificiales (en verano), zonas deportivas y kilómetros de senderos. Perfecto para desconectar
+- **Recinto Expo**: paseos junto al Ebro, la Torre del Agua y espacios al aire libre
+- **Parque del Tío Jorge**: otro espacio verde popular entre familias y estudiantes
+
+## Seguridad en el Actur
+
+El Actur es uno de los barrios más seguros de Zaragoza. Al ser un barrio residencial y familiar, la conflictividad es baja. Las calles están bien iluminadas, hay presencia policial regular y el ambiente general es tranquilo incluso por la noche.
+
+Como en cualquier ciudad, conviene tomar precauciones básicas:
+- No dejar objetos de valor a la vista en el coche
+- Cerrar bien la puerta de casa
+- Usar zonas iluminadas y transitadas si vuelves tarde
+
+Pero en general, **vivir en Actur Zaragoza** es una experiencia segura y cómoda.
+
+## Comunidad y ambiente del barrio
+
+El Actur tiene un ambiente de barrio consolidado con una comunidad activa:
+
+- **Asociaciones vecinales**: organizan fiestas de barrio, actividades culturales y mercadillos
+- **Fiestas del barrio**: en junio, con verbenas, conciertos y actividades para todas las edades
+- **Diversidad**: conviven familias, jubilados, jóvenes profesionales y muchos estudiantes. Es un barrio multicultural y acogedor
+- **Servicios públicos**: centro de salud, polideportivo municipal, biblioteca, oficina de correos, todo a mano
+
+## Ventajas de vivir en el Actur como estudiante
+
+- **Precio**: alquiler 30-80 EUR más barato que en el centro
+- **Tranvía directo** al Campus Río Ebro y al centro
+- **Barrio tranquilo** para estudiar sin distracciones
+- **Parque del Agua** para desconectar y hacer deporte al aire libre
+- **Todos los servicios** a pie de calle: súper, gimnasio, médico, farmacia
+- **Pisos amplios** y modernos comparados con el casco antiguo
+- **Buena comunidad** vecinal, barrio seguro
+
+## Desventajas a tener en cuenta
+
+- **Lejos del centro** si tu vida social se concentra en El Tubo o Casco Antiguo
+- **Menos ambiente estudiantil** que zonas como Delicias o San Francisco
+- **Dependencia del tranvía** para ir al Campus San Francisco
+- **Menos oferta de ocio nocturno** en el propio barrio
+- **Urbanismo funcional**: no es el barrio más bonito arquitectónicamente
+
+## ¿Para quién es ideal el Actur?
+
+**Vivir en Actur Zaragoza** es especialmente recomendable si:
+
+1. Estudias en el **Campus Río Ebro** (ingenierías, arquitectura)
+2. Prefieres un barrio **tranquilo** para concentrarte en los estudios
+3. Buscas un **alquiler asequible** sin renunciar a servicios
+4. Te gusta hacer **deporte al aire libre** (Parque del Agua, ribera del Ebro)
+5. No te importa coger el tranvía para ir de fiesta al centro
+
+Si, por el contrario, tu campus es el San Francisco y valoras salir de fiesta andando a casa, quizá te interese más buscar [pisos cerca del centro](/pisos/zaragoza).
+
+## Busca tu piso en el Actur
+
+¿Te has decidido? Encuentra [pisos y habitaciones en el Actur](/pisos/zaragoza) a través de Livix. Puedes filtrar por precio, número de habitaciones y servicios incluidos. También puedes buscar [compañeros de piso](/roommates) si prefieres compartir gastos y experiencia.
+
+Explora todas las opciones de [alojamiento para estudiantes en Zaragoza](/explore) y empieza la búsqueda con tiempo: los mejores pisos del Actur se alquilan entre abril y junio.`
+  },
+  {
+    id: 13,
+    title: "Contrato de alquiler para estudiantes: 7 cláusulas que debes revisar",
+    excerpt: "Las 7 cláusulas más importantes de un contrato de alquiler para estudiantes en España. Protege tus derechos y evita sorpresas desagradables.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "legalidad",
+    image: checklistAlquiler,
+    readTime: 9,
+    content: `Firmar un **contrato de alquiler estudiante** es probablemente el trámite legal más importante al que te enfrentas al empezar la universidad fuera de casa. Un contrato bien redactado te protege frente a abusos, evita malentendidos con el propietario y te da seguridad jurídica durante tu estancia.
+
+Sin embargo, muchos estudiantes firman su primer contrato sin leerlo detenidamente, y luego llegan los problemas: retenciones injustificadas de fianza, subidas de precio inesperadas o cláusulas abusivas que no conocían.
+
+En esta guía analizamos las **7 cláusulas que debes revisar** en cualquier **contrato de alquiler estudiante** antes de firmar.
+
+## Antes de empezar: tipos de contrato
+
+En España, el alquiler de vivienda se regula por la **Ley de Arrendamientos Urbanos (LAU)**. Existen dos tipos principales de contrato que afectan a estudiantes:
+
+### Contrato de vivienda habitual
+- Duración mínima de 5 años (si el propietario es persona física) o 7 años (si es empresa)
+- Prórrogas obligatorias anuales hasta cumplir esos plazos
+- Mayor protección para el inquilino
+- Es el más habitual para pisos completos
+
+### Contrato de temporada
+- Duración pactada libremente (un semestre, un curso académico, etc.)
+- Menos protección legal para el inquilino
+- Común para estudiantes que alquilan solo durante el curso
+- No obliga a prórrogas
+
+**Importante**: muchos propietarios intentan hacer pasar un contrato de vivienda habitual como uno de temporada para evitar la duración mínima de 5 años. Un **contrato de alquiler estudiante** debe especificar claramente su naturaleza.
+
+## Cláusula 1: Duración del contrato y prórrogas
+
+Es la primera cláusula que debes revisar en tu **contrato de alquiler estudiante**.
+
+### Qué debe incluir
+- **Fecha exacta de inicio y fin** del contrato
+- **Tipo de contrato**: vivienda habitual o de temporada
+- **Condiciones de prórroga**: automática o requiere comunicación expresa
+- **Preaviso para no renovar**: normalmente 30 días antes del vencimiento
+
+### Puntos de atención
+
+Si firmas un contrato de vivienda habitual, tienes derecho a permanecer en el piso al menos 5 años, con prórrogas anuales obligatorias para el propietario. Esto te protege frente a desahucios arbitrarios.
+
+Si es un contrato de temporada (por ejemplo, septiembre a junio), asegúrate de que:
+- La fecha de fin coincida con el final de tu curso o exámenes
+- Se especifique qué pasa si quieres renovar
+- No existan penalizaciones desproporcionadas por marcharte en la fecha prevista
+
+### Señal de alerta
+Desconfía si el contrato no tiene fecha de fin clara o si el propietario dice que "ya lo hablamos cuando llegue el momento". Todo debe estar por escrito.
+
+## Cláusula 2: Precio del alquiler y actualizaciones
+
+La renta mensual y sus posibles subidas son cruciales en cualquier **contrato de alquiler estudiante**.
+
+### Qué debe incluir
+- **Importe exacto** de la renta mensual
+- **Fecha de pago**: normalmente los primeros 5-7 días de cada mes
+- **Método de pago**: transferencia bancaria (recomendado por dejar registro)
+- **Actualización de renta**: cómo y cuándo puede subir el alquiler
+
+### La actualización anual
+
+Según la LAU, el propietario puede actualizar la renta anualmente según el **índice de referencia de precios de alquiler**. Desde 2024, la subida anual está topada al 3% en contratos vigentes. Verifica que tu contrato no incluya cláusulas que permitan subidas superiores a lo legal.
+
+### Gastos incluidos y excluidos
+
+El contrato debe detallar claramente:
+- Si los **gastos de comunidad** están incluidos en el precio
+- Quién paga los **suministros** (agua, luz, gas, internet)
+- Si hay **cuota de basuras** municipal y quién la asume
+- Cualquier otro gasto periódico
+
+### Consejo
+Pide un desglose por escrito. Un alquiler de 300 EUR "con gastos incluidos" no es lo mismo que 300 EUR más 80 EUR de suministros. La diferencia mensual es enorme para un presupuesto de estudiante.
+
+## Cláusula 3: Fianza y garantías adicionales
+
+La fianza es probablemente el tema que más conflictos genera en un **contrato de alquiler estudiante**.
+
+### Qué dice la ley
+
+- La fianza legal es de **1 mes de renta** para vivienda habitual y **2 meses** para uso distinto
+- El propietario **debe depositar la fianza** en el organismo oficial de su comunidad autónoma (en Aragón, la DGA)
+- Al finalizar el contrato, la fianza debe devolverse en un plazo de **30 días** salvo que existan desperfectos justificados
+
+### Garantías adicionales
+
+Además de la fianza, el propietario puede pedir:
+- **Mes de depósito adicional**: legal, hasta un máximo de 2 mensualidades extra
+- **Aval bancario**: un banco garantiza el pago. Costoso para un estudiante
+- **Aval personal**: un familiar (normalmente los padres) se compromete a responder si tú no pagas
+
+### Puntos clave para estudiantes
+
+1. **Exige recibo** de la fianza y de cualquier cantidad que entregues
+2. **Pregunta si la fianza está depositada** en la DGA
+3. **Haz un inventario fotográfico** del piso al entrar (más detalle en la Cláusula 4)
+4. **No aceptes** que te retengan la fianza por "desgaste normal" — la ley distingue entre deterioro por uso normal y daños reales
+5. Si el propietario no devuelve la fianza en 30 días, tienes derecho a reclamar con intereses
+
+### Consejo práctico
+Antes de entregar la fianza, busca información sobre el propietario. En [Livix](/explore) verificamos a los propietarios para reducir el riesgo de estafas.
+
+## Cláusula 4: Inventario y estado del inmueble
+
+Esta cláusula es tu seguro contra retenciones injustificadas de la fianza.
+
+### Qué debe incluir
+- **Listado detallado** de muebles, electrodomésticos y enseres incluidos en el alquiler
+- **Estado de conservación** de cada elemento (nuevo, buen estado, señales de uso, dañado)
+- **Estado general del piso**: pintura, suelos, puertas, ventanas, baño, cocina
+- **Lectura de contadores** de agua, luz y gas al momento de la entrega
+
+### Cómo hacerlo bien
+
+El inventario protege tanto al inquilino como al propietario:
+
+1. **Haz fotos y vídeos** de todo el piso el día de la entrega de llaves, con fecha visible
+2. **Documenta desperfectos previos**: manchas en paredes, arañazos en suelos, electrodomésticos que no funcionen bien
+3. **Ambas partes deben firmar** el inventario
+4. **Guarda una copia** en formato digital
+
+### Error común de estudiantes
+
+Muchos estudiantes, con las prisas de mudarse, se saltan el inventario. Meses después, cuando dejan el piso, el propietario retiene la fianza por "desperfectos" que ya existían. Sin documentación, no puedes demostrar nada.
+
+## Cláusula 5: Subarriendo y cesión del contrato
+
+Esta cláusula es especialmente relevante para un **contrato de alquiler estudiante** porque las situaciones de convivencia cambian mucho durante el curso.
+
+### Qué es el subarriendo
+
+Subarrendar es alquilar tu habitación o parte del piso a otra persona cuando tú eres el inquilino titular. Por ejemplo, si te vas de Erasmus un semestre y quieres que alguien ocupe tu habitación.
+
+### Qué dice la ley
+
+- El subarriendo requiere el **consentimiento expreso y por escrito** del propietario
+- Sin autorización, el propietario puede resolver (cancelar) el contrato
+- La renta del subarriendo no puede superar la del contrato original
+
+### Escenarios habituales entre estudiantes
+
+**Escenario 1**: firmas un piso con 3 amigos, uno se va a mitad de curso. ¿Podéis meter a otro compañero?
+- Si el contrato lo permite o el propietario acepta, sí. Si no, técnicamente es subarriendo no autorizado.
+
+**Escenario 2**: alquilas una habitación y quieres irte en enero. ¿Puedes encontrar un sustituto?
+- Solo si el contrato contempla esta posibilidad o el propietario da su permiso por escrito.
+
+### Consejo
+Antes de firmar, asegúrate de que el contrato permite la **sustitución de compañeros de piso** o el subarriendo parcial. Es muy común que algún compañero cambie durante el curso. Si necesitas encontrar un sustituto, en [Livix](/roommates) puedes buscar compañeros de piso compatibles.
+
+## Cláusula 6: Desistimiento anticipado (irte antes de tiempo)
+
+¿Qué pasa si necesitas dejar el piso antes de que termine el contrato? Esta es una de las situaciones más frecuentes en un **contrato de alquiler estudiante**.
+
+### Qué dice la LAU
+
+En contratos de vivienda habitual:
+- El inquilino puede desistir a partir del **sexto mes** de contrato
+- Debe comunicarlo con **30 días de antelación**
+- El contrato puede incluir una **penalización**: máximo 1 mes de renta por cada año de contrato que quede por cumplir, proporcional
+- La penalización se reduce proporcionalmente por meses
+
+### En contratos de temporada
+
+- Las condiciones de desistimiento se pactan en el contrato
+- No hay protección legal mínima como en vivienda habitual
+- Puede haber penalizaciones más altas
+- Lee esta cláusula con especial atención
+
+### Escenarios de estudiante
+
+- Te cambias de carrera o de universidad a mitad de curso
+- Suspendes y te vuelves a tu ciudad
+- Un Erasmus que termina antes de lo previsto
+- Problemas de convivencia insostenibles con compañeros de piso
+
+### Consejo
+Negocia la cláusula de desistimiento **antes de firmar**. Intenta que la penalización sea razonable (por ejemplo, 1 mes de preaviso sin penalización adicional) y que esté claramente especificada.
+
+## Cláusula 7: Gastos de comunidad y reparaciones
+
+La última cláusula crítica en un **contrato de alquiler estudiante** se refiere a quién paga qué.
+
+### Gastos de comunidad
+
+- Los **gastos ordinarios de comunidad** (portero, limpieza, ascensor, mantenimiento) los paga el propietario, salvo que el contrato diga lo contrario
+- Las **derramas** (gastos extraordinarios aprobados por la comunidad de propietarios) son responsabilidad del propietario
+- El contrato puede estipular que el inquilino pague la comunidad, pero debe constar expresamente
+
+### Reparaciones
+
+La LAU establece una distinción clara:
+
+**El propietario paga:**
+- Reparaciones necesarias para conservar la vivienda habitable (fontanería, electricidad, estructura)
+- Sustitución de electrodomésticos que se rompan por uso normal
+- Problemas de humedades, plagas o defectos estructurales
+
+**El inquilino paga:**
+- Pequeñas reparaciones derivadas del uso diario (cambiar una bombilla, un enchufe, el filtro de la campana)
+- Daños causados por negligencia o mal uso (cristal roto, cerradura forzada, etc.)
+
+### Señal de alerta
+Si el contrato dice que "todas las reparaciones corren a cargo del inquilino", es una **cláusula abusiva**. La ley es clara: el propietario debe mantener la vivienda en condiciones de habitabilidad.
+
+## Estafas comunes que debes evitar
+
+Además de las cláusulas del contrato, ten cuidado con estas estafas frecuentes que afectan a estudiantes:
+
+### Estafa del piso fantasma
+- Te piden dinero por adelantado para "reservar" un piso que no existe o que no es del anunciante
+- **Nunca pagues sin ver el piso en persona** y comprobar la identidad del propietario
+
+### Estafa de la fianza inflada
+- Te piden 2-3 meses de fianza cuando lo legal es 1 mes (vivienda habitual)
+- Pueden pedir garantías adicionales, pero deben estar justificadas y ser legales
+
+### Contrato verbal
+- Alguien te alquila "de palabra" sin contrato escrito
+- Sin contrato, no tienes prueba de las condiciones pactadas
+- **Siempre exige contrato por escrito**
+
+### El propietario intermediario
+- Alguien te alquila un piso del que no es propietario (es inquilino y subarrienda sin permiso)
+- Pide ver la escritura de propiedad o nota simple del Registro de la Propiedad
+
+En [Livix](/explore) trabajamos para verificar la legitimidad de los anuncios y proteger a los estudiantes frente a estas situaciones.
+
+## Tu checklist antes de firmar
+
+Antes de firmar cualquier **contrato de alquiler estudiante**, repasa esta lista:
+
+- [ ] He leído el contrato completo, incluida la letra pequeña
+- [ ] Conozco la duración exacta y las condiciones de prórroga
+- [ ] Sé cuánto pago de renta y qué gastos están incluidos
+- [ ] He entregado solo 1 mes de fianza legal y tengo recibo
+- [ ] Existe un inventario firmado con fotos del estado del piso
+- [ ] El contrato contempla el subarriendo o sustitución de compañeros
+- [ ] Conozco las condiciones de desistimiento anticipado
+- [ ] Sé quién paga la comunidad y las reparaciones
+- [ ] He verificado la identidad del propietario
+- [ ] Tengo una copia firmada del contrato
+
+## Recursos y dónde pedir ayuda
+
+Si tienes dudas sobre tu **contrato de alquiler estudiante**, puedes acudir a:
+
+1. **Oficina Municipal de Vivienda y Rehabilitación (Zaragoza)**: información gratuita sobre derechos del inquilino
+2. **OMIC (Oficina Municipal de Información al Consumidor)**: para reclamaciones y asesoramiento
+3. **Servicio de asesoría jurídica de tu universidad**: muchas universidades ofrecen asesoría legal gratuita a estudiantes
+4. **OCU (Organización de Consumidores y Usuarios)**: modelos de contrato y guías legales
+5. **Sindicato de Inquilinos**: asesoramiento y apoyo en conflictos con propietarios
+
+## Conclusión
+
+Un **contrato de alquiler estudiante** no tiene por qué ser un documento intimidante. Con esta guía y la checklist, tienes las herramientas para revisar las 7 cláusulas clave y firmar con tranquilidad.
+
+Recuerda: un buen contrato protege a ambas partes. Un propietario serio no pondrá problemas en incluir cláusulas claras y justas. Si alguien se resiste a poner las cosas por escrito o incluye condiciones abusivas, busca otra opción.
+
+Encuentra [pisos con propietarios verificados en Zaragoza](/pisos/zaragoza) a través de Livix, donde trabajamos para que tu experiencia de alquiler sea segura y transparente.`
+  },
+  {
+    id: 14,
+    title: "Becas y ayudas de alojamiento para estudiantes en Aragón 2026",
+    excerpt: "Guía completa de becas MEC, ayudas de la DGA, subvenciones municipales y becas Erasmus+ para cubrir gastos de alojamiento universitario en Aragón.",
+    date: "2026-03-18",
+    dateModified: "2026-03-18",
+    author: "Equipo Livix",
+    category: "becas",
+    image: ahorrarDinero,
+    readTime: 10,
+    content: `El alojamiento es uno de los mayores gastos para un estudiante universitario que vive fuera de casa. En Zaragoza, una [habitación en piso compartido](/habitaciones/zaragoza) cuesta entre 250 y 400 EUR mensuales, lo que supone entre 2.500 y 4.000 EUR por curso académico. Para muchas familias, esta cantidad es difícil de asumir sin ayuda.
+
+Por suerte, existen múltiples **becas de alojamiento en Aragón** que pueden cubrir parte o la totalidad de estos gastos. En esta guía repasamos todas las opciones disponibles en 2026: desde las becas generales del Ministerio hasta las ayudas específicas de la Diputación General de Aragón (DGA), pasando por subvenciones municipales y programas europeos.
+
+## 1. Becas MEC (Ministerio de Educación): la más importante
+
+La beca del Ministerio de Educación y Formación Profesional (comúnmente llamada "beca MEC") es la principal fuente de financiación para estudiantes en España. Aunque no es exclusiva para alojamiento, incluye un componente específico de **residencia** que es fundamental para estudiantes desplazados.
+
+### Componentes de la beca MEC relevantes para alojamiento
+
+| Componente | Importe aproximado 2025-2026 | Requisito clave |
+|---|---|---|
+| Cuantía fija por residencia | 1.600 EUR/curso | Domicilio familiar a más de 50 km del centro de estudios |
+| Cuantía fija por renta | 1.700 EUR/curso | Umbral de renta familiar |
+| Cuantía variable | Variable (hasta 1.600 EUR) | Según nota media y renta |
+| Matrícula | Coste de las tasas | Todos los becarios |
+
+### La cuantía de residencia
+
+Este es el componente más relevante para **becas de alojamiento en Aragón**. Para recibirlo debes cumplir:
+
+1. **Estar matriculado** en una universidad española presencial
+2. **Domicilio familiar** a más de 50 km de tu centro de estudios o más de 1 hora de transporte público
+3. **Residir fuera del domicilio familiar** durante el curso (en piso, residencia o colegio mayor)
+4. **No superar los umbrales de renta** establecidos cada año
+5. **Rendimiento académico mínimo**: haber aprobado un porcentaje mínimo de créditos (varía según rama de conocimiento)
+
+### Umbrales de renta familiar (orientativos)
+
+La beca MEC establece varios umbrales de renta. Para acceder al componente de residencia se aplica el umbral 2:
+
+| Miembros de la familia | Umbral 2 (aprox.) |
+|---|---|
+| 1 miembro | 14.112 EUR |
+| 2 miembros | 24.089 EUR |
+| 3 miembros | 32.697 EUR |
+| 4 miembros | 38.831 EUR |
+| 5 miembros | 43.402 EUR |
+| 6 miembros | 46.853 EUR |
+| 7 miembros | 50.267 EUR |
+| 8 miembros | 53.665 EUR |
+
+*Estos umbrales se actualizan cada convocatoria. Consulta siempre la convocatoria vigente.*
+
+### Plazos de solicitud
+
+- **Convocatoria**: normalmente se publica entre **marzo y abril**
+- **Plazo de solicitud**: habitualmente de **marzo a mayo** (varía cada año)
+- **Resolución provisional**: entre **noviembre y diciembre**
+- **Resolución definitiva**: entre **enero y marzo** del curso siguiente
+- **Pago**: puede demorarse, muchos estudiantes no cobran hasta el segundo semestre
+
+### Cómo solicitar la beca MEC paso a paso
+
+1. Entra en la **Sede Electrónica del Ministerio** (sede.educacion.gob.es)
+2. Necesitas **certificado digital, DNI electrónico o Cl@ve**
+3. Rellena el formulario con tus datos personales, académicos y económicos
+4. Autoriza la consulta de datos fiscales de tu unidad familiar
+5. Adjunta la documentación que te requieran (matrícula, empadronamiento, etc.)
+6. Envía la solicitud y guarda el justificante
+
+### Consejo importante
+Solicita la beca MEC **siempre**, aunque no estés seguro de cumplir los requisitos. El proceso es gratuito y no pierdes nada por intentarlo. Muchos estudiantes se quedan sin la ayuda simplemente por no solicitarla.
+
+## 2. Ayudas de la DGA (Diputación General de Aragón)
+
+La Comunidad Autónoma de Aragón ofrece sus propias **becas de alojamiento en Aragón** a través del Departamento de Educación, Cultura y Deporte de la DGA.
+
+### Becas de la DGA para estudiantes universitarios
+
+La DGA convoca anualmente ayudas complementarias a las becas MEC. Estas ayudas pueden incluir:
+
+- **Ayuda complementaria de residencia**: para estudiantes aragoneses que se desplazan a otra localidad
+- **Ayudas para material y transporte**: que liberan presupuesto para alojamiento
+- **Ayudas específicas para situaciones de especial dificultad económica**
+
+### Requisitos generales de la DGA
+
+1. **Vecindad administrativa** en Aragón (estar empadronado en algún municipio aragonés)
+2. **Estar matriculado** en estudios universitarios oficiales
+3. **Cumplir requisitos económicos** (similares a la beca MEC pero con umbrales propios)
+4. **Rendimiento académico** mínimo
+5. **No haber recibido** otra beca o ayuda que cubra el mismo concepto por importe superior
+
+### Plazos orientativos
+
+- **Publicación**: suele salir entre **junio y septiembre** de cada año
+- **Plazo de solicitud**: 30-45 días desde la publicación en el BOA (Boletín Oficial de Aragón)
+- **Resolución**: variable, generalmente entre 3 y 6 meses después del cierre de plazo
+
+### Dónde tramitarlas
+
+- **Online**: a través del portal de servicios del Gobierno de Aragón (servicios.aragon.es)
+- **Presencialmente**: en las oficinas de registro del Gobierno de Aragón en Zaragoza, Huesca y Teruel
+- **Información**: Dirección General de Política Educativa (976 71 40 00)
+
+## 3. Ayudas municipales del Ayuntamiento de Zaragoza
+
+El Ayuntamiento de Zaragoza también ofrece programas que pueden ayudar a cubrir gastos de alojamiento para estudiantes.
+
+### Programa de ayudas al alquiler juvenil
+
+El Ayuntamiento de Zaragoza ha convocado en años anteriores ayudas al alquiler para jóvenes de entre 18 y 35 años. Estas ayudas, aunque no son exclusivas para estudiantes, son perfectamente compatibles con la vida universitaria.
+
+### Requisitos habituales
+
+- Tener entre 18 y 35 años
+- Estar empadronado en Zaragoza
+- Contrato de alquiler a nombre del solicitante
+- No superar un nivel de renta determinado
+- El alquiler no debe superar un precio máximo (generalmente 600 EUR para vivienda completa)
+
+### Importes orientativos
+
+Las ayudas municipales suelen cubrir entre el **30% y el 50%** del alquiler mensual, con un máximo de 200-300 EUR al mes. Esto puede suponer un ahorro de 2.000-3.000 EUR al año, una cantidad muy significativa para un estudiante.
+
+### Programa de Vivienda Joven en Alquiler
+
+El Gobierno de Aragón, en colaboración con algunos ayuntamientos, gestiona un programa de vivienda en alquiler a precios reducidos para jóvenes. Aunque las plazas son limitadas, merece la pena informarse:
+
+- **Requisitos**: menor de 35 años, ingresos mínimos y máximos establecidos
+- **Precios**: alquileres por debajo de mercado (150-350 EUR según vivienda)
+- **Ubicación**: viviendas distribuidas en varios barrios de Zaragoza
+
+## 4. Becas Erasmus+ para alojamiento
+
+Si eres estudiante Erasmus o vas a realizar una movilidad internacional, las becas Erasmus+ incluyen una dotación mensual que está pensada para cubrir los gastos de vida en el destino, incluido el alojamiento.
+
+### Importes Erasmus+ según país de destino
+
+Los importes varían según el coste de vida del país de destino:
+
+| Grupo de países | Importe mensual |
+|---|---|
+| Grupo 1 (Dinamarca, Irlanda, Noruega, Suecia, etc.) | 350-400 EUR/mes |
+| Grupo 2 (Alemania, Francia, Italia, España, etc.) | 300-350 EUR/mes |
+| Grupo 3 (Bulgaria, Hungría, Polonia, etc.) | 250-300 EUR/mes |
+
+*España está en el Grupo 2. Si recibes estudiantes Erasmus en Zaragoza, estos son los importes que reciben.*
+
+### Becas Erasmus+ para estudiantes que vienen a Zaragoza
+
+Si eres estudiante Erasmus y vienes a Zaragoza, tu beca mensual puede cubrir buena parte de tu alojamiento. Con 300-350 EUR al mes puedes pagar una [habitación en piso compartido](/habitaciones/zaragoza) y te quedará algo para otros gastos.
+
+### Complementos adicionales
+
+- **Complemento por situación socioeconómica**: 250 EUR adicionales al mes para estudiantes con menos recursos
+- **Complemento por discapacidad**: cobertura de gastos adicionales justificados
+- **Ayudas complementarias de la universidad de origen**: muchas universidades añaden financiación propia al programa Erasmus
+
+### Cómo solicitar Erasmus+
+
+1. Contacta con la **Oficina de Relaciones Internacionales** de tu universidad
+2. Cumple los requisitos académicos (créditos aprobados, nivel de idioma)
+3. Presenta la solicitud en los plazos establecidos por tu universidad (generalmente entre **octubre y febrero** para el curso siguiente)
+4. Si eres seleccionado, formaliza el Learning Agreement
+5. La beca se paga en 2-3 plazos: al inicio, a mitad y al final de la estancia
+
+## 5. Becas de la Universidad de Zaragoza
+
+La propia Universidad de Zaragoza (Unizar) ofrece programas de ayuda que pueden contribuir a tu alojamiento.
+
+### Becas propias de Unizar
+
+- **Becas de colaboración**: trabajo a tiempo parcial en departamentos universitarios (bibliotecas, laboratorios, servicios administrativos). Remuneración de 200-400 EUR/mes que puedes destinar a alojamiento
+- **Ayudas de urgencia social**: para estudiantes en situación de emergencia económica sobrevenida
+- **Descuentos en colegios mayores propios**: el [Colegio Mayor Pedro Cerbuna](/colegios-mayores/zaragoza) y otros centros de la Universidad pueden aplicar descuentos por mérito académico o necesidad económica
+
+### Programas de alojamiento de Unizar
+
+La Universidad de Zaragoza gestiona varios programas que facilitan el alojamiento:
+
+- **Programa de alojamiento con personas mayores**: convives con una persona mayor a cambio de compañía y pequeñas ayudas. Alojamiento gratuito o a coste muy reducido
+- **Bolsa de alojamiento**: listado de pisos y habitaciones verificados para estudiantes de Unizar
+
+## 6. Otras becas y ayudas compatibles
+
+Además de las principales, existen otras fuentes de financiación que puedes combinar:
+
+### Becas de fundaciones privadas
+
+- **Fundación Amancio Ortega**: becas de excelencia para estudiar en el extranjero
+- **Fundación Carolina**: becas para estudiantes latinoamericanos en España
+- **Fundación ONCE**: becas para estudiantes con discapacidad
+- **Fundación Universia**: diversas convocatorias a lo largo del año
+- **La Caixa**: becas de máster y doctorado con dotación para alojamiento
+
+### Becas de las diputaciones provinciales
+
+Las diputaciones de Huesca, Teruel y Zaragoza convocan ayudas para estudiantes de sus provincias que se desplazan a otra ciudad:
+
+- **Diputación de Teruel**: especialmente generosa por la despoblación de la provincia. Ayudas de hasta 3.000 EUR para estudiantes turolenses
+- **Diputación de Huesca**: ayudas complementarias para estudiantes oscenses
+- **Diputación de Zaragoza**: programas de juventud con ayudas puntuales
+
+### Ayudas para colectivos específicos
+
+- **Estudiantes con discapacidad**: ayudas específicas de la DGA y del Ministerio para adaptación del alojamiento
+- **Familias numerosas**: descuentos en tasas universitarias que liberan presupuesto para alojamiento
+- **Víctimas de violencia de género**: prioridad en programas de vivienda y ayudas de emergencia
+- **Familias monoparentales**: puntuación adicional en la mayoría de convocatorias
+
+## Cómo maximizar tus ayudas: estrategia combinada
+
+La clave para cubrir el máximo de tu alojamiento con **becas de alojamiento en Aragón** es combinar varias ayudas. Aquí tienes una estrategia:
+
+### Paso 1: Solicita siempre la beca MEC (marzo-mayo)
+Es la base. La cuantía de residencia (1.600 EUR) más la de renta (1.700 EUR) pueden sumar más de 3.000 EUR al año.
+
+### Paso 2: Solicita las ayudas de la DGA (junio-septiembre)
+Son complementarias a la beca MEC. Puedes sumar otros 500-1.500 EUR.
+
+### Paso 3: Consulta ayudas municipales (variable)
+El Ayuntamiento de Zaragoza y el programa de vivienda joven pueden aportar 200-300 EUR mensuales.
+
+### Paso 4: Busca becas de tu diputación provincial
+Si eres de Teruel, Huesca o de un municipio pequeño de Zaragoza, hay ayudas específicas para ti.
+
+### Paso 5: Solicita becas de colaboración en tu universidad
+Trabajar 10-15 horas semanales en la biblioteca o en un laboratorio te puede dar 200-400 EUR/mes extra.
+
+### Ejemplo práctico
+
+| Fuente de ayuda | Importe anual estimado |
+|---|---|
+| Beca MEC (residencia + renta) | 3.300 EUR |
+| Ayuda DGA complementaria | 800 EUR |
+| Beca de colaboración Unizar (6 meses) | 1.800 EUR |
+| **Total anual** | **5.900 EUR** |
+
+Con 5.900 EUR puedes cubrir prácticamente el coste total de una [habitación en Zaragoza](/habitaciones/zaragoza) durante todo el curso (300 EUR x 10 meses = 3.000 EUR) y tener margen para suministros y otros gastos.
+
+## Calendario de solicitudes 2026
+
+Para no perderte ningún plazo, aquí tienes un calendario orientativo de las principales **becas de alojamiento en Aragón**:
+
+| Mes | Acción |
+|---|---|
+| Marzo | Apertura de la beca MEC. Prepara documentación |
+| Abril | Plazo abierto beca MEC. Solicita cuanto antes |
+| Mayo | Cierre habitual del plazo MEC |
+| Junio | Atento a la convocatoria de la DGA en el BOA |
+| Julio | Solicita ayudas DGA si se han publicado |
+| Septiembre | Consulta becas de colaboración en Unizar |
+| Octubre | Revisa ayudas municipales del Ayuntamiento de Zaragoza |
+| Noviembre | Resolución provisional beca MEC (comprueba el resultado) |
+| Enero-Febrero | Solicita Erasmus+ si planeas movilidad el curso siguiente |
+
+## Errores comunes al solicitar becas
+
+Evita estos errores que dejan a muchos estudiantes sin sus **becas de alojamiento en Aragón**:
+
+1. **No solicitar por creer que no cumples requisitos**: siempre merece la pena intentarlo
+2. **Entregar la solicitud fuera de plazo**: anota las fechas en el calendario desde el primer día
+3. **No autorizar la consulta de datos fiscales**: sin este paso, la solicitud se paraliza
+4. **Olvidar la matrícula**: debes estar matriculado o al menos preinscrito
+5. **No aportar el certificado de empadronamiento**: imprescindible para la cuantía de residencia
+6. **No renovar la beca**: si la tuviste el año anterior, debes volver a solicitarla cada curso
+7. **No reclamar la resolución provisional**: si te deniegan la beca, tienes plazo para presentar alegaciones. Muchas denegaciones se resuelven favorablemente tras la alegación
+
+## Mientras esperas la beca: cómo reducir gastos de alojamiento
+
+Las becas suelen tardar meses en resolverse y pagarse. Mientras tanto, necesitas un plan para financiar tu alojamiento:
+
+- **Busca pisos asequibles**: en [Livix](/explore) puedes filtrar por precio máximo y encontrar las opciones más económicas de Zaragoza
+- **Comparte gastos**: un [piso compartido con compañeros](/roommates) reduce el coste por persona significativamente
+- **Considera barrios económicos**: zonas como el Actur, Las Fuentes o San José ofrecen alquileres más bajos que el centro
+- **Negocia el precio**: algunos propietarios están abiertos a rebajar el alquiler si pagas varios meses por adelantado o firmas por el curso completo
+- **Programa de convivencia intergeneracional**: alojamiento casi gratuito a cambio de compañía a personas mayores
+
+## Conclusión
+
+Financiar tu alojamiento universitario en Aragón es posible si conoces todas las opciones disponibles y te organizas para solicitarlas a tiempo. Las **becas de alojamiento en Aragón** pueden cubrir entre el 50% y el 100% de tus gastos de vivienda, permitiéndote centrarte en lo que realmente importa: tus estudios.
+
+Empieza cuanto antes, solicita todas las ayudas para las que puedas ser elegible y no te desanimes si alguna se deniega. La combinación de varias becas pequeñas puede hacer una gran diferencia.
+
+Y para encontrar el alojamiento que se ajuste a tu presupuesto, explora las opciones de [pisos](/pisos/zaragoza), [habitaciones](/habitaciones/zaragoza) y [residencias para estudiantes en Zaragoza](/residencias/zaragoza) en Livix.`
   }
 ];
 
