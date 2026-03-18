@@ -1,6 +1,10 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
+
+// Rate limiting: max 5 auth attempts per 5 minutes
+const AUTH_RATE_LIMIT = 5;
+const AUTH_RATE_WINDOW_MS = 5 * 60 * 1000;
 
 export type UserRole = 'student' | 'landlord' | 'admin';
 
@@ -24,10 +28,38 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+/**
+ * Fetches user profile and role from the database.
+ * Single source of truth — used by both auth listener and getSession.
+ */
+async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackName: string): Promise<User> {
+  const [profileResult, roleResult] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('id, email, name')
+      .eq('id', userId)
+      .maybeSingle(),
+    supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId)
+      .maybeSingle(),
+  ]);
+
+  const resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
+  const profile = profileResult.data;
+
+  if (profile) {
+    return { id: profile.id, email: profile.email, name: profile.name, role: resolvedRole };
+  }
+  return { id: userId, email: fallbackEmail, name: fallbackName, role: resolvedRole };
+}
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const initialSessionHandled = useRef(false);
 
   // Initialize auth state
   useEffect(() => {
@@ -35,48 +67,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setSession(session);
-        
-        if (session?.user) {
-          // Defer profile fetching with setTimeout
-          setTimeout(async () => {
-            try {
-              const { data: profile } = await supabase
-                .from('profiles')
-                .select('id, email, name')
-                .eq('id', session.user.id)
-                .maybeSingle();
 
-              // Fetch role separately to avoid missing FK relationships
-              let resolvedRole: UserRole = 'student';
-              const { data: roleRow } = await supabase
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', session.user.id)
-                .maybeSingle();
-              if (roleRow?.role) resolvedRole = roleRow.role as UserRole;
-              
-              if (profile) {
-                setUser({
-                  id: profile.id,
-                  email: profile.email,
-                  name: profile.name,
-                  role: resolvedRole
-                });
-              } else {
-                // Fallback to auth user data if profile row is not yet created
-                setUser({
-                  id: session.user.id,
-                  email: session.user.email ?? '',
-                  name: (session.user.user_metadata as any)?.name ?? 'Usuario',
-                  role: resolvedRole
-                });
-              }
-            } catch (error) {
-              if (import.meta.env.DEV) {
-                console.error('Error fetching profile:', error);
-              }
+        if (session?.user) {
+          // Skip if initial session already handled this user
+          if (initialSessionHandled.current) {
+            initialSessionHandled.current = false;
+            return;
+          }
+
+          try {
+            const userData = await fetchUserProfile(
+              session.user.id,
+              session.user.email ?? '',
+              (session.user.user_metadata as any)?.name ?? 'Usuario'
+            );
+            setUser(userData);
+          } catch (error) {
+            if (import.meta.env.DEV) {
+              console.error('Error fetching profile:', error);
             }
-          }, 0);
+          }
         } else {
           setUser(null);
         }
@@ -84,66 +94,62 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
-      
-      if (session?.user) {
-        setTimeout(async () => {
-          try {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('id, email, name')
-              .eq('id', session.user.id)
-              .maybeSingle();
 
-            let resolvedRole: UserRole = 'student';
-            const { data: roleRow } = await supabase
-              .from('user_roles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .maybeSingle();
-            if (roleRow?.role) resolvedRole = roleRow.role as UserRole;
-            
-            if (profile) {
-              setUser({
-                id: profile.id,
-                email: profile.email,
-                name: profile.name,
-                role: resolvedRole
-              });
-            } else if (session?.user) {
-              setUser({
-                id: session.user.id,
-                email: session.user.email ?? '',
-                name: (session.user.user_metadata as any)?.name ?? 'Usuario',
-                role: resolvedRole
-              });
-            }
-          } catch (error) {
-            if (import.meta.env.DEV) {
-              console.error('Error fetching profile:', error);
-            }
+      if (session?.user) {
+        try {
+          initialSessionHandled.current = true;
+          const userData = await fetchUserProfile(
+            session.user.id,
+            session.user.email ?? '',
+            (session.user.user_metadata as any)?.name ?? 'Usuario'
+          );
+          setUser(userData);
+        } catch (error) {
+          if (import.meta.env.DEV) {
+            console.error('Error fetching profile:', error);
           }
-          setIsLoading(false);
-        }, 0);
-      } else {
-        setIsLoading(false);
+        }
       }
+      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
+  const authAttemptsRef = useRef<number[]>([]);
+
+  const checkRateLimit = useCallback((): boolean => {
+    const now = Date.now();
+    authAttemptsRef.current = authAttemptsRef.current.filter(
+      (t) => now - t < AUTH_RATE_WINDOW_MS
+    );
+    if (authAttemptsRef.current.length >= AUTH_RATE_LIMIT) {
+      return false;
+    }
+    authAttemptsRef.current.push(now);
+    return true;
+  }, []);
+
   const login = async (email: string, password: string): Promise<User> => {
+    if (!checkRateLimit()) {
+      throw new Error('Demasiados intentos. Espera unos minutos antes de intentarlo de nuevo.');
+    }
+
     setIsLoading(true);
-    
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase().trim(),
         password
       });
-      
+
       if (error) {
+        // Handle Supabase rate limiting (429)
+        if (error.status === 429 || error.message.includes('rate limit')) {
+          throw new Error('Demasiados intentos. Espera unos minutos antes de intentarlo de nuevo.');
+        }
         // Translate common Supabase errors to user-friendly Spanish messages
         if (error.message.includes('Invalid login credentials')) {
           throw new Error('Email o contraseña incorrectos');
@@ -158,38 +164,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       
       if (!data.user) throw new Error('No se pudo iniciar sesión');
-      
-      // Wait a bit for data consistency
-      await new Promise(resolve => setTimeout(resolve, 200));
-      
-      // Get profile and role with retry
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('id, email, name')
-        .eq('id', data.user.id)
-        .maybeSingle();
-      
-      let resolvedRole: UserRole = 'student';
-      const { data: roleRow } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', data.user.id)
-        .maybeSingle();
-      
-      if (roleRow?.role) resolvedRole = roleRow.role as UserRole;
-      
-      const userData: User = profile ? {
-        id: profile.id,
-        email: profile.email,
-        name: profile.name,
-        role: resolvedRole
-      } : {
-        id: data.user.id,
-        email: data.user.email ?? '',
-        name: (data.user.user_metadata as any)?.name ?? 'Usuario',
-        role: resolvedRole
-      };
-      
+
+      // Fetch profile directly (profile created by DB trigger on signup)
+      const userData = await fetchUserProfile(
+        data.user.id,
+        data.user.email ?? '',
+        (data.user.user_metadata as any)?.name ?? 'Usuario'
+      );
+
       setUser(userData);
       setIsLoading(false);
       return userData;

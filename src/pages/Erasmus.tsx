@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +18,7 @@ import {
   Home
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zaragozaListings } from "@/data/listings";
 import { zaragozaFaculties } from "@/data/faculties";
 import { analytics } from "@/utils/analytics";
@@ -125,12 +126,17 @@ const Erasmus = () => {
   };
 
   // Track page view
-  useState(() => {
+  useEffect(() => {
     analytics.track('erasmus_landing_viewed');
-  });
+  }, []);
 
   return (
     <Layout>
+      <SEOHead
+        title="Erasmus en Zaragoza: Encuentra tu Alojamiento Ideal | Livix"
+        description="Guía completa para estudiantes Erasmus en Zaragoza. Encuentra pisos, habitaciones y residencias cerca de tu universidad. Reserva online y segura."
+        canonical="https://livix.es/erasmus"
+      />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-primary/5 to-primary/10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
@@ -139,7 +145,7 @@ const Erasmus = () => {
             <div>
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
                 <Plane className="w-4 h-4 mr-2" />
-                Erasmus en Zaragoza 2024-25
+                Erasmus en Zaragoza 2026-27
               </Badge>
               
               <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -209,10 +215,14 @@ const Erasmus = () => {
             </div>
             
             <div className="relative">
-              <img 
+              <img
                 src={heroStudents}
                 alt="Estudiantes Erasmus internacionales en Zaragoza"
                 className="rounded-2xl shadow-2xl w-full h-[400px] object-cover"
+                width={600}
+                height={400}
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-xl shadow-lg">
                 <div className="flex items-center gap-2">

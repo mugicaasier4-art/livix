@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import ListingCard from "@/components/ui/listing-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -57,6 +58,11 @@ const Residences = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Residencias Universitarias en Zaragoza para Estudiantes | Livix"
+        description="Encuentra las mejores residencias universitarias en Zaragoza. Compara precios, servicios y ubicación. Reserva online tu plaza con Livix."
+        canonical="https://livix.es/residences"
+      />
       {/* Hero Section */}
       <section className="relative py-16 bg-gradient-to-br from-primary to-system-blue overflow-hidden">
         {/* Background Image - Low opacity to blend with the blue background */}
@@ -113,6 +119,10 @@ const Residences = () => {
                     src={allResidences[0].images?.[0] || apartment1}
                     alt="Residencia destacada"
                     className="w-full h-[280px] object-cover"
+                    width={800}
+                    height={280}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-4 left-4 right-4 flex flex-col sm:flex-row sm:justify-between">
                     <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold border-0 shadow-md w-fit">
@@ -186,6 +196,10 @@ const Residences = () => {
                               src={residence.images?.[0] || apartment1}
                               alt={residence.name}
                               className="w-full h-full object-cover"
+                              width={400}
+                              height={400}
+                              loading="lazy"
+                              decoding="async"
                             />
                             <Badge className="absolute top-2 left-2 bg-foreground text-background text-xs border-0 shadow-md">
                               <Crown className="h-3 w-3 mr-1" />
@@ -252,6 +266,10 @@ const Residences = () => {
                                 src={residence.images?.[0] || apartment1}
                                 alt={residence.name}
                                 className="w-full h-[180px] object-cover"
+                                width={300}
+                                height={180}
+                                loading="lazy"
+                                decoding="async"
                               />
                               <Badge className="absolute top-2 left-2 bg-foreground text-background text-xs border-0 shadow-md">
                                 <Crown className="h-3 w-3 mr-1" />
@@ -352,6 +370,10 @@ const Residences = () => {
                             src={residence.images?.[0] || apartment1}
                             alt={residence.name}
                             className="w-full h-[200px] object-cover"
+                            width={400}
+                            height={200}
+                            loading="lazy"
+                            decoding="async"
                           />
                           {residence.verified && (
                             <Badge className="absolute top-2 left-2 bg-primary text-white text-xs">
@@ -426,6 +448,10 @@ const Residences = () => {
                             src={residence.images?.[0] || apartment2}
                             alt={residence.name}
                             className="w-full h-[200px] object-cover"
+                            width={400}
+                            height={200}
+                            loading="lazy"
+                            decoding="async"
                           />
                           {residence.verified && (
                             <Badge className="absolute top-2 left-2 bg-primary text-white text-xs">

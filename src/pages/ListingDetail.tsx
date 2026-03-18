@@ -1,6 +1,7 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
 import Layout from '@/components/layout/Layout';
+import { SEOHead } from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,7 +23,7 @@ import { analytics } from '@/utils/analytics';
 import { trackListingView } from '@/hooks/useAnalytics';
 import PaywallModal from '@/components/common/PaywallModal';
 import RegisterGateModal from '@/components/auth/RegisterGateModal';
-import { zaragozaListings, type Listing } from '@/data/listings';
+import { zaragozaListings, type MockListing } from '@/data/listings';
 import { ReviewsList } from '@/components/reviews/ReviewsList';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
 import { useReviews } from '@/hooks/useReviews';
@@ -36,6 +37,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useListingDetail } from '@/hooks/useListingDetail';
 import { MeetNeighbors } from '@/components/listing/MeetNeighbors';
 import { PriceAlertButton } from '@/components/explore/PriceAlerts';
+import BadgeDisplay from '@/components/landlord/BadgeDisplay';
+import { useApplications } from '@/hooks/useApplications';
 
 // Extended listing interface for display
 interface ExtendedListing {
@@ -97,6 +100,7 @@ interface ExtendedListing {
 
 const ListingDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const { t } = useI18n();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -110,9 +114,15 @@ const ListingDetail = () => {
   const { canUserReview } = useReviews(id);
   const [canReview, setCanReview] = useState(false);
   const { scheduleVisit, isLoading: isSchedulingVisit } = useVisits();
+  const { createApplication } = useApplications();
   const [selectedVisitDate, setSelectedVisitDate] = useState<Date>();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('');
   const [visitNotes, setVisitNotes] = useState('');
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  // Apply modal state
+  const [selectedApplyDate, setSelectedApplyDate] = useState<Date>();
+  const [applyMessage, setApplyMessage] = useState('');
+  const [isApplying, setIsApplying] = useState(false);
 
   // Fetch listing from database or mock data
   const { listing: dbListing, isLoading, source } = useListingDetail(id);
@@ -136,13 +146,43 @@ const ListingDetail = () => {
     }
   }, [id]);
 
-  // Show loading state
+  // Auto-open apply modal from ?apply=true (quick apply from listing cards)
+  useEffect(() => {
+    if (searchParams.get('apply') === 'true' && !isLoading && dbListing) {
+      setShowApplyModal(true);
+    }
+  }, [searchParams, isLoading, dbListing]);
+
+  // Show loading state with skeleton
   if (isLoading) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-16 flex flex-col items-center justify-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary mb-4" />
-          <p className="text-muted-foreground">Cargando anuncio...</p>
+        <div className="container mx-auto px-4 py-6">
+          {/* Gallery skeleton */}
+          <div className="h-8 w-24 rounded bg-muted animate-pulse mb-4" />
+          <div className="w-full aspect-[16/9] md:aspect-[2/1] rounded-xl bg-muted animate-pulse mb-6" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main content skeleton */}
+            <div className="lg:col-span-2 space-y-4">
+              <div className="h-8 w-3/4 rounded bg-muted animate-pulse" />
+              <div className="h-5 w-1/3 rounded bg-muted animate-pulse" />
+              <div className="h-4 w-full rounded bg-muted animate-pulse" />
+              <div className="h-4 w-5/6 rounded bg-muted animate-pulse" />
+              <div className="h-4 w-4/6 rounded bg-muted animate-pulse" />
+              <div className="flex gap-2 mt-4">
+                <div className="h-8 w-20 rounded-full bg-muted animate-pulse" />
+                <div className="h-8 w-20 rounded-full bg-muted animate-pulse" />
+                <div className="h-8 w-20 rounded-full bg-muted animate-pulse" />
+              </div>
+            </div>
+
+            {/* Sidebar skeleton */}
+            <div className="space-y-4">
+              <div className="h-48 w-full rounded-lg bg-muted animate-pulse" />
+              <div className="h-12 w-full rounded-lg bg-muted animate-pulse" />
+            </div>
+          </div>
         </div>
       </Layout>
     );
@@ -260,6 +300,60 @@ const ListingDetail = () => {
 
   const baseListing = mockListing;
 
+  // SEO: Structured data for this listing
+  const listingStructuredData = useMemo(() => {
+    const structuredData: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "Accommodation",
+      "name": mockListing.title,
+      "description": mockListing.description,
+      "url": `https://livix.es/listing/${mockListing.id}`,
+      "image": mockListing.images,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": dbListing.city || dbListing.location || mockListing.location || "Zaragoza",
+        "addressRegion": "Aragon",
+        "addressCountry": "ES",
+        ...(dbListing.address ? { "streetAddress": dbListing.address } : {})
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": mockListing.price,
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    };
+
+    if (mockListing.bedrooms) {
+      structuredData["numberOfRooms"] = mockListing.bedrooms;
+    }
+
+    if (dbListing.size) {
+      structuredData["floorSize"] = {
+        "@type": "QuantitativeValue",
+        "value": dbListing.size,
+        "unitCode": "MTK"
+      };
+    }
+
+    if (mockListing.bathrooms) {
+      structuredData["numberOfBathroomsTotal"] = mockListing.bathrooms;
+    }
+
+    if (mockListing.amenities && mockListing.amenities.length > 0) {
+      structuredData["amenityFeature"] = mockListing.amenities.map(amenity => ({
+        "@type": "LocationFeatureSpecification",
+        "name": amenity,
+        "value": true
+      }));
+    }
+
+    return structuredData;
+  }, [mockListing, dbListing]);
+
+  const seoTitle = `${mockListing.title} en ${mockListing.location || 'Zaragoza'} - ${mockListing.price}\u20AC/mes | Livix`;
+  const seoDescription = `Alquila ${mockListing.title} en ${mockListing.location || 'Zaragoza'}. ${mockListing.price}\u20AC/mes.${mockListing.bedrooms ? ` ${mockListing.bedrooms} habitaciones.` : ''} Verificado en Livix - Alojamiento universitario.`;
+
   const handleSave = () => {
     const newSavedState = !isSaved;
     setIsSaved(newSavedState);
@@ -277,9 +371,22 @@ const ListingDetail = () => {
     localStorage.setItem('campus-room-saved', JSON.stringify(savedListings));
   };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleShare = async () => {
     const numericId = typeof mockListing.id === 'string' ? parseInt(mockListing.id) || 0 : mockListing.id;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: mockListing.title,
+          text: `${mockListing.title} - ${mockListing.price}€/mes en ${mockListing.location}`,
+          url: window.location.href,
+        });
+      } catch {
+        // User cancelled
+      }
+    } else {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success('Enlace copiado al portapapeles');
+    }
     analytics.trackCTAClicked(numericId, 'share');
   };
 
@@ -313,6 +420,14 @@ const ListingDetail = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`https://livix.es/listing/${mockListing.id}`}
+        ogImage={mockListing.images[0] || undefined}
+        ogType="product"
+        structuredData={listingStructuredData}
+      />
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-6 max-w-6xl">
           {/* Breadcrumb */}
@@ -336,7 +451,7 @@ const ListingDetail = () => {
                       {mockListing.title}
                     </h1>
                     <div className="flex items-center gap-2 text-muted-foreground mt-2">
-                      <MapPin className="h-4 w-4" />
+                      <MapPin className="h-4 w-4" aria-hidden="true" />
                       <span>{mockListing.location}</span>
                     </div>
                   </div>
@@ -360,6 +475,7 @@ const ListingDetail = () => {
                       variant="outline"
                       size="icon"
                       onClick={handleSave}
+                      aria-label={isSaved ? "Quitar de favoritos" : "Guardar en favoritos"}
                     >
                       <Heart className={cn("h-4 w-4", isSaved && "fill-red-500 text-red-500")} />
                     </Button>
@@ -367,6 +483,7 @@ const ListingDetail = () => {
                       variant="outline"
                       size="icon"
                       onClick={handleShare}
+                      aria-label="Compartir anuncio"
                     >
                       <Share2 className="h-4 w-4" />
                     </Button>
@@ -374,6 +491,7 @@ const ListingDetail = () => {
                       variant="outline"
                       size="icon"
                       onClick={() => setShowReportModal(true)}
+                      aria-label="Reportar anuncio"
                     >
                       <Flag className="h-4 w-4" />
                     </Button>
@@ -419,23 +537,42 @@ const ListingDetail = () => {
 
               {/* Image Gallery */}
               <div className="space-y-4">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
+                <div
+                  className="relative aspect-[16/9] overflow-hidden rounded-xl"
+                  onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+                  onTouchEnd={(e) => {
+                    if (touchStartX === null) return;
+                    const diff = touchStartX - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 50) {
+                      if (diff > 0) {
+                        setCurrentImageIndex(currentImageIndex === mockListing.images.length - 1 ? 0 : currentImageIndex + 1);
+                      } else {
+                        setCurrentImageIndex(currentImageIndex === 0 ? mockListing.images.length - 1 : currentImageIndex - 1);
+                      }
+                    }
+                    setTouchStartX(null);
+                  }}
+                >
                   <img
                     src={mockListing.images[currentImageIndex]}
                     alt={mockListing.title}
-                    className={cn("w-full h-full object-cover", !user && "blur-lg")}
+                    className={cn("w-full h-full object-cover", !user && currentImageIndex > 0 && "blur-lg")}
+                    loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                    decoding={currentImageIndex === 0 ? "auto" : "async"}
+                    width={800}
+                    height={600}
                   />
 
-                  {/* Registration overlay for non-logged-in users */}
-                  {!user && (
+                  {/* Registration overlay for non-logged-in users (only on 2nd+ image) */}
+                  {!user && currentImageIndex > 0 && (
                     <div
                       className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 cursor-pointer z-10"
                       onClick={() => setShowRegisterGate(true)}
                     >
                       <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 text-center shadow-xl">
                         <Lock className="h-8 w-8 text-primary mx-auto mb-3" />
-                        <p className="font-semibold text-foreground">Regístrate para ver las fotos</p>
-                        <p className="text-sm text-muted-foreground mt-1">Es gratis y rápido</p>
+                        <p className="font-semibold text-foreground">Regístrate para ver todas las fotos</p>
+                        <p className="text-sm text-muted-foreground mt-1">Es gratis y solo toma 30 segundos</p>
                       </div>
                     </div>
                   )}
@@ -446,20 +583,22 @@ const ListingDetail = () => {
                       <Button
                         variant="secondary"
                         size="icon"
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background backdrop-blur-sm"
                         onClick={() => setCurrentImageIndex(
                           currentImageIndex === 0 ? mockListing.images.length - 1 : currentImageIndex - 1
                         )}
+                        aria-label="Imagen anterior"
                       >
                         <ChevronLeft className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="secondary"
                         size="icon"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background backdrop-blur-sm"
                         onClick={() => setCurrentImageIndex(
                           currentImageIndex === mockListing.images.length - 1 ? 0 : currentImageIndex + 1
                         )}
+                        aria-label="Imagen siguiente"
                       >
                         <ChevronRight className="h-4 w-4" />
                       </Button>
@@ -487,7 +626,11 @@ const ListingDetail = () => {
                         <img
                           src={image}
                           alt={`Vista ${index + 1}`}
-                          className={cn("w-full h-full object-cover", !user && "blur-md")}
+                          className={cn("w-full h-full object-cover", !user && index > 0 && "blur-md")}
+                          loading="lazy"
+                          decoding="async"
+                          width={80}
+                          height={80}
                         />
                       </button>
                     ))}
@@ -500,6 +643,51 @@ const ListingDetail = () => {
                 onOpenChange={setShowRegisterGate}
                 context="ver las fotos de este piso"
               />
+
+              {/* Mobile Price & CTA Summary - visible only on mobile, before description */}
+              <div className="lg:hidden">
+                <Card>
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-2xl font-bold">
+                          {mockListing.price}€<span className="text-sm font-normal text-muted-foreground">/mes</span>
+                        </div>
+                        {mockListing.allInclusive && (
+                          <p className="text-xs text-success font-medium">Gastos incluidos</p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <Shield className="h-3.5 w-3.5 text-green-600" />
+                        <span className="text-green-600 font-medium">Sin comisiones</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <span>Disponible: <strong className="text-foreground">{mockListing.available_from || 'Ahora'}</strong></span>
+                      <span>Duración: <strong className="text-foreground">{mockListing.duration || '6+ meses'}</strong></span>
+                    </div>
+                    {/* Landlord quick info */}
+                    <div className="flex items-center gap-2 pt-1">
+                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                        <span className="font-medium text-primary text-xs">{mockListing.landlord.name.charAt(0)}</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm font-medium">{mockListing.landlord.name}</span>
+                          {mockListing.landlord.verified && <CheckCircle className="h-3.5 w-3.5 text-success" />}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Star className="h-3 w-3 fill-current" />
+                          <span>{mockListing.landlord.rating}</span>
+                          <span>·</span>
+                          <Clock className="h-3 w-3" />
+                          <span>Responde en {mockListing.landlord.responseTime}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
 
               {/* Description */}
               <Card>
@@ -730,6 +918,10 @@ const ListingDetail = () => {
                               src={listing.image}
                               alt={listing.title}
                               className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                              loading="lazy"
+                              decoding="async"
+                              width={64}
+                              height={64}
                             />
                             <div className="flex-1 min-w-0">
                               <h4 className="font-medium text-sm leading-tight line-clamp-2">
@@ -764,6 +956,15 @@ const ListingDetail = () => {
                     {mockListing.allInclusive && (
                       <p className="text-sm text-success">Gastos incluidos</p>
                     )}
+                  </div>
+
+                  {/* Sin comisiones badge */}
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+                    <div className="flex items-center justify-center gap-2 text-green-700 font-medium text-sm">
+                      <Shield className="h-4 w-4" />
+                      Sin comisiones hasta confirmar
+                    </div>
+                    <p className="text-xs text-green-600 mt-1">Solo pagas si reservas</p>
                   </div>
 
                   <div className="space-y-2 text-sm">
@@ -840,6 +1041,9 @@ const ListingDetail = () => {
                         </Badge>
                       ))}
                     </div>
+
+                    {/* Reputation Badges */}
+                    <BadgeDisplay userId={dbListing.landlord_id || dbListing.user_id} />
                   </div>
                 </CardContent>
               </Card>
@@ -848,7 +1052,10 @@ const ListingDetail = () => {
         </div>
 
         {/* Apply Modal */}
-        <Dialog open={showApplyModal} onOpenChange={setShowApplyModal}>
+        <Dialog open={showApplyModal} onOpenChange={(open) => {
+          setShowApplyModal(open);
+          if (!open) { setSelectedApplyDate(undefined); setApplyMessage(''); }
+        }}>
           <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Solicitar alojamiento</DialogTitle>
@@ -862,33 +1069,84 @@ const ListingDetail = () => {
                     availableFrom={mockListing.available_from}
                     availableTo={null}
                     mode="select"
-                    onDateSelect={(date) => console.log('Selected date:', date)}
+                    onDateSelect={(date) => setSelectedApplyDate(date)}
                   />
                 </div>
+                {selectedApplyDate && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Fecha seleccionada: {selectedApplyDate.toLocaleDateString('es-ES')}
+                  </p>
+                )}
               </div>
 
               <div>
-                <Label htmlFor="message">Mensaje para el propietario</Label>
+                <Label htmlFor="applyMessage">Mensaje para el propietario</Label>
                 <Textarea
-                  id="message"
-                  placeholder="Hola, me interesa mucho tu alojamiento..."
+                  id="applyMessage"
+                  value={applyMessage}
+                  onChange={(e) => setApplyMessage(e.target.value)}
+                  placeholder="Hola, me interesa mucho tu alojamiento. Soy estudiante en..."
                   className="mt-1"
                   rows={4}
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Mínimo 20 caracteres ({applyMessage.length}/20)
+                </p>
               </div>
               <div className="flex gap-2 pt-4">
-                <Button onClick={() => setShowApplyModal(false)} variant="outline" className="flex-1">
+                <Button onClick={() => setShowApplyModal(false)} variant="outline" className="flex-1" disabled={isApplying}>
                   Cancelar
                 </Button>
                 <Button
-                  onClick={() => {
-                    const numericId = typeof mockListing.id === 'string' ? parseInt(mockListing.id) || 0 : mockListing.id;
-                    analytics.trackApplicationSubmitted(numericId, 'direct');
-                    setShowApplyModal(false);
+                  onClick={async () => {
+                    if (!user) {
+                      toast.error('Debes iniciar sesión para enviar una solicitud');
+                      navigate('/login');
+                      return;
+                    }
+                    if (!selectedApplyDate) {
+                      toast.error('Selecciona una fecha de entrada');
+                      return;
+                    }
+                    if (applyMessage.trim().length < 20) {
+                      toast.error('El mensaje debe tener al menos 20 caracteres');
+                      return;
+                    }
+
+                    setIsApplying(true);
+                    try {
+                      const result = await createApplication({
+                        listing_id: id || '',
+                        landlord_id: dbListing?.landlord_id || dbListing?.user_id || '',
+                        message: applyMessage.trim(),
+                        move_in_date: selectedApplyDate.toISOString().split('T')[0],
+                        budget_eur: dbListing?.price || mockListing.price || 0,
+                        is_erasmus: false,
+                      });
+
+                      if (result) {
+                        analytics.trackApplicationSubmitted(id || '', 'direct');
+                        setShowApplyModal(false);
+                        setSelectedApplyDate(undefined);
+                        setApplyMessage('');
+                      }
+                    } catch {
+                      // Error handled by createApplication with toast
+                    } finally {
+                      setIsApplying(false);
+                    }
                   }}
                   className="flex-1"
+                  disabled={isApplying || !selectedApplyDate || applyMessage.trim().length < 20}
                 >
-                  Enviar solicitud
+                  {isApplying ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    'Enviar solicitud'
+                  )}
                 </Button>
               </div>
             </div>
@@ -1006,7 +1264,7 @@ const ListingDetail = () => {
 
                     const result = await scheduleVisit(
                       id || '1',
-                      'landlord-mock-id', // In production, get from listing
+                      dbListing?.landlord_id || dbListing?.user_id || '',
                       selectedVisitDate,
                       selectedTimeSlot,
                       visitNotes
@@ -1137,6 +1395,22 @@ const ListingDetail = () => {
           </Card>
         </div>
       </div>
+
+        {/* Mobile Sticky CTA Bar */}
+        <div className="fixed bottom-14 left-0 right-0 bg-background border-t border-border px-4 py-3 md:hidden z-40 pb-safe shadow-elevated">
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0">
+              <span className="text-lg font-bold">{mockListing.price}€</span>
+              <span className="text-xs text-muted-foreground">/mes</span>
+            </div>
+            <Button onClick={handleScheduleVisit} variant="outline" size="sm" className="h-10 px-3 flex-shrink-0">
+              <Calendar className="h-4 w-4" />
+            </Button>
+            <Button onClick={handleApply} size="sm" className="h-10 flex-1">
+              Solicitar
+            </Button>
+          </div>
+        </div>
     </Layout>
   );
 };

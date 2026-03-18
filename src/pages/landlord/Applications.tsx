@@ -229,7 +229,7 @@ const Applications = () => {
           {showFilters && (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Tipo de estudiante</label>
                     <div className="space-y-2">
@@ -237,7 +237,7 @@ const Applications = () => {
                         <Checkbox
                           id="erasmus"
                           checked={filters.is_erasmus === true}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             updateFilters({ is_erasmus: checked ? true : undefined })
                           }
                         />
@@ -247,7 +247,7 @@ const Applications = () => {
                         <Checkbox
                           id="local"
                           checked={filters.is_erasmus === false}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             updateFilters({ is_erasmus: checked ? false : undefined })
                           }
                         />
@@ -255,12 +255,12 @@ const Applications = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="text-sm font-medium mb-2 block">Documentos faltantes</label>
                     <Select
                       value={filters.missing_docs[0] || 'all'}
-                      onValueChange={(value) => 
+                      onValueChange={(value) =>
                         updateFilters({ missing_docs: value === 'all' ? [] : [value] })
                       }
                     >
@@ -275,27 +275,8 @@ const Applications = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Idiomas</label>
-                    <Select
-                      value={filters.languages[0] || 'all'}
-                      onValueChange={(value) => 
-                        updateFilters({ languages: value === 'all' ? [] : [value] })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Todos</SelectItem>
-                        <SelectItem value="es">Español</SelectItem>
-                        <SelectItem value="en">Inglés</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
                 </div>
-                
+
                 <div className="flex justify-end gap-2 mt-4">
                   <Button
                     variant="outline"
@@ -304,7 +285,6 @@ const Applications = () => {
                       status: [],
                       listings: [],
                       missing_docs: [],
-                      languages: [],
                       search: ''
                     })}
                   >

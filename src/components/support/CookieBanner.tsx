@@ -44,6 +44,7 @@ export const CookieBanner = () => {
       analytics: true,
       marketing: true
     });
+    analytics.updateConsent(true);
     analytics.track('cookies_accept_all');
   };
 
@@ -53,6 +54,7 @@ export const CookieBanner = () => {
       analytics: false,
       marketing: false
     });
+    analytics.updateConsent(false);
     analytics.track('cookies_reject_all');
   };
 

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { validateImageFile } from '@/utils/fileValidation';
+import { resizeImage } from '@/utils/imageResize';
 
 export interface Listing {
   id: string;
@@ -80,20 +82,30 @@ export interface CreateListingData {
   }>;
 }
 
+const LISTINGS_PAGE_SIZE = 20;
+
 export const useListings = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   const { user } = useAuth();
 
-  const fetchListings = async () => {
+  const fetchListings = async (cursor?: string) => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('listings')
         .select('*')
         .eq('is_active', true)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(LISTINGS_PAGE_SIZE);
+
+      if (cursor) {
+        query = query.lt('created_at', cursor);
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
 
@@ -103,14 +115,27 @@ export const useListings = () => {
         smoking_allowed: listing.smoking_allowed ?? false,
         gender_preference: listing.gender_preference ?? 'any'
       }));
-      setListings(normalizedData);
+
+      if (cursor) {
+        setListings(prev => [...prev, ...normalizedData]);
+      } else {
+        setListings(normalizedData);
+      }
+      setHasMore((data || []).length === LISTINGS_PAGE_SIZE);
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error('Error fetching listings:', error);
       }
-      setListings([]);
+      if (!cursor) setListings([]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loadMore = () => {
+    if (listings.length > 0 && hasMore) {
+      const lastListing = listings[listings.length - 1];
+      fetchListings(lastListing.created_at);
     }
   };
 
@@ -139,14 +164,28 @@ export const useListings = () => {
 
   const uploadImages = async (files: File[], listingId: string): Promise<string[]> => {
     if (!user) throw new Error('Usuario no autenticado');
-    
+
+    // Validate all files before uploading
+    for (const file of files) {
+      const validationError = validateImageFile(file);
+      if (validationError) {
+        toast.error('Archivo no válido', { description: validationError });
+        throw new Error(validationError);
+      }
+    }
+
     const uploadedUrls: string[] = [];
     const totalFiles = files.length;
-    
+
     for (let i = 0; i < totalFiles; i++) {
-      const file = files[i];
-      const fileExt = file.name.split('.').pop();
+      const resized = await resizeImage(files[i]);
+      const validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+      const fileExt = (resized.name.split('.').pop() || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!validExtensions.includes(fileExt)) {
+        throw new Error(`Extensión de archivo no permitida: .${fileExt}`);
+      }
       const fileName = `${user.id}/${listingId}/${Date.now()}-${i}.${fileExt}`;
+      const file = resized;
       
       setUploadProgress(Math.round(((i + 1) / totalFiles) * 100));
       
@@ -337,7 +376,9 @@ export const useListings = () => {
     listings,
     isLoading,
     uploadProgress,
+    hasMore,
     fetchListings,
+    loadMore,
     fetchLandlordListings,
     createListing,
     updateListing,

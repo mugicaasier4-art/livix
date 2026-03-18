@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Layout from '@/components/layout/Layout';
+import { SEOHead } from '@/components/seo/SEOHead';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -94,6 +95,11 @@ const HowItWorks = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Cómo Funciona Livix | Alojamiento Universitario Inteligente"
+        description="Descubre cómo encontrar tu alojamiento universitario en 3 pasos. Busca, compara y reserva pisos y habitaciones para estudiantes en Zaragoza."
+        canonical="https://livix.es/how-it-works"
+      />
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">

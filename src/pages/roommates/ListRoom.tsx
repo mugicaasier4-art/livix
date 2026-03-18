@@ -178,7 +178,7 @@ const ListRoom = () => {
                             <div className="grid grid-cols-3 gap-3">
                                 {formData.photoPreviews.map((src, idx) => (
                                     <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border group">
-                                        <img src={src} alt="Preview" className="w-full h-full object-cover" />
+                                        <img src={src} alt="Preview" className="w-full h-full object-cover" loading="lazy" decoding="async" width={200} height={200} />
                                         <button
                                             onClick={() => removePhoto(idx)}
                                             className="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"

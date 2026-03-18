@@ -45,6 +45,10 @@ const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalP
                         src={roommate.image}
                         alt={roommate.name}
                         className="w-full h-full object-cover opacity-50 blur-sm scale-110"
+                        loading="lazy"
+                        decoding="async"
+                        width={600}
+                        height={192}
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
 

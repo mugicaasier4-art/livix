@@ -331,6 +331,10 @@ const EditRoomListing = () => {
                       src={url}
                       alt={`Foto ${index + 1}`}
                       className="w-full h-full object-cover rounded-lg"
+                      loading="lazy"
+                      decoding="async"
+                      width={200}
+                      height={200}
                     />
                     <Button
                       variant="destructive"

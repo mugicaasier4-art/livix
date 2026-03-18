@@ -34,10 +34,10 @@ const PremiumCTA = () => {
               Livix Premium
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Encuentra tu piso antes que nadie
+              Los mejores pisos se van en horas
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Con Livix Premium, accede a nuevas ofertas 48 horas antes que el resto de estudiantes
+              Con Premium, ves los pisos nuevos 48h antes que nadie y recibes alerta al instante
             </p>
           </div>
 
@@ -66,11 +66,11 @@ const PremiumCTA = () => {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                    Sé el primero en reservar
+                    No pierdas otro piso por llegar tarde
                   </h3>
                   <p className="text-primary-foreground/90 mb-6">
-                    Los mejores pisos se alquilan en las primeras 24 horas. Con Premium, 
-                    tienes 2 días de ventaja para contactar al propietario sin competencia.
+                    El curso pasado, los pisos céntricos se alquilaron en menos de 24 horas.
+                    Con Premium tienes 2 días de ventaja para contactar sin competencia.
                   </p>
                   
                   <ul className="space-y-3 mb-6">

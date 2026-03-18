@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -248,7 +249,7 @@ const Roommates = () => {
 
         setMatchesWithProfiles(combined);
       } catch (error) {
-        console.error('Error fetching match profiles:', error);
+        if (import.meta.env.DEV) console.error('Error fetching match profiles:', error);
       } finally {
         setLoadingProfiles(false);
       }
@@ -278,7 +279,7 @@ const Roommates = () => {
         .maybeSingle();
 
       if (error) {
-        console.error('Error checking mutual like:', error);
+        if (import.meta.env.DEV) console.error('Error checking mutual like:', error);
       }
 
       // If it's a match, show celebration modal
@@ -289,7 +290,7 @@ const Roommates = () => {
 
       nextProfile();
     } catch (error) {
-      console.error('Error liking profile:', error);
+      if (import.meta.env.DEV) console.error('Error liking profile:', error);
     }
   };
 
@@ -308,9 +309,14 @@ const Roommates = () => {
   const handleStartChat = async (matchUserId: string) => {
     try {
       const conversationId = await getOrCreateConversation(matchUserId);
-      navigate(`/messages/${conversationId}`);
+      if (conversationId) {
+        navigate(`/messages/${conversationId}`);
+      } else {
+        toast.error('No se pudo iniciar la conversación');
+      }
     } catch (error) {
-      console.error('Error starting chat:', error);
+      if (import.meta.env.DEV) console.error('Error starting chat:', error);
+      toast.error('Error al iniciar el chat');
     }
   };
 
@@ -320,6 +326,11 @@ const Roommates = () => {
   if (selectedPath === 'none') {
     return (
       <Layout>
+        <SEOHead
+          title="Buscar Compañeros de Piso en Zaragoza | Livix"
+          description="Encuentra tu compañero de piso ideal en Zaragoza. Matching inteligente por compatibilidad, hábitos y presupuesto. Regístrate gratis en Livix."
+          canonical="https://livix.es/roommates"
+        />
         <div className="min-h-screen bg-background py-6 md:py-12">
           <div className="container mx-auto px-4">
             {/* Header */}
@@ -456,9 +467,9 @@ const Roommates = () => {
                 <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
                 Volver a opciones
               </Button>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
                 Encuentra tu Casa
-              </h1>
+              </h2>
               <p className="text-lg text-muted-foreground">
                 Habitaciones publicadas por estudiantes que buscan compañero/a
               </p>
@@ -533,9 +544,9 @@ const Roommates = () => {
               <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
               Volver a opciones
             </Button>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               Buscar Compañero
-            </h1>
+            </h2>
             <p className="text-lg text-muted-foreground">
               Encuentra roommates compatibles y gestiona tus conexiones
             </p>
@@ -617,6 +628,10 @@ const Roommates = () => {
                             src={currentProfile.user.avatar_url}
                             alt={currentProfile.user?.name}
                             className="w-full h-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            width={400}
+                            height={533}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">

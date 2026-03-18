@@ -23,6 +23,7 @@ export const CookieSettings = ({ isOpen, onClose, onSave }: CookieSettingsProps)
       analytics: analyticsEnabled,
       marketing
     });
+    analytics.updateConsent(analyticsEnabled);
     analytics.track('cookies_pref_saved', { analytics_enabled: analyticsEnabled, marketing_enabled: marketing });
   };
 
@@ -34,6 +35,7 @@ export const CookieSettings = ({ isOpen, onClose, onSave }: CookieSettingsProps)
       analytics: true,
       marketing: true
     });
+    analytics.updateConsent(true);
     analytics.track('cookies_accept_all', { source: 'settings' });
   };
 
@@ -45,6 +47,7 @@ export const CookieSettings = ({ isOpen, onClose, onSave }: CookieSettingsProps)
       analytics: false,
       marketing: false
     });
+    analytics.updateConsent(false);
     analytics.track('cookies_reject_all', { source: 'settings' });
   };
 

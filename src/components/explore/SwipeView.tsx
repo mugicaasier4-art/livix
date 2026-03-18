@@ -94,10 +94,14 @@ const SwipeView = ({ listings }: SwipeViewProps) => {
           )}
         >
           <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
-            <img 
-              src={currentListing.image} 
+            <img
+              src={currentListing.image}
               alt={currentListing.title}
               className="h-full w-full object-cover"
+              width={400}
+              height={300}
+              loading="lazy"
+              decoding="async"
             />
             
             {/* Overlay badges */}

@@ -39,6 +39,7 @@ const Bookings = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
   const [cancelReason, setCancelReason] = useState('');
+  const [isCanceling, setIsCanceling] = useState(false);
 
   // Role gating
   React.useEffect(() => {
@@ -102,19 +103,22 @@ const Bookings = () => {
 
   const confirmCancelBooking = async () => {
     if (!bookingToCancel) return;
-    
+
+    setIsCanceling(true);
     try {
       await cancelBooking(bookingToCancel, cancelReason.trim() || undefined);
       setShowCancelModal(false);
       setBookingToCancel(null);
       setCancelReason('');
-      
+
       analytics.track('booking_canceled', {
         booking_id: bookingToCancel,
         has_reason: !!cancelReason.trim()
       });
     } catch (error) {
-      console.error('Error canceling booking:', error);
+      if (import.meta.env.DEV) console.error('Error canceling booking:', error);
+    } finally {
+      setIsCanceling(false);
     }
   };
 
@@ -159,19 +163,20 @@ const Bookings = () => {
                   <span className="text-sm font-medium text-muted-foreground">Estado:</span>
                 </div>
                 {statusOptions.map((option) => (
-                  <Badge
+                  <Button
                     key={option.value}
                     variant={selectedStatuses.includes(option.value) ? "default" : "outline"}
+                    size="sm"
                     className={cn(
-                      "cursor-pointer transition-colors",
-                      selectedStatuses.includes(option.value) 
-                        ? "bg-primary text-primary-foreground" 
+                      "h-9 px-3 text-xs rounded-full transition-colors",
+                      selectedStatuses.includes(option.value)
+                        ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
                     )}
                     onClick={() => handleStatusToggle(option.value)}
                   >
                     {option.label}
-                  </Badge>
+                  </Button>
                 ))}
                 {selectedStatuses.length > 0 && (
                   <Button
@@ -204,7 +209,7 @@ const Bookings = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => window.location.reload()}
+                    onClick={() => { navigate(0); }}
                     className="ml-auto"
                   >
                     <RefreshCw className="h-4 w-4 mr-2" />
@@ -325,6 +330,7 @@ const Bookings = () => {
                   variant="outline"
                   onClick={() => setShowCancelModal(false)}
                   className="flex-1"
+                  disabled={isCanceling}
                 >
                   No cancelar
                 </Button>
@@ -332,8 +338,9 @@ const Bookings = () => {
                   variant="destructive"
                   onClick={confirmCancelBooking}
                   className="flex-1"
+                  disabled={isCanceling}
                 >
-                  Sí, cancelar
+                  {isCanceling ? 'Cancelando...' : 'Sí, cancelar'}
                 </Button>
               </div>
             </div>

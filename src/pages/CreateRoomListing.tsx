@@ -380,7 +380,7 @@ const CreateRoomListing = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {uploadedImages.map((url, idx) => (
                     <div key={idx} className="relative aspect-square rounded-lg overflow-hidden">
-                      <img src={url} alt={`Foto ${idx + 1} de la habitación`} className="h-full w-full object-cover" />
+                      <img src={url} alt={`Foto ${idx + 1} de la habitación`} className="h-full w-full object-cover" loading="lazy" decoding="async" width={200} height={200} />
                       <button
                         onClick={() => removeImage(idx)}
                         aria-label={`Eliminar foto ${idx + 1}`}

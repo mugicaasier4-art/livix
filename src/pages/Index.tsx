@@ -1,42 +1,32 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import Hero from "@/components/sections/Hero";
+import TrustBanner from "@/components/sections/TrustBanner";
 import Features from "@/components/sections/Features";
 import AnimatedStats from "@/components/sections/AnimatedStats";
 import FeaturedListings from "@/components/sections/FeaturedListings";
 import CategoryCTA from "@/components/sections/CategoryCTA";
 import PremiumCTA from "@/components/sections/PremiumCTA";
-import ClubCTA from "@/components/sections/ClubCTA";
-import BlogCTA from "@/components/sections/BlogCTA";
+import TestimonialSection from "@/components/sections/TestimonialSection";
 import HomeFAQ from "@/components/sections/HomeFAQ";
 
 const Index = () => {
   return (
     <Layout>
-      {/* Hero with rotating text */}
+      <SEOHead
+        title="Livix - Alojamiento Universitario en Zaragoza | Pisos, Habitaciones y Residencias"
+        description="Encuentra pisos, habitaciones y residencias universitarias verificadas en Zaragoza. Marketplace de alojamiento para estudiantes. Busca, compara y reserva online."
+        canonical="https://livix.es/"
+        ogImage="https://livix.es/og-livix.jpg"
+      />
       <Hero />
-
-      {/* Animated stats counter */}
+      <TrustBanner />
       <AnimatedStats />
-
-      {/* Features with premium cards */}
       <Features />
-
-      {/* Featured listings */}
       <FeaturedListings />
-
-      {/* Premium CTA */}
-      <PremiumCTA />
-
-      {/* Category CTA */}
+      <TestimonialSection />
       <CategoryCTA />
-
-      {/* Club CTA */}
-      <ClubCTA />
-
-      {/* Blog CTA */}
-      <BlogCTA />
-
-      {/* FAQ */}
+      <PremiumCTA />
       <HomeFAQ />
     </Layout>
   );

@@ -243,6 +243,8 @@ const CompleteStep = ({ data }: { data: any }) => {
                                     src={URL.createObjectURL(data.photos[0])}
                                     alt="Preview"
                                     className="w-full h-full object-cover rounded-lg"
+                                    width={80}
+                                    height={80}
                                 />
                             ) : (
                                 <Camera className="h-8 w-8 text-muted-foreground" />

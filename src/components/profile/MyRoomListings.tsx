@@ -151,10 +151,14 @@ const MyRoomListings = () => {
                 {/* Image */}
                 <div className="h-20 w-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
                   {listing.images?.[0] ? (
-                    <img 
-                      src={listing.images[0]} 
+                    <img
+                      src={listing.images[0]}
                       alt={listing.title}
                       className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width={80}
+                      height={80}
                     />
                   ) : (
                     <div className="h-full w-full flex items-center justify-center">

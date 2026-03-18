@@ -78,7 +78,7 @@ export const useReviews = (listingId?: string) => {
         setUserReview(userReviewData || null);
       }
     } catch (error) {
-      console.error('Error fetching reviews:', error);
+      if (import.meta.env.DEV) console.error('Error fetching reviews:', error);
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +111,7 @@ export const useReviews = (listingId?: string) => {
       await fetchReviews();
       return true;
     } catch (error: any) {
-      console.error('Error creating review:', error);
+      if (import.meta.env.DEV) console.error('Error creating review:', error);
       toast.error('Error al publicar valoración', {
         description: error.message || 'No se pudo publicar tu valoración'
       });
@@ -138,7 +138,7 @@ export const useReviews = (listingId?: string) => {
       await fetchReviews();
       return true;
     } catch (error) {
-      console.error('Error updating review:', error);
+      if (import.meta.env.DEV) console.error('Error updating review:', error);
       toast.error('Error al actualizar valoración');
       return false;
     } finally {
@@ -167,7 +167,7 @@ export const useReviews = (listingId?: string) => {
       await fetchReviews();
       return true;
     } catch (error) {
-      console.error('Error adding response:', error);
+      if (import.meta.env.DEV) console.error('Error adding response:', error);
       toast.error('Error al publicar respuesta');
       return false;
     } finally {
@@ -192,7 +192,7 @@ export const useReviews = (listingId?: string) => {
       await fetchReviews();
       return true;
     } catch (error) {
-      console.error('Error deleting review:', error);
+      if (import.meta.env.DEV) console.error('Error deleting review:', error);
       toast.error('Error al eliminar valoración');
       return false;
     } finally {
@@ -225,7 +225,7 @@ export const useReviews = (listingId?: string) => {
 
       return !!data && !existingReview;
     } catch (error) {
-      console.error('Error checking review eligibility:', error);
+      if (import.meta.env.DEV) console.error('Error checking review eligibility:', error);
       return false;
     }
   };

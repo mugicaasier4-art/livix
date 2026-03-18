@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import roommatesHeroImg from "@/assets/roommates-hero-generated.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -208,6 +209,11 @@ const RoommatesFrontpage = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Encuentra Compañero de Piso en Zaragoza | Livix Roommates"
+        description="Busca compañero de piso compatible en Zaragoza. Matching inteligente por hábitos, presupuesto y universidad. Publica tu habitación gratis."
+        canonical="https://livix.es/roommates"
+      />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="pt-24 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-32 relative overflow-hidden min-h-[400px] md:min-h-[500px]">
@@ -217,6 +223,9 @@ const RoommatesFrontpage = () => {
               src={roommatesHeroImg}
               alt=""
               className="w-full h-full object-cover object-center"
+              width={1200}
+              height={800}
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/40" />
           </div>
@@ -315,6 +324,10 @@ const RoommatesFrontpage = () => {
                           src={roomPhotos[index % roomPhotos.length]}
                           alt={listing.title}
                           className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          decoding="async"
+                          width={288}
+                          height={160}
                         />
                         {/* Profile avatar overlay */}
                         <div className="absolute bottom-2 right-2">
@@ -392,6 +405,10 @@ const RoommatesFrontpage = () => {
                           src={roomPhotos[index % roomPhotos.length]}
                           alt={listing.title}
                           className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          decoding="async"
+                          width={288}
+                          height={160}
                         />
                         {/* Profile avatar overlay */}
                         <div className="absolute bottom-2 right-2">

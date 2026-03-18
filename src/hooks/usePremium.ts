@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Tables } from '@/integrations/supabase/types';
+import { toast } from 'sonner';
 
 export type Subscription = Tables<'subscriptions'>;
 
@@ -40,7 +41,7 @@ export const usePremium = () => {
         if (error.code === 'PGRST116') {
           await createFreeSubscription();
         } else {
-          console.error('Error fetching subscription:', error);
+          if (import.meta.env.DEV) console.error('Error fetching subscription:', error);
         }
         return;
       }
@@ -55,7 +56,7 @@ export const usePremium = () => {
       
       setIsPremium(hasPremium);
     } catch (error) {
-      console.error('Error in fetchSubscription:', error);
+      if (import.meta.env.DEV) console.error('Error in fetchSubscription:', error);
     } finally {
       setIsLoading(false);
     }
@@ -77,45 +78,69 @@ export const usePremium = () => {
         .single();
 
       if (error) {
-        console.error('Error creating free subscription:', error);
+        if (import.meta.env.DEV) console.error('Error creating free subscription:', error);
         return;
       }
 
       setSubscription(data as Subscription);
       setIsPremium(false);
     } catch (error) {
-      console.error('Error in createFreeSubscription:', error);
+      if (import.meta.env.DEV) console.error('Error in createFreeSubscription:', error);
     }
   };
 
   const upgradeToPremium = async () => {
-    if (!user || !subscription) return;
+    if (!user) return;
 
     try {
-      // In a real implementation, this would integrate with Stripe
-      // For now, we'll just update the subscription directly
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .update({
+      const { data, error } = await supabase.functions.invoke('create-checkout-session', {
+        body: {
+          user_id: user.id,
           plan_type: 'premium',
-          status: 'active',
-          expires_at: null // Premium never expires unless canceled
-        })
-        .eq('user_id', user.id)
-        .select()
-        .single();
+          success_url: `${window.location.origin}/settings?upgrade=success`,
+          cancel_url: `${window.location.origin}/settings?upgrade=cancelled`,
+        },
+      });
 
       if (error) {
-        console.error('Error upgrading subscription:', error);
-        throw error;
+        // Edge Function not deployed yet or Stripe keys not configured
+        if (import.meta.env.DEV) console.warn('create-checkout-session not available:', error.message);
+        toast.info('Stripe no configurado', {
+          description:
+            'El pago con Stripe aún no está activado. Contacta con el equipo de Livix para completar la integración.',
+          duration: 6000,
+        });
+        return;
       }
 
-      setSubscription(data as Subscription);
-      setIsPremium(true);
-      return data;
+      if (data?.url) {
+        // Validate redirect URL - only allow trusted domains
+        try {
+          const redirectUrl = new URL(data.url);
+          const trustedDomains = ['checkout.stripe.com', 'stripe.com', 'livix.es', 'www.livix.es', ...(import.meta.env.DEV ? ['localhost'] : [])];
+          if (trustedDomains.some(d => redirectUrl.hostname === d || redirectUrl.hostname.endsWith('.' + d))) {
+            window.location.href = data.url;
+          } else {
+            console.error('Untrusted redirect URL blocked:', redirectUrl.hostname);
+            toast.error('Error en el proceso de pago');
+          }
+        } catch {
+          console.error('Invalid redirect URL');
+          toast.error('Error en el proceso de pago');
+        }
+      } else {
+        if (import.meta.env.DEV) console.error('No checkout URL returned from create-checkout-session');
+        toast.error('Error al iniciar el pago', {
+          description: 'No se pudo generar la sesión de pago. Inténtalo de nuevo.',
+        });
+      }
     } catch (error) {
-      console.error('Error in upgradeToPremium:', error);
-      throw error;
+      if (import.meta.env.DEV) console.error('Error in upgradeToPremium:', error);
+      toast.info('Integración Stripe pendiente', {
+        description:
+          'La integración de pagos está en proceso. Para activar Premium contacta con soporte.',
+        duration: 6000,
+      });
     }
   };
 
@@ -134,14 +159,14 @@ export const usePremium = () => {
         .single();
 
       if (error) {
-        console.error('Error canceling subscription:', error);
+        if (import.meta.env.DEV) console.error('Error canceling subscription:', error);
         throw error;
       }
 
       setSubscription(data as Subscription);
       return data;
     } catch (error) {
-      console.error('Error in cancelSubscription:', error);
+      if (import.meta.env.DEV) console.error('Error in cancelSubscription:', error);
       throw error;
     }
   };

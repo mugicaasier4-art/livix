@@ -88,6 +88,10 @@ const MessageBubble = ({ message, isOwn, showAvatar, participant, onImageLoad }:
                       alt={attachment.name}
                       className="max-w-full h-auto max-h-64 object-cover"
                       onLoad={onImageLoad}
+                      loading="lazy"
+                      decoding="async"
+                      width={400}
+                      height={256}
                     />
                   </a>
                 ) : (

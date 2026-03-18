@@ -49,9 +49,13 @@ const Submit = () => {
       email: "",
       role: "",
       language: language,
-      topic: new URLSearchParams(window.location.search).get('topic') || "",
-      subject: new URLSearchParams(window.location.search).get('subject') || "",
-      description: new URLSearchParams(window.location.search).get('description') || "",
+      topic: (() => {
+        const validTopics = ['general', 'bug', 'feature', 'billing', 'account', 'other', 'estudiante', 'propietario', 'residencia'];
+        const t = new URLSearchParams(window.location.search).get('topic') || '';
+        return validTopics.includes(t) ? t : '';
+      })(),
+      subject: (new URLSearchParams(window.location.search).get('subject') || '').slice(0, 200).replace(/[<>"']/g, ''),
+      description: (new URLSearchParams(window.location.search).get('description') || '').slice(0, 2000).replace(/[<>"']/g, ''),
       listingId: "",
       bookingId: "",
       applicationId: "",
@@ -164,8 +168,8 @@ const Submit = () => {
       window.location.href = `/support/success?id=${ticketId}`;
       
     } catch (error) {
-      console.error('Error creating ticket:', error);
-      analytics.track('support_submit_error', { error: error.message });
+      if (import.meta.env.DEV) console.error('Error creating ticket:', error);
+      analytics.track('support_submit_error', { error: error instanceof Error ? error.message : 'Unknown error' });
       
       toast.error("Error al enviar", {
         description: "No pudimos enviar tu ticket. Prueba de nuevo."

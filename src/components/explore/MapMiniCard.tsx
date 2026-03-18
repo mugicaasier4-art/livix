@@ -67,6 +67,10 @@ const MapMiniCard = ({ listing, onClose, className }: MapMiniCardProps) => {
           src={images[currentImageIndex]}
           alt={listing.title}
           className="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width={300}
+          height={225}
         />
         
         {/* Navigation Arrows */}

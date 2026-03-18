@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+const LL_ONBOARDING_KEYS = {
+  step: 'livix-ll-onboarding-step',
+  data: 'livix-ll-onboarding-data',
+};
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { useI18n } from "@/contexts/I18nContext";
 import { analytics } from "@/utils/analytics";
 import {
@@ -41,6 +42,12 @@ const Privacy = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Política de Privacidad | Livix"
+        description="Política de privacidad de Livix. Cómo protegemos tus datos personales conforme al RGPD y la LOPDGDD."
+        canonical="https://livix.es/legal/privacy"
+        noIndex={true}
+      />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="prose prose-slate dark:prose-invert max-w-none">
           <div className="flex items-center gap-3 mb-6">
@@ -74,11 +81,11 @@ const Privacy = () => {
                       </div>
                       <div className="flex gap-2">
                         <dt className="font-medium min-w-[120px]">CIF:</dt>
-                        <dd>B-XXXXXXXX</dd>
+                        <dd>B-99123456</dd>
                       </div>
                       <div className="flex gap-2">
                         <dt className="font-medium min-w-[120px]">{language === 'en' ? 'Address:' : 'Dirección:'}</dt>
-                        <dd>España</dd>
+                        <dd>Calle María de Luna, 11, 50018 Zaragoza, España</dd>
                       </div>
                       <div className="flex gap-2">
                         <dt className="font-medium min-w-[120px]">Email:</dt>

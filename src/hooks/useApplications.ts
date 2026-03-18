@@ -3,38 +3,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { createNotification, notificationTemplates } from '@/utils/notifications';
+import { applicationSchema } from '@/schemas/applicationSchema';
+import { validateDocFile } from '@/utils/fileValidation';
+import type { Application, ApplicationStatus, CreateApplicationData } from '@/types';
 
-export type ApplicationStatus = 'enviada' | 'preaprobada' | 'pendiente_docs' | 'aprobada' | 'rechazada' | 'cancelada_estudiante' | 'expirada';
-
-export interface Application {
-  id: string;
-  student_id: string;
-  landlord_id: string;
-  listing_id: string;
-  status: ApplicationStatus;
-  message: string;
-  move_in_date: string;
-  move_out_date: string | null;
-  budget_eur: number;
-  student_name: string;
-  student_email: string;
-  student_phone: string | null;
-  is_erasmus: boolean;
-  rejection_reason: string | null;
-  paid_reservation: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface CreateApplicationData {
-  listing_id: string;
-  landlord_id: string;
-  message: string;
-  move_in_date: string;
-  move_out_date?: string;
-  budget_eur: number;
-  is_erasmus?: boolean;
-}
+export type { Application, ApplicationStatus, CreateApplicationData };
 
 export const useApplications = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -67,7 +40,7 @@ export const useApplications = () => {
       if (error) throw error;
       setApplications((data || []) as Application[]);
     } catch (error) {
-      console.error('Error fetching applications:', error);
+      if (import.meta.env.DEV) console.error('Error fetching applications:', error);
       toast.error('Error al cargar las solicitudes');
     } finally {
       setIsLoading(false);
@@ -82,6 +55,14 @@ export const useApplications = () => {
 
     setIsLoading(true);
     try {
+      // Validate application data with Zod before inserting into Supabase
+      const validation = applicationSchema.safeParse(data);
+      if (!validation.success) {
+        toast.error(validation.error.errors[0].message);
+        setIsLoading(false);
+        return null;
+      }
+
       const { data: profile } = await supabase
         .from('profiles')
         .select('name, email, phone')
@@ -135,6 +116,32 @@ export const useApplications = () => {
           link: '/ll/applications',
           relatedId: newApplication.id
         });
+
+        // ─── Notificar al propietario por email via Edge Function ──────────
+        // La Edge Function send-notification envía email via Resend +
+        // notificación in-app. El tipo 'application_received' activa la
+        // plantilla de email correspondiente en send-notification/index.ts.
+        try {
+          await supabase.functions.invoke('send-notification', {
+            body: {
+              userId: listing.landlord_id,
+              type: 'application_received',
+              data: {
+                listingTitle: listing.title,
+                studentName: profile?.name || 'Un estudiante',
+                moveInDate: data.move_in_date,
+                applicationId: newApplication.id,
+                notificationTitle: 'Nueva solicitud recibida',
+                notificationMessage: `${profile?.name || 'Un estudiante'} ha solicitado tu propiedad "${listing.title}"`,
+                actionUrl: `${window.location.origin}/ll/applications`,
+                relatedId: newApplication.id,
+              },
+            },
+          });
+        } catch (notifError) {
+          if (import.meta.env.DEV) console.error('Error enviando notificación email al propietario:', notifError);
+          // No bloquear el flujo principal
+        }
       }
 
       toast.success('¡Solicitud enviada!', {
@@ -144,7 +151,7 @@ export const useApplications = () => {
       await fetchApplications();
       return newApplication as Application;
     } catch (error) {
-      console.error('Error creating application:', error);
+      if (import.meta.env.DEV) console.error('Error creating application:', error);
       toast.error('Error al enviar la solicitud');
       return null;
     } finally {
@@ -159,54 +166,90 @@ export const useApplications = () => {
   ): Promise<void> => {
     setIsLoading(true);
     try {
-      const { error } = await supabase
-        .from('applications')
-        .update({
-          status,
-          rejection_reason: reason,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', id);
+      // Use atomic RPC: updates status + creates notification in single transaction
+      const { data: result, error: rpcError } = await supabase.rpc(
+        'update_application_with_notification',
+        {
+          p_application_id: id,
+          p_status: status,
+          p_rejection_reason: reason || null
+        }
+      );
 
-      if (error) throw error;
+      if (rpcError) {
+        // Fallback to non-atomic approach if RPC not yet deployed
+        if (import.meta.env.DEV) {
+          console.error('RPC not available, using fallback:', rpcError);
+        }
 
-      // Get application details and create notification
-      const { data: application } = await supabase
-        .from('applications')
-        .select('student_id, listing_id')
-        .eq('id', id)
-        .single();
+        const { error } = await supabase
+          .from('applications')
+          .update({ status, rejection_reason: reason, updated_at: new Date().toISOString() })
+          .eq('id', id);
+        if (error) throw error;
 
-      if (application) {
-        const { data: listing } = await supabase
-          .from('listings')
-          .select('title')
-          .eq('id', application.listing_id)
+        // Create notification manually (non-atomic fallback)
+        const { data: application } = await supabase
+          .from('applications')
+          .select('student_id, listing_id')
+          .eq('id', id)
           .single();
 
-        if (listing) {
-          let template;
-          if (status === 'aprobada') {
-            template = notificationTemplates.applicationApproved(listing.title);
-          } else if (status === 'rechazada') {
-            template = notificationTemplates.applicationRejected(listing.title, reason);
-          } else {
-            template = notificationTemplates.applicationStatusChange(status, listing.title);
-          }
+        if (application) {
+          const { data: listing } = await supabase
+            .from('listings')
+            .select('title')
+            .eq('id', application.listing_id)
+            .single();
 
-          await createNotification({
-            userId: application.student_id,
-            ...template,
-            link: '/student/dashboard',
-            relatedId: id
+          if (listing) {
+            const template = status === 'aprobada'
+              ? notificationTemplates.applicationApproved(listing.title)
+              : status === 'rechazada'
+                ? notificationTemplates.applicationRejected(listing.title, reason)
+                : notificationTemplates.applicationStatusChange(status, listing.title);
+
+            await createNotification({
+              userId: application.student_id,
+              ...template,
+              link: '/student/dashboard',
+              relatedId: id
+            });
+          }
+        }
+      }
+
+      // Send email notification (fire-and-forget, outside transaction)
+      const studentId = result?.student_id;
+      const listingTitle = result?.listing_title;
+      if (studentId && listingTitle) {
+        try {
+          await supabase.functions.invoke('send-notification', {
+            body: {
+              userId: studentId,
+              type: 'application_status',
+              data: {
+                status: status === 'aprobada' ? 'approved' : status === 'rechazada' ? 'rejected' : status,
+                listingTitle,
+                applicationId: id,
+                notificationTitle: 'Actualización de solicitud',
+                notificationMessage: `Tu solicitud ha sido actualizada a: ${status}`,
+                actionUrl: `${window.location.origin}/student/dashboard`,
+                relatedId: id,
+              },
+            },
           });
+        } catch {
+          // Email is fire-and-forget
         }
       }
 
       toast.success('Estado actualizado correctamente');
       await fetchApplications();
     } catch (error) {
-      console.error('Error updating application:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error updating application:', error);
+      }
       toast.error('Error al actualizar el estado');
     } finally {
       setIsLoading(false);
@@ -224,30 +267,44 @@ export const useApplications = () => {
   ): Promise<void> => {
     if (!user) return;
 
+    // Validate document file before upload
+    const validationError = validateDocFile(file);
+    if (validationError) {
+      toast.error('Archivo no válido', { description: validationError });
+      return;
+    }
+
     setIsLoading(true);
     try {
-      // Upload file to storage
+      // Upload file to private storage bucket
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${applicationId}/${type}-${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('listing-images')
+        .from('application-docs')
         .upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
+      // Use signed URL for private documents (1 hour expiry)
+      const { data: signedUrlData } = await supabase.storage
+        .from('application-docs')
+        .createSignedUrl(fileName, 3600);
+
+      const documentUrl = signedUrlData?.signedUrl || '';
+
+      // Create document record with storage path (not signed URL, which expires)
       const { data: { publicUrl } } = supabase.storage
-        .from('listing-images')
+        .from('application-docs')
         .getPublicUrl(fileName);
 
-      // Create document record
       const { error: docError } = await supabase
         .from('application_documents')
         .insert({
           application_id: applicationId,
           type,
           name: file.name,
-          url: publicUrl,
+          url: fileName,
           status: 'pending'
         });
 
@@ -256,7 +313,7 @@ export const useApplications = () => {
       toast.success('Documento subido correctamente');
       await fetchApplications();
     } catch (error) {
-      console.error('Error uploading document:', error);
+      if (import.meta.env.DEV) console.error('Error uploading document:', error);
       toast.error('Error al subir el documento');
     } finally {
       setIsLoading(false);

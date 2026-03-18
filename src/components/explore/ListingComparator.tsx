@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { X, Check, Minus, MapPin, Bed, Bath, Users, Wifi, Car, Thermometer, Wind, PawPrint } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -148,6 +148,10 @@ export const ListingComparator = ({
                                             src={listing.image}
                                             alt={listing.title}
                                             className="w-full h-28 object-cover"
+                                            loading="lazy"
+                                            decoding="async"
+                                            width={200}
+                                            height={112}
                                         />
                                         <CardContent className="p-3">
                                             <h4 className="font-semibold text-sm line-clamp-1">{listing.title}</h4>
@@ -259,9 +263,22 @@ export const ListingComparator = ({
 };
 
 // Hook to manage comparison state
+const COMPARE_STORAGE_KEY = 'livix-compare-list';
+
 export const useListingCompare = () => {
-    const [compareList, setCompareList] = useState<CompareListing[]>([]);
+    const [compareList, setCompareList] = useState<CompareListing[]>(() => {
+        try {
+            const saved = sessionStorage.getItem(COMPARE_STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        } catch { return []; }
+    });
     const [isCompareOpen, setIsCompareOpen] = useState(false);
+
+    useEffect(() => {
+        try {
+            sessionStorage.setItem(COMPARE_STORAGE_KEY, JSON.stringify(compareList));
+        } catch { /* storage full */ }
+    }, [compareList]);
 
     const addToCompare = (listing: CompareListing) => {
         if (compareList.length >= 3) {

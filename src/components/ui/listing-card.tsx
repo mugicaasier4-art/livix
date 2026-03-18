@@ -39,7 +39,11 @@ const ListingCard = ({
           <div className="relative w-[60%] aspect-square overflow-hidden flex-shrink-0">
             <img
               src={image}
-              alt={title}
+              alt={`${title} - alojamiento estudiantes en ${location}`}
+              loading="lazy"
+              decoding="async"
+              width={400}
+              height={300}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute top-2 left-2 flex gap-1">

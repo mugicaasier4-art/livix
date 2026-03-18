@@ -1,40 +1,32 @@
-import React, { useState } from 'react';
-import { 
-  X, 
-  MessageSquare, 
-  Calendar, 
-  FileText, 
+import React from 'react';
+import {
+  X,
+  MessageSquare,
+  Calendar,
+  FileText,
   MoreVertical,
   ExternalLink,
   MapPin,
   Euro,
   CheckCircle,
   XCircle,
-  Clock,
-  User,
-  GraduationCap,
-  Languages,
-  Home
+  Clock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useApplications } from '@/contexts/ApplicationsContext';
 import { useI18n } from '@/contexts/I18nContext';
 import StatusBadge from '@/components/bookings/StatusBadge';
-import { Application } from '@/data/applications';
 import { formatDistanceToNow, format } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
 
 const ApplicationDetailPanel = () => {
   const { selectedApplication, setSelectedApplication, changeApplicationStatus } = useApplications();
-  const { t, language } = useI18n();
-  const [privateNotes, setPrivateNotes] = useState(selectedApplication?.private_notes || '');
-  const [isSavingNotes, setIsSavingNotes] = useState(false);
+  const { language } = useI18n();
 
   if (!selectedApplication) return null;
 
@@ -80,22 +72,24 @@ const ApplicationDetailPanel = () => {
       case 'enviada':
         return { text: 'Preaprobar', action: () => changeApplicationStatus(app.id, 'preaprobada') };
       case 'preaprobada':
-        return { text: 'Pedir docs', action: () => {} }; // Open docs modal
+        return { text: 'Aprobar', action: () => changeApplicationStatus(app.id, 'aprobada') };
       case 'pendiente_docs':
         return { text: 'Revisar y Aprobar', action: () => changeApplicationStatus(app.id, 'aprobada') };
-      case 'aprobada':
-        return { text: 'Generar contrato', action: () => {} }; // Navigate to contracts
       default:
         return null;
     }
   };
 
-  const savePrivateNotes = async () => {
-    setIsSavingNotes(true);
-    // Simulate save delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setIsSavingNotes(false);
-    // In real app, save to backend
+  const eventLabel = (event: string) => {
+    const map: Record<string, string> = {
+      enviada: 'Solicitud enviada',
+      preaprobada: 'Preaprobada',
+      pendiente_docs: 'Documentos solicitados',
+      aprobada: 'Aprobada',
+      rechazada: 'Rechazada',
+      cancelada_estudiante: 'Cancelada por estudiante',
+    };
+    return map[event] ?? event;
   };
 
   const primaryAction = getPrimaryAction();
@@ -107,33 +101,17 @@ const ApplicationDetailPanel = () => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
-              <AvatarFallback>
-                {getInitials(app.student.name)}
-              </AvatarFallback>
+              <AvatarFallback>{getInitials(app.student_name)}</AvatarFallback>
             </Avatar>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold">{app.student.name}</h2>
-                {app.student.age && (
-                  <span className="text-sm text-muted-foreground">
-                    {app.student.age} años
-                  </span>
-                )}
-                {app.student.is_erasmus && (
-                  <Badge variant="secondary">Erasmus</Badge>
-                )}
+                <h2 className="text-lg font-semibold">{app.student_name}</h2>
+                {app.is_erasmus && <Badge variant="secondary">Erasmus</Badge>}
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Languages className="h-4 w-4" />
-                {app.student.languages.join(', ').toUpperCase()}
-              </div>
+              <div className="text-sm text-muted-foreground">{app.student_email}</div>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setSelectedApplication(null)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => setSelectedApplication(null)}>
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -141,32 +119,25 @@ const ApplicationDetailPanel = () => {
         {/* Listing context */}
         <div className="bg-muted/50 rounded-lg p-3 mb-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div>
-                <h3 className="font-medium text-sm">{app.listing.title}</h3>
-                <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <div>
+              <h3 className="font-medium text-sm">{app.listing_title}</h3>
+              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                {app.listing_neighborhood && (
                   <span className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
-                    {app.listing.neighborhood}
+                    {app.listing_neighborhood}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <Euro className="h-3 w-3" />
-                    {app.listing.price}/mes
-                  </span>
-                </div>
+                )}
+                <span className="flex items-center gap-1">
+                  <Euro className="h-3 w-3" />
+                  {app.listing_price}/mes
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              {app.listing.badges.slice(0, 3).map(badge => (
-                <Badge key={badge} variant="outline" className="text-xs">
-                  {badge}
-                </Badge>
-              ))}
-              <Button variant="ghost" size="sm">
-                <ExternalLink className="h-4 w-4 mr-1" />
-                Ver anuncio
-              </Button>
-            </div>
+            <Button variant="ghost" size="sm" onClick={() => window.open(`/listing/${app.listing_id}`, '_blank')}>
+              <ExternalLink className="h-4 w-4 mr-1" />
+              Ver anuncio
+            </Button>
           </div>
         </div>
 
@@ -180,10 +151,6 @@ const ApplicationDetailPanel = () => {
             <Calendar className="h-4 w-4 mr-2" />
             Convocar visita
           </Button>
-          <Button variant="outline" size="sm">
-            <FileText className="h-4 w-4 mr-2" />
-            Pedir docs
-          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -191,10 +158,15 @@ const ApplicationDetailPanel = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Preaprobar</DropdownMenuItem>
-              <DropdownMenuItem>Aprobar</DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive">Rechazar</DropdownMenuItem>
-              <DropdownMenuItem>Archivar</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => changeApplicationStatus(app.id, 'preaprobada')}>
+                Preaprobar
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => changeApplicationStatus(app.id, 'aprobada')}>
+                Aprobar
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive" onClick={() => changeApplicationStatus(app.id, 'rechazada')}>
+                Rechazar
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -213,74 +185,46 @@ const ApplicationDetailPanel = () => {
               <div className="flex items-center gap-2">
                 <StatusBadge status={app.status} />
                 {primaryAction && (
-                  <Button size="sm" onClick={primaryAction.action}>
-                    {primaryAction.text}
-                  </Button>
+                  <Button size="sm" onClick={primaryAction.action}>{primaryAction.text}</Button>
                 )}
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-muted-foreground">Presupuesto</span>
-                <div className="font-medium">
-                  €{app.budget_eur}/mes
-                  {app.all_in && <Badge variant="outline" className="ml-1 text-xs">All-in</Badge>}
-                </div>
+                <div className="font-medium">{app.budget_eur}€/mes</div>
               </div>
               <div>
                 <span className="text-muted-foreground">Duración</span>
                 <div className="font-medium">
-                  {formatDate(app.stay.start)} - {formatDate(app.stay.end)}
+                  {formatDate(app.move_in_date)}
+                  {app.move_out_date && ` - ${formatDate(app.move_out_date)}`}
                 </div>
               </div>
-              <div>
-                <span className="text-muted-foreground">Preferencias</span>
-                <div className="font-medium capitalize">
-                  {app.student.roommates_pref} • {app.student.schedule}
+              {app.student_phone && (
+                <div>
+                  <span className="text-muted-foreground">Teléfono</span>
+                  <div className="font-medium">{app.student_phone}</div>
                 </div>
-              </div>
+              )}
               <div>
                 <span className="text-muted-foreground">Creada</span>
-                <div className="font-medium">
-                  {formatTimeAgo(app.created_at)}
-                </div>
+                <div className="font-medium">{formatTimeAgo(app.created_at)}</div>
               </div>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Perfil del estudiante */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Perfil del estudiante
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="h-4 w-4 text-muted-foreground" />
+            {app.message && (
+              <>
+                <Separator />
                 <div>
-                  <div className="font-medium">{app.student.university}</div>
-                  <div className="text-muted-foreground">{app.student.faculty}</div>
+                  <span className="text-sm text-muted-foreground">Mensaje del estudiante</span>
+                  <p className="text-sm mt-1">{app.message}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Home className="h-4 w-4 text-muted-foreground" />
-                <div>
-                  <div className="font-medium">
-                    {app.student.is_erasmus ? 'Estudiante Erasmus' : 'Estudiante local'}
-                  </div>
-                  <div className="text-muted-foreground">
-                    Horario {app.student.schedule}
-                  </div>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -289,61 +233,40 @@ const ApplicationDetailPanel = () => {
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Documentos
+              Documentos ({app.docs.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {app.docs.map((doc, index) => (
-                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    {getDocumentStatusIcon(doc.status)}
-                    <div>
-                      <div className="font-medium text-sm capitalize">
-                        {doc.type === 'dni' ? 'DNI/Pasaporte' : 
-                         doc.type === 'matricula' ? 'Matrícula' : 
-                         'Justificante económico'}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {doc.name}
+            {app.docs.length > 0 ? (
+              <div className="space-y-3">
+                {app.docs.map((doc) => (
+                  <div key={doc.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      {getDocumentStatusIcon(doc.status)}
+                      <div>
+                        <div className="font-medium text-sm capitalize">
+                          {doc.type === 'dni' ? 'DNI/Pasaporte' :
+                           doc.type === 'matricula' ? 'Matrícula' :
+                           doc.type === 'justificante' ? 'Justificante económico' :
+                           doc.type}
+                        </div>
+                        <div className="text-xs text-muted-foreground">{doc.name}</div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
                     <Badge variant={
                       doc.status === 'ok' ? 'default' :
                       doc.status === 'pending' ? 'secondary' : 'destructive'
                     } className="text-xs">
                       {getDocumentStatusText(doc.status)}
                     </Badge>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-6 w-6">
-                          <MoreVertical className="h-3 w-3" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Ver documento</DropdownMenuItem>
-                        <DropdownMenuItem>Descargar</DropdownMenuItem>
-                        {doc.status !== 'ok' && (
-                          <DropdownMenuItem>Marcar como aceptado</DropdownMenuItem>
-                        )}
-                        {doc.status !== 'rejected' && (
-                          <DropdownMenuItem className="text-destructive">
-                            Rechazar
-                          </DropdownMenuItem>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
-                </div>
-              ))}
-              
-              <Button variant="outline" className="w-full">
-                <FileText className="h-4 w-4 mr-2" />
-                Solicitar documentos
-              </Button>
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                No hay documentos subidos
+              </p>
+            )}
           </CardContent>
         </Card>
 
@@ -352,21 +275,21 @@ const ApplicationDetailPanel = () => {
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              Visitas
+              Visitas ({app.visits.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
             {app.visits.length > 0 ? (
               <div className="space-y-3">
-                {app.visits.map((visit, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                {app.visits.map((visit) => (
+                  <div key={visit.id} className="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                       <div className="font-medium text-sm">
-                        {formatDate(visit.start)} • {format(new Date(visit.start), 'HH:mm')}
+                        {formatDate(visit.start_time)} - {format(new Date(visit.start_time), 'HH:mm')}
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {visit.virtual ? 'Visita virtual' : 'Visita presencial'} • {visit.status}
-                      </div>
+                      {visit.notes && (
+                        <div className="text-xs text-muted-foreground">{visit.notes}</div>
+                      )}
                     </div>
                     <Badge variant={
                       visit.status === 'completed' ? 'default' :
@@ -381,9 +304,7 @@ const ApplicationDetailPanel = () => {
             ) : (
               <div className="text-center py-4">
                 <Calendar className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground mb-3">
-                  No hay visitas programadas
-                </p>
+                <p className="text-sm text-muted-foreground">No hay visitas programadas</p>
               </div>
             )}
             <Button variant="outline" className="w-full mt-3">
@@ -399,61 +320,32 @@ const ApplicationDetailPanel = () => {
             <CardTitle className="text-base">Timeline</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {app.timeline.map((event, index) => (
-                <div key={index} className="flex gap-3">
-                  <div className="flex flex-col items-center">
-                    <div className="w-2 h-2 rounded-full bg-primary" />
-                    {index < app.timeline.length - 1 && (
-                      <div className="w-px h-8 bg-border mt-2" />
-                    )}
-                  </div>
-                  <div className="flex-1 pb-4">
-                    <div className="font-medium text-sm">
-                      {event.event === 'submitted' ? 'Solicitud enviada' :
-                       event.event === 'preapproved' ? 'Preaprobada' :
-                       event.event === 'docs_requested' ? 'Documentos solicitados' :
-                       event.event === 'approved' ? 'Aprobada' :
-                       event.event === 'rejected' ? 'Rechazada' :
-                       event.event}
+            {app.timeline.length > 0 ? (
+              <div className="space-y-4">
+                {app.timeline.map((event, index) => (
+                  <div key={event.id} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full bg-primary" />
+                      {index < app.timeline.length - 1 && (
+                        <div className="w-px h-8 bg-border mt-2" />
+                      )}
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {formatTimeAgo(event.at)}
-                      {event.by && ` • por ${event.by}`}
-                    </div>
-                    {event.details && (
-                      <div className="text-xs text-muted-foreground mt-1">
-                        {event.details}
+                    <div className="flex-1 pb-4">
+                      <div className="font-medium text-sm">{eventLabel(event.event)}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {formatTimeAgo(event.created_at)}
+                        {event.actor && ` · ${event.actor}`}
                       </div>
-                    )}
+                      {event.description && (
+                        <div className="text-xs text-muted-foreground mt-1">{event.description}</div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Notas privadas */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Notas internas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <Textarea
-                value={privateNotes}
-                onChange={(e) => setPrivateNotes(e.target.value)}
-                placeholder="Añade notas privadas sobre este candidato..."
-                className="min-h-[100px]"
-              />
-              <Button 
-                size="sm" 
-                onClick={savePrivateNotes}
-                disabled={isSavingNotes}
-              >
-                {isSavingNotes ? 'Guardando...' : 'Guardar notas'}
-              </Button>
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-4">Sin actividad registrada</p>
+            )}
           </CardContent>
         </Card>
       </div>

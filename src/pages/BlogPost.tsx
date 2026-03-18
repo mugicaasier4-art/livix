@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import DOMPurify from "dompurify";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,10 @@ const renderMarkdown = (content: string): string => {
   
   // Bold text
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>');
-  
+
+  // Internal links [text](/url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors">$1</a>');
+
   // Emoji warnings
   html = html.replace(/^⚠️ (.*$)/gm, '<div class="bg-amber-500/10 border-l-4 border-amber-500 text-foreground p-4 rounded-r-lg my-4"><span class="mr-2">⚠️</span>$1</div>');
   html = html.replace(/^❌ (.*$)/gm, '<div class="text-destructive flex items-center gap-2 my-2"><span>❌</span><span>$1</span></div>');
@@ -112,8 +116,8 @@ const BlogPost = () => {
     const rawHtml = renderMarkdown(post.content);
     // Sanitize HTML to prevent XSS attacks
     return DOMPurify.sanitize(rawHtml, {
-      ALLOWED_TAGS: ['h2', 'h3', 'p', 'ul', 'ol', 'li', 'strong', 'div', 'span', 'table', 'tr', 'th', 'td'],
-      ALLOWED_ATTR: ['class'],
+      ALLOWED_TAGS: ['h2', 'h3', 'p', 'ul', 'ol', 'li', 'strong', 'div', 'span', 'table', 'tr', 'th', 'td', 'a'],
+      ALLOWED_ATTR: ['class', 'href'],
     });
   }, [post]);
 
@@ -149,15 +153,105 @@ const BlogPost = () => {
 
   const categoryLabel = categories.find(c => c.id === post.category)?.label || post.category;
 
+  // CTA link mapping based on post category
+  const ctaLinkMap: Record<string, string> = {
+    pisos: "/pisos/zaragoza",
+    estudiante: "/habitaciones/zaragoza",
+    consejos: "/habitaciones/zaragoza",
+    eventos: "/habitaciones/zaragoza",
+    legalidad: "/pisos/zaragoza",
+    becas: "/habitaciones/zaragoza",
+  };
+  const ctaLink = ctaLinkMap[post.category] || "/habitaciones/zaragoza";
+
+  // Related SEO pages mapping based on post category
+  const relatedSeoPages: Record<string, { title: string; url: string; description: string }[]> = {
+    pisos: [
+      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Encuentra pisos completos para estudiantes en Zaragoza" },
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Residencias en Zaragoza", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
+    ],
+    estudiante: [
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
+    ],
+    consejos: [
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
+    ],
+    becas: [
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
+    ],
+    eventos: [
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Campus San Francisco", url: "/campus/san-francisco", description: "Alojamiento cerca del Campus San Francisco" },
+      { title: "Residencias", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
+    ],
+    legalidad: [
+      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Encuentra pisos completos para estudiantes en Zaragoza" },
+      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: "Residencias en Zaragoza", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
+    ],
+  };
+  const seoPages = relatedSeoPages[post.category] || relatedSeoPages.estudiante;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.image,
+    "datePublished": post.date,
+    "dateModified": post.dateModified || post.date,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://livix.es/blog/${post.id}`
+    },
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Equipo Editorial Livix",
+        "url": "https://livix.es/about"
+      },
+      {
+        "@type": "Organization",
+        "name": "Livix",
+        "url": "https://livix.es"
+      }
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Livix",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://livix.es/logo.png"
+      }
+    }
+  };
+
   return (
     <Layout>
+      <SEOHead
+        title={`${post.title} | Blog Livix`}
+        description={post.excerpt}
+        canonical={`https://livix.es/blog/${post.id}`}
+        ogType="article"
+        structuredData={articleSchema}
+      />
       <div className="min-h-screen bg-background">
         {/* Hero Image */}
         <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden">
-          <img 
-            src={post.image} 
-            alt={post.title}
+          <img
+            src={post.image}
+            alt={`${post.title} - Blog Livix`}
+            width={1200}
+            height={600}
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         </div>
@@ -233,10 +327,14 @@ const BlogPost = () => {
                         >
                           <div className="flex gap-3">
                             <div className="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                              <img 
-                                src={relatedPost.image} 
+                              <img
+                                src={relatedPost.image}
                                 alt={relatedPost.title}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                                decoding="async"
+                                width={80}
+                                height={64}
                               />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -271,17 +369,46 @@ const BlogPost = () => {
                     <p className="text-sm opacity-90 mb-4">
                       Encuentra tu habitación ideal en Zaragoza
                     </p>
-                    <Button 
-                      variant="secondary" 
+                    <Button
+                      variant="secondary"
                       className="w-full"
-                      onClick={() => navigate('/explore')}
+                      onClick={() => navigate(ctaLink)}
                     >
-                      Explorar pisos
+                      Explorar alojamientos
                     </Button>
                   </CardContent>
                 </Card>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Related SEO Pages */}
+        <div className="container mx-auto px-4 mt-12">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Páginas que te pueden interesar</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {seoPages.map((page) => (
+              <Link
+                key={page.url}
+                to={page.url}
+                className="group block"
+              >
+                <Card className="bg-muted hover:bg-muted/80 transition-colors duration-200 h-full">
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                      {page.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {page.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-sm text-primary font-medium mt-3">
+                      Ver opciones
+                      <ArrowRight className="h-3 w-3" />
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
 

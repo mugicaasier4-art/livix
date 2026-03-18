@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { FAQAccordion } from "@/components/support/FAQAccordion";
 import { useI18n } from "@/contexts/I18nContext";
 import { faqItems, faqCategories } from "@/data/faq";
@@ -58,6 +59,11 @@ const Support = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Centro de Ayuda y Soporte | Livix"
+        description="¿Necesitas ayuda? Consulta las preguntas frecuentes o contacta con el equipo de soporte de Livix. Estamos aquí para ayudarte con tu alojamiento universitario."
+        canonical="https://livix.es/support"
+      />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-12">

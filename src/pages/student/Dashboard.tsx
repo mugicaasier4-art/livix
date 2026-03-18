@@ -300,6 +300,10 @@ const StudentDashboard = () => {
                               src={listing.images[0]}
                               alt={listing.title}
                               className="h-full w-full object-cover"
+                              loading="lazy"
+                              decoding="async"
+                              width={64}
+                              height={64}
                             />
                           ) : (
                             <div className="h-full w-full flex items-center justify-center">

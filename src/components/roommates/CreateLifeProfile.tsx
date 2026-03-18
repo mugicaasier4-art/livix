@@ -270,6 +270,8 @@ const CreateLifeProfile = ({ onComplete }: CreateLifeProfileProps) => {
                                         src={basicInfo.photoUrl}
                                         alt="Tu foto"
                                         className="w-full h-full object-cover"
+                                        width={200}
+                                        height={200}
                                     />
                                 ) : (
                                     <div className="flex flex-col items-center gap-1 text-muted-foreground group-hover:text-primary transition-colors">

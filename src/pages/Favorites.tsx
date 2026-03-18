@@ -99,6 +99,9 @@ const Favorites = () => {
                           alt={listing.title}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                           loading="lazy"
+                          decoding="async"
+                          width={400}
+                          height={400}
                         />
                         
                         {/* Overlay actions */}

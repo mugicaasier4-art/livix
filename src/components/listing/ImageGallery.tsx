@@ -30,7 +30,9 @@ const ImageGallery = ({ images, title }: ImageGalleryProps) => {
         <div className="col-span-2 row-span-2 relative group cursor-pointer" onClick={() => setIsFullscreen(true)}>
           <img
             src={images[selectedImage]}
-            alt={title}
+            alt={`${title} - alojamiento estudiantes Zaragoza`}
+            width={600}
+            height={400}
             className="w-full h-full object-cover transition-transform group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -62,6 +64,10 @@ const ImageGallery = ({ images, title }: ImageGalleryProps) => {
             <img
               src={image}
               alt={`${title} - imagen ${index + 2}`}
+              width={300}
+              height={200}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -115,6 +121,8 @@ const ImageGallery = ({ images, title }: ImageGalleryProps) => {
               src={images[selectedImage]}
               alt={title}
               className="max-w-full max-h-full object-contain"
+              width={1200}
+              height={800}
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">

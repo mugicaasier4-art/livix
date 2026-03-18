@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useI18n } from "@/contexts/I18nContext";
 import { analytics } from "@/utils/analytics";
@@ -26,6 +27,12 @@ const Terms = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Términos y Condiciones de Uso | Livix"
+        description="Lee los términos y condiciones de uso de Livix, marketplace de alojamiento universitario en España."
+        canonical="https://livix.es/legal/terms"
+        noIndex={true}
+      />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="prose prose-slate dark:prose-invert max-w-none">
           <div className="flex items-center gap-3 mb-6">

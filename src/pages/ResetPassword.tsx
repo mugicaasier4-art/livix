@@ -191,6 +191,7 @@ const ResetPassword = () => {
                       id="password"
                       type="password"
                       autoComplete="new-password"
+                      enterKeyHint="next"
                       {...register('password')}
                       placeholder="Mínimo 8 caracteres"
                       disabled={isLoading}
@@ -238,6 +239,7 @@ const ResetPassword = () => {
                     id="confirmPassword"
                     type="password"
                     autoComplete="new-password"
+                    enterKeyHint="done"
                     {...register('confirmPassword')}
                     placeholder="Repite tu contraseña"
                     disabled={isLoading}

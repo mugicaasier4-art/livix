@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Music, PartyPopper } from "lucide-react";
@@ -43,6 +44,11 @@ const Club = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Club Livix - Descuentos y Beneficios para Estudiantes | Livix"
+        description="Únete al Club Livix y accede a descuentos exclusivos en restaurantes, ocio, transporte y más en Zaragoza. Solo para estudiantes."
+        canonical="https://livix.es/club"
+      />
       <div className="min-h-screen bg-background">
         {/* Hero Section with Collage Background */}
         <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
@@ -52,6 +58,9 @@ const Club = () => {
               src={clubHeroCollage}
               alt="Students enjoying leisure activities"
               className="w-full h-full object-cover"
+              width={1200}
+              height={800}
+              fetchPriority="high"
             />
             {/* Side gradients - white on sides, transparent in middle */}
             <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background opacity-90" />
@@ -127,6 +136,10 @@ const Club = () => {
                       src={sector.image}
                       alt={sector.name}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                      width={400}
+                      height={400}
                     />
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:from-black/70 transition-colors" />

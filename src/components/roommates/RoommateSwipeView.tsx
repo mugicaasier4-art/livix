@@ -85,6 +85,10 @@ const RoommateSwipeView = ({ profiles, onLike, onPass }: RoommateSwipeViewProps)
                             src={currentProfile.image}
                             alt={currentProfile.name}
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                            decoding="async"
+                            width={400}
+                            height={500}
                         />
 
                         {/* Gradient Overlay */}

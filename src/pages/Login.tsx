@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -32,9 +32,20 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
 
-  const { register, handleSubmit, formState: { errors }, setError } = useForm<LoginForm>({
+  const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema)
   });
+
+  const registerWithClear = (name: keyof LoginForm) => {
+    const { onChange, ...rest } = register(name);
+    return {
+      ...rest,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (errors.root) clearErrors('root');
+        return onChange(e);
+      }
+    };
+  };
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -74,7 +85,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-8 md:py-16">
         <div className="max-w-md mx-auto">
           <Card>
             <CardHeader className="text-center">
@@ -85,6 +96,15 @@ const Login = () => {
             </CardHeader>
             
             <CardContent className="space-y-6">
+              {from !== '/' && (
+                <Alert className="bg-primary/5 border-primary/20">
+                  <ArrowRight className="h-4 w-4 text-primary" />
+                  <AlertDescription className="text-sm">
+                    Inicia sesión para continuar donde lo dejaste
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {errors.root && (
                   <Alert variant="destructive">
@@ -98,8 +118,10 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
+                    inputMode="email"
                     autoComplete="email"
-                    {...register('email')}
+                    enterKeyHint="next"
+                    {...registerWithClear('email')}
                     placeholder="tu-email@ejemplo.com"
                   />
                   {errors.email && (
@@ -110,9 +132,9 @@ const Login = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Contraseña</Label>
-                    <Link 
-                      to="/forgot-password" 
-                      className="text-xs text-primary hover:underline"
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-primary hover:underline py-1"
                     >
                       ¿Olvidaste tu contraseña?
                     </Link>
@@ -121,7 +143,8 @@ const Login = () => {
                     id="password"
                     type="password"
                     autoComplete="current-password"
-                    {...register('password')}
+                    enterKeyHint="done"
+                    {...registerWithClear('password')}
                     placeholder="Tu contraseña"
                   />
                   {errors.password && (
@@ -140,8 +163,8 @@ const Login = () => {
               <div className="text-center text-sm">
                 <p className="text-muted-foreground">
                   ¿No tienes cuenta?{' '}
-                  <Link to="/signup" className="text-primary hover:underline">
-                    Regístrate aquí
+                  <Link to="/signup" className="text-primary hover:underline font-medium">
+                    Crear cuenta gratis
                   </Link>
                 </p>
               </div>

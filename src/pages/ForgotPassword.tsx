@@ -110,7 +110,9 @@ const ForgotPassword = () => {
                     <Input
                       id="email"
                       type="email"
+                      inputMode="email"
                       autoComplete="email"
+                      enterKeyHint="done"
                       {...register('email')}
                       placeholder="tu-email@ejemplo.com"
                       disabled={isLoading}

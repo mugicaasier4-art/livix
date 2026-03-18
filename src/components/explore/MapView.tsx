@@ -231,12 +231,10 @@ const MapView = ({
   }, [map, mapReady, listings, initialBoundsFit]);
 
   const onLoad = useCallback((mapInstance: google.maps.Map) => {
-    console.log('Google Map loaded successfully');
     setMap(mapInstance);
 
     // Wait for the map to be fully idle before marking as ready
     google.maps.event.addListenerOnce(mapInstance, 'idle', () => {
-      console.log('Map is idle and ready');
       setMapReady(true);
     });
   }, []);
@@ -544,6 +542,10 @@ const MapView = ({
                     src={listing.image}
                     alt={listing.title}
                     className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
+                    loading="lazy"
+                    decoding="async"
+                    width={80}
+                    height={80}
                   />
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground truncate">{listing.title}</p>

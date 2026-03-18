@@ -93,6 +93,10 @@ const RoommateChat = ({ profile, onBack }: RoommateChatProps) => {
                             src={profile.image}
                             alt={profile.name}
                             className="w-full h-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            width={44}
+                            height={44}
                         />
                     </div>
                     <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-blue-500" />
@@ -124,6 +128,10 @@ const RoommateChat = ({ profile, onBack }: RoommateChatProps) => {
                                 src={profile.image}
                                 alt={profile.name}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                                width={80}
+                                height={80}
                             />
                         </div>
                         <h4 className="font-bold text-foreground text-lg mb-1">

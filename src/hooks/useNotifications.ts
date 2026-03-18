@@ -37,7 +37,7 @@ export const useNotifications = () => {
       setNotifications(data || []);
       setUnreadCount(data?.filter(n => !n.is_read).length || 0);
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      if (import.meta.env.DEV) console.error('Error fetching notifications:', error);
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +57,8 @@ export const useNotifications = () => {
       );
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      if (import.meta.env.DEV) console.error('Error marking notification as read:', error);
+      toast.error('Error al actualizar la notificación');
     }
   };
 
@@ -77,7 +78,8 @@ export const useNotifications = () => {
       setUnreadCount(0);
       toast.success('Todas las notificaciones marcadas como leídas');
     } catch (error) {
-      console.error('Error marking all as read:', error);
+      if (import.meta.env.DEV) console.error('Error marking all as read:', error);
+      toast.error('Error al marcar las notificaciones');
     }
   };
 
@@ -96,7 +98,8 @@ export const useNotifications = () => {
         return notification && !notification.is_read ? Math.max(0, prev - 1) : prev;
       });
     } catch (error) {
-      console.error('Error deleting notification:', error);
+      if (import.meta.env.DEV) console.error('Error deleting notification:', error);
+      toast.error('Error al eliminar la notificación');
     }
   };
 

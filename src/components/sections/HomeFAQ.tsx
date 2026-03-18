@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { HelpCircle } from "lucide-react";
@@ -6,33 +7,50 @@ import { HelpCircle } from "lucide-react";
 const HomeFAQ = () => {
   const faqs = [
     {
-      question: "¿Cómo funciona Livix?",
-      answer: "Livix conecta estudiantes con propietarios de forma segura y verificada. Los estudiantes buscan alojamiento, envían solicitudes y los propietarios revisan los perfiles antes de aceptar. Todo el proceso es transparente y seguro."
+      question: "¿Livix es gratis?",
+      answer: "Sí. Buscar, contactar propietarios y solicitar pisos es 100% gratis para estudiantes. Solo cobramos a propietarios por publicar. Opcionalmente, con Premium (9,99€/mes) ves pisos nuevos 48h antes."
     },
     {
-      question: "¿Es gratis para estudiantes?",
-      answer: "Sí, para estudiantes es completamente gratis buscar y solicitar alojamientos. Solo los propietarios tienen planes de pago para publicar y gestionar sus propiedades."
+      question: "¿Cómo verificáis los pisos?",
+      answer: "Revisamos cada anuncio manualmente: comprobamos fotos, datos del propietario y condiciones del piso. Si detectamos algo raro, no se publica."
     },
     {
-      question: "¿Cómo sé que los alojamientos son seguros?",
-      answer: "Verificamos todos los alojamientos y propietarios antes de publicarlos. Además, contamos con un sistema de reseñas y valoraciones de otros estudiantes que ya han vivido en esas propiedades."
+      question: "¿Puedo encontrar compañero de piso?",
+      answer: "Sí. En la sección Compañeros puedes ver perfiles de otros estudiantes buscando piso y conectar con ellos por facultad, presupuesto y estilo de vida."
     },
     {
-      question: "¿Puedo encontrar compañeros de piso?",
-      answer: "Sí, en cada anuncio puedes ver el perfil de los actuales compañeros de piso y sus intereses. También puedes filtrar por preferencias de convivencia para encontrar el ambiente perfecto."
+      question: "¿Aceptan Erasmus?",
+      answer: "Muchos pisos aceptan contratos por semestre. Filtra por 'Erasmus-friendly' para ver pisos con contrato flexible, gastos incluidos y propietarios que hablan inglés."
     },
     {
-      question: "¿Aceptan estudiantes Erasmus?",
-      answer: "Muchos de nuestros alojamientos están especialmente adaptados para estudiantes Erasmus, con contratos flexibles, idiomas internacionales y orientación para tu llegada a la ciudad."
+      question: "¿Y si tengo un problema con el piso?",
+      answer: "Escríbenos por el chat de soporte o a info@livix.es. Mediamos entre estudiante y propietario para resolver cualquier incidencia."
     },
     {
-      question: "¿Qué pasa si tengo un problema con mi alojamiento?",
-      answer: "Nuestro equipo de soporte está disponible 24/7 para ayudarte con cualquier incidencia. Además, contamos con protocolos de mediación entre estudiantes y propietarios."
+      question: "¿En qué ciudades estáis?",
+      answer: "Ahora mismo en Zaragoza. Estamos preparando la expansión a más ciudades universitarias españolas."
     }
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          })}
+        </script>
+      </Helmet>
+      <section className="py-16 md:py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
@@ -44,7 +62,7 @@ const HomeFAQ = () => {
               Preguntas Frecuentes
             </h2>
             <p className="text-lg text-muted-foreground">
-              Las dudas más comunes resueltas
+              Lo que todo el mundo pregunta antes de empezar
             </p>
           </div>
 
@@ -74,14 +92,37 @@ const HomeFAQ = () => {
               ¿No encuentras lo que buscas?
             </p>
             <Link to="/support">
-              <Button size="lg">
+              <Button size="lg" variant="outline">
                 Ver todas las preguntas frecuentes
               </Button>
             </Link>
           </div>
+
+          {/* Conversion CTA */}
+          <div className="text-center mt-16 p-8 bg-primary/5 border border-primary/10 rounded-2xl">
+            <h3 className="text-xl font-bold text-foreground mb-2">
+              ¿Listo para encontrar tu piso?
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Pisos verificados para estudiantes te esperan en Zaragoza
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link to="/explore">
+                <Button size="lg">
+                  Explorar pisos
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button size="lg" variant="outline">
+                  Crear cuenta gratis
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+    </>
   );
 };
 

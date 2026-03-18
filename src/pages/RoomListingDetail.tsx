@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { useRoomListing } from "@/hooks/useRoomListings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -98,6 +99,12 @@ const RoomListingDetail = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title={`${listing.title} - ${listing.price}€/mes | Livix`}
+        description={`Habitación en ${listing.neighborhood}: ${listing.roommates.count} compañeros, ${listing.bathrooms} baños. ${listing.price}€/mes.`}
+        canonical={`https://livix.es/roommates/listing/${id}`}
+        ogImage={listing.images?.[0]}
+      />
       <div className="min-h-screen bg-background">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b">
@@ -106,10 +113,11 @@ const RoomListingDetail = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver
             </Button>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
               onClick={() => setIsLiked(!isLiked)}
+              aria-label={isLiked ? "Quitar de favoritos" : "Añadir a favoritos"}
             >
               <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
             </Button>
@@ -126,18 +134,24 @@ const RoomListingDetail = () => {
                   src={listing.images[currentImageIndex]}
                   alt={listing.title}
                   className="h-full w-full object-cover"
+                  width={800}
+                  height={450}
+                  loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                  decoding={currentImageIndex === 0 ? "auto" : "async"}
                 />
                 
                 {listing.images.length > 1 && (
                   <>
                     <button
                       onClick={prevImage}
+                      aria-label="Imagen anterior"
                       className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/90 shadow-lg hover:bg-background transition-colors"
                     >
                       <ChevronLeft className="h-5 w-5" />
                     </button>
                     <button
                       onClick={nextImage}
+                      aria-label="Imagen siguiente"
                       className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/90 shadow-lg hover:bg-background transition-colors"
                     >
                       <ChevronRight className="h-5 w-5" />
@@ -148,6 +162,7 @@ const RoomListingDetail = () => {
                         <button
                           key={idx}
                           onClick={() => setCurrentImageIndex(idx)}
+                          aria-label={`Ver imagen ${idx + 1}`}
                           className={`w-2 h-2 rounded-full transition-all ${
                             idx === currentImageIndex ? 'bg-background w-4' : 'bg-background/60'
                           }`}
@@ -181,7 +196,7 @@ const RoomListingDetail = () => {
                         idx === currentImageIndex ? 'border-primary' : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={img} alt={`Foto ${idx + 1} de la habitación`} className="h-full w-full object-cover" />
+                      <img src={img} alt={`Foto ${idx + 1} de la habitación`} className="h-full w-full object-cover" loading="lazy" decoding="async" width={80} height={80} />
                     </button>
                   ))}
                 </div>

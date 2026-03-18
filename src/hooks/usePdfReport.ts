@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
-import jsPDF from 'jspdf';
-
 interface ReportData {
   period: string;
   totalViews: number;
@@ -23,6 +21,7 @@ export const usePdfReport = () => {
     setIsGenerating(true);
     
     try {
+      const { default: jsPDF } = await import('jspdf');
       const pdf = new jsPDF('p', 'mm', 'a4');
       
       // Header

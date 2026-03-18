@@ -192,6 +192,10 @@ const ResidenceDetail = () => {
                         "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
                         idx === currentImageIndex ? "opacity-100" : "opacity-0"
                       )}
+                      width={800}
+                      height={600}
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      decoding={idx === 0 ? "auto" : "async"}
                     />
                   ))}
                 </div>
@@ -251,7 +255,7 @@ const ResidenceDetail = () => {
                             idx === currentImageIndex ? "border-white scale-110" : "border-transparent opacity-70 hover:opacity-100"
                           )}
                         >
-                          <img src={img} alt={`Foto ${idx + 1} de la residencia`} className="w-full h-full object-cover" />
+                          <img src={img} alt={`Foto ${idx + 1} de la residencia`} className="w-full h-full object-cover" loading="lazy" decoding="async" width={96} height={64} />
                         </button>
                       ))}
                       {images.length > 6 && (

@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import ListingCard from "@/components/ui/listing-card";
 import ViewToggle, { ViewMode } from "@/components/explore/ViewToggle";
 import { Button } from "@/components/ui/button";
@@ -196,6 +197,11 @@ const ErasmusHousing = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Erasmus Housing en Zaragoza - Alojamiento Verificado | Livix"
+        description="Encuentra alojamiento verificado para tu Erasmus en Zaragoza. Filtros especiales: contrato en inglés, todo incluido, depósito flexible. Reserva online segura."
+        canonical="https://livix.es/erasmus/housing"
+      />
       <div className="container mx-auto px-4 py-8">
         {/* Back button */}
         <div className="mb-6">

@@ -15,6 +15,7 @@ const Footer = () => {
     { label: "Residencias", to: "/residences" },
     { label: "Livix Club", to: "/club" },
     { label: "Blog", to: "/blog" },
+    { label: "Sobre nosotros", to: "/about" },
     { label: "Soporte", to: "/support" },
   ];
 
@@ -25,7 +26,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-muted/50 border-t border-border mt-auto">
+    <footer className="bg-muted/50 border-t border-border mt-auto pb-16 md:pb-0">
       {/* SEO Internal Linking Grid */}
       <SEOLinks />
 
@@ -35,8 +36,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-foreground">LIVIX</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              La plataforma de alojamiento para estudiantes en Zaragoza.
-              Encuentra tu piso, residencia o compañero de piso ideal.
+              El marketplace de alojamiento universitario en Zaragoza.
+              Pisos verificados, compañeros de piso y vida universitaria.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />

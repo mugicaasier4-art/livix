@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import Layout from '@/components/layout/Layout';
@@ -7,8 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertCircle, GraduationCap, Building, CheckCircle2 } from 'lucide-react';
+import { Loader2, AlertCircle, GraduationCap, Building, CheckCircle2, Users, Shield, Star } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -43,17 +45,31 @@ type SignupForm = z.infer<typeof signupSchema>;
 const Signup = () => {
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get('type');
-  const [role, setRole] = useState<UserRole>(typeParam === 'landlord' ? 'landlord' : 'student');
+  const validRoles: UserRole[] = ['student', 'landlord'];
+  const [role, setRole] = useState<UserRole>(
+    typeParam && validRoles.includes(typeParam as UserRole) ? (typeParam as UserRole) : 'student'
+  );
   const { signup, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [studentCount, setStudentCount] = useState(0);
 
-  const { register, handleSubmit, formState: { errors }, setError, control } = useForm<SignupForm>({
+  useEffect(() => {
+    supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .eq('role', 'student')
+      .then(({ count }) => setStudentCount(count || 0));
+  }, []);
+
+  const { register, handleSubmit, formState: { errors }, setError, control, watch } = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       confirmAge: false,
       acceptTerms: false
     }
   });
+
+  const passwordValue = watch('password', '');
 
   const roleOptions = [
     {
@@ -108,6 +124,22 @@ const Signup = () => {
     <Layout>
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-md mx-auto">
+          {studentCount > 0 && (
+            <div className="flex items-center justify-center gap-6 mb-4 text-sm text-muted-foreground flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <Users className="h-4 w-4 text-primary" />
+                <span>{studentCount}+ estudiantes</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Shield className="h-4 w-4 text-green-500" />
+                <span>100% verificado</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Star className="h-4 w-4 text-yellow-500" />
+                <span>Sin comisiones</span>
+              </div>
+            </div>
+          )}
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Crear cuenta</CardTitle>
@@ -117,6 +149,15 @@ const Signup = () => {
             </CardHeader>
 
             <CardContent className="space-y-6">
+              <SocialAuth mode="signup" />
+
+              <div className="relative">
+                <Separator />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
+                  o regístrate con email
+                </span>
+              </div>
+
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {errors.root && (
                   <Alert variant="destructive">
@@ -130,6 +171,8 @@ const Signup = () => {
                   <Input
                     id="name"
                     type="text"
+                    autoComplete="name"
+                    enterKeyHint="next"
                     {...register('name')}
                     placeholder="Tu nombre completo"
                   />
@@ -143,6 +186,9 @@ const Signup = () => {
                   <Input
                     id="email"
                     type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    enterKeyHint="next"
                     {...register('email')}
                     placeholder="tu-email@ejemplo.com"
                   />
@@ -156,6 +202,8 @@ const Signup = () => {
                   <Input
                     id="password"
                     type="password"
+                    autoComplete="new-password"
+                    enterKeyHint="done"
                     {...register('password')}
                     placeholder="Mínimo 8 caracteres"
                   />
@@ -163,17 +211,17 @@ const Signup = () => {
                     <p className="text-sm text-destructive">{errors.password.message}</p>
                   )}
                   <div className="text-xs text-muted-foreground space-y-1 mt-1">
-                    <p className="flex items-center gap-1">
+                    <p className={`flex items-center gap-1 ${passwordValue.length >= 8 && passwordValue.length <= 72 ? 'text-green-600' : ''}`}>
                       <CheckCircle2 className="h-3 w-3" />
                       Entre 8 y 72 caracteres
                     </p>
-                    <p className="flex items-center gap-1">
+                    <p className={`flex items-center gap-1 ${/[a-z]/.test(passwordValue) && /[A-Z]/.test(passwordValue) ? 'text-green-600' : ''}`}>
                       <CheckCircle2 className="h-3 w-3" />
                       Una letra mayúscula y una minúscula
                     </p>
-                    <p className="flex items-center gap-1">
+                    <p className={`flex items-center gap-1 ${/\d/.test(passwordValue) ? 'text-green-600' : ''}`}>
                       <CheckCircle2 className="h-3 w-3" />
-                      Al menos un número y un carácter especial
+                      Al menos un número
                     </p>
                   </div>
                 </div>
@@ -279,8 +327,6 @@ const Signup = () => {
                   Crear cuenta
                 </Button>
               </form>
-
-              <SocialAuth mode="signup" />
 
               <div className="text-center text-sm">
                 <p className="text-muted-foreground">

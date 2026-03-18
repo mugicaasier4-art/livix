@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,11 +45,19 @@ const StudentOnboarding = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { createProfile } = useRoommateProfiles();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isErasmus, setIsErasmus] = useState<boolean | null>(null);
+  const [currentStep, setCurrentStep] = useState(() => {
+    const saved = localStorage.getItem('livix-onboarding-step');
+    return saved ? parseInt(saved) : 0;
+  });
+  const [isErasmus, setIsErasmus] = useState<boolean | null>(() => {
+    const saved = localStorage.getItem('livix-onboarding-erasmus');
+    return saved !== null ? JSON.parse(saved) : null;
+  });
   const [isSaving, setIsSaving] = useState(false);
-  
-  const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState(() => {
+    const saved = localStorage.getItem('livix-onboarding-data');
+    return saved ? JSON.parse(saved) : {
     // Basic Info
     isErasmus: false,
     age: 20,
@@ -117,7 +125,17 @@ const StudentOnboarding = () => {
     // Final
     acceptsTerms: false,
     acceptsMatching: false
+  };
   });
+
+  // Persist onboarding progress to localStorage
+  useEffect(() => {
+    localStorage.setItem('livix-onboarding-data', JSON.stringify(formData));
+    localStorage.setItem('livix-onboarding-step', String(currentStep));
+    if (isErasmus !== null) {
+      localStorage.setItem('livix-onboarding-erasmus', JSON.stringify(isErasmus));
+    }
+  }, [formData, currentStep, isErasmus]);
 
   // Dynamic steps based on Erasmus status
   const getSteps = () => {
@@ -228,7 +246,14 @@ const StudentOnboarding = () => {
   const currentStepData = steps[currentStep];
 
   const handleNext = () => {
+    // After step 2 (academic info), show phase complete interstitial
+    if (currentStep === 2 && !showPhaseComplete) {
+      setShowPhaseComplete(true);
+      return;
+    }
+
     if (currentStep < steps.length - 1) {
+      setShowPhaseComplete(false);
       setCurrentStep(currentStep + 1);
     } else {
       handleComplete();
@@ -236,6 +261,10 @@ const StudentOnboarding = () => {
   };
 
   const handleBack = () => {
+    if (showPhaseComplete) {
+      setShowPhaseComplete(false);
+      return;
+    }
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
@@ -307,7 +336,12 @@ const StudentOnboarding = () => {
       };
 
       await createProfile(profileData);
-      
+
+      // Clear persisted onboarding data
+      localStorage.removeItem('livix-onboarding-data');
+      localStorage.removeItem('livix-onboarding-step');
+      localStorage.removeItem('livix-onboarding-erasmus');
+
       toast.success("¡Perfil completado!", {
         description: isErasmus 
           ? "Te ayudaremos a encontrar el alojamiento perfecto para tu Erasmus"
@@ -332,7 +366,73 @@ const StudentOnboarding = () => {
     setFormData({...formData, [field]: newArray});
   };
 
+  // Phase completion screen after academic info (step 2)
+  const renderPhaseComplete = () => (
+    <div className="space-y-6">
+      <div className="text-center mb-8">
+        <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="h-8 w-8 text-success" />
+        </div>
+        <h2 className="text-2xl font-bold text-foreground mb-2">
+          Tu perfil básico está listo
+        </h2>
+        <p className="text-muted-foreground">
+          Ya puedes explorar pisos y contactar propietarios.
+          Si quieres mejores matches con compañeros, sigue personalizando tu perfil.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3">
+        <Button
+          size="lg"
+          className="w-full text-base py-6"
+          onClick={() => {
+            // Save partial data to Supabase and redirect
+            handlePartialSave();
+          }}
+        >
+          <Home className="h-5 w-5 mr-2" />
+          Empezar a explorar pisos
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          className="w-full"
+          onClick={() => setCurrentStep(currentStep + 1)}
+        >
+          Seguir personalizando mi perfil
+          <ArrowRight className="h-4 w-4 ml-2" />
+        </Button>
+      </div>
+
+      <p className="text-xs text-center text-muted-foreground">
+        Puedes completar tu perfil en cualquier momento desde Configuración
+      </p>
+    </div>
+  );
+
+  // Show phase-complete interstitial
+  const [showPhaseComplete, setShowPhaseComplete] = useState(false);
+
+  const handlePartialSave = async () => {
+    // Clear localStorage and redirect
+    localStorage.removeItem('livix-onboarding-data');
+    localStorage.removeItem('livix-onboarding-step');
+    localStorage.removeItem('livix-onboarding-erasmus');
+
+    toast.success('Perfil básico guardado', {
+      description: 'Puedes completar el resto desde Configuración',
+      duration: 3000,
+    });
+    navigate('/explore');
+  };
+
   const renderStepContent = () => {
+    // Show phase complete interstitial
+    if (showPhaseComplete) {
+      return renderPhaseComplete();
+    }
+
     switch (currentStep) {
       case 0:
         return (
@@ -1504,12 +1604,13 @@ const StudentOnboarding = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           {/* Progress Header */}
+          {!showPhaseComplete && (
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <currentStepData.icon className="h-6 w-6 text-primary" />
                 <span className="text-sm font-medium text-muted-foreground">
-                  Paso {currentStep + 1} de {steps.length}
+                  {currentStep <= 2 ? 'Fase 1' : 'Fase 2'} — Paso {currentStep + 1} de {steps.length}
                 </span>
               </div>
               <Badge variant="outline">
@@ -1526,6 +1627,7 @@ const StudentOnboarding = () => {
               </p>
             </div>
           </div>
+          )}
 
           {/* Step Content */}
           <Card className="border-0 shadow-lg">
@@ -1534,7 +1636,8 @@ const StudentOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Navigation */}
+          {/* Navigation (hidden during phase complete interstitial) */}
+          {!showPhaseComplete && (
           <div className="flex justify-between mt-6">
             <Button
               variant="outline"
@@ -1545,7 +1648,7 @@ const StudentOnboarding = () => {
               <ArrowLeft className="h-4 w-4" />
               Anterior
             </Button>
-            
+
             <Button
               onClick={handleNext}
               disabled={!canProceed() || isSaving}
@@ -1564,6 +1667,24 @@ const StudentOnboarding = () => {
               )}
             </Button>
           </div>
+          )}
+
+          {/* Skip onboarding option (visible from step 2 onwards) */}
+          {currentStep >= 2 && currentStep < steps.length - 1 && (
+            <div className="text-center mt-4">
+              <button
+                onClick={() => {
+                  toast.info('Puedes completar tu perfil en cualquier momento desde Configuración', {
+                    duration: 4000,
+                  });
+                  navigate('/explore');
+                }}
+                className="text-sm text-muted-foreground hover:text-primary underline transition-colors"
+              >
+                Saltar por ahora y explorar pisos
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

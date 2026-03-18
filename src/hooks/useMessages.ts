@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { createNotification, notificationTemplates } from '@/utils/notifications';
+import { messageSchema } from '@/schemas/messageSchema';
+import { validateAttachment } from '@/utils/fileValidation';
+import { sanitizeUserInput } from '@/utils/contentModeration';
 
 export interface MessageAttachment {
   name: string;
@@ -59,14 +62,50 @@ export const useMessages = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
   const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set());
-  const [presenceChannel, setPresenceChannel] = useState<any>(null);
+  const presenceChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const { user } = useAuth();
 
-  // Fetch conversations for the current user
+  // Fetch conversations with details in a single RPC call (no N+1)
   const fetchConversations = async () => {
     if (!user) return;
-    
+
     setIsLoading(true);
+    try {
+      const { data, error } = await supabase.rpc('get_conversations_with_details', {
+        p_user_id: user.id
+      });
+
+      if (error) {
+        // Fallback to legacy query if RPC not yet deployed
+        if (import.meta.env.DEV) {
+          console.error('RPC not available, using fallback:', error);
+        }
+        await fetchConversationsFallback();
+        return;
+      }
+
+      const conversationsWithDetails: Conversation[] = (data || []).map((row: any) => ({
+        ...row.conversation_data,
+        unread_count: row.unread_count || 0,
+        last_message: row.last_message_data
+      }));
+
+      setConversations(conversationsWithDetails);
+    } catch (error) {
+      if (import.meta.env.DEV) {
+        console.error('Error fetching conversations:', error);
+      }
+      toast.error('Error', {
+        description: 'No se pudieron cargar las conversaciones'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Legacy fallback for when the RPC hasn't been deployed yet
+  const fetchConversationsFallback = async () => {
+    if (!user) return;
     try {
       const { data, error } = await supabase
         .from('conversations')
@@ -81,10 +120,8 @@ export const useMessages = () => {
 
       if (error) throw error;
 
-      // Get unread counts and last messages for each conversation
       const conversationsWithDetails = await Promise.all(
         (data || []).map(async (conv) => {
-          // Get unread count
           const { count } = await supabase
             .from('messages')
             .select('*', { count: 'exact', head: true })
@@ -92,7 +129,6 @@ export const useMessages = () => {
             .eq('is_read', false)
             .neq('sender_id', user.id);
 
-          // Get last message
           const { data: lastMessage } = await supabase
             .from('messages')
             .select('*')
@@ -101,22 +137,14 @@ export const useMessages = () => {
             .limit(1)
             .single();
 
-          return {
-            ...conv,
-            unread_count: count || 0,
-            last_message: lastMessage
-          } as Conversation;
+          return { ...conv, unread_count: count || 0, last_message: lastMessage } as Conversation;
         })
       );
-
       setConversations(conversationsWithDetails);
     } catch (error) {
       if (import.meta.env.DEV) {
-        console.error('Error fetching conversations:', error);
+        console.error('Error fetching conversations (fallback):', error);
       }
-      toast.error('Error', {
-        description: 'No se pudieron cargar las conversaciones'
-      });
     } finally {
       setIsLoading(false);
     }
@@ -212,11 +240,27 @@ export const useMessages = () => {
   const sendMessage = async (conversationId: string, content: string, files?: File[]) => {
     if (!user || !content.trim()) return;
 
+    // Validate message data with Zod before inserting into Supabase
+    const validation = messageSchema.safeParse({ content, conversation_id: conversationId });
+    if (!validation.success) {
+      toast.error(validation.error.errors[0].message);
+      return;
+    }
+
     try {
       let attachments: MessageAttachment[] = [];
 
       // Upload files if provided
       if (files && files.length > 0) {
+        // Validate all files before uploading
+        for (const file of files) {
+          const validationError = validateAttachment(file);
+          if (validationError) {
+            toast.error('Archivo no válido', { description: validationError });
+            return;
+          }
+        }
+
         const uploadPromises = files.map(async (file) => {
           const fileExt = file.name.split('.').pop();
           const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -248,7 +292,7 @@ export const useMessages = () => {
         .insert({
           conversation_id: conversationId,
           sender_id: user.id,
-          content: content.trim(),
+          content: sanitizeUserInput(content.trim()),
           attachments: attachments.length > 0 ? attachments : null
         });
 
@@ -406,15 +450,12 @@ export const useMessages = () => {
   // Check if user is online
   const isUserOnline = (userId: string) => onlineUsers.has(userId);
 
-  // Set up realtime subscriptions
+  // Presence channel — only depends on user, NOT on activeConversation
   useEffect(() => {
     if (!user) return;
 
-    fetchConversations();
-
-    // Set up presence channel for online status
     const channel = supabase.channel('online-users');
-    
+
     channel
       .on('presence', { event: 'sync' }, () => {
         const state = channel.presenceState();
@@ -450,25 +491,40 @@ export const useMessages = () => {
         }
       });
 
-    setPresenceChannel(channel);
+    presenceChannelRef.current = channel;
 
-    // Subscribe to new messages
+    return () => {
+      if (presenceChannelRef.current) {
+        supabase.removeChannel(presenceChannelRef.current);
+        presenceChannelRef.current = null;
+      }
+    };
+  }, [user]);
+
+  // Messages & typing subscriptions — depends on user + activeConversation
+  useEffect(() => {
+    if (!user) return;
+
+    fetchConversations();
+
+    // Subscribe to new messages (filtered by active conversation when available)
     const messagesChannel = supabase
-      .channel('messages-changes')
+      .channel(`messages-changes-${activeConversation || 'all'}`)
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'messages'
+          table: 'messages',
+          ...(activeConversation ? { filter: `conversation_id=eq.${activeConversation}` } : {})
         },
         (payload) => {
           const newMessage = payload.new as Message;
-          
+
           // If message is for active conversation, add it
           if (newMessage.conversation_id === activeConversation) {
             setMessages(prev => [...prev, newMessage]);
-            
+
             // Mark as read if not from current user
             if (newMessage.sender_id !== user.id) {
               supabase
@@ -477,7 +533,7 @@ export const useMessages = () => {
                 .eq('id', newMessage.id);
             }
           }
-          
+
           // Refresh conversations list
           fetchConversations();
         }
@@ -491,10 +547,10 @@ export const useMessages = () => {
         },
         (payload) => {
           const updatedMessage = payload.new as Message;
-          
+
           // Update message in active conversation (for read receipts)
           if (updatedMessage.conversation_id === activeConversation) {
-            setMessages(prev => 
+            setMessages(prev =>
               prev.map(msg => msg.id === updatedMessage.id ? updatedMessage : msg)
             );
           }
@@ -517,7 +573,7 @@ export const useMessages = () => {
             const indicator = payload.new as any;
             if (indicator.is_typing && indicator.user_id !== user.id) {
               setTypingUsers(prev => new Set(prev).add(indicator.user_id));
-              
+
               // Remove after 3 seconds
               setTimeout(() => {
                 setTypingUsers(prev => {
@@ -541,9 +597,6 @@ export const useMessages = () => {
     return () => {
       supabase.removeChannel(messagesChannel);
       supabase.removeChannel(typingChannel);
-      if (presenceChannel) {
-        supabase.removeChannel(presenceChannel);
-      }
     };
   }, [user, activeConversation]);
 

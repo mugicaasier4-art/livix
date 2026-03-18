@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -82,6 +83,11 @@ const ErasmusGuide = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Guía Erasmus Zaragoza 2025-2026: Checklist Completo | Livix"
+        description="Guía paso a paso para tu Erasmus en Zaragoza. Checklist de trámites, documentos y consejos antes de llegar, primera semana y primer mes. Plantillas incluidas."
+        canonical="https://livix.es/erasmus/guide"
+      />
       <div className="container mx-auto px-4 py-8">
         {/* Back button */}
         <div className="mb-6">
@@ -97,7 +103,7 @@ const ErasmusGuide = () => {
         <div className="mb-12 text-center">
           <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
             <Plane className="w-4 h-4 mr-2" />
-            Guía completa Erasmus Zaragoza 2024-25
+            Guía completa Erasmus Zaragoza 2025-2026
           </Badge>
           <h1 className="text-4xl font-bold text-foreground mb-4">
             Tu guía paso a paso para Erasmus en Zaragoza

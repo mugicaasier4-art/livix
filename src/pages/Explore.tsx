@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import ListingCard from "@/components/explore/ListingCard";
 import ViewToggle, { ViewMode } from "@/components/explore/ViewToggle";
 import PropertyTypeFilter, { PropertyFilter } from "@/components/explore/PropertyTypeFilter";
@@ -9,9 +10,8 @@ import MapView from "@/components/explore/MapView";
 import SwipeView from "@/components/explore/SwipeView";
 import MobileDrawer from "@/components/explore/MobileDrawer";
 import { ListingComparator } from "@/components/explore/ListingComparator";
+import ListingCardSkeleton from "@/components/explore/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useI18n } from "@/contexts/I18nContext";
 import { usePreferences } from "@/contexts/PreferencesContext";
 import { useCompare } from "@/contexts/CompareContext";
@@ -23,7 +23,7 @@ import { useLikes } from "@/hooks/useLikes";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSquads } from "@/hooks/useSquads";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Users, Building2, X } from "lucide-react";
+import { Users, Building2, X, MapIcon, List } from "lucide-react";
 import { residences } from "@/data/residences";
 import { Faculty } from "@/data/faculties";
 import { Filters } from "@/components/explore/FiltersSheet";
@@ -61,6 +61,9 @@ const Explore = () => {
   // New filter states
   const [entryDate, setEntryDate] = useState<Date | undefined>(undefined);
   const [selectedFaculty, setSelectedFaculty] = useState<Faculty | null>(null);
+
+  // Mobile map toggle
+  const [mobileShowMap, setMobileShowMap] = useState(false);
 
   // Bidirectional hover sync state
   const [hoveredListingId, setHoveredListingId] = useState<number | null>(null);
@@ -380,6 +383,12 @@ const Explore = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Buscar Alojamiento | Livix"
+        description="Busca y filtra pisos, habitaciones y residencias para estudiantes. Mapa interactivo, filtros avanzados y vista swipe. Encuentra tu alojamiento ideal."
+        canonical="https://livix.es/explore"
+        noIndex={true}
+      />
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-4 max-w-6xl space-y-3">
           {/* View & Property Type Controls */}
@@ -434,7 +443,7 @@ const Explore = () => {
                 <span className="text-sm font-medium text-primary">
                   Zona personalizada activa
                 </span>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground" aria-live="polite">
                   ({displayListings.length} resultados)
                 </span>
               </div>
@@ -473,13 +482,7 @@ const Explore = () => {
           {isLoading ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="aspect-[16/9] w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-3 w-1/2" />
-                  </div>
-                </Card>
+                <ListingCardSkeleton key={i} />
               ))}
             </div>
           ) : (
@@ -551,24 +554,58 @@ const Explore = () => {
                       </div>
                     </div>
                   ) : (
-                    /* Mobile: Simple list view without map */
-                    <div className="space-y-4 pb-6">
-                      <p className="text-sm text-muted-foreground">
-                        {displayListings.length} alojamientos encontrados
-                      </p>
-                      {displayListings.length > 0 ? (
-                        displayListings.map((listing, index) => (
-                          <ListingCard
-                            key={listing.id}
-                            {...listing}
-                            position={index}
+                    /* Mobile: List view with map toggle */
+                    <div className="relative pb-6">
+                      {mobileShowMap ? (
+                        /* Full screen map on mobile */
+                        <div className="h-[calc(100vh-200px)] min-h-[400px] rounded-2xl overflow-hidden shadow-lg -mx-4">
+                          <MapView
+                            listings={displayListings}
+                            onVisibleListingsChange={setVisibleListingIds}
+                            hoveredListingId={hoveredListingId}
+                            onMarkerHover={handleMarkerHover}
+                            onZoneFilter={handleZoneFilter}
                           />
-                        ))
+                        </div>
                       ) : (
-                        <div className="text-center py-16">
-                          <p className="text-muted-foreground">No hay resultados</p>
+                        <div className="space-y-4">
+                          <p className="text-sm text-muted-foreground">
+                            {displayListings.length} alojamientos encontrados
+                          </p>
+                          {displayListings.length > 0 ? (
+                            displayListings.map((listing, index) => (
+                              <ListingCard
+                                key={listing.id}
+                                {...listing}
+                                position={index}
+                              />
+                            ))
+                          ) : (
+                            <div className="text-center py-16">
+                              <p className="text-muted-foreground">No hay resultados</p>
+                            </div>
+                          )}
                         </div>
                       )}
+
+                      {/* Floating toggle button */}
+                      <button
+                        onClick={() => setMobileShowMap(!mobileShowMap)}
+                        className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-5 py-3 rounded-full bg-foreground text-background shadow-floating font-medium text-sm transition-transform active:scale-95"
+                        aria-label={mobileShowMap ? "Ver lista" : "Ver mapa"}
+                      >
+                        {mobileShowMap ? (
+                          <>
+                            <List className="h-4 w-4" />
+                            Lista
+                          </>
+                        ) : (
+                          <>
+                            <MapIcon className="h-4 w-4" />
+                            Mapa
+                          </>
+                        )}
+                      </button>
                     </div>
                   )}
                 </>

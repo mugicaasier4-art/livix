@@ -4,8 +4,9 @@ import Layout from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Users, Home, AlertTriangle, TrendingUp, Activity, Database, Settings, Loader2, Building } from 'lucide-react';
+import { Shield, Users, Home, AlertTriangle, TrendingUp, Activity, Database, Loader2, Building } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface AdminStats {
   totalUsers: number;
@@ -36,35 +37,40 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const [usersRes, listingsRes, applicationsRes, subsRes, recentRes] = await Promise.all([
-        supabase.from('profiles').select('*', { count: 'exact', head: true }),
-        supabase.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-        supabase.from('applications').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-        supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-        supabase
-          .from('applications')
-          .select('id, status, created_at')
-          .order('created_at', { ascending: false })
-          .limit(5),
-      ]);
+      try {
+        const [usersRes, listingsRes, applicationsRes, subsRes, recentRes] = await Promise.all([
+          supabase.from('profiles').select('*', { count: 'exact', head: true }),
+          supabase.from('listings').select('*', { count: 'exact', head: true }).eq('is_active', true),
+          supabase.from('applications').select('*', { count: 'exact', head: true }).eq('status', 'enviada'),
+          supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+          supabase
+            .from('applications')
+            .select('id, status, created_at')
+            .order('created_at', { ascending: false })
+            .limit(5),
+        ]);
 
-      setStats({
-        totalUsers: usersRes.count ?? 0,
-        activeListings: listingsRes.count ?? 0,
-        pendingApplications: applicationsRes.count ?? 0,
-        activeSubscriptions: subsRes.count ?? 0,
-        isLoading: false,
-      });
+        setStats({
+          totalUsers: usersRes.count ?? 0,
+          activeListings: listingsRes.count ?? 0,
+          pendingApplications: applicationsRes.count ?? 0,
+          activeSubscriptions: subsRes.count ?? 0,
+          isLoading: false,
+        });
 
-      setRecentApplications(
-        (recentRes.data || []).map((a) => ({
-          id: a.id,
-          status: a.status,
-          created_at: a.created_at,
-          student_name: null,
-          listing_title: null,
-        }))
-      );
+        setRecentApplications(
+          (recentRes.data || []).map((a) => ({
+            id: a.id,
+            status: a.status,
+            created_at: a.created_at,
+            student_name: null,
+            listing_title: null,
+          }))
+        );
+      } catch (error) {
+        if (import.meta.env.DEV) console.error('Error fetching admin stats:', error);
+        setStats(prev => ({ ...prev, isLoading: false }));
+      }
     };
 
     fetchStats();
@@ -102,19 +108,19 @@ const AdminDashboard = () => {
   ];
 
   const statusColor = (status: string) => {
-    if (status === 'pending') return 'default';
-    if (status === 'accepted') return 'secondary';
-    if (status === 'rejected') return 'destructive';
+    if (status === 'enviada') return 'default';
+    if (status === 'preaprobada' || status === 'aprobada') return 'secondary';
+    if (status === 'rechazada') return 'destructive';
     return 'outline';
   };
 
   const statusLabel = (status: string) => {
     const map: Record<string, string> = {
-      pending: 'Pendiente',
-      accepted: 'Aceptada',
-      rejected: 'Rechazada',
-      withdrawn: 'Retirada',
-      completed: 'Completada',
+      enviada: 'Pendiente',
+      preaprobada: 'Pre-aprobada',
+      aprobada: 'Aprobada',
+      rechazada: 'Rechazada',
+      retirada: 'Retirada',
     };
     return map[status] ?? status;
   };
@@ -134,11 +140,11 @@ const AdminDashboard = () => {
           </div>
 
           <div className="flex gap-3">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => toast.info('Funcionalidad próximamente', { description: 'Los logs estarán disponibles en una futura actualización.' })}>
               <Activity className="mr-2 h-4 w-4" />
               Ver logs
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => toast.info('Funcionalidad próximamente', { description: 'El backup automático estará disponible pronto.' })}>
               <Database className="mr-2 h-4 w-4" />
               Backup
             </Button>
@@ -231,11 +237,11 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <Button className="w-full justify-start" variant="outline" onClick={() => window.open('https://supabase.com/dashboard/project/xeyfrydlojosratstsfk/editor', '_blank')}>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => window.open(`https://supabase.com/dashboard/project/${import.meta.env.VITE_SUPABASE_PROJECT_ID}/editor`, '_blank')}>
                     <Database className="mr-2 h-4 w-4" />
                     Supabase SQL Editor
                   </Button>
-                  <Button className="w-full justify-start" variant="outline" onClick={() => window.open('https://supabase.com/dashboard/project/xeyfrydlojosratstsfk/logs/postgres-logs', '_blank')}>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => window.open(`https://supabase.com/dashboard/project/${import.meta.env.VITE_SUPABASE_PROJECT_ID}/logs/postgres-logs`, '_blank')}>
                     <Activity className="mr-2 h-4 w-4" />
                     Logs de base de datos
                   </Button>

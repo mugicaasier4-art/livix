@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { NotificationsDropdown } from "./NotificationsDropdown";
@@ -21,6 +21,84 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const [hideHeader, setHideHeader] = useState(false);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  // Smart header: hide on scroll down, show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const diff = currentScrollY - lastScrollY.current;
+        if (Math.abs(diff) > 10) {
+          setHideHeader(diff > 0 && currentScrollY > 64);
+          lastScrollY.current = currentScrollY;
+        }
+        ticking.current = false;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+
+      const menu = mobileMenuRef.current;
+      if (!menu) return;
+
+      const focusableEls = menu.querySelectorAll<HTMLElement>(
+        'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusableEls.length === 0) return;
+
+      const firstEl = focusableEls[0];
+      const lastEl = focusableEls[focusableEls.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstEl) {
+        e.preventDefault();
+        lastEl.focus();
+      } else if (!e.shiftKey && document.activeElement === lastEl) {
+        e.preventDefault();
+        firstEl.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    // Focus first item when menu opens
+    const menu = mobileMenuRef.current;
+    if (menu) {
+      const firstFocusable = menu.querySelector<HTMLElement>('a[href], button');
+      firstFocusable?.focus();
+    }
+
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   // Main items always visible on tablet+
   const mainNavItems = [
@@ -82,7 +160,10 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-white-pure/80 backdrop-blur-md">
+    <header className={cn(
+      "sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md transition-transform duration-300",
+      hideHeader && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"
+    )}>
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo - Text on all devices */}
@@ -253,7 +334,7 @@ const Header = () => {
                 </Link>
                 <Link to="/signup">
                   <Button size="sm">
-                    Registrarse
+                    Crear cuenta gratis
                   </Button>
                 </Link>
               </>
@@ -261,13 +342,15 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            ref={menuButtonRef}
+            variant="ghost"
+            size="sm"
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -276,11 +359,16 @@ const Header = () => {
 
       {/* Mobile Menu Dropdown - Apple Style */}
       <div
+        ref={mobileMenuRef}
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú de navegación"
         className={cn(
-          "md:hidden fixed left-0 right-0 bg-white-pure border-b shadow-elevated overflow-hidden transition-all duration-300 ease-out z-40",
-          mobileMenuOpen 
-            ? "top-16 max-h-[calc(100vh-4rem)] opacity-100" 
-            : "top-16 max-h-0 opacity-0"
+          "md:hidden fixed left-0 right-0 bg-background border-b shadow-elevated overflow-y-auto transition-all duration-300 ease-out z-40",
+          mobileMenuOpen
+            ? "top-16 max-h-[calc(100vh-4rem)] opacity-100"
+            : "top-16 max-h-0 opacity-0 pointer-events-none"
         )}
       >
         <nav className="container mx-auto px-6 py-6 space-y-1">
@@ -436,7 +524,7 @@ const Header = () => {
                 className="flex-1"
               >
                 <Button className="w-full">
-                  Registrarse
+                  Crear cuenta gratis
                 </Button>
               </Link>
             </div>

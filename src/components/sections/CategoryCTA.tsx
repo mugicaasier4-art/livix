@@ -9,24 +9,23 @@ const CategoryCTA = () => {
   const categories = [
     {
       icon: Home,
-      title: "Pisos y habitaciones",
-      description: "Habitaciones individuales y pisos compartidos en toda Zaragoza",
-      buttonText: "Buscar pisos",
+      title: "Busco habitación o piso",
+      description: "Habitaciones desde 250€/mes y pisos compartidos en todas las zonas de Zaragoza",
+      buttonText: "Ver pisos disponibles",
       route: "/explore"
     },
     {
       icon: Users,
-      title: "Foro de Compañeros",
-      description: "Encuentra roommates compatibles antes de buscar piso juntos",
-      buttonText: "Encontrar compañeros",
-      route: "/roommates",
-      badge: "Próximamente"
+      title: "Busco compañero de piso",
+      description: "Conecta con estudiantes de tu facultad y formad grupo para buscar piso juntos",
+      buttonText: "Buscar compañeros",
+      route: "/roommates"
     },
     {
       icon: Building2,
-      title: "Residencias",
-      description: "Residencias universitarias y colegios mayores con servicios completos",
-      buttonText: "Explorar residencias",
+      title: "Busco residencia",
+      description: "Residencias universitarias y colegios mayores con servicios incluidos",
+      buttonText: "Ver residencias",
       route: "/residences"
     }
   ];
@@ -36,10 +35,10 @@ const CategoryCTA = () => {
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-bold text-foreground md:text-4xl">
-            ¿Qué tipo de alojamiento buscas?
+            ¿Qué necesitas?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Encuentra la opción perfecta para ti
+            Elige tu camino y empieza a buscar
           </p>
         </div>
         

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowRight, Home, GraduationCap, Lightbulb, PartyPopper, Sparkles, Scale, Banknote, Clock, TrendingUp } from "lucide-react";
@@ -35,6 +36,11 @@ const Blog = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Blog sobre Alojamiento Universitario en Zaragoza | Livix"
+        description="Consejos, guías y recursos para encontrar piso como estudiante en Zaragoza. Barrios, precios, contratos y trucos para la vida universitaria."
+        canonical="https://livix.es/blog"
+      />
       <div className="min-h-screen bg-background">
         {/* Hero Section with Collage Background */}
         <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
@@ -42,8 +48,11 @@ const Blog = () => {
           <div className="absolute inset-0">
             <img
               src={blogHeroCollage}
-              alt="Estudiantes en pisos compartidos"
+              alt="Estudiantes en pisos compartidos en Zaragoza"
+              width={1200}
+              height={600}
               className="w-full h-full object-cover"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
           </div>
@@ -123,7 +132,11 @@ const Blog = () => {
                         <img
                           src={featuredPost.image}
                           alt={featuredPost.title}
+                          width={600}
+                          height={400}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       <CardContent className="p-6 md:p-8 flex flex-col justify-center">
@@ -180,6 +193,10 @@ const Blog = () => {
                           <img
                             src={post.image}
                             alt={post.title}
+                            width={400}
+                            height={250}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         </div>

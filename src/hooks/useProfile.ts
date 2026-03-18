@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { validateImageFile } from '@/utils/fileValidation';
+import { resizeImage } from '@/utils/imageResize';
 
 export interface ProfileData {
   name: string;
@@ -31,7 +33,7 @@ export const useProfile = () => {
         description: 'Tus cambios se guardaron correctamente',
       });
     } catch (error) {
-      console.error('Error updating profile:', error);
+      if (import.meta.env.DEV) console.error('Error updating profile:', error);
       toast.error('Error al actualizar perfil', {
         description: 'No se pudo actualizar el perfil',
       });
@@ -44,27 +46,35 @@ export const useProfile = () => {
   const uploadAvatar = async (file: File): Promise<string> => {
     if (!user) throw new Error('No autenticado');
     
+    // Validate image file before upload
+    const validationError = validateImageFile(file);
+    if (validationError) {
+      toast.error('Imagen no válida', { description: validationError });
+      throw new Error(validationError);
+    }
+
     setIsUploadingAvatar(true);
     try {
-      const fileExt = file.name.split('.').pop();
+      const resized = await resizeImage(file, { maxWidth: 400, maxHeight: 400 });
+      const fileExt = resized.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
       const filePath = `avatars/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('listing-images')
-        .upload(filePath, file, { upsert: true });
+        .from('avatars')
+        .upload(filePath, resized, { upsert: true });
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('listing-images')
+        .from('avatars')
         .getPublicUrl(filePath);
 
       await updateProfile({ avatar_url: publicUrl });
 
       return publicUrl;
     } catch (error) {
-      console.error('Error uploading avatar:', error);
+      if (import.meta.env.DEV) console.error('Error uploading avatar:', error);
       toast.error('Error al subir imagen', {
         description: 'No se pudo subir la imagen',
       });

@@ -9,6 +9,7 @@ import { useListings } from '@/hooks/useListings';
 import { useApplications } from '@/hooks/useApplications';
 import { useMessages } from '@/hooks/useMessages';
 import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const LandlordDashboard = () => {
   const { user } = useAuth();
@@ -30,20 +31,29 @@ const LandlordDashboard = () => {
   }, [user]);
 
   useEffect(() => {
-    // Calculate stats from real data
     const activeListings = listings.filter(l => l.is_active).length;
     const pendingApplications = applications.filter(
       app => app.status === 'enviada' || app.status === 'preaprobada'
     ).length;
     const unreadMessages = conversations.reduce((sum, conv) => sum + (conv.unread_count || 0), 0);
 
-    setStats({
-      activeListings,
-      pendingApplications,
-      unreadMessages,
-      upcomingVisits: 0 // TODO: Implement visits
+    // Fetch upcoming visits from application_visits
+    const fetchVisitCount = async () => {
+      if (!user) return 0;
+      const now = new Date().toISOString();
+      const { count } = await supabase
+        .from('application_visits')
+        .select('*', { count: 'exact', head: true })
+        .in('listing_id', listings.map(l => l.id))
+        .gte('start_time', now)
+        .in('status', ['pending', 'confirmed']);
+      return count || 0;
+    };
+
+    fetchVisitCount().then(upcomingVisits => {
+      setStats({ activeListings, pendingApplications, unreadMessages, upcomingVisits });
     });
-  }, [listings, applications, conversations]);
+  }, [listings, applications, conversations, user]);
 
   const statsDisplay = [
     {

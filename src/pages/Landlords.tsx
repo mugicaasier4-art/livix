@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -226,6 +227,11 @@ const Landlords = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Propietarios: Publica tu Piso en Livix | Alquiler a Estudiantes"
+        description="Publica tu piso o habitación en Livix y llega a miles de estudiantes en Zaragoza. Gestión integral, inquilinos verificados y pagos seguros."
+        canonical="https://livix.es/landlords"
+      />
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         {/* Background Image */}
@@ -234,6 +240,10 @@ const Landlords = () => {
             src={landlordHero}
             alt="Landlord handing keys to tenant"
             className="w-full h-full object-cover"
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/80 to-system-blue/70" />
         </div>

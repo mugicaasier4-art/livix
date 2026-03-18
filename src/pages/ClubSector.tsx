@@ -62,6 +62,9 @@ const ClubSector = () => {
             src={sectorMeta.image}
             alt={sectorMeta.name}
             className="w-full h-full object-cover"
+            width={1200}
+            height={400}
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6">

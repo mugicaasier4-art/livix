@@ -261,6 +261,10 @@ const ProfileCard = ({ profile, compatibility, isLiked, onLike, onClick }: Profi
                                 src={profile.image}
                                 alt={profile.name}
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                loading="lazy"
+                                decoding="async"
+                                width={64}
+                                height={64}
                             />
                         </div>
                         <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
@@ -375,6 +379,10 @@ const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMes
                                 src={profile.image}
                                 alt={profile.name}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                                width={128}
+                                height={128}
                             />
                         </div>
                         {/* Online indicator */}
@@ -857,6 +865,10 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                                                         src={conv.profile.image}
                                                         alt={conv.profile.name}
                                                         className="w-full h-full object-cover"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        width={48}
+                                                        height={48}
                                                     />
                                                 </div>
                                                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white" />
@@ -1087,7 +1099,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                                 return (
                                     <div key={id} className="flex items-center gap-3 p-3 rounded-xl border hover:shadow-sm transition-all">
                                         <div className="w-12 h-12 rounded-full overflow-hidden border">
-                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
+                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" loading="lazy" decoding="async" width={48} height={48} />
                                         </div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-sm">{profile.name}, {profile.age}</h4>
@@ -1136,7 +1148,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                                 return (
                                     <div key={id} className="group relative overflow-hidden flex items-center gap-4 p-4 rounded-xl border-2 border-purple-100 bg-purple-50/30 hover:bg-purple-50 hover:border-purple-200 transition-all">
                                         <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
+                                            <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" loading="lazy" decoding="async" width={56} height={56} />
                                             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                                         </div>
 

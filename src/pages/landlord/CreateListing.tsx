@@ -173,6 +173,33 @@ const CreateListing = () => {
     roomAreaSqm: 0
   });
 
+  // Auto-save form data to localStorage (debounced)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      try {
+        // Don't save File objects — only serializable data
+        const { photos, ...serializable } = formData;
+        localStorage.setItem('livix-create-listing-draft', JSON.stringify({ formData: serializable, step }));
+      } catch { /* Storage full or disabled */ }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [formData, step]);
+
+  // Restore draft on mount
+  useEffect(() => {
+    try {
+      const draft = localStorage.getItem('livix-create-listing-draft');
+      if (draft) {
+        const parsed = JSON.parse(draft);
+        if (parsed.formData) {
+          setFormData(prev => ({ ...prev, ...parsed.formData }));
+          if (parsed.step) setStep(parsed.step);
+          toast.info('Borrador restaurado', { description: 'Se ha cargado tu progreso anterior.' });
+        }
+      }
+    } catch { /* Invalid draft */ }
+  }, []);
+
   // Initialize rooms array when availableRooms changes
   const updateRoomsArray = (numRooms: number) => {
     const currentRooms = formData.rooms;
@@ -305,8 +332,8 @@ const CreateListing = () => {
     // Step 4: Description and Contact
     if (step === 4) {
       const wordCount = formData.title.trim().split(/\s+/).filter(w => w).length;
-      if (!formData.title || formData.title.trim().length < 5) {
-        toast.error("Error", { description: "El título no puede estar vacío" });
+      if (!formData.title || formData.title.trim().length < 10) {
+        toast.error("Error", { description: "El título debe tener al menos 10 caracteres" });
         return false;
       }
       
@@ -427,9 +454,10 @@ const CreateListing = () => {
         rooms_config: roomsConfig
       });
       
+      localStorage.removeItem('livix-create-listing-draft');
       navigate("/ll/dashboard");
     } catch (error) {
-      console.error('Error creating listing:', error);
+      if (import.meta.env.DEV) console.error('Error creating listing:', error);
       toast.error("Error", { 
         description: error instanceof Error ? error.message : "No se pudo crear el listado"
       });
@@ -854,6 +882,10 @@ La ubicación es inmejorable, cerca de transporte público y zonas de ocio.
                         src={photo.url}
                         alt={`Foto ${index + 1}`}
                         className="w-full h-32 object-cover rounded-lg border"
+                        loading="lazy"
+                        decoding="async"
+                        width={200}
+                        height={128}
                       />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
                         <button
@@ -1368,8 +1400,11 @@ La ubicación es inmejorable, cerca de transporte público y zonas de ocio.
                   className="mt-1"
                 />
                 {!isPremium && (
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Máximo 6 palabras / 100 caracteres
+                  <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                    Máximo 6 palabras / 100 caracteres •{' '}
+                    <button type="button" onClick={() => setShowPaywall(true)} className="text-primary underline inline-flex items-center gap-0.5">
+                      Premium: sin límites
+                    </button>
                   </p>
                 )}
               </div>
@@ -1547,10 +1582,14 @@ La ubicación es inmejorable, cerca de transporte público y zonas de ocio.
                   <Card className="overflow-hidden">
                     {uploadedPhotos.length > 0 ? (
                       <div className="relative h-48">
-                        <img 
-                          src={uploadedPhotos[0].url} 
-                          alt="Vista previa del anuncio" 
+                        <img
+                          src={uploadedPhotos[0].url}
+                          alt="Vista previa del anuncio"
                           className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          width={400}
+                          height={192}
                         />
                         <Badge className="absolute top-2 right-2 bg-background/90 backdrop-blur">
                           {uploadedPhotos.length} fotos

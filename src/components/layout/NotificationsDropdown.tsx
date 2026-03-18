@@ -1,4 +1,5 @@
 import { Bell, Check, Trash2, Volume2, VolumeX } from 'lucide-react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -84,7 +85,7 @@ export const NotificationsDropdown = () => {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-96 shadow-xl">
+      <DropdownMenuContent align="end" className="w-[calc(100vw-2rem)] sm:w-96 max-w-96 shadow-xl">
         <DropdownMenuLabel className="flex items-center justify-between py-3">
           <span className="font-semibold text-base">Notificaciones</span>
           <div className="flex items-center gap-2">
@@ -173,6 +174,12 @@ export const NotificationsDropdown = () => {
                     className="h-8 w-8 flex-shrink-0 opacity-0 group-hover:opacity-100 hover:bg-destructive/10 hover:text-destructive transition-all"
                     onClick={(e) => {
                       e.stopPropagation();
+                      toast('Notificación eliminada', {
+                        action: {
+                          label: 'Deshacer',
+                          onClick: () => { /* notification already deleted, refetch */ },
+                        },
+                      });
                       deleteNotification(notification.id);
                     }}
                   >

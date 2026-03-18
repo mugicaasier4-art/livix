@@ -32,10 +32,20 @@ const Settings = () => {
       return;
     }
 
-    if (passwordData.newPassword.length < 6) {
+    if (passwordData.newPassword.length < 8) {
       toast({
         title: 'Error',
-        description: 'La contraseña debe tener al menos 6 caracteres',
+        description: 'La contraseña debe tener al menos 8 caracteres',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!/[A-Z]/.test(passwordData.newPassword) || !/[a-z]/.test(passwordData.newPassword) ||
+        !/[0-9]/.test(passwordData.newPassword) || !/[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword)) {
+      toast({
+        title: 'Error',
+        description: 'La contraseña debe incluir mayúscula, minúscula, número y carácter especial',
         variant: 'destructive',
       });
       return;
@@ -99,7 +109,7 @@ const Settings = () => {
                   type="password"
                   value={passwordData.newPassword}
                   onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Mínimo 8 caracteres"
                   required
                 />
               </div>
