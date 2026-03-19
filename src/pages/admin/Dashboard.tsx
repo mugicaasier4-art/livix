@@ -4,7 +4,7 @@ import Layout from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Users, Home, AlertTriangle, TrendingUp, Activity, Database, Loader2, Building } from 'lucide-react';
+import { Shield, Users, Home, AlertTriangle, TrendingUp, Activity, Database, Loader2, Building, Plus, Upload, Phone, GraduationCap } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -13,6 +13,8 @@ interface AdminStats {
   activeListings: number;
   pendingApplications: number;
   activeSubscriptions: number;
+  landlordLeads: number;
+  studentWaitlist: number;
   isLoading: boolean;
 }
 
@@ -31,6 +33,8 @@ const AdminDashboard = () => {
     activeListings: 0,
     pendingApplications: 0,
     activeSubscriptions: 0,
+    landlordLeads: 0,
+    studentWaitlist: 0,
     isLoading: true,
   });
   const [recentApplications, setRecentApplications] = useState<RecentApplication[]>([]);
@@ -38,7 +42,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [usersRes, listingsRes, applicationsRes, subsRes, recentRes] = await Promise.all([
+        const [usersRes, listingsRes, applicationsRes, subsRes, recentRes, leadsRes, waitlistRes] = await Promise.all([
           supabase.from('profiles').select('*', { count: 'exact', head: true }),
           supabase.from('listings').select('*', { count: 'exact', head: true }).eq('is_active', true),
           supabase.from('applications').select('*', { count: 'exact', head: true }).eq('status', 'enviada'),
@@ -48,6 +52,8 @@ const AdminDashboard = () => {
             .select('id, status, created_at')
             .order('created_at', { ascending: false })
             .limit(5),
+          (supabase as any).from('landlord_leads').select('*', { count: 'exact', head: true }),
+          (supabase as any).rpc('student_count'),
         ]);
 
         setStats({
@@ -55,6 +61,8 @@ const AdminDashboard = () => {
           activeListings: listingsRes.count ?? 0,
           pendingApplications: applicationsRes.count ?? 0,
           activeSubscriptions: subsRes.count ?? 0,
+          landlordLeads: leadsRes.count ?? 0,
+          studentWaitlist: waitlistRes.data ?? 0,
           isLoading: false,
         });
 
@@ -104,6 +112,20 @@ const AdminDashboard = () => {
       change: 'Planes premium activos',
       icon: TrendingUp,
       color: 'text-green-600'
+    },
+    {
+      title: 'Leads propietarios',
+      value: stats.isLoading ? '—' : stats.landlordLeads.toLocaleString('es-ES'),
+      change: 'Formulario /propietarios',
+      icon: Phone,
+      color: 'text-blue-600'
+    },
+    {
+      title: 'Waitlist estudiantes',
+      value: stats.isLoading ? '—' : stats.studentWaitlist.toLocaleString('es-ES'),
+      change: 'Formulario /estudiantes',
+      icon: GraduationCap,
+      color: 'text-purple-600'
     }
   ];
 
@@ -152,7 +174,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {statCards.map((stat, index) => (
             <Card key={index}>
               <CardContent className="p-6">
@@ -237,6 +259,14 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
+                  <Button className="w-full justify-start" onClick={() => window.location.href = '/admin/quick-listing'}>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Subir piso rapido
+                  </Button>
+                  <Button className="w-full justify-start" variant="secondary" onClick={() => window.location.href = '/admin/bulk-import'}>
+                    <Upload className="mr-2 h-4 w-4" />
+                    Importacion masiva
+                  </Button>
                   <Button className="w-full justify-start" variant="outline" onClick={() => window.open(`https://supabase.com/dashboard/project/${import.meta.env.VITE_SUPABASE_PROJECT_ID}/editor`, '_blank')}>
                     <Database className="mr-2 h-4 w-4" />
                     Supabase SQL Editor

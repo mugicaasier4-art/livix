@@ -61,6 +61,8 @@ const CreateListing = lazy(() => import("./pages/landlord/CreateListing"));
 const StudentOnboarding = lazy(() => import("./pages/student/Onboarding"));
 const StudentDashboard = lazy(() => import("./pages/student/Dashboard"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminQuickListing = lazy(() => import("./pages/admin/QuickListing"));
+const AdminBulkImport = lazy(() => import("./pages/admin/BulkImport"));
 const Support = lazy(() => import("./pages/Support"));
 const SupportSubmit = lazy(() => import("./pages/support/Submit"));
 const SupportSuccess = lazy(() => import("./pages/support/Success"));
@@ -309,6 +311,16 @@ const App = () => (
                                 <Route path="/admin/dashboard" element={
                                   <ProtectedRoute allowedRoles={['admin']}>
                                     <AdminDashboard />
+                                  </ProtectedRoute>
+                                } />
+                                <Route path="/admin/quick-listing" element={
+                                  <ProtectedRoute allowedRoles={['admin']}>
+                                    <AdminQuickListing />
+                                  </ProtectedRoute>
+                                } />
+                                <Route path="/admin/bulk-import" element={
+                                  <ProtectedRoute allowedRoles={['admin']}>
+                                    <AdminBulkImport />
                                   </ProtectedRoute>
                                 } />
 

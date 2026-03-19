@@ -1,0 +1,63 @@
+============================================================
+ONE-PAGER PARA INMOBILIARIAS — LIVIX
+(Copiar a Canva, formato A4 vertical)
+============================================================
+
+--- CABECERA ---
+Logo Livix + livix.es
+"Alquiler universitario sin vacíos"
+
+--- DATO IMPACTO (grande, centrado) ---
+35.000 estudiantes buscan piso en Zaragoza cada septiembre.
+¿Cuántos llegan a tus anuncios de Idealista?
+
+--- 3 BLOQUES BENEFICIOS (iconos + texto corto) ---
+
+[1] INQUILINOS CON IDENTIDAD UNIVERSITARIA CONFIRMADA
+Verificamos matrícula antes de que contacten contigo.
+Sabes exactamente a quién le alquilas.
+
+[2] PISOS LLENOS ANTES DE SEPTIEMBRE
+Los estudiantes reservan desde abril.
+Tu cartera empieza a generar ingresos antes.
+
+[3] SIN COSTE, SIN PERMANENCIA
+3 meses gratis para probar. Sin contrato.
+Si no funciona, no pagas nada.
+
+--- COMO FUNCIONA (3 pasos numerados) ---
+
+1. Nos das acceso a tu cartera de pisos en zonas universitarias
+2. Nosotros subimos los anuncios con fotos y video tour
+3. Te enviamos estudiantes verificados listos para firmar
+
+--- DATOS MERCADO (caja destacada) ---
+• 3.500 Erasmus nuevos cada año en Zaragoza (ORI UNIZAR)
+• Morosidad alquiler estudiantil: <2% (avales familiares)
+• Rotación anual garantizada: contratos 10 meses
+• [X]+ estudiantes ya registrados en Livix buscando piso
+
+--- CTA (grande, color primario) ---
+¿5 minutos para ver cómo funciona?
+
+Asier Mugica
+[teléfono]
+[email]
+livix.es/propietarios
+
+--- FOOTER (letra pequeña) ---
+Livix confirma identidad universitaria de los estudiantes.
+Livix no garantiza solvencia ni comportamiento del inquilino.
+
+============================================================
+NOTAS PARA DISEÑO EN CANVA:
+- Color primario: #5DB4EE
+- Color texto: #000000
+- Fondo: #FFFFFF
+- Fuente títulos: Poppins Bold
+- Fuente cuerpo: Poppins Regular
+- Estilo: limpio, mucho espacio blanco, tipo Apple
+- Incluir QR a livix.es/propietarios
+- Logo arriba izquierda
+- Tamaño: A4 (210x297mm)
+============================================================

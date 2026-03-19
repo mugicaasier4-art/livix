@@ -1,0 +1,155 @@
+============================================================
+SCRIPTS DE LLAMADA Y EMAIL — LIVIX ZARAGOZA
+Adaptados con datos reales. Personalizar [X] antes de usar.
+============================================================
+
+
+=== SCRIPT 1: LLAMADA EN FRIO A PROPIETARIO (Idealista) ===
+
+"Hola, buenos dias. Soy Asier, de Livix. He visto tu anuncio
+del piso en [ZONA] por [PRECIO] euros en Idealista.
+
+Te llamo porque tenemos [X] estudiantes registrados buscando
+piso para septiembre y varios buscan justo en [ZONA].
+
+Nosotros verificamos la matricula universitaria antes de
+ponerles en contacto contigo, asi sabes exactamente a quien
+le alquilas.
+
+¿Te interesaria recibir estudiantes verificados para tu piso?"
+
+--- SI DICE SI ---
+"Perfecto. Lo unico que necesito es que me pases las fotos
+del piso y los datos basicos — yo lo subo a la plataforma
+y te envio candidatos. Sin coste los 3 primeros meses."
+
+--- SI DICE "YA ESTOY EN IDEALISTA" ---
+"Claro, no sustituimos Idealista. Es un canal mas.
+35.000 estudiantes en Zaragoza, muchos no buscan en Idealista
+— buscan donde les dicen sus companeros. Con Livix llegas
+a esos estudiantes sin hacer nada mas."
+
+--- SI DICE "ESTUDIANTES SON PROBLEMATICOS" ---
+"Lo entiendo. Por eso verificamos identidad universitaria
+y pedimos datos del garante. La morosidad en alquiler
+estudiantil es menor del 2% porque hay avales familiares.
+Ademas, contratos de 10 meses = rotacion garantizada."
+
+--- SI DICE "CUANTOS ESTUDIANTES TENEIS" ---
+"Ahora mismo [X] registrados. Cada semana entran mas.
+3.500 Erasmus nuevos llegan cada ano a Zaragoza — solo
+de ahi ya hay demanda de sobra."
+
+--- CIERRE ---
+"¿Te va bien que te mande un WhatsApp con el enlace
+para que veas como funciona? Son 2 minutos."
+
+
+=== SCRIPT 2: LLAMADA A INMOBILIARIA ===
+
+"Buenos dias, soy Asier Mugica de Livix. Somos una
+plataforma de alquiler universitario en Zaragoza.
+
+Os llamo porque veo que teneis pisos en [ZONA] y queria
+proponeros algo: nosotros tenemos [X] estudiantes
+verificados buscando piso y podemos enviaros candidatos
+para vuestras viviendas en zonas universitarias.
+
+Para vosotros es gratis los 3 primeros meses, sin contrato
+ni permanencia. Basicamente es un canal mas de captacion
+de inquilinos.
+
+¿Teneis 5 minutos esta semana para que os lo cuente
+en persona con datos?"
+
+--- SI PIDEN MAS INFO ---
+"Os mando un one-pager por email ahora mismo.
+El resumen: verificamos matricula, os mandamos candidatos
+listos para firmar. 3.500 Erasmus al ano mas 30.000
+estudiantes locales. Zaragoza es la 5a ciudad universitaria
+de Espana y no hay ninguna plataforma especializada."
+
+
+=== SCRIPT 3: EMAIL FRIO A INMOBILIARIA ===
+
+Asunto: [X] estudiantes buscan piso en [ZONA] — os los enviamos gratis
+
+---
+
+Hola [NOMBRE],
+
+Soy Asier de Livix (livix.es), plataforma de alquiler
+universitario en Zaragoza.
+
+Tenemos [X] estudiantes verificados buscando piso para
+septiembre y hemos visto que teneis viviendas en zonas
+universitarias.
+
+Os propongo:
+- Nosotros os enviamos estudiantes con identidad
+  universitaria confirmada
+- Vosotros elegis a quien le alquilais
+- 3 meses gratis. Sin contrato ni permanencia.
+
+35.000 estudiantes buscan piso en Zaragoza cada septiembre.
+La mayoria no usa Idealista — busca donde le recomiendan
+sus companeros. Livix es ese sitio.
+
+¿Teneis 5 minutos esta semana para una llamada rapida?
+
+Un saludo,
+Asier Mugica
+Livix — Alquiler universitario verificado
+[telefono]
+livix.es/propietarios
+
+
+=== SCRIPT 4: WHATSAPP FOLLOW-UP (despues de llamada) ===
+
+"Hola [NOMBRE], soy Asier de Livix. Como te comentaba,
+aqui tienes el enlace para ver como funciona:
+livix.es/propietarios
+
+Si quieres, puedo pasarme a hacer las fotos y subirte
+el piso. Sin compromiso."
+
+
+=== SCRIPT 5: PUERTA FRIA (portales/porteros) ===
+
+"Buenos dias. Soy Asier, de Livix. Estamos ayudando a
+propietarios de [ZONA] a encontrar inquilinos universitarios
+verificados.
+
+¿Sabe si hay pisos en alquiler en este edificio?
+Si me puede dar el contacto del propietario, le ofrecemos
+publicar gratis los 3 primeros meses."
+
+[Dejar tarjeta/one-pager si no esta el propietario]
+
+
+=== SECUENCIA OUTBOUND (10 dias) ===
+
+D1:  Email frio personalizado (Script 3)
+D2:  Llamada (Script 1 o 2)
+D3:  WhatsApp si no contesto (Script 4)
+D5:  Visita presencial con one-pager (si posible)
+D7:  Email con caso de exito (cuando haya)
+D10: Segundo contacto: "Solo queria saber si lo pensaste"
+D21: "Ultima oportunidad plazas gratis" (si aplica)
+
+--- REGISTRO EN CRM ---
+Despues de cada interaccion:
+1. Actualizar columna "Estado"
+2. Escribir "Proximo paso" concreto
+3. Poner "Fecha prox paso" real
+4. Anadir nota breve de lo hablado
+
+============================================================
+DATOS CLAVE PARA TENER EN LA CABEZA:
+- 35.000 estudiantes en Zaragoza (UNIZAR + USJ)
+- 3.500 Erasmus nuevos/ano (dato ORI UNIZAR)
+- Morosidad alquiler estudiantil: <2%
+- Contratos 10 meses = rotacion anual garantizada
+- [X] estudiantes ya registrados en Livix (actualizar)
+- 0 EUR coste para propietarios los 3 primeros meses
+============================================================

@@ -1,0 +1,93 @@
+============================================================
+ESTRUCTURA CRM — GOOGLE SHEET
+Crear en Google Sheets y compartir con socio
+============================================================
+
+--- HOJA 1: PROPIETARIOS ---
+
+Columnas (A-N):
+
+A | Fecha contacto    | dd/mm/yyyy
+B | Nombre            | texto
+C | Telefono          | texto (formato +34...)
+D | Email             | texto
+E | Zona              | desplegable: Delicias, Centro, Actur, San Jose, Las Fuentes, Romareda, Universidad, Oliver, Torrero, Otra
+F | Direccion         | texto
+G | Num pisos         | numero
+H | Precio medio      | numero (EUR/mes)
+I | Tipo              | desplegable: Particular, Inmobiliaria, Gestor
+J | Canal origen      | desplegable: Idealista, Puerta fria, Llamada, Referido, Web /propietarios, Instagram
+K | Estado            | desplegable: Nuevo, Contactado, Interesado, Piso subido, Descartado
+L | Proximo paso      | texto libre (ej: "llamar martes 10h", "visitar piso")
+M | Fecha prox paso   | dd/mm/yyyy
+N | Notas             | texto libre
+
+--- FORMULAS UTILES (fila 1 de hoja "Metricas") ---
+
+Total contactados:       =COUNTA(Propietarios!B2:B)
+Nuevos esta semana:      =COUNTIFS(Propietarios!A2:A,">="&HOY()-7)
+Tasa conversion:         =COUNTIF(Propietarios!K2:K,"Piso subido")/COUNTA(Propietarios!K2:K)
+Por zona:                =COUNTIF(Propietarios!E2:E,"Delicias")
+Pipeline activo:         =COUNTIFS(Propietarios!K2:K,"<>Descartado",Propietarios!K2:K,"<>Piso subido")
+Pendientes hoy:          =COUNTIFS(Propietarios!M2:M,"<="&HOY(),Propietarios!K2:K,"<>Descartado",Propietarios!K2:K,"<>Piso subido")
+
+--- HOJA 2: INMOBILIARIAS ---
+
+Columnas (A-L):
+
+A | Fecha contacto    | dd/mm/yyyy
+B | Nombre empresa    | texto
+C | Contacto (nombre) | texto
+D | Telefono          | texto
+E | Email             | texto
+F | Zonas que cubren  | texto (ej: "Delicias, Centro")
+G | Num pisos estud.  | numero (estimado)
+H | Estado            | desplegable: Nuevo, Email enviado, Llamada hecha, Reunion, Partner, Descartado
+I | Proximo paso      | texto
+J | Fecha prox paso   | dd/mm/yyyy
+K | Interes (1-5)     | numero
+L | Notas             | texto
+
+--- HOJA 3: ESTUDIANTES (complementa Supabase) ---
+
+Solo para tracking manual fuera de la app:
+
+A | Fecha             | dd/mm/yyyy
+B | Nombre            | texto
+C | Email             | texto
+D | Universidad       | desplegable: UNIZAR, USJ, Otro
+E | Erasmus?          | desplegable: Si, No
+F | Canal             | desplegable: Instagram, ESN, OUPI, Web, Boca a boca
+G | Busca para        | desplegable: Sept 2026, Otro
+H | Presupuesto       | numero
+I | Zona preferida    | texto
+J | Estado            | desplegable: Registrado web, Solo contacto, Buscando activo
+
+--- HOJA 4: METRICAS SEMANALES ---
+
+A | Semana            | texto (ej: "S1 Abril")
+B | Llamadas hechas   | numero
+C | Emails enviados   | numero
+D | Visitas puerta fria | numero
+E | Nuevos propiet.   | numero
+F | Pisos subidos     | numero
+G | Nuevos estudiantes| numero
+H | Contratos         | numero
+
+Meta semanal: 25-40 llamadas, 5 pisos nuevos, 50 estudiantes
+
+--- FORMATO CONDICIONAL ---
+
+Estado "Descartado" → fila gris
+Estado "Piso subido" / "Partner" → fila verde claro
+Fecha prox paso <= HOY → celda roja (accion pendiente)
+Fecha prox paso = manana → celda amarilla
+
+--- FILTROS ---
+
+Crear vistas filtradas:
+1. "Pendientes hoy" → Fecha prox paso <= HOY, Estado != Descartado
+2. "Pipeline activo" → Estado = Contactado o Interesado
+3. "Por zona" → filtro en columna Zona
+
+============================================================

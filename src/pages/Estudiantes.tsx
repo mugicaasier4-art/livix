@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
@@ -15,11 +15,24 @@ import { toast } from "sonner";
 const Estudiantes = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [studentCount, setStudentCount] = useState<number>(0);
   const [form, setForm] = useState({
     email: "",
     tipo: "",
     acepta: false,
   });
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const { data } = await (supabase as any).rpc('student_count');
+        if (data !== null) setStudentCount(data);
+      } catch {
+        // Keep default silently
+      }
+    };
+    fetchCount();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,10 +59,18 @@ const Estudiantes = () => {
 
       if (error) throw error;
 
+      // Refresh counter
+      const { data: newCount } = await (supabase as any).rpc('student_count');
+      if (newCount !== null) setStudentCount(newCount);
+
       setSubmitted(true);
       toast.success("Ya estas en la lista. Te avisaremos cuando haya pisos en tu zona.");
-    } catch {
-      toast.error("Error al registrarte. Intentalo de nuevo.");
+    } catch (err: any) {
+      if (err?.code === '23505' || err?.message?.includes('duplicate')) {
+        toast.error("Ya estas registrado con este email");
+      } else {
+        toast.error("Error al registrarte. Intentalo de nuevo.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -68,7 +89,7 @@ const Estudiantes = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center text-white">
             <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
-              Curso 2026-2027
+              Reserva tu sitio — Curso 2026-2027
             </Badge>
 
             <h1 className="text-3xl md:text-5xl font-bold font-poppins mb-4 leading-tight">
@@ -82,11 +103,11 @@ const Estudiantes = () => {
 
             <div className="grid grid-cols-3 gap-6 max-w-md mx-auto">
               <div>
-                <div className="text-2xl md:text-3xl font-bold">100%</div>
-                <div className="text-xs md:text-sm text-white/80">Pisos verificados</div>
+                <div className="text-2xl md:text-3xl font-bold">{studentCount > 0 ? `${studentCount}+` : '--'}</div>
+                <div className="text-xs md:text-sm text-white/80">Estudiantes apuntados</div>
               </div>
               <div>
-                <div className="text-2xl md:text-3xl font-bold">0€</div>
+                <div className="text-2xl md:text-3xl font-bold">0EUR</div>
                 <div className="text-xs md:text-sm text-white/80">Gratis para ti</div>
               </div>
               <div>
@@ -162,7 +183,7 @@ const Estudiantes = () => {
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Ya estas en la lista</h3>
                   <p className="text-muted-foreground">
-                    Te enviaremos un email en cuanto tengamos pisos disponibles para el curso 2026-2027.
+                    Eres el estudiante numero {studentCount} en la lista. Te avisaremos antes que a nadie cuando haya pisos para el curso 2026-2027.
                   </p>
                 </CardContent>
               </Card>
@@ -171,11 +192,11 @@ const Estudiantes = () => {
                 <CardContent className="p-6 md:p-8">
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                      <Label htmlFor="email">Tu email universitario *</Label>
+                      <Label htmlFor="email">Tu email *</Label>
                       <Input
                         id="email"
                         type="email"
-                        placeholder="tu@unizar.es"
+                        placeholder="tu@email.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         required
@@ -219,7 +240,7 @@ const Estudiantes = () => {
                       className="w-full"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Registrando..." : "Quiero que me avisen"}
+                      {isSubmitting ? "Registrando..." : "Reservar mi sitio gratis"}
                       {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
                     </Button>
                   </form>

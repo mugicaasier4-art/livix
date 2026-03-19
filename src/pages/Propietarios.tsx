@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import { toast } from "sonner";
 const ZONAS_ZARAGOZA = [
   "Delicias",
   "Centro",
-  "San José",
+  "San Jose",
   "Universidad / Campus",
   "Actur",
   "Romareda",
@@ -28,6 +28,8 @@ const ZONAS_ZARAGOZA = [
 const Propietarios = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [spotsRemaining, setSpotsRemaining] = useState<number>(50);
+  const [studentCount, setStudentCount] = useState<number>(0);
   const [form, setForm] = useState({
     nombre: "",
     telefono: "",
@@ -37,11 +39,27 @@ const Propietarios = () => {
     acepta_comunicaciones: false,
   });
 
+  useEffect(() => {
+    const fetchCounters = async () => {
+      try {
+        const [spotsRes, studentsRes] = await Promise.all([
+          (supabase as any).rpc('landlord_spots_remaining'),
+          (supabase as any).rpc('student_count'),
+        ]);
+        if (spotsRes.data !== null) setSpotsRemaining(spotsRes.data);
+        if (studentsRes.data !== null) setStudentCount(studentsRes.data);
+      } catch {
+        // Keep defaults silently
+      }
+    };
+    fetchCounters();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.nombre || !form.telefono) {
-      toast.error("Nombre y teléfono son obligatorios");
+      toast.error("Nombre y telefono son obligatorios");
       return;
     }
 
@@ -65,10 +83,14 @@ const Propietarios = () => {
 
       if (error) throw error;
 
+      // Refresh spots counter
+      const { data: newSpots } = await (supabase as any).rpc('landlord_spots_remaining');
+      if (newSpots !== null) setSpotsRemaining(newSpots);
+
       setSubmitted(true);
       toast.success("Hemos recibido tus datos. Te contactamos en menos de 24 horas.");
     } catch {
-      toast.error("Error al enviar. Llámanos al 600 000 000 si el problema persiste.");
+      toast.error("Error al enviar. Llamanos al 600 000 000 si el problema persiste.");
     } finally {
       setIsSubmitting(false);
     }
@@ -86,26 +108,26 @@ const Propietarios = () => {
       <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary via-primary/95 to-primary/85">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center text-white">
-            <Badge className="mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1">
-              Gratis para los primeros 50 propietarios
+            <Badge className={`mb-6 bg-white/20 text-white border-white/30 text-sm px-4 py-1 ${spotsRemaining < 10 ? 'animate-pulse' : ''}`}>
+              {spotsRemaining > 0 ? `Quedan ${spotsRemaining} de 50 plazas gratis` : 'Plazas agotadas'}
             </Badge>
 
             <h1 className="text-3xl md:text-5xl font-bold font-poppins mb-4 leading-tight">
-              ¿Tienes un piso cerca de la universidad?
+              Tienes un piso cerca de la universidad?
             </h1>
 
             <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
               Tenemos estudiantes con identidad universitaria confirmada buscando en tu zona.
-              Déjanos tus datos y te contactamos en 24h.
+              Dejanos tus datos y te contactamos en 24h.
             </p>
 
             <div className="grid grid-cols-3 gap-6 max-w-md mx-auto">
               <div>
-                <div className="text-2xl md:text-3xl font-bold">500+</div>
+                <div className="text-2xl md:text-3xl font-bold">{studentCount > 0 ? `${studentCount}+` : '--'}</div>
                 <div className="text-xs md:text-sm text-white/80">Estudiantes buscando</div>
               </div>
               <div>
-                <div className="text-2xl md:text-3xl font-bold">0€</div>
+                <div className="text-2xl md:text-3xl font-bold">0EUR</div>
                 <div className="text-xs md:text-sm text-white/80">Coste para ti</div>
               </div>
               <div>
@@ -140,7 +162,7 @@ const Propietarios = () => {
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Identidad universitaria confirmada</h3>
                 <p className="text-sm text-muted-foreground">
-                  Confirmamos matrícula universitaria antes de que contacten contigo. Sabes a quién le alquilas.
+                  Confirmamos matricula universitaria antes de que contacten contigo. Sabes a quien le alquilas.
                 </p>
               </CardContent>
             </Card>
@@ -152,7 +174,7 @@ const Propietarios = () => {
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Sin coste, sin permanencia</h3>
                 <p className="text-sm text-muted-foreground">
-                  Publicar es gratis. Si no funciona, no pagas nada. Sin contratos, sin letra pequeña.
+                  Publicar es gratis. Si no funciona, no pagas nada. Sin contratos, sin letra pequena.
                 </p>
               </CardContent>
             </Card>
@@ -166,7 +188,7 @@ const Propietarios = () => {
           <div className="max-w-lg mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                Déjanos tus datos
+                Dejanos tus datos
               </h2>
               <p className="text-muted-foreground">
                 Te contactamos en menos de 24 horas. Sin compromiso.
@@ -181,11 +203,11 @@ const Propietarios = () => {
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Datos recibidos</h3>
                   <p className="text-muted-foreground mb-4">
-                    Te contactamos en menos de 24 horas para explicarte cómo funciona y resolver cualquier duda.
+                    Eres uno de los {50 - spotsRemaining} propietarios registrados. Te contactamos en menos de 24 horas.
                   </p>
                   <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <Phone className="h-4 w-4" />
-                    <span>Si prefieres, llámanos: 600 000 000</span>
+                    <span>Si prefieres, llamanos: 600 000 000</span>
                   </div>
                 </CardContent>
               </Card>
@@ -205,7 +227,7 @@ const Propietarios = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="telefono">Teléfono *</Label>
+                      <Label htmlFor="telefono">Telefono *</Label>
                       <Input
                         id="telefono"
                         type="tel"
@@ -243,7 +265,7 @@ const Propietarios = () => {
                           onValueChange={(value) => setForm({ ...form, habitaciones: value })}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Nº" />
+                            <SelectValue placeholder="N" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="1">1</SelectItem>
@@ -256,7 +278,7 @@ const Propietarios = () => {
                       </div>
 
                       <div>
-                        <Label htmlFor="precio">Precio orient. (€/mes)</Label>
+                        <Label htmlFor="precio">Precio orient. (EUR/mes)</Label>
                         <Input
                           id="precio"
                           type="number"
@@ -288,7 +310,7 @@ const Propietarios = () => {
                       className="w-full"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Enviando..." : "Quiero que me contactéis"}
+                      {isSubmitting ? "Enviando..." : "Quiero que me contacteis"}
                       {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
                     </Button>
                   </form>
@@ -306,7 +328,7 @@ const Propietarios = () => {
             Livix confirma la identidad universitaria de los estudiantes. Livix no garantiza
             la solvencia ni el comportamiento del inquilino.{" "}
             <a href="/legal/privacy" className="text-primary hover:underline">
-              Política de privacidad
+              Politica de privacidad
             </a>
           </p>
         </div>
