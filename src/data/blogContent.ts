@@ -2790,6 +2790,356 @@ Financiar tu alojamiento universitario en Aragón es posible si conoces todas la
 Empieza cuanto antes, solicita todas las ayudas para las que puedas ser elegible y no te desanimes si alguna se deniega. La combinación de varias becas pequeñas puede hacer una gran diferencia.
 
 Y para encontrar el alojamiento que se ajuste a tu presupuesto, explora las opciones de [pisos](/pisos/zaragoza), [habitaciones](/habitaciones/zaragoza) y [residencias para estudiantes en Zaragoza](/residencias/zaragoza) en Livix.`
+  },
+  {
+    id: 15,
+    title: "Beca MEC 2026-2027: Requisitos, Cuantías y Cómo Solicitarla Paso a Paso",
+    excerpt: "Todo sobre la beca MEC 2026-2027: requisitos académicos y económicos, cuantías, plazos, errores comunes y proceso paso a paso. Actualizado marzo 2026.",
+    date: "2026-03-19",
+    dateModified: "2026-03-19",
+    author: "Equipo Livix",
+    category: "becas",
+    image: ahorrarDinero,
+    readTime: 18,
+    content: `La beca MEC es la ayuda más importante que puedes solicitar como estudiante en España. Cada año, más de 400.000 estudiantes la reciben y cubre desde la matrícula completa hasta 2.700 EUR para alojamiento. Si has llegado aquí desde nuestro video, estás en el sitio correcto: esta es la guía más completa que vas a encontrar sobre la beca MEC 2026-2027.
+
+El plazo de solicitud para el curso 2026-2027 se abre en marzo de 2026 según el Real Decreto 179/2026 (BOE-A-2026-5713). No lo dejes para el último día.
+
+**Los 7 pasos resumidos para pedir tu beca MEC:**
+
+1. **Consigue tu acceso Cl@ve** en la sede electrónica del gobierno (hazlo YA, tarda varios días)
+2. **Comprueba que cumples los requisitos** económicos y académicos que detallamos abajo
+3. **Reúne los datos fiscales** de toda tu unidad familiar (declaración IRPF 2025)
+4. **Accede a sede.educacion.gob.es** y rellena el formulario de solicitud
+5. **Autoriza la consulta fiscal** de todos los miembros de tu familia mayores de 14 años
+6. **Envía la solicitud** y guarda el justificante PDF con tu número de referencia
+7. **Actualiza tus datos de matrícula** en septiembre cuando te matricules definitivamente
+
+Si también buscas ayudas autonómicas, consulta nuestra [guía de becas y ayudas de alojamiento en Aragón](/blog/14).
+
+## Qué es la beca MEC y quién puede pedirla
+
+La beca MEC (oficialmente "beca de carácter general del Ministerio de Educación, Formación Profesional y Deportes") es una ayuda económica del Estado español destinada a estudiantes con recursos económicos limitados y un rendimiento académico mínimo. Se convoca cada año y cubre estudios no universitarios y universitarios.
+
+### Estudios que cubre la beca MEC
+
+✅ Grados universitarios (todos los cursos)
+
+✅ Másteres universitarios oficiales
+
+✅ Bachillerato (1º y 2º)
+
+✅ FP de Grado Básico, Medio y Superior
+
+✅ Enseñanzas artísticas profesionales y superiores
+
+✅ Enseñanzas deportivas
+
+✅ Estudios religiosos superiores
+
+✅ Idiomas en Escuelas Oficiales de Idiomas
+
+✅ Cursos de acceso a la universidad para mayores de 25 años
+
+❌ Doctorado
+
+❌ Segunda carrera si ya tienes un título del mismo nivel
+
+❌ Estudios no oficiales o títulos propios
+
+❌ Formación no reglada (academias, cursos privados)
+
+## Requisitos de la beca MEC 2026-2027
+
+Para obtener la beca MEC necesitas cumplir tres tipos de requisitos: económicos, académicos y de nacionalidad. Los económicos son los que más estudiantes eliminan, así que préstales especial atención.
+
+### Requisitos económicos: umbrales de renta familiar
+
+La beca MEC establece tres umbrales de renta según el número de miembros de tu unidad familiar. Se toma como referencia la declaración del IRPF del ejercicio 2025. Cuanto menor sea tu renta, más componentes de la beca recibes.
+
+| Miembros familia | Umbral 1 (EUR) | Umbral 2 (EUR) | Umbral 3 (EUR) |
+|---|---|---|---|
+| 1 | 9.315 | 13.898 | 15.567 |
+| 2 | 13.971 | 23.724 | 26.573 |
+| 3 | 18.629 | 32.201 | 36.070 |
+| 4 | 23.286 | 38.242 | 42.836 |
+| 5 | 27.012 | 42.743 | 47.878 |
+| 6 | 30.738 | 46.142 | 51.685 |
+| 7 | 34.463 | 49.503 | 55.451 |
+| 8 | 38.190 | 52.850 | 59.199 |
+
+**Qué da cada umbral:**
+- **Umbral 1** (renta más baja): matrícula + cuantía fija de renta (1.700 EUR) + cuantía fija de residencia (2.700 EUR) + excelencia + cuantía variable
+- **Umbral 2**: matrícula + cuantía fija de residencia + beca básica (300 EUR) + excelencia + cuantía variable
+- **Umbral 3**: solo beca básica (300 EUR) + excelencia académica
+
+⚠️ Si tu familia tiene inmuebles urbanos (excluida vivienda habitual) con valor catastral superior a 42.900 EUR, o un capital mobiliario superior a 1.700 EUR en el ejercicio fiscal, quedas excluido automáticamente independientemente de tu renta.
+
+### Requisitos académicos por rama de conocimiento
+
+Si es tu primer año de universidad, solo necesitas estar matriculado de al menos 60 créditos. A partir de segundo curso, necesitas haber aprobado un porcentaje mínimo de créditos del curso anterior:
+
+| Rama de conocimiento | % créditos aprobados mínimo | Créditos mínimos matriculados |
+|---|---|---|
+| Artes y Humanidades | 90% | 60 |
+| Ciencias Sociales y Jurídicas | 90% | 60 |
+| Ciencias de la Salud | 80% | 60 |
+| Ciencias | 65% | 60 |
+| Ingeniería y Arquitectura | 65% | 60 |
+| FP (2º curso y posteriores) | 85% horas totales | Curso completo |
+
+**Para máster universitario:** nota media mínima de 5,00 en el grado de acceso y matrícula de al menos 60 créditos (mínimo 30 si el máster tiene menos de 60). En segundo curso de máster: 100% de créditos aprobados del primer curso.
+
+**Para FP primer curso:** FP Básica y Grado Medio no exigen nota mínima; FP Grado Superior exige 5,00 en Bachillerato, ciclo medio previo o prueba de acceso.
+
+### Requisitos de nacionalidad y residencia
+
+Pueden solicitar la beca MEC: ciudadanos españoles, ciudadanos de la Unión Europea con residencia en España, y residentes legales con permiso de residencia vigente. Debes estar matriculado en un centro educativo español.
+
+## Cuánto dinero da la beca MEC: cuantías 2026-2027
+
+La beca MEC no es una cantidad fija: se compone de varios elementos que se suman según tu situación. Estos son los componentes y sus importes para el curso 2026-2027:
+
+| Componente | Importe | Quién lo recibe | Requisito clave |
+|---|---|---|---|
+| Beca de matrícula | Coste total de las tasas | Todos los becarios universitarios | Estar en umbral 1, 2 o 3 |
+| Cuantía fija de renta | 1.700 EUR | Rentas más bajas | Estar en umbral 1 |
+| Cuantía fija de residencia | 2.700 EUR | Estudiantes desplazados | Domicilio familiar a +50 km del centro |
+| Beca básica | 300 EUR (350 EUR en FP Básica) | No universitarios en umbral 2 o 3 | Estudiantes de Bachillerato o FP |
+| Excelencia académica | 50-125 EUR | Nota media igual o superior a 8,00 | 8,00-8,49: 50 EUR; 8,50-8,99: 75 EUR; 9,00-9,49: 100 EUR; 9,50+: 125 EUR |
+| Cuantía variable | Mínimo 60 EUR (hasta ~1.600 EUR) | Según renta y nota media | Depende del presupuesto total disponible |
+
+### Caso práctico 1: estudiante de Derecho, de Huesca a Zaragoza
+
+María estudia 2º de Derecho en la Universidad de Zaragoza. Vive con su madre y un hermano (familia de 3 miembros). Renta familiar: 28.000 EUR al año. Nota media: 7,8. Vive en un piso compartido en Zaragoza.
+
+- Renta de 28.000 EUR < Umbral 2 (32.201 EUR para 3 miembros) → Cumple umbral 2
+- Huesca-Zaragoza: 74 km → Cumple requisito de residencia
+- 90% créditos aprobados en CC. Sociales → Cumple requisito académico
+- **Resultado estimado:** matrícula (~1.200 EUR) + residencia (2.700 EUR) + beca básica (300 EUR) + variable (~600 EUR) = **~4.800 EUR**
+
+### Caso práctico 2: estudiante de FP Superior en Zaragoza
+
+Carlos estudia 1er curso de FP Superior de Desarrollo de Aplicaciones Web en Zaragoza. Familia de 4 miembros. Renta: 20.000 EUR. Su pueblo está a 120 km.
+
+- Renta de 20.000 EUR < Umbral 1 (23.286 EUR para 4 miembros) → Cumple umbral 1
+- 120 km → Cumple residencia
+- Primer curso, nota de acceso 6,5 → Cumple académico
+- **Resultado estimado:** matrícula (gratuita en FP público) + renta (1.700 EUR) + residencia (2.700 EUR) + variable (~400 EUR) = **~4.800 EUR**
+
+### Caso práctico 3: estudiante de máster
+
+Laura cursa un máster oficial de 60 créditos en la Universidad de Zaragoza. Familia de 4 miembros. Renta: 35.000 EUR. Nota media del grado: 8,2. Viene de Teruel (170 km).
+
+- Renta de 35.000 EUR < Umbral 2 (38.242 EUR para 4 miembros) → Cumple umbral 2
+- 170 km → Cumple residencia
+- Nota grado 8,2 > 5,00 mínimo para máster → Cumple académico
+- **Resultado estimado:** matrícula (~2.500 EUR en máster) + residencia (2.700 EUR) + excelencia (50 EUR) + variable (~500 EUR) = **~5.750 EUR**
+
+Con la cuantía de residencia de 2.700 EUR puedes cubrir gran parte de tu alojamiento. En Zaragoza, una habitación en piso compartido cuesta entre 250 y 350 EUR al mes, lo que supone 2.250-3.150 EUR por curso (9 meses). Encuentra [habitaciones para estudiantes desde 250 EUR/mes](/habitaciones/zaragoza) en Livix y calcula cuánto te cubre la beca.
+
+## Cómo solicitar la beca MEC paso a paso
+
+Este es el proceso completo para solicitar la beca MEC online. Todo se hace por internet, no hay que entregar papeles en ninguna oficina.
+
+### Paso 1: Consigue tu acceso Cl@ve
+
+Para identificarte en la sede electrónica necesitas Cl@ve (PIN o Permanente), DNI electrónico o certificado digital. Si no tienes ninguno, regístrate en Cl@ve cuanto antes porque el proceso puede tardar varios días:
+
+- **Cl@ve PIN**: registro por videollamada o en oficina de la Seguridad Social/AEAT. Válido para trámites puntuales.
+- **Cl@ve Permanente**: mismo registro pero con contraseña fija. Más cómodo para consultar el estado después.
+- **Certificado digital FNMT**: se solicita online y se recoge en oficina de la AEAT. Tarda 2-3 días.
+
+⚠️ No dejes esto para el último día. Es el error más común y el que más solicitudes fuera de plazo causa.
+
+### Paso 2: Accede a sede.educacion.gob.es
+
+Entra en la sede electrónica del Ministerio de Educación (sede.educacion.gob.es) y busca "Becas y ayudas para estudiar". Selecciona la convocatoria de becas generales 2026-2027. También puedes acceder directamente desde becaseducacion.gob.es.
+
+### Paso 3: Rellena el formulario de solicitud
+
+El formulario pide tres bloques de información:
+
+- **Datos personales**: DNI/NIE, dirección, datos de contacto, cuenta bancaria (IBAN a tu nombre)
+- **Datos académicos**: centro de estudios, titulación, curso, créditos matriculados
+- **Datos económicos**: composición de la unidad familiar, situación laboral de los miembros
+
+**Consejo**: ten a mano la declaración de IRPF 2025 de tus padres (o tutores). La necesitarás para los datos de renta. Si tus padres están divorciados, solo computa la renta del progenitor custodio y su nuevo cónyuge si lo tiene.
+
+### Paso 4: Autoriza la consulta de datos fiscales
+
+Este paso es crítico. **Todos los miembros de tu unidad familiar mayores de 14 años** deben autorizar al Ministerio a consultar sus datos fiscales en la Agencia Tributaria. Si falta la autorización de un solo miembro, tu solicitud se paraliza.
+
+Cada miembro debe firmar con su propio Cl@ve, DNI electrónico o certificado digital. Coordínate con tu familia antes de empezar.
+
+### Paso 5: Revisa y envía
+
+Antes de enviar, revisa todos los datos con calma. Una vez enviada la solicitud, recibirás un justificante en PDF con un número de referencia. **Guárdalo**. Es tu prueba de que has solicitado la beca dentro de plazo.
+
+### Paso 6: Sigue el estado de tu solicitud
+
+Puedes consultar el estado en cualquier momento desde sede.educacion.gob.es > Mis expedientes. Los estados habituales son:
+
+- **Presentada**: la solicitud se ha registrado correctamente
+- **En tramitación**: se están verificando los datos
+- **Propuesta provisional**: resultado provisional (favorable o desfavorable)
+- **Alegaciones**: si es desfavorable, tienes 10 días hábiles para alegar
+- **Resolución definitiva**: resultado final
+- **Credencial emitida**: la beca está concedida y pendiente de pago
+
+## Plazos de la beca MEC 2026-2027
+
+| Fecha estimada | Evento |
+|---|---|
+| Marzo 2026 | Publicación del RD 179/2026 en el BOE (ya publicado) |
+| Finales de marzo 2026 | Apertura del plazo de solicitud |
+| Mayo 2026 (estimado) | Cierre del plazo de solicitud |
+| Septiembre 2026 | Periodo de actualización de datos de matrícula |
+| Octubre-noviembre 2026 | Resolución provisional |
+| Noviembre-diciembre 2026 | Plazo de alegaciones (10 días hábiles) |
+| Enero-marzo 2027 | Resolución definitiva |
+| Febrero-abril 2027 | Primer pago en cuenta bancaria |
+
+⚠️ El plazo de solicitud abre AHORA (marzo 2026). Aunque no estés aún matriculado para el próximo curso, puedes y debes solicitar la beca durante el plazo. En septiembre actualizarás los datos de matrícula definitiva.
+
+## La beca MEC y el alojamiento: cuantía de residencia
+
+La cuantía fija de residencia (2.700 EUR en el curso 2026-2027) es el componente más relevante si vives fuera de casa. Para recibirla debes cumplir:
+
+1. Tu **domicilio familiar** está a más de 50 km del centro de estudios o a más de 1 hora en transporte público
+2. Estás **matriculado en modalidad presencial** (no online ni semipresencial)
+3. **Resides fuera del domicilio familiar** durante el curso (piso, residencia o colegio mayor)
+4. Cumples el umbral de renta correspondiente (umbral 1 o umbral 2)
+
+No necesitas presentar contrato de alquiler ni justificante de pago, pero sí debes estar empadronado en la ciudad donde estudias si te lo requieren.
+
+¿Cuánto cubre la beca de residencia respecto al coste real del alojamiento en Zaragoza?
+
+| Tipo de alojamiento | Coste mensual | Coste 9 meses | % cubierto por la beca (2.700 EUR) |
+|---|---|---|---|
+| Habitación en piso compartido | 250-350 EUR | 2.250-3.150 EUR | 86-100% |
+| Estudio individual | 400-500 EUR | 3.600-4.500 EUR | 60-75% |
+| Residencia universitaria | 600-750 EUR | 5.400-6.750 EUR | 40-50% |
+| Colegio mayor | 700-900 EUR | 6.300-8.100 EUR | 33-43% |
+
+Como ves, si optas por una habitación en piso compartido, la beca de residencia puede cubrir prácticamente el 100% de tu gasto de alojamiento. Busca [residencias universitarias en Zaragoza](/residencias/zaragoza), [habitaciones en piso compartido](/habitaciones/zaragoza) o [colegios mayores en Zaragoza](/colegios-mayores/zaragoza) en Livix y compara precios para elegir la opción que mejor se adapte a tu presupuesto.
+
+## 10 errores que hacen que te denieguen la beca MEC
+
+1. **No autorizar la consulta fiscal de TODOS los miembros**: si falta un hermano mayor de 14 años, tu solicitud se bloquea. Coordínate con toda la familia antes de empezar.
+
+2. **Poner un IBAN incorrecto o a nombre de otra persona**: la cuenta bancaria debe estar a tu nombre. Si el IBAN es erróneo, el pago se devuelve y puede tardar meses en resolverse.
+
+3. **No renovar cada curso**: la beca MEC no se renueva automáticamente. Debes solicitarla CADA año dentro del plazo.
+
+4. **No revisar las notificaciones en la sede electrónica**: si el Ministerio te pide documentación adicional o te notifica una propuesta de denegación, tienes solo 10 días hábiles para responder. Si no lo haces, pierdes la beca.
+
+5. **Superar el umbral de renta por muy poco**: revisa bien los umbrales antes de solicitar. Si tu renta está muy cerca del límite, comprueba si algún miembro computable ha cambiado de situación (divorcio, desempleo) que pueda reducir la renta computable.
+
+6. **No matricularte de suficientes créditos**: se recomiendan 60 créditos mínimo. Si te matriculas de menos, puedes perder la cuantía variable o incluso toda la beca.
+
+7. **No cumplir el rendimiento académico mínimo**: en ramas como Sociales o Humanidades necesitas aprobar el 90% de los créditos. Si suspendes demasiado un año, no podrás renovar al siguiente.
+
+8. **Presentar fuera de plazo**: una vez cerrado el plazo (habitualmente en mayo), no hay prórroga ni excepción. Marca la fecha en tu calendario ahora.
+
+9. **No empadronarte en la ciudad de estudios**: aunque no siempre lo piden, si cuestionan tu derecho a la cuantía de residencia, necesitarás demostrar que vives fuera del domicilio familiar.
+
+10. **Creer que la beca es automática**: hay que solicitarla activamente cada curso. Nadie te la va a ofrecer.
+
+## Qué hacer si te deniegan la beca MEC
+
+Si recibes una propuesta de denegación, no te rindas. Según foros de estudiantes, un porcentaje significativo de denegaciones se revierten con alegaciones bien fundamentadas.
+
+### Alegaciones en plazo (10 días hábiles)
+
+Cuando recibes una propuesta de denegación provisional, tienes 10 días hábiles para presentar alegaciones. Accede a sede.educacion.gob.es > Mis expedientes > Alegar. Adjunta documentación que respalde tu caso:
+
+- Si el motivo es económico: cambios de situación familiar (desempleo, divorcio, enfermedad), documentación actualizada de ingresos
+- Si el motivo es académico: certificado de notas actualizado, justificantes de circunstancias excepcionales (enfermedad, DANA, violencia de género)
+
+### Recurso de reposición (1 mes)
+
+Si la resolución definitiva es desfavorable, puedes interponer un recurso de reposición ante el mismo Ministerio. Plazo: 1 mes desde la publicación de las listas definitivas. Es gratuito y no requiere abogado.
+
+### Recurso contencioso-administrativo (2 meses)
+
+Como último recurso, puedes acudir a los juzgados de lo contencioso-administrativo. Plazo: 2 meses desde la resolución del recurso de reposición. Este sí requiere abogado. Rara vez es necesario llegar aquí.
+
+## Beca MEC y Erasmus: ¿son compatibles?
+
+**Sí, son totalmente compatibles.** Puedes cobrar la beca MEC y la beca Erasmus+ al mismo tiempo. No tienes que elegir entre una y otra.
+
+La cuantía de residencia de la beca MEC se mantiene si tu domicilio familiar está a más de 50 km de tu centro de estudios en España (es decir, de la universidad española que te envía, no de la universidad de destino). Esto significa que si eres de Huesca y estudias en Zaragoza, cobras la residencia MEC aunque pases un semestre en Italia con Erasmus.
+
+Otras compatibilidades confirmadas:
+- ✅ Beca de colaboración del Ministerio
+- ✅ Becas SICUE (movilidad nacional)
+- ✅ Becas Santander y de fundaciones privadas
+- ✅ Becas de excelencia de comunidades autónomas
+- ✅ Ayudas al transporte municipales
+
+Incompatibilidades:
+- ❌ Beca Adriano (Junta de Andalucía)
+- ❌ Cualquier otra beca con la misma finalidad y financiación pública
+
+## Beca MEC para FP: diferencias clave
+
+El sistema de solicitud es exactamente el mismo que para estudiantes universitarios: misma sede electrónica, mismo formulario, mismos plazos. Las diferencias principales son:
+
+- **FP Básica y Grado Medio (1er curso)**: no se exige nota mínima de acceso, solo estar matriculado
+- **FP Grado Superior (1er curso)**: nota mínima de 5,00 en Bachillerato, ciclo medio previo o prueba de acceso
+- **Segundo curso y posteriores**: haber superado el 85% de las horas totales del curso anterior
+- **La matrícula en FP público es gratuita**, por lo que el componente de matrícula no aplica, pero sí todos los demás (renta, residencia, excelencia, variable)
+- **Beca básica**: 300 EUR (350 EUR en FP Básica), componente exclusivo para estudios no universitarios
+
+## Preguntas frecuentes sobre la beca MEC
+
+**¿Cuánto tarda en resolverse la beca MEC?**
+El plazo legal máximo es de 6 meses desde que el Ministerio dispone de toda la información. En la práctica, las resoluciones provisionales suelen publicarse entre octubre y noviembre, y las definitivas entre enero y marzo. El primer pago llega 4-5 semanas después de la emisión de la credencial.
+
+**¿Puedo solicitar la beca MEC si mis padres están divorciados?**
+Sí. En caso de divorcio o separación legal, solo computa la renta del progenitor custodio (con quien convives) y su nuevo cónyuge si lo tiene. La renta del progenitor no custodio no se tiene en cuenta.
+
+**¿Me quitan la beca si suspendo asignaturas?**
+No automáticamente durante el curso, pero necesitas cumplir el porcentaje mínimo de créditos aprobados para poder renovarla al curso siguiente. Si no lo cumples, no podrás solicitar la beca el próximo año.
+
+**¿La beca MEC cubre másteres?**
+Sí, cubre másteres universitarios oficiales. Los requisitos académicos son nota media mínima de 5,00 en el grado de acceso y matrícula de al menos 60 créditos. Los másteres habilitantes (profesiones reguladas como abogacía o ingeniería) tienen las mismas cuantías que los grados.
+
+**¿Puedo cobrar la beca MEC y trabajar al mismo tiempo?**
+Sí, pero los ingresos de tu trabajo computan como renta de la unidad familiar (o renta propia si eres independiente). Si tus ingresos laborales hacen que superes el umbral de renta, podrías perder la beca o reducir su cuantía.
+
+**¿Qué pasa si cambio de carrera?**
+Puedes solicitar la beca MEC en la nueva carrera, pero solo se concede una vez por nivel de estudios. Si ya te graduaste con beca en un grado, no puedes pedir beca para otro grado.
+
+**¿Puedo pedir la beca MEC si estudio en una universidad privada?**
+Sí, pero la beca de matrícula cubre únicamente el importe de las tasas oficiales (lo que costaría en la universidad pública equivalente), no el precio real de la privada. Los demás componentes (renta, residencia, variable) se conceden igual.
+
+**¿Qué nota media necesito?**
+Para solicitar: 5,00 mínimo. Para la cuantía variable: a mayor nota media, mayor cuantía. Para excelencia académica: 8,00 o más. En Ingeniería y Arquitectura se aplica un coeficiente corrector de 1,17 (tu nota se multiplica por 1,17 para comparar con otras ramas).
+
+**¿Necesito tener cuenta bancaria propia?**
+Sí, obligatoriamente. La cuenta debe estar a tu nombre (puedes ser cotitular) y debe ser un IBAN español. Si no tienes cuenta, ábrela antes de solicitar.
+
+**¿La beca MEC es compatible con becas de mi comunidad autónoma?**
+Depende de la comunidad autónoma y de la finalidad de la beca. En general, son compatibles si no cubren el mismo concepto. Por ejemplo, puedes cobrar beca MEC y una ayuda autonómica al transporte sin problema.
+
+**¿Qué hago si no tengo Cl@ve y el plazo se acaba?**
+Puedes registrarte en Cl@ve por videollamada (inmediato) o solicitar un certificado digital FNMT online (recogida en 2-3 días en oficina AEAT). También puedes usar el sistema de usuario y contraseña de la sede electrónica del Ministerio si ya lo tenías de años anteriores.
+
+**¿Puedo corregir errores en mi solicitud una vez enviada?**
+Sí, mientras el plazo esté abierto puedes acceder a tu solicitud y modificar datos. Una vez cerrado el plazo, solo podrás aportar documentación adicional si te la requieren.
+
+## Links y recursos oficiales
+
+- **Sede electrónica del Ministerio**: sede.educacion.gob.es (presentación de solicitud y seguimiento)
+- **Portal de becas**: becaseducacion.gob.es (información general, requisitos, FAQ oficiales)
+- **Real Decreto 179/2026**: BOE-A-2026-5713 (umbrales de renta y patrimonio para 2026-2027)
+- **Registro en Cl@ve**: clave.gob.es (imprescindible para identificarte)
+- **Teléfono de información del Ministerio**: 910 837 937 (lunes a viernes, 9:00-14:00)
+- **Simulador de becas**: disponible en becaseducacion.gob.es antes de la apertura del plazo
+
+Ahora que sabes exactamente cómo pedir tu beca MEC 2026-2027, el siguiente paso es encontrar tu alojamiento para el próximo curso. En Livix puedes buscar [habitaciones en piso compartido](/habitaciones/zaragoza), [pisos completos](/pisos/zaragoza) y [residencias universitarias en Zaragoza](/residencias/zaragoza) con fotos verificadas y precios transparentes. Si la beca te concede los 2.700 EUR de residencia, una habitación compartida puede salirte prácticamente gratis. Empieza a buscar en [Livix](/explore).`
   }
 ];
 
