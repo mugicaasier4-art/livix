@@ -11,6 +11,7 @@ export type BlogCategory = "all" | "pisos" | "estudiante" | "consejos" | "evento
 
 export interface BlogPost {
   id: number;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
@@ -25,6 +26,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
+    slug: "guia-estudiantes-zaragoza",
     title: "Guía completa para estudiantes en Zaragoza 2025-2026",
     excerpt: "Todo lo que necesitas saber para vivir en Zaragoza como estudiante: transporte, ocio, universidades, barrios y coste de vida.",
     date: "2026-02-15",
@@ -159,6 +161,7 @@ Zaragoza te espera con los brazos abiertos. Es una ciudad que enamora a quien la
   },
   {
     id: 2,
+    slug: "mejores-barrios-estudiantes-zaragoza",
     title: "Los 6 mejores barrios para estudiantes en Zaragoza",
     excerpt: "Delicias, Actur, Centro... Analizamos los barrios más populares entre universitarios: precios, transporte y ambiente.",
     date: "2026-02-20",
@@ -334,6 +337,7 @@ En Livix puedes buscar [habitaciones en Zaragoza](/habitaciones/zaragoza) filtra
   },
   {
     id: 3,
+    slug: "residencia-universitaria-o-piso-compartido",
     title: "Residencia universitaria o piso compartido: ¿qué es mejor?",
     excerpt: "Comparamos pros, contras y precios de vivir en una residencia vs compartir piso como estudiante en Zaragoza.",
     date: "2026-02-25",
@@ -470,6 +474,7 @@ Si optas por piso compartido, busca con tiempo (a partir de mayo para el curso s
   },
   {
     id: 4,
+    slug: "coste-vida-estudiantes-zaragoza",
     title: "Coste de vida para estudiantes en Zaragoza: guía actualizada",
     excerpt: "Desglose completo de gastos mensuales: alquiler, comida, transporte, ocio y trucos para ahorrar en Zaragoza.",
     date: "2026-03-01",
@@ -644,6 +649,7 @@ Zaragoza te permite vivir bien como estudiante sin arruinarte. Con un poco de pl
   },
   {
     id: 5,
+    slug: "evitar-estafas-alquiler-estudiantes",
     title: "Cómo evitar estafas al alquilar piso como estudiante",
     excerpt: "Las 10 señales de alarma que debes conocer antes de alquilar. Protégete de estafas inmobiliarias y alquila seguro.",
     date: "2026-03-03",
@@ -803,6 +809,7 @@ Buscar piso puede ser estresante, pero con precaución y sentido común puedes e
   },
   {
     id: 6,
+    slug: "alquilar-habitacion-zaragoza-paso-a-paso",
     title: "Cómo alquilar una habitación en Zaragoza paso a paso",
     excerpt: "Guía práctica desde la búsqueda hasta la firma del contrato. Todo lo que necesitas saber para alquilar tu primera habitación.",
     date: "2026-03-05",
@@ -1013,6 +1020,7 @@ Alquilar tu primera habitación es un paso importante hacia la independencia. Co
   },
   {
     id: 7,
+    slug: "residencia-vs-piso-compartido-zaragoza",
     title: "Residencia universitaria vs piso compartido en Zaragoza: guía completa",
     excerpt: "Comparamos en detalle residencias universitarias y pisos compartidos en Zaragoza: precios, servicios, estilo de vida y cuál te conviene según tu perfil.",
     date: "2026-03-18",
@@ -1172,6 +1180,7 @@ Si necesitas ayuda para encontrar alojamiento en Zaragoza, ya sea residencia o p
   },
   {
     id: 8,
+    slug: "guia-erasmus-zaragoza",
     title: "Guía Erasmus Zaragoza 2026: alojamiento, trámites y vida universitaria",
     excerpt: "Todo lo que necesitas como estudiante Erasmus en Zaragoza: cómo encontrar alojamiento, tramitar el NIE, presupuesto mensual y consejos para disfrutar al máximo tu experiencia.",
     date: "2026-03-18",
@@ -1365,6 +1374,7 @@ Zaragoza es una ciudad que enamora a los Erasmus. El tamaño perfecto para mover
   },
   {
     id: 9,
+    slug: "precio-habitacion-zaragoza-por-barrios",
     title: "Precio de habitación en Zaragoza por barrios: mapa actualizado 2026",
     excerpt: "Descubre cuánto cuesta una habitación en cada barrio de Zaragoza en 2026. Datos actualizados de precios, comparativas y consejos para encontrar la mejor relación calidad-precio.",
     date: "2026-03-18",
@@ -1508,6 +1518,7 @@ Explora ahora las [habitaciones disponibles en Zaragoza](/habitaciones/zaragoza)
   },
   {
     id: 10,
+    slug: "mejores-residencias-universitarias-zaragoza",
     title: "Las 10 mejores residencias universitarias en Zaragoza (ranking 2026)",
     excerpt: "Ranking actualizado de las mejores residencias universitarias en Zaragoza: precios, servicios, ubicación y opiniones de estudiantes para ayudarte a elegir.",
     date: "2026-03-18",
@@ -1751,7 +1762,7 @@ La Residencia Inmaculada ofrece una buena relación calidad-precio en una ubicac
 
 Antes de reservar plaza en una de las mejores residencias de Zaragoza, considera si realmente es la mejor opción para ti. Una habitación en [piso compartido en Zaragoza](/habitaciones/zaragoza) cuesta entre 250 y 420€/mes, significativamente menos que cualquier residencia, aunque tendrás que cocinar y gestionar los gastos del hogar.
 
-Si quieres una comparación detallada, lee nuestra [guía de residencia vs piso compartido](/blog/7).
+Si quieres una comparación detallada, lee nuestra [guía de residencia vs piso compartido](/blog/residencia-vs-piso-compartido-zaragoza).
 
 ## Cómo reservar plaza
 
@@ -1773,6 +1784,7 @@ También puedes usar nuestro [buscador de compañeros de piso](/roommates) para 
   },
   {
     id: 11,
+    slug: "colegio-mayor-pedro-cerbuna-zaragoza",
     title: "Colegio Mayor Pedro Cerbuna en Zaragoza: guía completa 2026",
     excerpt: "Todo sobre el Colegio Mayor Pedro Cerbuna: habitaciones, precios, proceso de admisión, actividades y vida diaria junto al Campus San Francisco.",
     date: "2026-03-18",
@@ -2040,6 +2052,7 @@ Sea cual sea tu elección, lo importante es que investigues bien antes de decidi
   },
   {
     id: 12,
+    slug: "vivir-actur-estudiante-zaragoza",
     title: "Vivir en el barrio del Actur como estudiante en Zaragoza",
     excerpt: "Guía completa del Actur: precios de alquiler, transporte a la universidad, servicios, ocio y todo lo que necesitas saber para vivir en este barrio.",
     date: "2026-03-18",
@@ -2237,6 +2250,7 @@ Explora todas las opciones de [alojamiento para estudiantes en Zaragoza](/explor
   },
   {
     id: 13,
+    slug: "contrato-alquiler-estudiantes-clausulas",
     title: "Contrato de alquiler para estudiantes: 7 cláusulas que debes revisar",
     excerpt: "Las 7 cláusulas más importantes de un contrato de alquiler para estudiantes en España. Protege tus derechos y evita sorpresas desagradables.",
     date: "2026-03-18",
@@ -2505,6 +2519,7 @@ Encuentra [pisos con propietarios verificados en Zaragoza](/pisos/zaragoza) a tr
   },
   {
     id: 14,
+    slug: "becas-ayudas-alojamiento-aragon",
     title: "Becas y ayudas de alojamiento para estudiantes en Aragón 2026",
     excerpt: "Guía completa de becas MEC, ayudas de la DGA, subvenciones municipales y becas Erasmus+ para cubrir gastos de alojamiento universitario en Aragón.",
     date: "2026-03-18",
@@ -2793,6 +2808,7 @@ Y para encontrar el alojamiento que se ajuste a tu presupuesto, explora las opci
   },
   {
     id: 15,
+    slug: "beca-mec-2026-2027-requisitos-cuantias",
     title: "Beca MEC 2026-2027: Requisitos, Cuantías y Cómo Solicitarla Paso a Paso",
     excerpt: "Todo sobre la beca MEC 2026-2027: requisitos académicos y económicos, cuantías, plazos, errores comunes y proceso paso a paso. Actualizado marzo 2026.",
     date: "2026-03-19",
@@ -2815,7 +2831,7 @@ El plazo de solicitud para el curso 2026-2027 se abre en marzo de 2026 según el
 6. **Envía la solicitud** y guarda el justificante PDF con tu número de referencia
 7. **Actualiza tus datos de matrícula** en septiembre cuando te matricules definitivamente
 
-Si también buscas ayudas autonómicas, consulta nuestra [guía de becas y ayudas de alojamiento en Aragón](/blog/14).
+Si también buscas ayudas autonómicas, consulta nuestra [guía de becas y ayudas de alojamiento en Aragón](/blog/becas-ayudas-alojamiento-aragon).
 
 ## Qué es la beca MEC y quién puede pedirla
 

@@ -84,6 +84,23 @@
             ]
         }
     ],
+    "redirects": [
+        { "source": "/blog/1", "destination": "/blog/guia-estudiantes-zaragoza", "statusCode": 301 },
+        { "source": "/blog/2", "destination": "/blog/mejores-barrios-estudiantes-zaragoza", "statusCode": 301 },
+        { "source": "/blog/3", "destination": "/blog/residencia-universitaria-o-piso-compartido", "statusCode": 301 },
+        { "source": "/blog/4", "destination": "/blog/coste-vida-estudiantes-zaragoza", "statusCode": 301 },
+        { "source": "/blog/5", "destination": "/blog/evitar-estafas-alquiler-estudiantes", "statusCode": 301 },
+        { "source": "/blog/6", "destination": "/blog/alquilar-habitacion-zaragoza-paso-a-paso", "statusCode": 301 },
+        { "source": "/blog/7", "destination": "/blog/residencia-vs-piso-compartido-zaragoza", "statusCode": 301 },
+        { "source": "/blog/8", "destination": "/blog/guia-erasmus-zaragoza", "statusCode": 301 },
+        { "source": "/blog/9", "destination": "/blog/precio-habitacion-zaragoza-por-barrios", "statusCode": 301 },
+        { "source": "/blog/10", "destination": "/blog/mejores-residencias-universitarias-zaragoza", "statusCode": 301 },
+        { "source": "/blog/11", "destination": "/blog/colegio-mayor-pedro-cerbuna-zaragoza", "statusCode": 301 },
+        { "source": "/blog/12", "destination": "/blog/vivir-actur-estudiante-zaragoza", "statusCode": 301 },
+        { "source": "/blog/13", "destination": "/blog/contrato-alquiler-estudiantes-clausulas", "statusCode": 301 },
+        { "source": "/blog/14", "destination": "/blog/becas-ayudas-alojamiento-aragon", "statusCode": 301 },
+        { "source": "/blog/15", "destination": "/blog/beca-mec-2026-2027-requisitos-cuantias", "statusCode": 301 }
+    ],
     "rewrites": [
         {
             "source": "/(.*)",

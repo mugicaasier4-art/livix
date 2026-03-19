@@ -172,7 +172,7 @@ const App = () => (
                                 <Route path="/club" element={<Club />} />
                                 <Route path="/club/:sectorId" element={<ClubSector />} />
                                 <Route path="/blog" element={<Blog />} />
-                                <Route path="/blog/:id" element={<BlogPost />} />
+                                <Route path="/blog/:slug" element={<BlogPost />} />
                                 <Route path="/erasmus" element={<Erasmus />} />
                                 <Route path="/erasmus/guide" element={<ErasmusGuide />} />
                                 <Route path="/erasmus/housing" element={<ErasmusHousing />} />

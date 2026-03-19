@@ -125,7 +125,7 @@ const Blog = () => {
           <section className="py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-5xl mx-auto">
-                <Link to={`/blog/${featuredPost.id}`} className="block group">
+                <Link to={`/blog/${featuredPost.slug}`} className="block group">
                   <Card className="overflow-hidden border-0 bg-gradient-to-br from-muted/50 to-muted/30 hover:shadow-2xl transition-all duration-500">
                     <div className="grid md:grid-cols-2 gap-0">
                       <div className="aspect-video md:aspect-auto md:min-h-[320px] overflow-hidden">
@@ -184,7 +184,7 @@ const Blog = () => {
                   {otherPosts.map((post, index) => (
                     <Link
                       key={post.id}
-                      to={`/blog/${post.id}`}
+                      to={`/blog/${post.slug}`}
                       className="group"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >

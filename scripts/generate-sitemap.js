@@ -9,23 +9,23 @@ const CITIES = ['zaragoza'];
 const BARRIOS = ['delicias', 'actur', 'centro', 'las-fuentes', 'romareda', 'san-jose'];
 const CAMPUS = ['san-francisco', 'rio-ebro', 'usj'];
 
-// Extract blog post IDs from blogContent.ts
-const extractBlogIds = () => {
+// Extract blog post slugs from blogContent.ts
+const extractBlogSlugs = () => {
     const blogPath = path.resolve(process.cwd(), 'src/data/blogContent.ts');
     const content = fs.readFileSync(blogPath, 'utf-8');
-    const ids = [];
-    const regex = /id:\s*(\d+)/g;
+    const slugs = [];
+    const regex = /slug:\s*"([^"]+)"/g;
     let match;
     while ((match = regex.exec(content)) !== null) {
-        ids.push(match[1]);
+        slugs.push(match[1]);
     }
-    return ids;
+    return slugs;
 };
 
 const today = new Date().toISOString().split('T')[0];
 
 const generateSitemap = () => {
-    const blogIds = extractBlogIds();
+    const blogSlugs = extractBlogSlugs();
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
@@ -54,10 +54,10 @@ const generateSitemap = () => {
     });
 
     // Blog Posts
-    blogIds.forEach(id => {
+    blogSlugs.forEach(slug => {
         xml += `
     <url>
-        <loc>${DOMAIN}/blog/${id}</loc>
+        <loc>${DOMAIN}/blog/${slug}</loc>
         <lastmod>${today}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
@@ -90,7 +90,7 @@ const generateSitemap = () => {
 
     const outputPath = path.resolve(process.cwd(), 'public/sitemap.xml');
     fs.writeFileSync(outputPath, xml);
-    console.log(`Sitemap generated at ${outputPath} (${staticRoutes.length + blogIds.length + CITIES.length * 4 + CITIES.length * BARRIOS.length * 2 + CAMPUS.length} URLs)`);
+    console.log(`Sitemap generated at ${outputPath} (${staticRoutes.length + blogSlugs.length + CITIES.length * 4 + CITIES.length * BARRIOS.length * 2 + CAMPUS.length} URLs)`);
 };
 
 generateSitemap();

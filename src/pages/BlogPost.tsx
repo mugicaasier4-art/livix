@@ -99,10 +99,10 @@ const renderMarkdown = (content: string): string => {
 };
 
 const BlogPost = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  
-  const post = blogPosts.find(p => p.id === Number(id));
+
+  const post = blogPosts.find(p => p.slug === slug);
   
   useEffect(() => {
     if (post) {
@@ -209,7 +209,7 @@ const BlogPost = () => {
     "dateModified": post.dateModified || post.date,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://livix.es/blog/${post.id}`
+      "@id": `https://livix.es/blog/${post.slug}`
     },
     "author": [
       {
@@ -238,7 +238,7 @@ const BlogPost = () => {
       <SEOHead
         title={`${post.title} | Blog Livix`}
         description={post.excerpt}
-        canonical={`https://livix.es/blog/${post.id}`}
+        canonical={`https://livix.es/blog/${post.slug}`}
         ogType="article"
         structuredData={articleSchema}
       />
@@ -322,7 +322,7 @@ const BlogPost = () => {
                       {sidebarPosts.map((relatedPost) => (
                         <Link 
                           key={relatedPost.id}
-                          to={`/blog/${relatedPost.id}`}
+                          to={`/blog/${relatedPost.slug}`}
                           className="group block"
                         >
                           <div className="flex gap-3">
