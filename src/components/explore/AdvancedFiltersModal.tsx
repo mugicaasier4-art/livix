@@ -85,7 +85,7 @@ const AdvancedFiltersModal = ({
 
   const clearAllFilters = () => {
     onFiltersChange({
-      priceRange: [200, 800],
+      priceRange: [200, 2500],
       bedrooms: null,
       bathrooms: null,
       propertyType: [],
@@ -167,7 +167,7 @@ const AdvancedFiltersModal = ({
                     value={filters.priceRange}
                     onValueChange={(value) => handleFilterChange('priceRange', value as [number, number])}
                     min={150}
-                    max={2000}
+                    max={2500}
                     step={25}
                     className="w-full"
                   />

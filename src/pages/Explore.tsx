@@ -70,7 +70,7 @@ const Explore = () => {
   const listingRefs = useRef<Map<number, HTMLElement>>(new Map());
 
   const [filters, setFilters] = useState<Filters>({
-    priceRange: [200, 800],
+    priceRange: [200, 2500],
     bedrooms: null,
     bathrooms: null,
     propertyType: [],
@@ -315,7 +315,7 @@ const Explore = () => {
   // Count active filters
   const activeFiltersCount = useMemo(() => {
     let count = 0;
-    if (filters.priceRange[0] !== 200 || filters.priceRange[1] !== 800) count++;
+    if (filters.priceRange[0] !== 200 || filters.priceRange[1] !== 2500) count++;
     if (filters.bedrooms) count++;
     if (filters.bathrooms) count++;
     if (filters.amenities.length > 0) count += filters.amenities.length;
@@ -336,7 +336,7 @@ const Explore = () => {
 
   const handleClearFilters = () => {
     setFilters({
-      priceRange: [200, 800],
+      priceRange: [200, 2500],
       bedrooms: null,
       bathrooms: null,
       propertyType: [],
@@ -367,7 +367,7 @@ const Explore = () => {
     const newFilters = { ...filters };
 
     if (key === 'priceRange') {
-      newFilters.priceRange = [200, 800];
+      newFilters.priceRange = [200, 2500];
     } else if (key === 'amenities' && value) {
       newFilters.amenities = newFilters.amenities.filter(a => a !== value);
     } else if (typeof newFilters[key] === 'boolean') {

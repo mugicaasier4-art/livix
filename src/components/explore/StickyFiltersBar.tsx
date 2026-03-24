@@ -190,11 +190,11 @@ const StickyFiltersBar = ({
               size="sm"
               className={cn(
                 "rounded-full gap-2 whitespace-nowrap",
-                (priceRange[0] !== 200 || priceRange[1] !== 800) && "bg-primary/10 border-primary text-primary"
+                (priceRange[0] !== 200 || priceRange[1] !== 2500) && "bg-primary/10 border-primary text-primary"
               )}
             >
               <Euro className="h-4 w-4" />
-              {priceRange[0] === 200 && priceRange[1] === 800 
+              {priceRange[0] === 200 && priceRange[1] === 2500
                 ? 'Precio' 
                 : `${priceRange[0]}€ - ${priceRange[1]}€`
               }
@@ -212,13 +212,13 @@ const StickyFiltersBar = ({
                   value={priceRange}
                   onValueChange={(value) => onPriceRangeChange(value as [number, number])}
                   min={150}
-                  max={2000}
+                  max={2500}
                   step={25}
                   className="w-full"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground mt-2">
                   <span>150€</span>
-                  <span>2000€</span>
+                  <span>2500€</span>
                 </div>
               </div>
               {/* Quick price options */}
@@ -227,7 +227,7 @@ const StickyFiltersBar = ({
                   { label: '< 300€', range: [150, 300] as [number, number] },
                   { label: '300-500€', range: [300, 500] as [number, number] },
                   { label: '500-800€', range: [500, 800] as [number, number] },
-                  { label: '800€+', range: [800, 2000] as [number, number] },
+                  { label: '800€+', range: [800, 2500] as [number, number] },
                 ].map((option) => (
                   <Badge
                     key={option.label}

@@ -13,7 +13,7 @@ const ActiveFilters: React.FC<ActiveFiltersProps> = ({ filters, onFilterRemove, 
   const activeFilterTags: { key: keyof Filters; label: string; value?: any }[] = [];
 
   // Price range (only show if not default)
-  if (filters.priceRange[0] !== 200 || filters.priceRange[1] !== 800) {
+  if (filters.priceRange[0] !== 200 || filters.priceRange[1] !== 2500) {
     activeFilterTags.push({
       key: 'priceRange',
       label: `€${filters.priceRange[0]} - €${filters.priceRange[1]}`

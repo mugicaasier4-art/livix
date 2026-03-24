@@ -77,7 +77,7 @@ const FiltersSheet: React.FC<FiltersSheetProps> = ({
 
   const clearAllFilters = () => {
     const clearedFilters: Filters = {
-      priceRange: [200, 800],
+      priceRange: [200, 2500],
       bedrooms: null,
       bathrooms: null,
       propertyType: [],
@@ -231,7 +231,7 @@ const FiltersSheet: React.FC<FiltersSheetProps> = ({
                 value={filters.priceRange}
                 onValueChange={(value) => handleFilterChange('priceRange', value as [number, number])}
                 min={150}
-                max={1000}
+                max={2500}
                 step={10}
                 className="w-full"
               />

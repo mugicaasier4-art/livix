@@ -54,7 +54,7 @@ const FilterPills = ({ filters, onFiltersChange }: FilterPillsProps) => {
 
   const clearAllFilters = () => {
     onFiltersChange({
-      priceRange: [200, 800],
+      priceRange: [200, 2500],
       verified: false,
       amenities: [],
       roommates: [],
@@ -66,7 +66,7 @@ const FilterPills = ({ filters, onFiltersChange }: FilterPillsProps) => {
     filters.amenities.length > 0 || 
     filters.roommates.length > 0 ||
     filters.priceRange[0] !== 200 ||
-    filters.priceRange[1] !== 800 ||
+    filters.priceRange[1] !== 2500 ||
     filters.distance !== 30;
 
   return (
