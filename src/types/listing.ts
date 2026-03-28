@@ -45,6 +45,9 @@ export interface Listing {
   smoking_allowed: boolean | null;
   gender_preference: string | null;
   rooms_config: Json | null;
+  source: string | null;
+  source_url: string | null;
+  is_seed: boolean | null;
   created_at: string | null;
   updated_at: string | null;
 }

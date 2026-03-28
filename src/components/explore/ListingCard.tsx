@@ -24,6 +24,8 @@ interface ListingCardProps extends MockListing {
   registerRef?: (id: number, element: HTMLElement | null) => void;
   originalId?: string;
   isResidence?: boolean;
+  source?: string | null;
+  source_url?: string | null;
 }
 
 const CompareButton = ({ listing }: { listing: { id: any; originalId?: string; title: string; location: string; price: number; image: string; bedrooms?: number; amenities?: string[]; verified?: boolean; allInclusive?: boolean; furnished?: boolean } }) => {
@@ -90,6 +92,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onMouseLeave,
   registerRef,
   isResidence = false,
+  source,
+  source_url,
 }) => {
   const { t } = useI18n();
   const { isLiked, toggleLike } = useLikes();
@@ -102,7 +106,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
 
-  const allImages = images && images.length > 0 ? images : [image];
+  const isAggregated = source != null && source !== 'manual';
+  const portalName = source === 'idealista' ? 'Idealista' : source === 'milanuncios' ? 'Milanuncios' : source || '';
+
+  const allImages = images && images.length > 0
+    ? images.map(img => isAggregated ? `/api/img-proxy?url=${encodeURIComponent(img)}` : img)
+    : [image];
 
   useEffect(() => {
     if (registerRef && cardRef.current) {
@@ -310,6 +319,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     Erasmus
                   </Badge>
                 )}
+                {isAggregated && (
+                  <Badge className="bg-gray-500/80 text-white text-xs backdrop-blur-sm">
+                    Encontrado en {portalName}
+                  </Badge>
+                )}
               </div>
 
               {/* Price overlay on mobile - bottom left of image */}
@@ -349,7 +363,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <div className="font-bold text-lg">
                     {price}€<span className="text-xs font-normal text-muted-foreground">/mes</span>
                   </div>
-                  <span className="text-xs text-green-600">Sin comisiones</span>
+                  {!isAggregated && <span className="text-xs text-green-600">Sin comisiones</span>}
                 </div>
 
                 {/* Meta info */}
@@ -374,22 +388,40 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
               {/* Mobile: price + sin comisiones row */}
               <div className="md:hidden flex items-center justify-between">
-                <span className="text-xs text-green-600 font-medium">Sin comisiones</span>
+                {!isAggregated && <span className="text-xs text-green-600 font-medium">Sin comisiones</span>}
               </div>
 
               {/* CTA buttons */}
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" className="flex-1 h-9 text-sm" asChild>
-                  <Link to={`/listing/${linkId}`} onClick={(e) => e.stopPropagation()}>
-                    <Eye className="h-4 w-4 mr-1.5" aria-hidden="true" />
-                    Ver
-                  </Link>
-                </Button>
-                <Button size="sm" className="flex-1 h-9 text-sm" asChild>
-                  <Link to={`/listing/${linkId}?apply=true`} onClick={(e) => e.stopPropagation()}>
-                    Solicitar
-                  </Link>
-                </Button>
+                {isAggregated && source_url ? (
+                  <>
+                    <Button size="sm" variant="outline" className="flex-1 h-9 text-sm" asChild>
+                      <Link to={`/listing/${linkId}`} onClick={(e) => e.stopPropagation()}>
+                        <Eye className="h-4 w-4 mr-1.5" aria-hidden="true" />
+                        Ver
+                      </Link>
+                    </Button>
+                    <Button size="sm" className="flex-1 h-9 text-sm" asChild>
+                      <a href={source_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                        Ver en {portalName}
+                      </a>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button size="sm" variant="outline" className="flex-1 h-9 text-sm" asChild>
+                      <Link to={`/listing/${linkId}`} onClick={(e) => e.stopPropagation()}>
+                        <Eye className="h-4 w-4 mr-1.5" aria-hidden="true" />
+                        Ver
+                      </Link>
+                    </Button>
+                    <Button size="sm" className="flex-1 h-9 text-sm" asChild>
+                      <Link to={`/listing/${linkId}?apply=true`} onClick={(e) => e.stopPropagation()}>
+                        Solicitar
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
