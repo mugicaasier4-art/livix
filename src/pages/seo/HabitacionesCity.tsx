@@ -8,6 +8,7 @@ import { getBarriosByCity } from "@/data/seo/barrios";
 import ListingCard from "@/components/ui/listing-card";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
+import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
 
 const HabitacionesCity = () => {
     const { city } = useParams<{ city: string }>();
@@ -78,7 +79,6 @@ const HabitacionesCity = () => {
                 description={description}
                 canonical={`https://livix.es/habitaciones/${normalizedCity}`}
                 structuredData={structuredData}
-                noIndex={!isLoading && filteredListings.length === 0}
             />
 
             <div className="container mx-auto px-4 py-8">
@@ -137,15 +137,7 @@ const HabitacionesCity = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-16 bg-muted/30 rounded-xl">
-                        <h3 className="text-xl font-semibold mb-2">No hay habitaciones disponibles ahora mismo</h3>
-                        <p className="text-muted-foreground mb-6">
-                            Prueba a buscar en otras zonas o mira pisos completos para compartir.
-                        </p>
-                        <Link to={`/pisos/${normalizedCity}`}>
-                            <Button>Ver Pisos Completos</Button>
-                        </Link>
-                    </div>
+                    <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="habitaciones" />
                 )}
             </div>
 

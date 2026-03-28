@@ -8,6 +8,7 @@ import { getBarriosByCity } from "@/data/seo/barrios";
 import ListingCard from "@/components/ui/listing-card";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
+import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
 
 const PisosCity = () => {
     const { city } = useParams<{ city: string }>();
@@ -141,15 +142,7 @@ const PisosCity = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-16 bg-muted/30 rounded-xl">
-                        <h3 className="text-xl font-semibold mb-2">No hay pisos completos disponibles</h3>
-                        <p className="text-muted-foreground mb-6">
-                            Quizás prefieras buscar una habitación individual en un piso compartido.
-                        </p>
-                        <Link to={`/habitaciones/${normalizedCity}`}>
-                            <Button>Ver Habitaciones</Button>
-                        </Link>
-                    </div>
+                    <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="pisos" />
                 )}
 
                 {/* FAQs Section */}

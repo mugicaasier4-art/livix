@@ -7,7 +7,7 @@ import gestionTiempo from "@/assets/blog/gestion-tiempo.jpg";
 import ahorrarDinero from "@/assets/blog/ahorrar-dinero.jpg";
 import deportesClubs from "@/assets/blog/deportes-clubs.jpg";
 
-export type BlogCategory = "all" | "pisos" | "estudiante" | "consejos" | "eventos" | "legalidad" | "becas";
+export type BlogCategory = "all" | "pisos" | "estudiante" | "consejos" | "eventos" | "legalidad" | "becas" | "propietarios";
 
 export interface BlogPost {
   id: number;
@@ -3156,12 +3156,408 @@ Sí, mientras el plazo esté abierto puedes acceder a tu solicitud y modificar d
 - **Simulador de becas**: disponible en becaseducacion.gob.es antes de la apertura del plazo
 
 Ahora que sabes exactamente cómo pedir tu beca MEC 2026-2027, el siguiente paso es encontrar tu alojamiento para el próximo curso. En Livix puedes buscar [habitaciones en piso compartido](/habitaciones/zaragoza), [pisos completos](/pisos/zaragoza) y [residencias universitarias en Zaragoza](/residencias/zaragoza) con fotos verificadas y precios transparentes. Si la beca te concede los 2.700 EUR de residencia, una habitación compartida puede salirte prácticamente gratis. Empieza a buscar en [Livix](/explore).`
+  },
+  {
+    id: 16,
+    slug: "alquilar-piso-estudiantes-zaragoza-guia-propietarios",
+    title: "Alquilar tu piso a estudiantes en Zaragoza: guia completa para propietarios 2026",
+    excerpt: "Todo lo que necesitas saber para alquilar tu piso a universitarios en Zaragoza: precios por barrio, contratos, ventajas fiscales y como encontrar inquilinos verificados.",
+    date: "2026-03-24",
+    dateModified: "2026-03-24",
+    author: "Equipo Livix",
+    category: "propietarios",
+    image: pisosEstudiante,
+    readTime: 10,
+    content: `Zaragoza tiene mas de 35.000 estudiantes universitarios cada curso. Miles de ellos necesitan alojamiento, y la demanda supera con creces la oferta en zonas cercanas a los campus. Si tienes un piso en Zaragoza, alquilar a estudiantes es una de las opciones mas rentables y seguras del mercado.
+
+En esta guia te explicamos todo lo que necesitas saber como propietario: precios reales por barrio, tipos de contrato, ventajas fiscales, y como encontrar inquilinos universitarios verificados.
+
+## Por que alquilar a estudiantes es buena idea
+
+El alquiler a estudiantes tiene ventajas que otros perfiles de inquilino no ofrecen:
+
+**1. Demanda garantizada cada septiembre.** Mientras haya universidades en Zaragoza, habra estudiantes buscando piso. No dependes de ciclos economicos ni de modas.
+
+**2. Rotacion predecible.** Los contratos suelen ser de 10-12 meses (septiembre a junio/julio). Sabes exactamente cuando se libera el piso y puedes planificar.
+
+**3. Garantias familiares.** En la mayoria de casos, los padres avalan o pagan directamente. La tasa de impago en alquiler estudiantil es significativamente menor que en alquiler general.
+
+**4. Mayor rentabilidad por habitacion.** Alquilar un piso de 3 habitaciones a 300 EUR/hab genera 900 EUR/mes, frente a los 600-700 EUR que obtendrias alquilando el piso completo a una familia.
+
+**5. Desgravacion fiscal.** Los ingresos por alquiler de vivienda habitual tienen una reduccion del 50-60% en el IRPF (segun la nueva Ley de Vivienda). Si el inquilino es menor de 35 anos, la reduccion puede llegar al 70%.
+
+## Precios reales de alquiler por barrio en Zaragoza (2026)
+
+Estos son los precios medios de mercado para alquiler a estudiantes, basados en datos de los principales portales inmobiliarios:
+
+| Barrio | Habitacion | Piso completo (3 hab) | Distancia campus |
+|--------|-----------|----------------------|-----------------|
+| Centro / Casco Antiguo | 320-400 EUR | 800-1.000 EUR | 5-10 min a pie (San Francisco) |
+| Delicias | 250-320 EUR | 600-750 EUR | 15 min tranvia |
+| San Jose | 280-350 EUR | 650-850 EUR | 10 min a pie (San Francisco) |
+| Actur / Rey Fernando | 260-330 EUR | 620-780 EUR | 5 min a pie (Rio Ebro) |
+| Romareda | 300-380 EUR | 750-950 EUR | 10 min bus |
+| Las Fuentes | 230-290 EUR | 550-680 EUR | 15-20 min bus |
+| La Almozara | 240-310 EUR | 580-720 EUR | 15 min tranvia |
+| Universidad / Campus | 300-380 EUR | 750-900 EUR | 0-5 min a pie |
+
+**Nota**: los precios mas altos corresponden a pisos reformados, amueblados y con gastos incluidos. Un piso sin amueblar en zona periferica puede estar un 20-30% por debajo de estos rangos.
+
+## Tipos de contrato para alquiler estudiantil
+
+### Contrato de arrendamiento de vivienda (LAU)
+Es el contrato estandar. Duracion minima de 5 anos (7 si el arrendador es empresa). El estudiante puede desistir a partir del 6o mes con 30 dias de preaviso.
+
+**Ventaja**: seguridad juridica maxima para ambas partes.
+**Inconveniente**: si el estudiante se va en junio, legalmente el contrato sigue vigente.
+
+### Contrato de temporada
+Ideal para estudiantes. Duracion pactada (10-12 meses). No esta sujeto a la duracion minima de 5 anos de la LAU. El estudiante debe acreditar que la necesidad de vivienda es temporal (matricula universitaria).
+
+**Ventaja**: recuperas el piso al final del curso con certeza.
+**Inconveniente**: no puedes actualizarlo por IPC ni aplicar las prorrogas automaticas.
+
+### Alquiler por habitaciones
+Cada habitacion tiene su propio contrato. Es la opcion mas rentable pero requiere mas gestion.
+
+**Ventaja**: si un inquilino se va, los demas siguen pagando. Mayor rentabilidad total.
+**Inconveniente**: mas contratos, mas gestion, posibles conflictos entre inquilinos.
+
+## Ventajas fiscales del alquiler a estudiantes
+
+### Reduccion en IRPF (Ley de Vivienda 2024)
+Si el inquilino utiliza la vivienda como residencia habitual:
+
+- **50% de reduccion** sobre el rendimiento neto (regla general)
+- **60% de reduccion** si el piso esta en zona de mercado tensionado (Zaragoza no esta declarada zona tensionada actualmente)
+- **70% de reduccion** si el inquilino tiene entre 18 y 35 anos (la mayoria de estudiantes)
+- **90% de reduccion** si bajas la renta un 5% respecto al contrato anterior
+
+### Gastos deducibles
+Puedes deducirte todos los gastos necesarios para obtener el rendimiento:
+- Intereses de hipoteca
+- IBI
+- Comunidad de propietarios
+- Seguro del hogar
+- Reparaciones y mantenimiento
+- Amortizacion del inmueble (3% del valor de construccion)
+
+### Ejemplo practico
+Piso en Delicias alquilado a 3 estudiantes a 300 EUR/hab = 900 EUR/mes = 10.800 EUR/ano brutos.
+
+| Concepto | Importe |
+|----------|---------|
+| Ingresos brutos | 10.800 EUR |
+| Gastos deducibles (hipoteca, IBI, comunidad, seguro, amortizacion) | -3.200 EUR |
+| Rendimiento neto | 7.600 EUR |
+| Reduccion 70% (inquilinos <35 anos) | -5.320 EUR |
+| **Base imponible alquiler** | **2.280 EUR** |
+
+Es decir, de 10.800 EUR de ingresos, solo tributas por 2.280 EUR. Con un tipo marginal del 30%, pagas 684 EUR de impuestos. Tu rentabilidad neta real es superior al 90%.
+
+## Como preparar tu piso para estudiantes
+
+### Lo imprescindible
+- **Amueblado completo**: cama, armario, escritorio y silla en cada habitacion. Sofa, mesa de comedor, electrodomesticos basicos en zonas comunes
+- **WiFi de alta velocidad**: minimo 100 Mbps. Los estudiantes lo consideran tan esencial como el agua
+- **Calefaccion funcional**: Zaragoza tiene inviernos frios. Un piso sin calefaccion o con radiadores viejos no se alquila
+- **Lavadora**: imprescindible. Secadora es un plus muy valorado
+
+### Lo que marca la diferencia
+- **Aire acondicionado**: Zaragoza supera los 40 grados en verano. Los pisos con AC se alquilan antes y a mejor precio
+- **Terraza o balcon**: muy valorado, especialmente en pisos compartidos
+- **Buena iluminacion natural**: los estudiantes pasan muchas horas en casa estudiando
+- **Cerraduras individuales en habitaciones**: da tranquilidad a estudiantes que comparten piso con desconocidos
+
+### Lo que NO necesitas
+- Decoracion de disenador: funcional y limpio es suficiente
+- Electrodomesticos de gama alta: fiables y sencillos de usar
+- Plaza de garaje: la mayoria de estudiantes no tienen coche
+
+## Como encontrar inquilinos universitarios verificados
+
+### La forma tradicional
+Publicar en portales (Idealista, Fotocasa, Pisos.com) y gestionar llamadas, visitas y contratos tu mismo. Funciona, pero requiere tiempo y no tienes garantia de que el inquilino sea realmente estudiante.
+
+### Con Livix
+[Livix](/propietarios) es la plataforma de alojamiento universitario de Zaragoza. La diferencia fundamental:
+
+- **Identidad universitaria confirmada**: verificamos que el inquilino esta matriculado en la universidad antes de que contacte contigo
+- **Publicacion gratuita**: las primeras 50 plazas son gratis. Publicamos tu piso con fotos profesionales
+- **Sin comisiones de entrada**: no cobramos al propietario por encontrar inquilino
+- **Gestion simplificada**: solicitudes, mensajes y documentacion en un solo sitio
+
+Si tienes un piso cerca de la universidad y quieres alquilar a estudiantes verificados, [dejanos tus datos](/propietarios) y te contactamos en 24 horas.
+
+## Preguntas frecuentes
+
+**¿Es seguro alquilar a estudiantes?**
+Si. La tasa de impago en alquiler estudiantil es menor que la media del mercado. En la mayoria de casos, los padres avalan o pagan directamente. Ademas, la rotacion predecible (septiembre-junio) reduce el riesgo de okupacion.
+
+**¿Necesito seguro de impago?**
+Es recomendable pero no imprescindible. El coste suele ser un 3-5% de la renta anual. Si los padres avalan, el riesgo es bajo.
+
+**¿Puedo alquilar solo durante el curso y usar el piso en verano?**
+Si, con un contrato de temporada. Muchos propietarios alquilan de septiembre a junio y usan el piso en julio-agosto, o lo alquilan en plataformas de alquiler turistico durante el verano.
+
+**¿Cuantos estudiantes puedo meter en un piso?**
+La normativa de Zaragoza no establece un limite especifico, pero el piso debe cumplir las condiciones de habitabilidad. Como regla general: una persona por habitacion, con un minimo de 6-8 m2 por habitacion.
+
+**¿Tengo que dar de alta los suministros a mi nombre?**
+Lo habitual es que los suministros esten a nombre del propietario y se incluyan en el alquiler (con un tope) o se repercutan al inquilino. Incluir gastos simplifica la gestion y permite cobrar un alquiler mas alto.
+
+**¿Que pasa si el estudiante deja el piso antes de tiempo?**
+Con un contrato de temporada, debe pagar hasta la fecha acordada salvo que encontreis un acuerdo. Con un contrato LAU, puede desistir a partir del 6o mes pagando una indemnizacion de un mes por cada ano que falte.
+
+## Proximo paso
+
+Si tienes un piso en Zaragoza y quieres alquilar a estudiantes universitarios verificados, el proceso es sencillo:
+
+1. [Deja tus datos en Livix](/propietarios) (30 segundos)
+2. Te contactamos en menos de 24 horas
+3. Publicamos tu piso gratis con fotos y descripcion profesional
+4. Empiezas a recibir solicitudes de estudiantes verificados
+
+Las primeras 50 plazas son gratuitas. [Registrate ahora](/propietarios).`
+  },
+  {
+    id: 17,
+    slug: "cuanto-cobrar-alquiler-estudiantes-zaragoza",
+    title: "Cuanto cobrar de alquiler a estudiantes en Zaragoza por barrio (2026)",
+    excerpt: "Precios reales de alquiler a universitarios en cada barrio de Zaragoza. Tabla comparativa, rentabilidad por habitacion y factores que suben o bajan el precio.",
+    date: "2026-03-24",
+    dateModified: "2026-03-24",
+    author: "Equipo Livix",
+    category: "propietarios",
+    image: pisosEstudiante,
+    readTime: 7,
+    content: `Si tienes un piso en Zaragoza y quieres alquilar a estudiantes, la primera pregunta es: cuanto puedo cobrar? La respuesta depende del barrio, el estado del piso y si alquilas completo o por habitaciones.
+
+En esta guia te damos precios reales basados en datos de los principales portales inmobiliarios (pisos.com, Idealista, Fotocasa) actualizados a marzo 2026.
+
+## Precios por barrio: piso completo vs habitacion
+
+| Barrio | Habitacion | Piso 3 hab completo | Diferencia |
+|--------|-----------|---------------------|-----------|
+| Centro / Casco Antiguo | 320-400 EUR | 800-1.000 EUR | +8-20% por hab |
+| Delicias | 250-320 EUR | 600-750 EUR | +0-28% por hab |
+| San Jose | 280-350 EUR | 650-850 EUR | +6-24% por hab |
+| Actur / Rey Fernando | 260-330 EUR | 620-780 EUR | +0-27% por hab |
+| Universidad / Campus | 300-380 EUR | 750-900 EUR | +7-27% por hab |
+| Romareda | 300-380 EUR | 750-950 EUR | +5-20% por hab |
+| Las Fuentes | 230-290 EUR | 550-680 EUR | +2-28% por hab |
+| La Almozara | 240-310 EUR | 580-720 EUR | +0-29% por hab |
+| Torrero | 220-280 EUR | 520-650 EUR | +3-29% por hab |
+
+**Lectura clave**: alquilar por habitaciones genera entre un 0% y un 29% mas de ingresos que alquilar el piso completo, dependiendo del barrio y el precio.
+
+## Ejemplo: rentabilidad real por barrio
+
+Supongamos un piso de 3 habitaciones en cada zona. Comparamos el ingreso mensual alquilando completo vs por habitaciones:
+
+| Barrio | Piso completo | 3 hab individuales | Diferencia anual |
+|--------|--------------|-------------------|-----------------|
+| Centro | 900 EUR/mes | 3 x 360 = 1.080 EUR/mes | +2.160 EUR/ano |
+| Delicias | 675 EUR/mes | 3 x 285 = 855 EUR/mes | +2.160 EUR/ano |
+| San Jose | 750 EUR/mes | 3 x 315 = 945 EUR/mes | +2.340 EUR/ano |
+| Actur | 700 EUR/mes | 3 x 295 = 885 EUR/mes | +2.220 EUR/ano |
+| Las Fuentes | 615 EUR/mes | 3 x 260 = 780 EUR/mes | +1.980 EUR/ano |
+
+**La media**: alquilar por habitaciones genera ~2.170 EUR/ano mas que alquilar el piso completo. Eso si, requiere mas gestion (3 contratos, rotacion individual, posibles conflictos).
+
+## Que factores suben el precio
+
+No todos los pisos son iguales. Estos factores justifican cobrar en la parte alta del rango:
+
+**+10-15% sobre precio base:**
+- Amueblado completo con escritorios en habitaciones
+- WiFi de alta velocidad (100+ Mbps) incluido
+- Gastos incluidos (agua, luz, gas, internet)
+
+**+5-10%:**
+- Aire acondicionado (Zaragoza supera 40 grados en verano)
+- Terraza o balcon
+- Lavadora + secadora
+- Ascensor (pisos altos sin ascensor penalizan mucho)
+
+**+15-25% (premium):**
+- Reformado recientemente (bano y cocina nuevos)
+- Distancia <5 minutos a pie del campus
+- Vistas, luminosidad natural excepcional
+
+## Que factores bajan el precio
+
+**-10-15%:**
+- Sin amueblar (los estudiantes no tienen muebles)
+- Sin calefaccion o calefaccion deficiente
+- Planta baja interior sin luz natural
+
+**-15-25%:**
+- Zona alejada de campus (>20 min transporte)
+- Sin ascensor en planta 4+ (deal-breaker para muchos)
+- Estado deteriorado visible (pintura, bano antiguo)
+
+## Gastos incluidos o aparte?
+
+Las dos opciones son validas. Pros y contras:
+
+**Gastos incluidos:**
+- Ventaja: puedes cobrar mas y simplificas la gestion (un solo pago)
+- Riesgo: si el consumo es alto, pierdes dinero
+- Recomendacion: incluir con un tope ("gastos incluidos hasta 80 EUR/mes")
+
+**Gastos aparte:**
+- Ventaja: no asumes riesgo de consumo
+- Inconveniente: mas complejo de gestionar, estudiantes prefieren "todo incluido"
+- Recomendacion: funciona bien si son 1-2 inquilinos, menos con 3+
+
+## Cuando subir y cuando bajar el precio
+
+**Septiembre (alta demanda):** puedes cobrar en la parte alta del rango. Los estudiantes que buscan en septiembre tienen urgencia y menos opciones.
+
+**Enero-febrero (media demanda):** estudiantes Erasmus que llegan al segundo cuatrimestre. Precio medio del rango.
+
+**Abril-mayo (baja demanda):** si no has alquilado, baja un 10-15%. Mejor cobrar algo que tener el piso vacio.
+
+**Verano (julio-agosto):** si usas contrato de temporada, recuperas el piso. Puedes alquilar en plataformas turisticas o dejarlo libre.
+
+## Como saber si tu precio es competitivo
+
+1. Busca pisos similares en tu zona en [pisos.com](https://www.pisos.com/alquiler/pisos-zaragoza/) e Idealista
+2. Filtra por numero de habitaciones y zona
+3. Tu precio deberia estar en el rango medio salvo que tu piso tenga ventajas claras
+
+Si quieres una valoracion personalizada, [dejanos tus datos](/propietarios) y te contactamos con una estimacion de precio basada en tu zona y caracteristicas.
+
+## Proximo paso
+
+Si ya sabes cuanto cobrar, el siguiente paso es publicar tu piso donde los estudiantes lo encuentren. En [Livix](/propietarios) puedes publicar gratis (primeras 50 plazas) y acceder a estudiantes con identidad universitaria verificada. [Registrate aqui](/propietarios).`
+  },
+  {
+    id: 27,
+    slug: "mejores-barrios-estudiantes-zaragoza-2026",
+    title: "Los 7 mejores barrios para estudiantes en Zaragoza en 2026: precios, transporte y vida nocturna",
+    excerpt: "Analizamos los barrios mas populares entre universitarios en Zaragoza con datos reales de precios, distancia a campus y calidad de vida.",
+    date: "2026-03-28",
+    dateModified: "2026-03-28",
+    author: "Equipo Livix",
+    category: "pisos",
+    image: zonasUniversidad,
+    readTime: 12,
+    content: `Elegir barrio es una de las decisiones mas importantes cuando buscas piso como estudiante en Zaragoza. No todos los barrios ofrecen lo mismo, y la diferencia de precio entre uno y otro puede superar los 150 euros al mes por habitacion.
+
+En esta guia hemos analizado datos reales de mas de 2.000 anuncios de alquiler para darte una vision completa de los 7 barrios mas populares entre universitarios en Zaragoza.
+
+## 1. Centro / Casco Antiguo
+
+El corazon de Zaragoza. Vida nocturna, bares, restaurantes y cultura a cada esquina. Es el barrio mas demandado por estudiantes Erasmus.
+
+**Precio medio habitacion:** 380-450 EUR/mes
+
+**Ventajas:** Todo esta a mano. Puedes ir andando a Campus San Francisco en 10 minutos. La zona del Tubo es el epicentro del ocio.
+
+**Desventajas:** Ruido, pisos antiguos, y los precios son los mas altos de la ciudad para estudiantes.
+
+**Ideal para:** Estudiantes sociales que priorizan la vida nocturna y la comodidad de estar en el centro.
+
+## 2. Delicias
+
+El barrio mas grande y diverso de Zaragoza. Multicultural, con todos los servicios y precios muy competitivos.
+
+**Precio medio habitacion:** 280-350 EUR/mes
+
+**Ventajas:** Precios bajos, buena conexion en tranvia y autobus, supermercados baratos, mucha oferta de pisos.
+
+**Desventajas:** Algunas zonas son menos tranquilas. Esta mas lejos del Campus Rio Ebro.
+
+**Ideal para:** Estudiantes que buscan la mejor relacion calidad-precio sin renunciar a servicios.
+
+## 3. San Jose
+
+Barrio residencial y tranquilo con buena conexion al centro y al Campus San Francisco.
+
+**Precio medio habitacion:** 300-380 EUR/mes
+
+**Ventajas:** Tranquilo pero con servicios. A 15 minutos andando del centro. Pisos en buen estado.
+
+**Desventajas:** Menos vida nocturna que el centro. Puede ser aburrido para quien busque mucho ambiente.
+
+**Ideal para:** Estudiantes que quieren tranquilidad para estudiar pero sin estar lejos de todo.
+
+## 4. Actur / Rey Fernando
+
+El barrio universitario por excelencia para los estudiantes de ingenierias. Aqui esta el Campus Rio Ebro.
+
+**Precio medio habitacion:** 300-380 EUR/mes
+
+**Ventajas:** Campus Rio Ebro a 5 minutos andando. Tranvia directo al centro. Zona moderna y limpia.
+
+**Desventajas:** Un poco alejado del centro para el ocio nocturno.
+
+**Ideal para:** Estudiantes de EINA, CPS o cualquier carrera en Rio Ebro.
+
+## 5. Romareda
+
+Zona residencial de clase media-alta, muy bien conectada y con el estadio de futbol como referencia.
+
+**Precio medio habitacion:** 350-420 EUR/mes
+
+**Ventajas:** Seguridad, limpieza, buenos pisos. Cerca del Campus San Francisco y del centro.
+
+**Desventajas:** Precios por encima de la media. Menos ambiente estudiantil que Delicias o Centro.
+
+**Ideal para:** Estudiantes con presupuesto medio-alto que valoran la tranquilidad y la calidad del piso.
+
+## 6. Universidad / Gran Via
+
+La zona que rodea directamente el Campus San Francisco. Literalmente al lado de las facultades.
+
+**Precio medio habitacion:** 350-430 EUR/mes
+
+**Ventajas:** Campus a 2 minutos. Bibliotecas, cafeterias, copisterias, todo orientado al estudiante.
+
+**Desventajas:** Muy demandado, asi que la oferta se agota rapido. Precios al alza.
+
+**Ideal para:** Quien quiera maximizar tiempo y no perder ni un minuto en transporte.
+
+## 7. Las Fuentes
+
+Barrio tradicional al otro lado del Ebro, cada vez mas popular entre estudiantes por sus precios.
+
+**Precio medio habitacion:** 250-320 EUR/mes
+
+**Ventajas:** Los precios mas bajos de Zaragoza. Buena conexion en autobus. Mercado local, bares autentigos.
+
+**Desventajas:** Mas alejado de ambos campus. Algunos edificios necesitan reforma.
+
+**Ideal para:** Estudiantes con presupuesto ajustado que no les importa 20 minutos de bus.
+
+## Comparativa rapida
+
+| Barrio | Precio medio | Campus SF | Campus RE | Tranvia | Vida nocturna |
+|--------|-------------|-----------|-----------|---------|---------------|
+| Centro | 380-450 EUR | 10 min | 25 min | Si | Excelente |
+| Delicias | 280-350 EUR | 20 min | 30 min | Si | Buena |
+| San Jose | 300-380 EUR | 15 min | 25 min | No | Media |
+| Actur | 300-380 EUR | 25 min | 5 min | Si | Media |
+| Romareda | 350-420 EUR | 10 min | 20 min | No | Baja |
+| Universidad | 350-430 EUR | 2 min | 20 min | Si | Buena |
+| Las Fuentes | 250-320 EUR | 25 min | 35 min | No | Baja |
+
+## Como elegir tu barrio
+
+La decision depende de tres factores: **presupuesto, campus y estilo de vida**.
+
+Si tu presupuesto es ajustado, Delicias y Las Fuentes son tus mejores opciones. Si estudias en Rio Ebro, Actur es imbatible. Y si lo que quieres es vivir la experiencia universitaria al maximo, el Centro es tu sitio.
+
+En [Livix](/) puedes filtrar pisos por barrio, precio y distancia a tu campus. Todos los pisos estan verificados y los propietarios tienen valoraciones reales de otros estudiantes. [Busca tu piso ahora](/).`
   }
 ];
 
 export const categories = [
   { id: "all" as BlogCategory, label: "Todo" },
   { id: "pisos" as BlogCategory, label: "Información Pisos" },
+  { id: "propietarios" as BlogCategory, label: "Propietarios" },
   { id: "legalidad" as BlogCategory, label: "Legalidad" },
   { id: "becas" as BlogCategory, label: "Becas y Ayudas" },
   { id: "estudiante" as BlogCategory, label: "Vida Universitaria" },

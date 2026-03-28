@@ -4,15 +4,18 @@ import { SEOHead } from "@/components/seo/SEOHead";
 import { BreadcrumbSEO } from "@/components/seo/BreadcrumbSEO";
 import { BarrioContent } from "@/components/seo/BarrioContent";
 import { getBarrio, getBarriosByCity } from "@/data/seo/barrios";
+import { cities } from "@/data/seo/cities";
 import ListingCard from "@/components/ui/listing-card";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
+import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
 
 const PisosBarrio = () => {
     const { city, barrio } = useParams<{ city: string; barrio: string }>();
 
     const barrioData = getBarrio(barrio || "");
     const normalizedCity = city?.toLowerCase() || "";
+    const cityData = cities[normalizedCity];
 
     if (!barrioData || barrioData.city !== normalizedCity) {
         return <Navigate to="/404" replace />;
@@ -120,14 +123,7 @@ const PisosBarrio = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-12 text-muted-foreground bg-muted/20 rounded-lg">
-                        <p>No hay pisos completos disponibles en {barrioData.name} ahora mismo.</p>
-                        <p className="mt-2">
-                            <Link to={`/pisos/${normalizedCity}`} className="text-primary hover:underline font-medium">
-                                Ver todos los pisos en {normalizedCity}
-                            </Link>
-                        </p>
-                    </div>
+                    <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="pisos" />
                 )}
 
                 {otherBarrios.length > 0 && (

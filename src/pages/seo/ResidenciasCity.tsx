@@ -7,6 +7,7 @@ import { cities } from "@/data/seo/cities";
 import ListingCard from "@/components/ui/listing-card";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
+import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
 
 const ResidenciasCity = () => {
     const { city } = useParams<{ city: string }>();
@@ -75,7 +76,6 @@ const ResidenciasCity = () => {
                 description={description}
                 canonical={`https://livix.es/residencias/${normalizedCity}`}
                 structuredData={structuredData}
-                noIndex={!isLoading && residencias.length === 0}
             />
 
             <div className="container mx-auto px-4 py-8">
@@ -119,20 +119,7 @@ const ResidenciasCity = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-16 bg-muted/30 rounded-xl">
-                        <h3 className="text-xl font-semibold mb-2">No hemos encontrado residencias disponibles</h3>
-                        <p className="text-muted-foreground mb-6">
-                            Actualmente no tenemos residencias disponibles en {cityData.name}, pero puedes ver otras opciones.
-                        </p>
-                        <div className="flex justify-center gap-4">
-                            <Link to={`/habitaciones/${normalizedCity}`}>
-                                <Button variant="default">Ver Habitaciones</Button>
-                            </Link>
-                            <Link to={`/pisos/${normalizedCity}`}>
-                                <Button variant="outline">Ver Pisos Completos</Button>
-                            </Link>
-                        </div>
-                    </div>
+                    <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="residencias" />
                 )}
 
                 <section className="mt-16">

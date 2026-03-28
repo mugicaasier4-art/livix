@@ -6,6 +6,7 @@ import { colegiosMayores } from "@/data/seo/colegiosMayores";
 import { cities } from "@/data/seo/cities";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MapPin, Users, CheckCircle } from "lucide-react";
+import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
 
 const ColegiosMayoresCity = () => {
     const { city } = useParams<{ city: string }>();
@@ -127,9 +128,7 @@ const ColegiosMayoresCity = () => {
                 </div>
 
                 {colegios.length === 0 && (
-                    <div className="text-center py-16">
-                        <p className="text-muted-foreground">No hay información disponible de Colegios Mayores en esta ciudad todavía.</p>
-                    </div>
+                    <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="colegios-mayores" />
                 )}
 
                 <div className="mt-8 p-6 bg-muted/30 rounded-lg">
