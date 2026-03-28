@@ -21,14 +21,35 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CompatibilityRadar from "./CompatibilityRadar";
+import type { CompatibilityResult } from "@/hooks/useRoommateScoring";
 
 interface RoommateDetailModalProps {
     isOpen: boolean;
     onClose: () => void;
     roommate: MockRoommate | null;
+    compatibility?: CompatibilityResult | null;
 }
 
-const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalProps) => {
+/** Color-coded score badge */
+const ScoreBadge = ({ score }: { score: number }) => {
+    const cls =
+        score >= 85
+            ? "bg-green-100 text-green-700"
+            : score >= 70
+              ? "bg-primary/10 text-primary"
+              : "bg-amber-100 text-amber-700";
+
+    return (
+        <span
+            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${cls}`}
+        >
+            {score}% compatible
+        </span>
+    );
+};
+
+const RoommateDetailModal = ({ isOpen, onClose, roommate, compatibility }: RoommateDetailModalProps) => {
     if (!roommate) return null;
 
     const handleContact = () => {
@@ -51,6 +72,13 @@ const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalP
                         height={192}
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+
+                    {/* Score badge at top-right of cover */}
+                    {compatibility && (
+                        <div className="absolute top-4 right-4 z-10">
+                            <ScoreBadge score={compatibility.score} />
+                        </div>
+                    )}
 
                     {/* Avatar overlap */}
                     <div className="absolute -bottom-12 left-8 p-1.5 bg-background rounded-full shadow-xl">
@@ -80,6 +108,27 @@ const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalP
                         </div>
                     </div>
 
+                    {/* Same university + shared hobbies badges */}
+                    {compatibility && (compatibility.sameUniversity || compatibility.sharedHobbies.length > 0) && (
+                        <div className="flex flex-wrap gap-2">
+                            {compatibility.sameUniversity && (
+                                <Badge className="bg-green-50 text-green-700 border-green-200 text-xs font-semibold gap-1">
+                                    <GraduationCap className="w-3 h-3" />
+                                    Misma universidad
+                                </Badge>
+                            )}
+                            {compatibility.sharedHobbies.map((hobby) => (
+                                <Badge
+                                    key={hobby}
+                                    variant="secondary"
+                                    className="bg-purple-50 text-purple-600 border-0 text-xs"
+                                >
+                                    {hobby}
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
+
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2">
                         {roommate.tags.map((tag, i) => (
@@ -97,9 +146,22 @@ const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalP
                         ))}
                     </div>
 
+                    {/* Compatibility Radar Chart */}
+                    {compatibility && compatibility.breakdown.length > 0 && (
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-primary" />
+                                Compatibilidad por dimensiones
+                            </h3>
+                            <div className="bg-muted/20 rounded-2xl p-4 border border-border/10">
+                                <CompatibilityRadar breakdown={compatibility.breakdown} size={260} />
+                            </div>
+                        </div>
+                    )}
+
                     {/* Bio Section */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-2">Sobre mí</h3>
+                        <h3 className="text-lg font-semibold mb-2">Sobre mi</h3>
                         <p className="text-muted-foreground leading-relaxed">
                             {roommate.bio}
                         </p>
@@ -132,7 +194,7 @@ const RoommateDetailModal = ({ isOpen, onClose, roommate }: RoommateDetailModalP
                                 <Sparkles className="w-5 h-5" />
                             </div>
                             <div>
-                                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Género</p>
+                                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Genero</p>
                                 <p className="font-bold text-sm">{roommate.gender}</p>
                             </div>
                         </div>

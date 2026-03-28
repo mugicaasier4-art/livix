@@ -34,6 +34,11 @@ import RegisterGateModal from "@/components/auth/RegisterGateModal";
 import { toast } from "sonner";
 import type { RoomListing } from "@/data/roomListings";
 import { usePublicRoommateProfiles, type PublicRoommateProfile } from "@/hooks/usePublicRoommateProfiles";
+import PersonalityQuiz from "@/components/roommates/PersonalityQuiz";
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog";
 
 // Convert a real DB profile into the format used by flip cards
 function dbProfileToFlipCard(p: PublicRoommateProfile) {
@@ -179,6 +184,7 @@ const RoommatesFrontpage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showGate, setShowGate] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
   const { profiles: dbProfiles, isLoading: profilesLoading } = usePublicRoommateProfiles();
 
   // Only show real DB profiles, no mock fallback
@@ -210,8 +216,8 @@ const RoommatesFrontpage = () => {
   return (
     <Layout>
       <SEOHead
-        title="Encuentra Compañero de Piso en Zaragoza | Livix Roommates"
-        description="Busca compañero de piso compatible en Zaragoza. Matching inteligente por hábitos, presupuesto y universidad. Publica tu habitación gratis."
+        title="Encuentra Companero de Piso en Espana | Livix Roommates"
+        description="Busca companero de piso compatible en cualquier ciudad universitaria de Espana. Matching inteligente por compatibilidad, habitos y presupuesto. 100% gratis."
         canonical="https://livix.es/roommates"
       />
       <div className="min-h-screen bg-background">
@@ -235,7 +241,7 @@ const RoommatesFrontpage = () => {
               Encuentra tu compañero de piso ideal
             </h1>
             <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 drop-shadow-sm">
-              Conecta con otros estudiantes que buscan piso en Zaragoza para el curso 26/27
+              Conecta con otros estudiantes que buscan piso en tu ciudad universitaria para el curso 26/27
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" onClick={() => {
@@ -465,6 +471,44 @@ const RoommatesFrontpage = () => {
             </div>
           </div>
         </section>
+
+        {/* Quiz CTA Section */}
+        <section className="py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <Badge variant="outline" className="mb-4">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Test de compatibilidad
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                Descubre que tipo de companero de piso eres
+              </h2>
+              <p className="text-muted-foreground mb-8 text-lg">
+                8 preguntas rapidas para descubrir tu perfil de convivencia. Comparte tu resultado con amigos.
+              </p>
+              <Button
+                size="lg"
+                onClick={() => setShowQuiz(true)}
+                className="h-14 px-8 rounded-2xl font-bold text-base shadow-lg shadow-primary/20"
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
+                Hacer el test
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz Dialog */}
+        <Dialog open={showQuiz} onOpenChange={setShowQuiz}>
+          <DialogContent className="max-w-lg p-0 overflow-y-auto max-h-[90vh]">
+            <PersonalityQuiz
+              onComplete={(type) => {
+                setShowQuiz(false);
+                navigate('/roommates/app');
+              }}
+            />
+          </DialogContent>
+        </Dialog>
 
         {/* Section 2: Buscar Compañero - Flip Cards */}
         <section className="py-12 md:py-16 bg-muted/30">

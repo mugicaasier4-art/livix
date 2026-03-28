@@ -2,7 +2,11 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { MockRoommate, myLifeGraph, calculateCompatibility, type LifeGraphData } from "@/data/mockRoommates";
 import { usePublicRoommateProfiles, type PublicRoommateProfile } from "@/hooks/usePublicRoommateProfiles";
-import { getSavedLifeProfile } from "./CreateLifeProfile";
+import { useRoommateScoring, type CompatibilityResult } from "@/hooks/useRoommateScoring";
+import { useRoommateProfiles } from "@/hooks/useRoommateProfiles";
+import CreateLifeProfile, { getSavedLifeProfile } from "./CreateLifeProfile";
+import CitySelector from "@/components/roommates/CitySelector";
+import CompatibilityRadar from "./CompatibilityRadar";
 import {
     Search,
     MapPin,
@@ -46,6 +50,24 @@ import {
 } from "@/components/ui/sheet";
 import { Loader2 } from "lucide-react";
 
+/** Color-coded score badge helper */
+const CompatScoreBadge = ({ score, className = "" }: { score: number; className?: string }) => {
+    const cls =
+        score >= 85
+            ? "bg-green-100 text-green-700"
+            : score >= 70
+              ? "bg-primary/10 text-primary"
+              : "bg-amber-100 text-amber-700";
+
+    return (
+        <span
+            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${cls} ${className}`}
+        >
+            {score}%
+        </span>
+    );
+};
+
 // ── Convert Supabase profile to MockRoommate shape ──
 const defaultAvatars = [
     'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
@@ -64,9 +86,9 @@ function dbToMockRoommate(p: PublicRoommateProfile): MockRoommate {
         age: p.age || 20,
         gender: 'Otro',
         studies: p.faculty,
-        university: 'UNIZAR',
+        university: (p as any).university || p.preferred_location || '',
         bio: p.bio,
-        location: p.preferred_location || 'Zaragoza',
+        location: p.preferred_location || (p as any).city || '',
         interests: p.interests || [],
         image: p.avatar_url || defaultAvatars[hash % defaultAvatars.length],
         verified: p.is_verified,
@@ -213,12 +235,13 @@ const LifeGraph = ({ data, size = 220 }: LifeGraphProps) => {
 interface ProfileCardProps {
     profile: MockRoommate;
     compatibility: number;
+    compatibilityResult?: CompatibilityResult | null;
     isLiked: boolean;
     onLike: (id: string) => void;
     onClick: () => void;
 }
 
-const ProfileCard = ({ profile, compatibility, isLiked, onLike, onClick }: ProfileCardProps) => {
+const ProfileCard = ({ profile, compatibility, compatibilityResult, isLiked, onLike, onClick }: ProfileCardProps) => {
     return (
         <div
             onClick={onClick}
@@ -276,8 +299,11 @@ const ProfileCard = ({ profile, compatibility, isLiked, onLike, onClick }: Profi
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-lg text-foreground leading-tight">
+                        <h3 className="font-bold text-lg text-foreground leading-tight flex items-center gap-2">
                             {profile.name}, <span className="font-normal text-muted-foreground">{profile.age}</span>
+                            {compatibilityResult && (
+                                <CompatScoreBadge score={compatibilityResult.score} />
+                            )}
                         </h3>
                     </div>
                 </div>
@@ -339,13 +365,14 @@ const ProfileCard = ({ profile, compatibility, isLiked, onLike, onClick }: Profi
 interface ProfileDetailProps {
     profile: MockRoommate;
     compatibility: number;
+    compatibilityResult?: CompatibilityResult | null;
     isLiked: boolean;
     onLike: (id: string) => void;
     onClose: () => void;
     onMessage: (profile: MockRoommate) => void;
 }
 
-const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMessage }: ProfileDetailProps) => {
+const ProfileDetail = ({ profile, compatibility, compatibilityResult, isLiked, onLike, onClose, onMessage }: ProfileDetailProps) => {
     return (
         <Dialog open={true} onOpenChange={onClose}>
             <DialogContent className="max-w-lg max-h-[92vh] overflow-y-auto p-0 gap-0 rounded-[2rem] border-none shadow-2xl">
@@ -356,13 +383,15 @@ const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMes
                     <div className="absolute top-4 left-4 flex items-center gap-2 flex-wrap">
                         <Badge className={cn(
                             "border-0 text-xs font-bold shadow-md",
-                            compatibility >= 80
+                            (compatibilityResult?.score ?? compatibility) >= 85
                                 ? "bg-green-500 text-white"
-                                : compatibility >= 60
-                                    ? "bg-amber-500 text-white"
-                                    : "bg-gray-500 text-white"
+                                : (compatibilityResult?.score ?? compatibility) >= 70
+                                    ? "bg-blue-500 text-white"
+                                    : (compatibilityResult?.score ?? compatibility) >= 50
+                                        ? "bg-amber-500 text-white"
+                                        : "bg-gray-500 text-white"
                         )}>
-                            {compatibility}% Compatible
+                            {compatibilityResult?.score ?? compatibility}% Compatible
                         </Badge>
                         {profile.verified && (
                             <Badge className="bg-primary text-white border-0 text-[10px] font-bold gap-1 shadow-md">
@@ -438,6 +467,45 @@ const ProfileDetail = ({ profile, compatibility, isLiked, onLike, onClose, onMes
 
                 {/* ── Content below ── */}
                 <div className="px-7 py-6 space-y-6">
+
+                    {/* Compatibility Radar + badges (when real scoring available) */}
+                    {compatibilityResult && (
+                        <>
+                            {/* Same university + shared hobbies badges */}
+                            {(compatibilityResult.sameUniversity || compatibilityResult.sharedHobbies.length > 0) && (
+                                <div className="flex flex-wrap gap-2">
+                                    {compatibilityResult.sameUniversity && (
+                                        <Badge className="bg-green-50 text-green-700 border-green-200 text-xs font-semibold gap-1">
+                                            <GraduationCap className="w-3 h-3" />
+                                            Misma universidad
+                                        </Badge>
+                                    )}
+                                    {compatibilityResult.sharedHobbies.map((hobby) => (
+                                        <Badge
+                                            key={hobby}
+                                            variant="secondary"
+                                            className="bg-purple-50 text-purple-600 border-0 text-xs"
+                                        >
+                                            {hobby}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Radar chart */}
+                            {compatibilityResult.breakdown.length > 0 && (
+                                <div>
+                                    <h3 className="text-sm font-bold text-foreground mb-1 flex items-center gap-2">
+                                        <Sparkles className="w-4 h-4 text-primary" />
+                                        Compatibilidad por dimensiones
+                                    </h3>
+                                    <div className="bg-muted/20 rounded-2xl p-4 border border-border/10">
+                                        <CompatibilityRadar breakdown={compatibilityResult.breakdown} size={220} />
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
 
                     {/* Bio */}
                     <div className="bg-muted/20 rounded-2xl p-5 border border-border/10">
@@ -545,6 +613,26 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const { profiles: dbProfiles, isLoading: profilesLoading } = usePublicRoommateProfiles();
     const realProfiles = useMemo(() => dbProfiles.map(dbToMockRoommate), [dbProfiles]);
 
+    // ── Real scoring hook ──
+    const { myProfile } = useRoommateProfiles();
+    const { scoreAndRankProfiles } = useRoommateScoring();
+
+    // Compute real compatibility map (profileId -> CompatibilityResult) when myProfile exists
+    const compatibilityMap = useMemo<Map<string, CompatibilityResult>>(() => {
+        const map = new Map<string, CompatibilityResult>();
+        if (!myProfile || dbProfiles.length === 0) return map;
+
+        // Cast PublicRoommateProfile to RoommateProfile-compatible shape for scoring
+        const ranked = scoreAndRankProfiles(myProfile, dbProfiles as any);
+        for (const item of ranked) {
+            map.set(item.id, item.compatibility);
+        }
+        return map;
+    }, [myProfile, dbProfiles, scoreAndRankProfiles]);
+
+    // ── Life Profile Gate ──
+    const [hasLifeProfile, setHasLifeProfile] = useState<boolean>(() => getSavedLifeProfile() !== null);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredProfiles, setFilteredProfiles] = useState<(MockRoommate & { _compat: number })[]>([]);
     const [openProfile, setOpenProfile] = useState<MockRoommate | null>(null);
@@ -554,6 +642,10 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     // Sheet States
     const [showLikesSheet, setShowLikesSheet] = useState(false);
     const [showMatchesSheet, setShowMatchesSheet] = useState(false);
+
+    // City/University filter state
+    const [filterCity, setFilterCity] = useState("");
+    const [filterUniversity, setFilterUniversity] = useState("");
 
     // User's own profile stats (editable) — use saved profile if available
     const [userStats, setUserStats] = useState<LifeGraphData>(() => getSavedLifeProfile() ?? { ...myLifeGraph });
@@ -592,7 +684,8 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     useEffect(() => {
         let result = realProfiles.map(p => ({
             ...p,
-            _compat: calculateCompatibility(userStats, p.lifeGraph),
+            // Use real scoring if available, fallback to mock lifeGraph scoring
+            _compat: compatibilityMap.get(p.id)?.score ?? calculateCompatibility(userStats, p.lifeGraph),
         }));
 
         if (searchTerm) {
@@ -619,11 +712,18 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
             result = result.filter(p => p.verified);
         }
 
+        // City filter from CitySelector
+        if (filterCity) {
+            result = result.filter(p =>
+                p.location.toLowerCase().includes(filterCity.toLowerCase())
+            );
+        }
+
         // Sort by compatibility (most similar spider first)
         result.sort((a, b) => b._compat - a._compat);
 
         setFilteredProfiles(result);
-    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm, userStats, realProfiles]);
+    }, [searchTerm, selectedZones, verifiedOnly, cleanlinessLevel, biorhythm, userStats, realProfiles, compatibilityMap, filterCity]);
 
     const handleLike = useCallback((id: string) => {
         setLikedProfiles(prev => {
@@ -952,6 +1052,32 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
 
 
 
+                                        {/* City / University Filter */}
+                                        <div className="bg-white rounded-[2rem] p-6 shadow-lg shadow-primary/5 border border-border/40">
+                                            <h2 className="font-bold text-base text-foreground mb-4 flex items-center gap-2">
+                                                <MapPin className="w-4 h-4 text-primary" />
+                                                Filtrar por ciudad
+                                            </h2>
+                                            <CitySelector
+                                                selectedCity={filterCity}
+                                                selectedUniversity={filterUniversity}
+                                                onCityChange={setFilterCity}
+                                                onUniversityChange={setFilterUniversity}
+                                                className="grid-cols-1"
+                                            />
+                                            {(filterCity || filterUniversity) && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="mt-3 text-xs text-muted-foreground hover:text-foreground w-full"
+                                                    onClick={() => { setFilterCity(""); setFilterUniversity(""); }}
+                                                >
+                                                    <X className="w-3 h-3 mr-1" />
+                                                    Limpiar ciudad
+                                                </Button>
+                                            )}
+                                        </div>
+
                                         {/* Liked count */}
                                         {likedProfiles.size > 0 && (
                                             <div className="bg-red-50 border border-red-100 rounded-2xl p-4 text-center">
@@ -1011,6 +1137,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                                                     key={profile.id}
                                                     profile={profile}
                                                     compatibility={profile._compat}
+                                                    compatibilityResult={compatibilityMap.get(profile.id) ?? null}
                                                     isLiked={likedProfiles.has(profile.id)}
                                                     onLike={handleLike}
                                                     onClick={() => setOpenProfile(profile)}
@@ -1030,6 +1157,7 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
                 <ProfileDetail
                     profile={openProfile}
                     compatibility={getCompat(openProfile.id)}
+                    compatibilityResult={compatibilityMap.get(openProfile.id) ?? null}
                     isLiked={likedProfiles.has(openProfile.id)}
                     onLike={handleLike}
                     onClose={() => setOpenProfile(null)}

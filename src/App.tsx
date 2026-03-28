@@ -57,12 +57,14 @@ const Unauthorized = lazy(() => import("./pages/Unauthorized"));
 const ListingDetail = lazy(() => import("./pages/ListingDetail"));
 const LandlordDashboard = lazy(() => import("./pages/landlord/Dashboard"));
 const LandlordOnboarding = lazy(() => import("./pages/landlord/Onboarding"));
+const QuickOnboarding = lazy(() => import("./pages/landlord/QuickOnboarding"));
 const CreateListing = lazy(() => import("./pages/landlord/CreateListing"));
 const StudentOnboarding = lazy(() => import("./pages/student/Onboarding"));
 const StudentDashboard = lazy(() => import("./pages/student/Dashboard"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 const AdminQuickListing = lazy(() => import("./pages/admin/QuickListing"));
 const AdminBulkImport = lazy(() => import("./pages/admin/BulkImport"));
+const AdminCRM = lazy(() => import("./pages/admin/CRM"));
 const Support = lazy(() => import("./pages/Support"));
 const SupportSubmit = lazy(() => import("./pages/support/Submit"));
 const SupportSuccess = lazy(() => import("./pages/support/Success"));
@@ -78,6 +80,7 @@ const LandlordListings = lazy(() => import("./pages/landlord/Listings"));
 const EditListing = lazy(() => import("./pages/landlord/EditListing"));
 const Analytics = lazy(() => import("./pages/landlord/Analytics"));
 const ListRoom = lazy(() => import("./pages/roommates/ListRoom")); // New Student Listing Flow
+const RoommateQuiz = lazy(() => import("./pages/roommates/Quiz"));
 
 // Secret premium dashboard for residences
 const ResidencesAdminPortal = lazy(() => import("./pages/residences/AdminPortal"));
@@ -90,6 +93,7 @@ const PisosCity = lazy(() => import("./pages/seo/PisosCity"));
 const PisosBarrio = lazy(() => import("./pages/seo/PisosBarrio"));
 const CampusLanding = lazy(() => import("./pages/seo/CampusLanding"));
 const ColegiosMayoresCity = lazy(() => import("./pages/seo/ColegiosMayoresCity"));
+const AlquilarBarrio = lazy(() => import("./pages/seo/AlquilarBarrio"));
 
 // QueryClient singleton - created once outside component
 const queryClient = new QueryClient({
@@ -165,6 +169,8 @@ const App = () => (
                                 <Route path="/residences/:id" element={<ResidenceDetail />} />
                                 <Route path="/roommates" element={<RoommatesFrontpage />} />
                                 <Route path="/roommates/search" element={<RoommateSearchPage />} />
+                                <Route path="/roommates/quiz" element={<RoommateQuiz />} />
+                                <Route path="/roommates/join/:groupId" element={<RoommatesApp />} />
                                 <Route path="/publicar-habitacion" element={<ListRoom />} />
                                 <Route path="/roommates/app" element={<RoommatesApp />} />
                                 <Route path="/roommates/listing/:id" element={<RoomListingDetail />} />
@@ -198,6 +204,7 @@ const App = () => (
                                 <Route path="/pisos/:city/:barrio" element={<PisosBarrio />} />
                                 <Route path="/campus/:campus" element={<CampusLanding />} />
                                 <Route path="/colegios-mayores/:city" element={<ColegiosMayoresCity />} />
+                                <Route path="/alquilar-piso-estudiantes/:barrio" element={<AlquilarBarrio />} />
 
                                 {/* Secret Premium Dashboard for Residences */}
                                 <Route path="/residences/admin-portal-x7k9" element={<ResidencesAdminPortal />} />
@@ -259,6 +266,7 @@ const App = () => (
                                     <LandlordOnboarding />
                                   </ProtectedRoute>
                                 } />
+                                <Route path="/ll/quick-onboarding" element={<QuickOnboarding />} />
                                 <Route path="/ll/create-listing" element={
                                   <ProtectedRoute allowedRoles={['landlord']}>
                                     <CreateListing />
@@ -321,6 +329,11 @@ const App = () => (
                                 <Route path="/admin/bulk-import" element={
                                   <ProtectedRoute allowedRoles={['admin']}>
                                     <AdminBulkImport />
+                                  </ProtectedRoute>
+                                } />
+                                <Route path="/admin/crm" element={
+                                  <ProtectedRoute allowedRoles={['admin']}>
+                                    <AdminCRM />
                                   </ProtectedRoute>
                                 } />
 

@@ -20,12 +20,39 @@ export interface RoommateProfile {
   smoking_allowed: boolean;
   pets_allowed: boolean;
   created_at: string;
+  // New fields from v2 migration
+  city: string | null;
+  university: string | null;
+  campus: string | null;
+  languages: string[] | null;
+  sleep_time: number | null;
+  cleanliness: number | null;
+  noise_tolerance: number | null;
+  guest_frequency: number | null;
+  intro_extro: number | null;
+  study_place: string | null;
+  cooking: number | null;
+  expense_sharing: string | null;
+  party_frequency: number | null;
+  hobbies: string[] | null;
+  move_out_date: string | null;
+  is_verified_student: boolean;
+  personality_type: string | null;
+  profile_completeness: number;
+  lifestyle_preferences?: Record<string, unknown> | null;
   user?: {
     name: string;
     avatar_url: string | null;
     is_verified: boolean;
   };
 }
+
+export type RoommateProfileInput = Omit<
+  RoommateProfile,
+  'id' | 'user_id' | 'created_at' | 'user' | 'is_verified_student' | 'personality_type' | 'move_out_date'
+> & {
+  lifestyle_preferences?: Record<string, unknown>;
+};
 
 export const useRoommateProfiles = () => {
   const [profiles, setProfiles] = useState<RoommateProfile[]>([]);
@@ -36,7 +63,7 @@ export const useRoommateProfiles = () => {
   // Fetch all active profiles (excluding current user and already liked)
   const fetchProfiles = async () => {
     if (!user) return;
-    
+
     setIsLoading(true);
     try {
       // First, get IDs of users we've already liked
@@ -47,29 +74,33 @@ export const useRoommateProfiles = () => {
 
       if (likedError) throw likedError;
 
-      const likedIds = likedData?.map(like => like.liked_id) || [];
+      const likedIds = likedData?.map((like) => like.liked_id) || [];
 
       // Fetch active profiles excluding current user
       const { data, error } = await supabase
         .from('roommate_profiles')
-        .select(`
+        .select(
+          `
           *,
           profiles!roommate_profiles_user_id_profiles_fkey(name, avatar_url, is_verified)
-        `)
+        `
+        )
         .eq('is_active', true)
         .neq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
+
       // Transform data and filter out liked profiles in client
       const transformedProfiles = (data || [])
-        .map(profile => ({
+        .map((profile) => ({
           ...profile,
-          user: Array.isArray(profile.profiles) ? profile.profiles[0] : profile.profiles
+          user: Array.isArray(profile.profiles)
+            ? profile.profiles[0]
+            : profile.profiles,
         }))
-        .filter(profile => !likedIds.includes(profile.user_id)); // Client-side filter
-      
+        .filter((profile) => !likedIds.includes(profile.user_id));
+
       setProfiles(transformedProfiles as any);
     } catch (error) {
       console.error('Error fetching profiles:', error);
@@ -82,23 +113,27 @@ export const useRoommateProfiles = () => {
   // Fetch user's own profile
   const fetchMyProfile = async () => {
     if (!user) return;
-    
+
     try {
       const { data, error } = await supabase
         .from('roommate_profiles')
-        .select(`
+        .select(
+          `
           *,
           profiles!roommate_profiles_user_id_profiles_fkey(name, avatar_url, is_verified)
-        `)
+        `
+        )
         .eq('user_id', user.id)
         .maybeSingle();
 
       if (error && error.code !== 'PGRST116') throw error;
-      
+
       if (data) {
         const transformedProfile = {
           ...data,
-          user: Array.isArray(data.profiles) ? data.profiles[0] : data.profiles
+          user: Array.isArray(data.profiles)
+            ? data.profiles[0]
+            : data.profiles,
         };
         setMyProfile(transformedProfile as any);
       } else {
@@ -110,36 +145,56 @@ export const useRoommateProfiles = () => {
   };
 
   // Create profile
-  const createProfile = async (profileData: Omit<RoommateProfile, 'id' | 'user_id' | 'created_at' | 'user'> & { lifestyle_preferences?: Record<string, unknown> }) => {
+  const createProfile = async (profileData: RoommateProfileInput) => {
     if (!user) throw new Error('No autenticado');
-    
+
     try {
       const { data, error } = await supabase
         .from('roommate_profiles')
-        .insert([{
-          user_id: user.id,
-          faculty: profileData.faculty,
-          year: profileData.year,
-          bio: profileData.bio,
-          interests: profileData.interests,
-          budget_min: profileData.budget_min,
-          budget_max: profileData.budget_max,
-          move_date: profileData.move_date,
-          preferred_location: profileData.preferred_location,
-          is_active: profileData.is_active,
-          age: profileData.age,
-          gender_preference: profileData.gender_preference,
-          smoking_allowed: profileData.smoking_allowed,
-          pets_allowed: profileData.pets_allowed,
-          lifestyle_preferences: JSON.parse(JSON.stringify(profileData.lifestyle_preferences || {}))
-        }])
+        .insert([
+          {
+            user_id: user.id,
+            faculty: profileData.faculty,
+            year: profileData.year,
+            bio: profileData.bio,
+            interests: profileData.interests,
+            budget_min: profileData.budget_min,
+            budget_max: profileData.budget_max,
+            move_date: profileData.move_date,
+            preferred_location: profileData.preferred_location,
+            is_active: profileData.is_active ?? true,
+            age: profileData.age,
+            gender_preference: profileData.gender_preference,
+            smoking_allowed: profileData.smoking_allowed,
+            pets_allowed: profileData.pets_allowed,
+            // New v2 fields
+            city: profileData.city,
+            university: profileData.university,
+            campus: profileData.campus,
+            languages: profileData.languages,
+            sleep_time: profileData.sleep_time,
+            cleanliness: profileData.cleanliness,
+            noise_tolerance: profileData.noise_tolerance,
+            guest_frequency: profileData.guest_frequency,
+            intro_extro: profileData.intro_extro,
+            study_place: profileData.study_place,
+            cooking: profileData.cooking,
+            expense_sharing: profileData.expense_sharing,
+            party_frequency: profileData.party_frequency,
+            hobbies: profileData.hobbies,
+            profile_completeness: profileData.profile_completeness ?? 0,
+            lifestyle_preferences: JSON.parse(
+              JSON.stringify(profileData.lifestyle_preferences || {})
+            ),
+          },
+        ])
         .select()
         .single();
 
       if (error) throw error;
 
       toast.success('Perfil creado', {
-        description: '¡Tu perfil está ahora visible para otros estudiantes!'
+        description: 'Tu perfil esta ahora visible para otros estudiantes!',
       });
 
       setMyProfile(data);
@@ -154,11 +209,14 @@ export const useRoommateProfiles = () => {
   // Update profile
   const updateProfile = async (updates: Partial<RoommateProfile>) => {
     if (!user || !myProfile) throw new Error('No profile to update');
-    
+
     try {
+      // Strip non-DB fields
+      const { user: _user, ...dbUpdates } = updates as any;
+
       const { data, error } = await supabase
         .from('roommate_profiles')
-        .update(updates)
+        .update(dbUpdates)
         .eq('user_id', user.id)
         .select()
         .single();
@@ -178,7 +236,7 @@ export const useRoommateProfiles = () => {
   // Delete profile
   const deleteProfile = async () => {
     if (!user) throw new Error('No autenticado');
-    
+
     try {
       const { error } = await supabase
         .from('roommate_profiles')
@@ -210,6 +268,7 @@ export const useRoommateProfiles = () => {
     createProfile,
     updateProfile,
     deleteProfile,
-    refetch: fetchProfiles
+    refetch: fetchProfiles,
+    refetchMyProfile: fetchMyProfile,
   };
 };

@@ -43,6 +43,8 @@ import RoomListingCard from "@/components/roommates/RoomListingCard";
 import ProfilingConsent from "@/components/roommates/ProfilingConsent";
 import { toast } from "sonner";
 import RoommateSearchGrid from "@/components/roommates/RoommateSearchGrid";
+import GroupSearch from "@/components/roommates/GroupSearch";
+import CreateGroup from "@/components/roommates/CreateGroup";
 
 interface MatchWithProfile {
   user_id: string;
@@ -153,6 +155,7 @@ const Roommates = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("explore");
   const [showMatchModal, setShowMatchModal] = useState(false);
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [matchedUserName, setMatchedUserName] = useState("");
   const [selectedPath, setSelectedPath] = useState<UserPath>('none');
   const navigate = useNavigate();
@@ -327,8 +330,8 @@ const Roommates = () => {
     return (
       <Layout>
         <SEOHead
-          title="Buscar Compañeros de Piso en Zaragoza | Livix"
-          description="Encuentra tu compañero de piso ideal en Zaragoza. Matching inteligente por compatibilidad, hábitos y presupuesto. Regístrate gratis en Livix."
+          title="Buscar Companero de Piso en Espana | Livix"
+          description="Encuentra tu companero de piso ideal en cualquier ciudad universitaria de Espana. Matching inteligente por compatibilidad, habitos y presupuesto. 100% gratis."
           canonical="https://livix.es/roommates"
         />
         <div className="min-h-screen bg-background py-6 md:py-12">
@@ -573,10 +576,14 @@ const Roommates = () => {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-3 mb-8">
               <TabsTrigger value="explore" className="gap-2">
                 <Users className="h-4 w-4" />
                 Explorar ({availableProfiles.length})
+              </TabsTrigger>
+              <TabsTrigger value="groups" className="gap-2">
+                <Home className="h-4 w-4" />
+                Grupos
               </TabsTrigger>
               <TabsTrigger value="matches" className="gap-2">
                 <Heart className="h-4 w-4" />
@@ -826,6 +833,30 @@ const Roommates = () => {
                   </div>
                 </div>
               </div>
+            </TabsContent>
+
+            {/* Groups Tab */}
+            <TabsContent value="groups" className="space-y-6">
+              <div className="flex justify-end">
+                <Button onClick={() => setShowCreateGroup(true)}>
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Crear grupo
+                </Button>
+              </div>
+              <GroupSearch city={myProfile?.city || undefined} />
+
+              <Dialog open={showCreateGroup} onOpenChange={setShowCreateGroup}>
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Crear nuevo grupo</DialogTitle>
+                  </DialogHeader>
+                  <CreateGroup
+                    onCreated={() => {
+                      setShowCreateGroup(false);
+                    }}
+                  />
+                </DialogContent>
+              </Dialog>
             </TabsContent>
 
             {/* Matches Tab */}
