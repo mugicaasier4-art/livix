@@ -3,8 +3,10 @@ import { AnimatedCounter } from "@/components/ui/AnimatedElements";
 import { Home, Users, Clock, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const AnimatedStats = () => {
+    const activeCity = useCityOrDefault();
     const [listingCount, setListingCount] = useState<number>(0);
     const [studentCount, setStudentCount] = useState<number>(0);
 
@@ -29,7 +31,7 @@ const AnimatedStats = () => {
             icon: Home,
             value: listingCount || 0,
             suffix: "",
-            label: "Pisos publicados en Zaragoza",
+            label: `Pisos publicados en ${activeCity.name}`,
             color: "text-primary"
         },
         {

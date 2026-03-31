@@ -2,14 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, TrendingUp, Calendar, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const BlogCTA = () => {
   const navigate = useNavigate();
+  const activeCity = useCityOrDefault();
 
   const topics = [
     {
       icon: Calendar,
-      title: "Vida en Zaragoza",
+      title: `Vida en ${activeCity.name}`,
       description: "Barrios, transporte y lugares"
     },
     {
@@ -43,7 +45,7 @@ const BlogCTA = () => {
           </h2>
           
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            Guías prácticas sobre alquiler, zonas de Zaragoza y vida universitaria
+            Guías prácticas sobre alquiler, zonas de {activeCity.name} y vida universitaria
           </p>
 
           <div className="grid gap-6 md:grid-cols-3 mb-10">

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Instagram, Twitter, Linkedin, Mail, MapPin } from "lucide-react";
 import { SEOLinks } from "@/components/seo/SEOLinks";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const activeCity = useCityOrDefault();
 
   const legalLinks = [
     { label: "Términos y Condiciones", to: "/legal/terms" },
@@ -36,12 +38,12 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-foreground">LIVIX</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              El marketplace de alojamiento universitario en Zaragoza.
+              El marketplace de alojamiento universitario en {activeCity.name}.
               Pisos verificados, compañeros de piso y vida universitaria.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              <span>Zaragoza, España</span>
+              <span>{activeCity.name}, España</span>
             </div>
           </div>
 
@@ -110,7 +112,7 @@ const Footer = () => {
             © {currentYear} Livix. Todos los derechos reservados.
           </p>
           <p className="text-xs text-muted-foreground">
-            Hecho con ❤️ para estudiantes en Zaragoza
+            Hecho con ❤️ para estudiantes en {activeCity.name}
           </p>
         </div>
       </div>

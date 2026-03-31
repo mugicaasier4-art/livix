@@ -6,7 +6,6 @@ import Features from "@/components/sections/Features";
 import AnimatedStats from "@/components/sections/AnimatedStats";
 import FeaturedListings from "@/components/sections/FeaturedListings";
 import CategoryCTA from "@/components/sections/CategoryCTA";
-import PremiumCTA from "@/components/sections/PremiumCTA";
 import TestimonialSection from "@/components/sections/TestimonialSection";
 import HomeFAQ from "@/components/sections/HomeFAQ";
 
@@ -26,7 +25,6 @@ const Index = () => {
       <FeaturedListings />
       <TestimonialSection />
       <CategoryCTA />
-      <PremiumCTA />
       <HomeFAQ />
     </Layout>
   );

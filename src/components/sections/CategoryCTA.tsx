@@ -2,15 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Home, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const CategoryCTA = () => {
   const navigate = useNavigate();
+  const activeCity = useCityOrDefault();
 
   const categories = [
     {
       icon: Home,
       title: "Busco habitación o piso",
-      description: "Habitaciones desde 250€/mes y pisos compartidos en todas las zonas de Zaragoza",
+      description: `Habitaciones desde 250€/mes y pisos compartidos en todas las zonas de ${activeCity.name}`,
       buttonText: "Ver pisos disponibles",
       route: "/explore"
     },

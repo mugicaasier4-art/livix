@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Home, Search, MessageCircle, CheckCircle } from 'lucide-react';
+import { useCityOrDefault } from '@/contexts/CityContext';
 
 interface WelcomeModalProps {
   open: boolean;
@@ -15,6 +16,7 @@ export const WelcomeModal = ({ open, onClose, userRole, onRoleSelect }: WelcomeM
   const [currentStep, setCurrentStep] = useState(0);
   const [isSelectingRole, setIsSelectingRole] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const activeCity = useCityOrDefault();
 
   const handleRoleSelection = async (role: 'student' | 'landlord') => {
     setIsUpdating(true);
@@ -32,7 +34,7 @@ export const WelcomeModal = ({ open, onClose, userRole, onRoleSelect }: WelcomeM
   const studentSteps = [
     {
       title: '¡Bienvenido a Livix!',
-      description: 'Encuentra tu alojamiento perfecto para estudiar en Zaragoza.',
+      description: `Encuentra tu alojamiento perfecto para estudiar en ${activeCity.name}.`,
       icon: Home,
       tips: [
         'Explora miles de pisos cerca de tu universidad',

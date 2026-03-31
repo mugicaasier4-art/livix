@@ -1,42 +1,35 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Search, MapPin, ChevronsUpDown, Check } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { analytics } from "@/utils/analytics";
 import heroImage from "@/assets/hero-students.jpg";
+import { useCity, useCityOrDefault } from "@/contexts/CityContext";
+import { CITIES } from "@/data/cities";
+import { cn } from "@/lib/utils";
 
-interface HeroProps {
-  city?: string;
-}
-
-const Hero = ({ city = "Zaragoza" }: HeroProps) => {
-  const [location, setLocation] = useState("");
+const Hero = () => {
+  const activeCity = useCityOrDefault();
+  const { setCity } = useCity();
   const [accommodationType, setAccommodationType] = useState("");
+  const [cityOpen, setCityOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = () => {
     analytics.track('hero_search_used', {
-      location,
+      city: activeCity.id,
       accommodationType
     });
 
     const params = new URLSearchParams();
-    if (location.trim()) {
-      params.set('location', location.trim());
-    }
     if (accommodationType) {
       params.set('type', accommodationType);
     }
 
     navigate(`/explore?${params.toString()}`);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
   };
 
   return (
@@ -72,51 +65,112 @@ const Hero = ({ city = "Zaragoza" }: HeroProps) => {
             <h1 className="text-3xl font-bold tracking-tight text-white md:text-6xl">
               Tu alojamiento universitario
               <span className="block text-white/90 mt-1 md:mt-2">
-                en {city}, resuelto.
+                en {activeCity.name}, resuelto.
               </span>
             </h1>
 
             <p className="mt-4 md:mt-6 text-base text-white/90 md:text-xl">
               Pisos, habitaciones y residencias verificadas para estudiantes.
-              <span className="block mt-1">Busca, compara y reserva tu alojamiento en {city} online.</span>
+              <span className="block mt-1">Busca, compara y reserva tu alojamiento en {activeCity.name} online.</span>
             </p>
 
             {/* Search Bar */}
-            <div className="mt-6 md:mt-8 flex flex-col gap-3 md:gap-4 rounded-2xl bg-background p-4 md:p-6 shadow-floating md:flex-row">
-              <div className="flex flex-1 items-center space-x-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">
-                  <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
+            <div className="mt-6 md:mt-8 rounded-2xl bg-background p-3 shadow-floating">
+              {/* Mobile: stack vertical / Desktop: fila única */}
+              <div className="flex flex-col md:flex-row md:items-center gap-2">
+
+                {/* Ciudad — combobox con búsqueda */}
+                <Popover open={cityOpen} onOpenChange={setCityOpen}>
+                  <PopoverTrigger asChild>
+                    <button
+                      className={cn(
+                        "flex items-center gap-3 px-3 py-2 rounded-xl transition-colors md:flex-1 md:min-w-0 w-full text-left",
+                        "hover:bg-muted/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                        cityOpen && "bg-muted/40"
+                      )}
+                      aria-expanded={cityOpen}
+                    >
+                      <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 shrink-0">
+                        <MapPin className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide leading-none mb-1">Ciudad</p>
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm font-medium text-foreground truncate">{activeCity.name}</span>
+                          <ChevronsUpDown className="h-3 w-3 text-muted-foreground shrink-0 ml-auto" />
+                        </div>
+                      </div>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72 p-0 shadow-lg" align="start" sideOffset={8}>
+                    <Command>
+                      <div className="flex items-center border-b px-3">
+                        <Search className="h-4 w-4 text-muted-foreground shrink-0 mr-2" />
+                        <CommandInput
+                          placeholder="¿A qué ciudad te mudas?"
+                          className="border-0 shadow-none focus-visible:ring-0 h-11 pl-0"
+                        />
+                      </div>
+                      <CommandList className="max-h-60">
+                        <CommandEmpty className="py-4 text-center text-sm text-muted-foreground">
+                          Todavía no estamos en esa ciudad.
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {CITIES.map((city) => (
+                            <CommandItem
+                              key={city.id}
+                              value={`${city.name} ${city.region}`}
+                              onSelect={() => {
+                                setCity(city.id);
+                                setCityOpen(false);
+                              }}
+                              className="flex items-center gap-3 px-3 py-2.5 cursor-pointer"
+                            >
+                              <span className="text-lg w-6 text-center shrink-0">{city.emoji}</span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium leading-none">{city.name}</p>
+                                <p className="text-xs text-muted-foreground mt-0.5">{city.region}</p>
+                              </div>
+                              {activeCity.id === city.id && (
+                                <Check className="h-4 w-4 text-primary shrink-0" />
+                              )}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Separador vertical (solo desktop) */}
+                <div className="hidden md:block w-px h-10 bg-border shrink-0" />
+
+                {/* Tipo de alojamiento */}
+                <div className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted/40 transition-colors md:flex-1 md:min-w-0">
+                  <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 shrink-0">
+                    <Search className="h-4 w-4 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide leading-none mb-1">Tipo</p>
+                    <Select value={accommodationType} onValueChange={setAccommodationType}>
+                      <SelectTrigger className="border-0 bg-transparent p-0 h-auto text-sm font-medium focus:ring-0 shadow-none w-full">
+                        <SelectValue placeholder="Tipo de alojamiento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="habitacion">Habitación</SelectItem>
+                        <SelectItem value="piso">Piso completo</SelectItem>
+                        <SelectItem value="residencia">Residencia</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <label htmlFor="hero-location" className="sr-only">Ubicación</label>
-                <Input
-                  id="hero-location"
-                  placeholder="Ej: Delicias, Centro, Campus..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  enterKeyHint="search"
-                  className="border-0 bg-transparent text-base focus-visible:ring-0"
-                />
+
+                {/* Botón buscar */}
+                <Button size="lg" className="w-full md:w-auto px-8 glow-on-hover shrink-0" onClick={handleSearch}>
+                  Buscar
+                </Button>
+
               </div>
-              <div className="flex flex-1 items-center space-x-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">
-                  <Search className="h-5 w-5 text-primary" aria-hidden="true" />
-                </div>
-                <label htmlFor="hero-type" className="sr-only">Tipo de alojamiento</label>
-                <Select value={accommodationType} onValueChange={setAccommodationType}>
-                  <SelectTrigger id="hero-type" className="border-0 bg-transparent text-base focus:ring-0 shadow-none">
-                    <SelectValue placeholder="Tipo de alojamiento" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="habitacion">Habitación</SelectItem>
-                    <SelectItem value="piso">Piso completo</SelectItem>
-                    <SelectItem value="residencia">Residencia</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button size="lg" className="w-full md:w-auto px-8 glow-on-hover" onClick={handleSearch}>
-                Buscar alojamiento
-              </Button>
             </div>
 
             {/* Social proof */}

@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
 import ExitIntentPopup from "@/components/common/ExitIntentPopup";
 import BackToTopFAB from "@/components/ui/BackToTopFAB";
+import LoginPrompt from "@/components/auth/LoginPrompt";
 
 interface LayoutProps {
   children: ReactNode;
@@ -29,6 +30,7 @@ const Layout = ({ children }: LayoutProps) => {
       <MobileBottomNav />
       <BackToTopFAB />
       <ExitIntentPopup />
+      <LoginPrompt />
     </div>
   );
 };

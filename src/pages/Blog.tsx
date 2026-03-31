@@ -3,21 +3,28 @@ import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, ArrowRight, Home, GraduationCap, Lightbulb, PartyPopper, Sparkles, Scale, Banknote, Clock, TrendingUp } from "lucide-react";
+import { Calendar, User, ArrowRight, Home, GraduationCap, Lightbulb, PartyPopper, Sparkles, Scale, Banknote, Clock, TrendingUp, MapPin } from "lucide-react";
 import { analytics } from "@/utils/analytics";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { blogPosts, categories, BlogCategory } from "@/data/blogContent";
+import { blogPosts, categories, BlogCategory, BlogCityCategory } from "@/data/blogContent";
 import blogHeroCollage from "@/assets/blog/blog-hero-collage.jpg";
+import { useCity } from "@/contexts/CityContext";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory>("all");
+  const { selectedCity } = useCity();
 
   useEffect(() => {
     analytics.track('blog_viewed');
   }, []);
 
-  const categoryIcons: Record<BlogCategory, React.ComponentType<{ className?: string }>> = {
+  // Reset category when city changes
+  useEffect(() => {
+    setSelectedCategory("all");
+  }, [selectedCity?.id]);
+
+  const generalCategoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     all: Sparkles,
     pisos: Home,
     legalidad: Scale,
@@ -27,10 +34,54 @@ const Blog = () => {
     eventos: PartyPopper,
   };
 
-  const filteredPosts = (selectedCategory === "all"
-    ? [...blogPosts]
-    : blogPosts.filter(post => post.category === selectedCategory)
-  ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // City slug categories use MapPin icon
+  const getCategoryIcon = (id: string) =>
+    generalCategoryIcons[id] ?? MapPin;
+
+  // Whether selectedCategory is a city category
+  const cityCategSlugs: BlogCityCategory[] = [
+    "zaragoza", "madrid", "barcelona", "sevilla", "valencia",
+    "granada", "malaga", "bilbao", "salamanca", "pamplona", "logrono", "santiago",
+  ];
+  const isSelectedCityCategory = cityCategSlugs.includes(selectedCategory as BlogCityCategory);
+
+  // Filtering logic:
+  // - If selectedCategory is a city slug → show only posts for that city
+  // - If selectedCategory is a general category and there's a selected city →
+  //     show posts matching category AND (no citySlug OR citySlug matches selected city)
+  // - If selectedCategory === "all" and city selected →
+  //     show general posts + city-specific posts for selected city
+  // - If no city selected → show only general posts (no citySlug) filtered by category
+  const filteredPosts = (() => {
+    let posts = [...blogPosts];
+
+    if (isSelectedCityCategory) {
+      // Show only posts for the clicked city category
+      posts = posts.filter(p => p.citySlug === selectedCategory);
+    } else if (selectedCity) {
+      // City is selected: show general posts + posts for that city
+      posts = posts.filter(p => !p.citySlug || p.citySlug === selectedCity.id);
+      if (selectedCategory !== "all") {
+        posts = posts.filter(p => p.category === selectedCategory);
+      }
+    } else {
+      // No city selected: only general posts
+      posts = posts.filter(p => !p.citySlug);
+      if (selectedCategory !== "all") {
+        posts = posts.filter(p => p.category === selectedCategory);
+      }
+    }
+
+    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  })();
+
+  // Build the categories bar: general categories + city category if a city is selected
+  const visibleCategories = [
+    ...categories,
+    ...(selectedCity
+      ? [{ id: selectedCity.id as BlogCategory, label: `📍 ${selectedCity.name}` }]
+      : []),
+  ];
 
   const [featuredPost, ...otherPosts] = filteredPosts;
 
@@ -97,8 +148,9 @@ const Blog = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-2 p-1.5 bg-background/80 backdrop-blur-xl rounded-full border shadow-lg overflow-x-auto scrollbar-hide">
-                {categories.map((category) => {
-                  const Icon = categoryIcons[category.id];
+                {visibleCategories.map((category) => {
+                  const Icon = getCategoryIcon(category.id);
+                  const isCityPill = cityCategSlugs.includes(category.id as BlogCityCategory);
                   return (
                     <button
                       key={category.id}
@@ -107,10 +159,12 @@ const Blog = () => {
                         "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0",
                         selectedCategory === category.id
                           ? "bg-primary text-primary-foreground shadow-md"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                          : isCityPill
+                            ? "text-primary border border-primary/30 hover:bg-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                       )}
                     >
-                      <Icon className="h-4 w-4" />
+                      {!isCityPill && <Icon className="h-4 w-4" />}
                       {category.label}
                     </button>
                   );

@@ -1,5 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { lazy, Suspense } from "react";
+const CitySelector = lazy(() => import("@/components/city/CitySelector"));
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { NotificationsDropdown } from "./NotificationsDropdown";
@@ -11,15 +13,18 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { LogOut, Menu, ChevronDown, X, Heart, User, Settings, UserCircle, Home, MessageSquare, BedDouble } from "lucide-react";
+import { LogOut, Menu, ChevronDown, X, Heart, User, Settings, UserCircle, Home, MessageSquare, BedDouble, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCity } from "@/contexts/CityContext";
 import livixLogo from "@/assets/livix-logo.png";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { selectedCity } = useCity();
+  const [cityChangerOpen, setCityChangerOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -230,6 +235,18 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
+
+          {/* City Selector Button - Visible on tablet+ */}
+          <div className="hidden md:flex items-center">
+            <button
+              onClick={() => setCityChangerOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
+            >
+              <MapPin className="h-4 w-4" />
+              {selectedCity ? selectedCity.name : "Elige ciudad"}
+              <ChevronDown className="h-3 w-3" />
+            </button>
+          </div>
 
           {/* Auth Section - Visible on tablet+ */}
           <div className="hidden md:flex items-center space-x-2">
@@ -529,8 +546,28 @@ const Header = () => {
               </Link>
             </div>
           )}
+        {/* City selector mobile button */}
+        <div className="px-6 pb-4">
+          <button
+            onClick={() => { setCityChangerOpen(true); setMobileMenuOpen(false); }}
+            className="flex items-center gap-2 w-full px-4 py-3 rounded-xl border border-border bg-muted/30 text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+          >
+            <MapPin className="h-4 w-4 text-primary" />
+            <span>{selectedCity ? `Ciudad: ${selectedCity.name}` : "Elige tu ciudad"}</span>
+            <ChevronDown className="h-3 w-3 ml-auto" />
+          </button>
+        </div>
         </nav>
       </div>
+
+      {/* City changer overlay */}
+      {cityChangerOpen && (
+        <div className="fixed inset-0 z-[110] bg-background overflow-y-auto">
+          <Suspense fallback={<div className="flex h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" /></div>}>
+            <CitySelector onClose={() => setCityChangerOpen(false)} />
+          </Suspense>
+        </div>
+      )}
     </header>
   );
 };

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
+import { useCityOrDefault } from "@/contexts/CityContext";
 import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -160,6 +161,7 @@ const Roommates = () => {
   const [selectedPath, setSelectedPath] = useState<UserPath>('none');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const activeCity = useCityOrDefault();
   const { profiles, myProfile, isLoading } = useRoommateProfiles();
   const { likeProfile, isLiked, matches, isLoading: matchesLoading } = useRoommateMatching();
   const { getOrCreateConversation } = useMessages();
@@ -330,8 +332,8 @@ const Roommates = () => {
     return (
       <Layout>
         <SEOHead
-          title="Buscar Companero de Piso en Espana | Livix"
-          description="Encuentra tu companero de piso ideal en cualquier ciudad universitaria de Espana. Matching inteligente por compatibilidad, habitos y presupuesto. 100% gratis."
+          title={`Buscar Compañeros de Piso en ${activeCity.name} | Livix`}
+          description={`Encuentra tu compañero de piso ideal en ${activeCity.name}. Matching inteligente por compatibilidad, hábitos y presupuesto. Regístrate gratis en Livix.`}
           canonical="https://livix.es/roommates"
         />
         <div className="min-h-screen bg-background py-6 md:py-12">

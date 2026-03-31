@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Filter, GraduationCap, X } from 'lucide-react';
 import { useI18n } from '@/contexts/I18nContext';
 import SortMenu from './SortMenu';
+import { useCityOrDefault } from '@/contexts/CityContext';
 
 interface SearchHeaderProps {
   searchQuery: string;
@@ -32,6 +33,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
   hasActiveFilters,
 }) => {
   const { t } = useI18n();
+  const activeCity = useCityOrDefault();
 
   return (
     <div className="space-y-4">
@@ -92,7 +94,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({
       {/* Results Counter */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>
-          {resultsCount} {t('explore.results')} en Zaragoza
+          {resultsCount} {t('explore.results')} en {activeCity.name}
         </span>
       </div>
     </div>

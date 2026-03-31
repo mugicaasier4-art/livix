@@ -3,10 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Gift, Users, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const ClubCTA = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const activeCity = useCityOrDefault();
 
   const benefits = [
     {
@@ -42,9 +44,9 @@ const ClubCTA = () => {
             </h2>
             
             <p className="text-center text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              {user 
-                ? "Accede a descuentos en comercios de Zaragoza y eventos para estudiantes"
-                : "Regístrate gratis y accede a descuentos en gimnasios, copisterías y más comercios de Zaragoza"
+              {user
+                ? `Accede a descuentos en comercios de ${activeCity.name} y eventos para estudiantes`
+                : `Regístrate gratis y accede a descuentos en gimnasios, copisterías y más comercios de ${activeCity.name}`
               }
             </p>
 

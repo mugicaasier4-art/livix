@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { GoogleMap, useJsApiLoader, OverlayView } from '@react-google-maps/api';
 import { MapPin, X, Loader2, ArrowUp } from 'lucide-react';
 import { GOOGLE_MAPS_CONFIG } from '@/config/maps';
+import { useCityOrDefault } from '@/contexts/CityContext';
 import { cn } from '@/lib/utils';
 import MapMiniCard from './MapMiniCard';
 import DrawingTool from './DrawingTool';
@@ -160,6 +161,8 @@ const MapView = ({
   onMarkerHover,
   onZoneFilter
 }: MapViewProps) => {
+  const activeCity = useCityOrDefault();
+  const cityCenter = { lat: activeCity.coordinates.lat, lng: activeCity.coordinates.lng };
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   const [internalHoveredId, setInternalHoveredId] = useState<number | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -214,6 +217,14 @@ const MapView = ({
     clusterListings(listings, zoom),
     [listings, zoom]
   );
+
+  // Centrar en la ciudad cuando cambia y no hay listings
+  useEffect(() => {
+    if (map && mapReady && listings.length === 0) {
+      map.panTo(cityCenter);
+      map.setZoom(activeCity.zoom);
+    }
+  }, [activeCity.id, map, mapReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Fit bounds only ONCE when map is first ready
   useEffect(() => {
@@ -405,8 +416,8 @@ const MapView = ({
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={GOOGLE_MAPS_CONFIG.defaultCenter}
-        zoom={13}
+        center={listings.length === 0 ? cityCenter : GOOGLE_MAPS_CONFIG.defaultCenter}
+        zoom={listings.length === 0 ? activeCity.zoom : 13}
         options={mapOptions}
         onLoad={onLoad}
         onUnmount={onUnmount}

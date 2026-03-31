@@ -3,12 +3,15 @@ import { Helmet } from "react-helmet-async";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { HelpCircle } from "lucide-react";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 const HomeFAQ = () => {
+  const activeCity = useCityOrDefault();
+
   const faqs = [
     {
       question: "¿Livix es gratis?",
-      answer: "Sí. Buscar, contactar propietarios y solicitar pisos es 100% gratis para estudiantes. Solo cobramos a propietarios por publicar. Opcionalmente, con Premium (9,99€/mes) ves pisos nuevos 48h antes."
+      answer: "Sí. Buscar, contactar propietarios y solicitar pisos es 100% gratis para estudiantes. Solo cobramos a propietarios por publicar anuncios."
     },
     {
       question: "¿Cómo verificáis los pisos?",
@@ -104,7 +107,7 @@ const HomeFAQ = () => {
               ¿Listo para encontrar tu piso?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Pisos verificados para estudiantes te esperan en Zaragoza
+              Pisos verificados para estudiantes te esperan en {activeCity.name}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/explore">

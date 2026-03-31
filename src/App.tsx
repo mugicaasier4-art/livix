@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/contexts/I18nContext";
+import { CityProvider } from "@/contexts/CityContext";
+import { CitySelectorOverlay } from "@/components/city/CitySelector";
 import { BookingProvider } from "@/contexts/BookingContext";
 import { MessagingProvider } from "@/contexts/MessagingContext";
 import { ApplicationsProvider } from "@/contexts/ApplicationsContext";
@@ -136,6 +138,7 @@ const App = () => (
   <ErrorBoundary>
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
+      <CityProvider>
       <AuthProvider>
         <LikesProvider>
           <NotificationPreferencesProvider>
@@ -145,6 +148,7 @@ const App = () => (
                   <TooltipProvider>
                     <Sonner />
                     <BrowserRouter>
+                      <CitySelectorOverlay />
                       <ScrollToTop />
                       <OnboardingProvider>
                         <CompareProvider>
@@ -355,6 +359,7 @@ const App = () => (
           </NotificationPreferencesProvider>
         </LikesProvider>
       </AuthProvider>
+      </CityProvider>
     </I18nProvider>
   </QueryClientProvider>
   </ErrorBoundary>

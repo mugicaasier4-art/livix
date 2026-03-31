@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
+import { useCityOrDefault } from "@/contexts/CityContext";
 import DOMPurify from "dompurify";
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
@@ -101,6 +102,7 @@ const renderMarkdown = (content: string): string => {
 const BlogPost = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const activeCity = useCityOrDefault();
 
   const post = blogPosts.find(p => p.slug === slug);
   
@@ -167,34 +169,34 @@ const BlogPost = () => {
   // Related SEO pages mapping based on post category
   const relatedSeoPages: Record<string, { title: string; url: string; description: string }[]> = {
     pisos: [
-      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Encuentra pisos completos para estudiantes en Zaragoza" },
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
-      { title: "Residencias en Zaragoza", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
+      { title: `Pisos en ${activeCity.name}`, url: "/pisos/zaragoza", description: `Encuentra pisos completos para estudiantes en ${activeCity.name}` },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Residencias en ${activeCity.name}`, url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
     ],
     estudiante: [
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
-      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Pisos en ${activeCity.name}`, url: "/pisos/zaragoza", description: `Pisos completos para estudiantes en ${activeCity.name}` },
       { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
     ],
     consejos: [
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
-      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Pisos en ${activeCity.name}`, url: "/pisos/zaragoza", description: `Pisos completos para estudiantes en ${activeCity.name}` },
       { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
     ],
     becas: [
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
-      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Pisos completos para estudiantes en Zaragoza" },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Pisos en ${activeCity.name}`, url: "/pisos/zaragoza", description: `Pisos completos para estudiantes en ${activeCity.name}` },
       { title: "Colegios Mayores", url: "/colegios-mayores/zaragoza", description: "Colegios mayores con vida cultural y académica" },
     ],
     eventos: [
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
       { title: "Campus San Francisco", url: "/campus/san-francisco", description: "Alojamiento cerca del Campus San Francisco" },
       { title: "Residencias", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
     ],
     legalidad: [
-      { title: "Pisos en Zaragoza", url: "/pisos/zaragoza", description: "Encuentra pisos completos para estudiantes en Zaragoza" },
-      { title: "Habitaciones en Zaragoza", url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
-      { title: "Residencias en Zaragoza", url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
+      { title: `Pisos en ${activeCity.name}`, url: "/pisos/zaragoza", description: `Encuentra pisos completos para estudiantes en ${activeCity.name}` },
+      { title: `Habitaciones en ${activeCity.name}`, url: "/habitaciones/zaragoza", description: "Habitaciones en piso compartido para universitarios" },
+      { title: `Residencias en ${activeCity.name}`, url: "/residencias/zaragoza", description: "Residencias universitarias con todo incluido" },
     ],
   };
   const seoPages = relatedSeoPages[post.category] || relatedSeoPages.estudiante;
@@ -367,7 +369,7 @@ const BlogPost = () => {
                   <CardContent className="p-6 text-center">
                     <h3 className="font-bold text-lg mb-2">¿Buscas piso?</h3>
                     <p className="text-sm opacity-90 mb-4">
-                      Encuentra tu habitación ideal en Zaragoza
+                      Encuentra tu habitación ideal en {activeCity.name}
                     </p>
                     <Button
                       variant="secondary"

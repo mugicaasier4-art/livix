@@ -7,7 +7,16 @@ import gestionTiempo from "@/assets/blog/gestion-tiempo.jpg";
 import ahorrarDinero from "@/assets/blog/ahorrar-dinero.jpg";
 import deportesClubs from "@/assets/blog/deportes-clubs.jpg";
 
-export type BlogCategory = "all" | "pisos" | "estudiante" | "consejos" | "eventos" | "legalidad" | "becas" | "propietarios";
+// Categorías generales del blog
+export type BlogGeneralCategory = "all" | "pisos" | "estudiante" | "consejos" | "eventos" | "legalidad" | "becas" | "propietarios";
+
+// Categorías por ciudad (slug de cada ciudad)
+export type BlogCityCategory =
+  | "zaragoza" | "madrid" | "barcelona" | "sevilla" | "valencia"
+  | "granada" | "malaga" | "bilbao" | "salamanca" | "pamplona"
+  | "logrono" | "santiago";
+
+export type BlogCategory = BlogGeneralCategory | BlogCityCategory;
 
 export interface BlogPost {
   id: number;
@@ -18,6 +27,7 @@ export interface BlogPost {
   dateModified: string;
   author: string;
   category: BlogCategory;
+  citySlug?: BlogCityCategory | null; // null / undefined = artículo general (aparece en todas las ciudades)
   image: string;
   content: string;
   readTime: number;
@@ -33,6 +43,7 @@ export const blogPosts: BlogPost[] = [
     dateModified: "2026-03-08",
     author: "Equipo Livix",
     category: "estudiante",
+    citySlug: "zaragoza",
     image: zonasUniversidad,
     readTime: 8,
     content: `Zaragoza es una de las ciudades universitarias más atractivas de España. Con más de 35.000 estudiantes, una ubicación privilegiada entre Madrid y Barcelona, y un coste de vida muy competitivo, la capital aragonesa se ha convertido en el destino favorito de miles de jóvenes cada curso académico.
@@ -168,6 +179,7 @@ Zaragoza te espera con los brazos abiertos. Es una ciudad que enamora a quien la
     dateModified: "2026-03-08",
     author: "Equipo Livix",
     category: "pisos",
+    citySlug: "zaragoza",
     image: pisosEstudiante,
     readTime: 7,
     content: `Elegir barrio es casi tan importante como elegir carrera. El barrio donde vivas determinará tu rutina diaria, tu presupuesto y, en gran medida, tu experiencia universitaria en Zaragoza.
@@ -481,6 +493,7 @@ Si optas por piso compartido, busca con tiempo (a partir de mayo para el curso s
     dateModified: "2026-03-08",
     author: "Equipo Livix",
     category: "consejos",
+    citySlug: "zaragoza",
     image: ahorrarDinero,
     readTime: 7,
     content: `Una de las principales ventajas de estudiar en Zaragoza es su coste de vida asequible comparado con otras ciudades universitarias españolas. Pero, ¿cuánto cuesta realmente vivir en Zaragoza como estudiante? En este artículo te damos las cifras reales y actualizadas.
@@ -816,6 +829,7 @@ Buscar piso puede ser estresante, pero con precaución y sentido común puedes e
     dateModified: "2026-03-08",
     author: "Equipo Livix",
     category: "pisos",
+    citySlug: "zaragoza",
     image: gestionTiempo,
     readTime: 7,
     content: `Alquilar tu primera habitación en Zaragoza puede parecer abrumador, pero con esta guía paso a paso tendrás todo controlado. Desde cuándo empezar a buscar hasta qué mirar en el contrato, te explicamos cada etapa del proceso.
@@ -1027,6 +1041,7 @@ Alquilar tu primera habitación es un paso importante hacia la independencia. Co
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "pisos",
+    citySlug: "zaragoza",
     image: pisosEstudiante,
     readTime: 10,
     content: `Elegir entre una residencia universitaria en Zaragoza y un piso compartido es una de las decisiones más importantes que tomarás como estudiante. Ambas opciones tienen ventajas claras, pero también inconvenientes que conviene conocer antes de comprometerte con un contrato o una reserva.
@@ -1187,6 +1202,7 @@ Si necesitas ayuda para encontrar alojamiento en Zaragoza, ya sea residencia o p
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "estudiante",
+    citySlug: "zaragoza",
     image: zonasUniversidad,
     readTime: 12,
     content: `Si has sido seleccionado para hacer tu Erasmus en Zaragoza, enhorabuena. Has elegido (o te ha tocado) una de las mejores ciudades universitarias de España para estudiantes internacionales. Zaragoza combina un coste de vida asequible, una vida social intensa, una gastronomía excelente y una ubicación estratégica entre Madrid y Barcelona.
@@ -1381,6 +1397,7 @@ Zaragoza es una ciudad que enamora a los Erasmus. El tamaño perfecto para mover
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "pisos",
+    citySlug: "zaragoza",
     image: pisosEstudiante,
     readTime: 8,
     content: `¿Cuánto cuesta una habitación en Zaragoza? Es la primera pregunta que se hace cualquier estudiante que busca piso. La respuesta depende, sobre todo, del barrio. En Zaragoza los precios de habitación varían significativamente de una zona a otra, y conocer estas diferencias puede ahorrarte cientos de euros al año.
@@ -1525,6 +1542,7 @@ Explora ahora las [habitaciones disponibles en Zaragoza](/habitaciones/zaragoza)
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "pisos",
+    citySlug: "zaragoza",
     image: zonasUniversidad,
     readTime: 10,
     content: `Elegir residencia universitaria en Zaragoza es una decisión que marcará tu experiencia como estudiante. No todas las residencias son iguales: los precios, los servicios, la ubicación y el ambiente varían enormemente de una a otra.
@@ -1791,6 +1809,7 @@ También puedes usar nuestro [buscador de compañeros de piso](/roommates) para 
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "estudiante",
+    citySlug: "zaragoza",
     image: tecnicasEstudio,
     readTime: 10,
     content: `El **Colegio Mayor Pedro Cerbuna** es la residencia universitaria más emblemática de Zaragoza y una de las más antiguas de España. Situado junto al [Campus San Francisco](/campus/san-francisco), lleva décadas acogiendo a estudiantes de toda España y del extranjero que buscan mucho más que un lugar donde dormir: una experiencia universitaria completa.
@@ -2059,6 +2078,7 @@ Sea cual sea tu elección, lo importante es que investigues bien antes de decidi
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "consejos",
+    citySlug: "zaragoza",
     image: gestionTiempo,
     readTime: 8,
     content: `El Actur es uno de los barrios más populares entre estudiantes universitarios en Zaragoza, y no es casualidad. Su cercanía al Campus Río Ebro, su excelente conexión por tranvía y sus precios de alquiler razonables lo convierten en una de las mejores zonas para **vivir en Actur Zaragoza** durante la etapa universitaria.
@@ -2526,6 +2546,7 @@ Encuentra [pisos con propietarios verificados en Zaragoza](/pisos/zaragoza) a tr
     dateModified: "2026-03-18",
     author: "Equipo Livix",
     category: "becas",
+    citySlug: "zaragoza",
     image: ahorrarDinero,
     readTime: 10,
     content: `El alojamiento es uno de los mayores gastos para un estudiante universitario que vive fuera de casa. En Zaragoza, una [habitación en piso compartido](/habitaciones/zaragoza) cuesta entre 250 y 400 EUR mensuales, lo que supone entre 2.500 y 4.000 EUR por curso académico. Para muchas familias, esta cantidad es difícil de asumir sin ayuda.
@@ -3158,7 +3179,7 @@ Sí, mientras el plazo esté abierto puedes acceder a tu solicitud y modificar d
 Ahora que sabes exactamente cómo pedir tu beca MEC 2026-2027, el siguiente paso es encontrar tu alojamiento para el próximo curso. En Livix puedes buscar [habitaciones en piso compartido](/habitaciones/zaragoza), [pisos completos](/pisos/zaragoza) y [residencias universitarias en Zaragoza](/residencias/zaragoza) con fotos verificadas y precios transparentes. Si la beca te concede los 2.700 EUR de residencia, una habitación compartida puede salirte prácticamente gratis. Empieza a buscar en [Livix](/explore).`
   },
   {
-    id: 16,
+    id: 28,
     slug: "alquilar-piso-estudiantes-zaragoza-guia-propietarios",
     title: "Alquilar tu piso a estudiantes en Zaragoza: guia completa para propietarios 2026",
     excerpt: "Todo lo que necesitas saber para alquilar tu piso a universitarios en Zaragoza: precios por barrio, contratos, ventajas fiscales y como encontrar inquilinos verificados.",
@@ -3434,7 +3455,7 @@ Si quieres una valoracion personalizada, [dejanos tus datos](/propietarios) y te
 Si ya sabes cuanto cobrar, el siguiente paso es publicar tu piso donde los estudiantes lo encuentren. En [Livix](/propietarios) puedes publicar gratis (primeras 50 plazas) y acceder a estudiantes con identidad universitaria verificada. [Registrate aqui](/propietarios).`
   },
   {
-    id: 27,
+    id: 29,
     slug: "mejores-barrios-estudiantes-zaragoza-2026",
     title: "Los 7 mejores barrios para estudiantes en Zaragoza en 2026: precios, transporte y vida nocturna",
     excerpt: "Analizamos los barrios mas populares entre universitarios en Zaragoza con datos reales de precios, distancia a campus y calidad de vida.",
@@ -3551,7 +3572,394 @@ La decision depende de tres factores: **presupuesto, campus y estilo de vida**.
 Si tu presupuesto es ajustado, Delicias y Las Fuentes son tus mejores opciones. Si estudias en Rio Ebro, Actur es imbatible. Y si lo que quieres es vivir la experiencia universitaria al maximo, el Centro es tu sitio.
 
 En [Livix](/) puedes filtrar pisos por barrio, precio y distancia a tu campus. Todos los pisos estan verificados y los propietarios tienen valoraciones reales de otros estudiantes. [Busca tu piso ahora](/).`
-  }
+  },
+
+  // ─── POSTS DE CIUDAD ────────────────────────────────────────────────────────
+
+  {
+    id: 16,
+    slug: "guia-estudiantes-madrid",
+    title: "Guía para estudiantes en Madrid 2025-2026: barrios, precios y universidades",
+    excerpt: "Madrid acoge a más de 300.000 estudiantes universitarios. Te contamos todo sobre dónde vivir, cuánto cuesta y cómo moverte por la capital.",
+    date: "2026-03-01",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "madrid",
+    image: zonasUniversidad,
+    readTime: 9,
+    content: `Madrid es la ciudad universitaria más grande de España, con más de 300.000 estudiantes repartidos entre la Complutense, la UAM, la UC3M, la Carlos III y decenas de centros privados. Vivir aquí como estudiante es una experiencia única, pero también requiere planificación: los precios son significativamente más altos que en otras ciudades universitarias.
+
+## Universidades en Madrid
+
+- **Universidad Complutense de Madrid (UCM)**: la más grande de España, con campus en Moncloa y en varios puntos de la ciudad
+- **Universidad Autónoma de Madrid (UAM)**: campus en Cantoblanco, al norte de la ciudad
+- **Universidad Carlos III (UC3M)**: campus en Leganés, Getafe y Colmenarejo
+- **Universidad Rey Juan Carlos (URJC)**: campus en Móstoles, Fuenlabrada, Alcorcón y Vicálvaro
+- **IE University / CEU / ESIC**: entre las privadas más destacadas
+
+## Barrios para estudiantes en Madrid
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Malasaña | 550–750€ | Vida nocturna, céntrico |
+| Lavapiés | 450–650€ | Diverso, bien comunicado |
+| Moncloa | 500–700€ | Cerca de la Complutense |
+| Vallecas | 380–520€ | Económico, tranquilo |
+| Tetuán | 420–580€ | Buena relación calidad-precio |
+
+## Coste de vida en Madrid
+
+Madrid es cara comparada con el resto de España. Una habitación en piso compartido cuesta entre 450€ y 750€ al mes según la zona. El transporte público para estudiantes (Abono Joven) cuesta unos 20€/mes y es una de las mejores opciones para moverse.
+
+Busca tu alojamiento en Madrid en [Livix](/explore) y compara precios verificados en todos los barrios.`
+  },
+
+  {
+    id: 17,
+    slug: "guia-estudiantes-barcelona",
+    title: "Guía para estudiantes en Barcelona 2025-2026: pisos, barrios y universidad",
+    excerpt: "Barcelona combina calidad universitaria con una vida cultural inigualable. Todo lo que necesitas saber para encontrar alojamiento y adaptarte a la ciudad condal.",
+    date: "2026-03-02",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "barcelona",
+    image: zonasUniversidad,
+    readTime: 8,
+    content: `Barcelona es una de las ciudades universitarias más internacionales de Europa. Con más de 250.000 estudiantes, acoge cada año a miles de erasmus y estudiantes de todo el mundo gracias a sus universidades de referencia y su calidad de vida.
+
+## Universidades en Barcelona
+
+- **Universitat de Barcelona (UB)**: la más antigua, presente en el Eixample y Diagonal
+- **Universitat Autònoma de Barcelona (UAB)**: campus propio en Bellaterra
+- **Universitat Politècnica de Catalunya (UPC)**: ingeniería y arquitectura
+- **Universitat Pompeu Fabra (UPF)**: derecho, economía, comunicación y más
+- **ESADE / IESE**: entre las mejores escuelas de negocios del mundo
+
+## Barrios para estudiantes en Barcelona
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Gràcia | 600–800€ | Bohemio, comunidad universitaria |
+| Sants | 500–700€ | Bien comunicado, precios razonables |
+| El Poblenou | 550–750€ | Moderno, zona tecnológica |
+| Sant Andreu | 450–620€ | Tranquilo, precios más bajos |
+| Les Corts | 620–850€ | Cerca de la UB |
+
+## Coste de vida en Barcelona
+
+Barcelona es similar a Madrid en costes. Una habitación en piso compartido oscila entre 500€ y 850€. La T-Jove para transporte público cuesta unos 80€/trimestre.
+
+Encuentra habitación en Barcelona en [Livix](/explore) con precios verificados y sin comisiones de agencia.`
+  },
+
+  {
+    id: 18,
+    slug: "guia-estudiantes-sevilla",
+    title: "Guía para estudiantes en Sevilla 2025-2026: la ciudad más erasmus de España",
+    excerpt: "Sevilla es el destino Erasmus favorito de España por su clima, cultura y precios razonables. Guía completa para encontrar piso y vivir como estudiante en la capital andaluza.",
+    date: "2026-03-03",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "sevilla",
+    image: zonasUniversidad,
+    readTime: 7,
+    content: `Sevilla recibe cada año a miles de estudiantes Erasmus de toda Europa, convirtiéndola en una de las ciudades universitarias más internacionales de España. La calidad de vida, el clima y los precios relativamente asequibles la hacen muy atractiva.
+
+## Universidades en Sevilla
+
+- **Universidad de Sevilla (US)**: la más grande, con campus repartidos por la ciudad
+- **Universidad Pablo de Olavide (UPO)**: en el barrio de Montequinto
+
+## Barrios para estudiantes en Sevilla
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Triana | 380–520€ | Tradicional, ambiente universitario |
+| Nervión | 350–500€ | Bien comunicado, comercial |
+| El Centro | 400–580€ | Céntrico, turístico |
+| Los Remedios | 360–490€ | Tranquilo, buena conexión |
+| La Palmera | 330–460€ | Económico, familiar |
+
+## Coste de vida en Sevilla
+
+Sevilla es una de las ciudades universitarias más baratas de España. Una habitación en piso compartido cuesta entre 300€ y 520€ al mes. El coste de vida general (comida, ocio, transporte) es notablemente menor que en Madrid o Barcelona.
+
+Busca habitación en Sevilla en [Livix](/explore).`
+  },
+
+  {
+    id: 19,
+    slug: "guia-estudiantes-valencia",
+    title: "Guía para estudiantes en Valencia 2025-2026: sol, playa y campus",
+    excerpt: "Valencia es la tercera ciudad universitaria de España. Te explicamos todo sobre sus universidades, barrios para estudiantes y coste de vida.",
+    date: "2026-03-04",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "valencia",
+    image: zonasUniversidad,
+    readTime: 7,
+    content: `Valencia combina una excelente oferta universitaria con una calidad de vida envidiable: playa, clima mediterráneo y precios más razonables que Madrid o Barcelona. No es casualidad que cada año más estudiantes elijan Valencia para su formación universitaria.
+
+## Universidades en Valencia
+
+- **Universitat de València (UV)**: la más grande, con campus en Blasco Ibáñez y otros puntos de la ciudad
+- **Universitat Politècnica de València (UPV)**: ingeniería, arquitectura y bellas artes
+- **Universidad CEU Cardenal Herrera**: privada, en Moncada
+
+## Barrios para estudiantes en Valencia
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Ruzafa | 450–620€ | Hipster, bien comunicado |
+| Benimaclet | 380–520€ | El barrio universitario por excelencia |
+| El Carmen | 420–580€ | Histórico, vida nocturna |
+| Campanar | 350–480€ | Tranquilo, precio-calidad |
+| Patraix | 330–460€ | Económico, cerca de la UPV |
+
+## Coste de vida en Valencia
+
+Valencia es más asequible que Madrid y Barcelona. Una habitación en piso compartido cuesta entre 330€ y 620€. El bono joven de metro-bus-tranvía cuesta unos 20€/mes.
+
+Encuentra tu habitación en Valencia en [Livix](/explore).`
+  },
+
+  {
+    id: 20,
+    slug: "guia-estudiantes-granada",
+    title: "Guía para estudiantes en Granada 2025-2026: la ciudad universitaria por excelencia",
+    excerpt: "Granada tiene la mayor proporción de estudiantes por habitante de España. Conoce sus barrios, precios y por qué es la ciudad universitaria perfecta.",
+    date: "2026-03-05",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "granada",
+    image: zonasUniversidad,
+    readTime: 7,
+    content: `Granada es probablemente la ciudad universitaria más pura de España. Con más de 55.000 estudiantes para una población de apenas 230.000 habitantes, los universitarios son parte fundamental de la vida y la cultura de la ciudad. Las tapas gratis, el Albaicín y el ambiente estudiantil hacen de Granada un destino único.
+
+## Universidad de Granada
+
+La Universidad de Granada (UGR) es una de las más antiguas de España, fundada en 1531. Con más de 55.000 estudiantes, es la cuarta universidad pública española por tamaño. Destaca en humanidades, ciencias de la salud y arte.
+
+## Barrios para estudiantes en Granada
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Centro (Gran Vía) | 320–460€ | Céntrico, cerca de la Facultad de Derecho |
+| Zaidín | 280–400€ | Económico, bien comunicado |
+| La Chana | 260–380€ | El más asequible, comunidad universitaria |
+| Bola de Oro | 300–420€ | Tranquilo, buena conexión |
+| El Realejo | 340–480€ | Histórico, cerca de la Alhambra |
+
+## Coste de vida en Granada
+
+Granada es una de las ciudades universitarias más baratas de España. Una habitación en piso compartido cuesta entre 260€ y 460€. Y lo mejor: en la mayoría de bares de copas las tapas son gratis.
+
+Busca tu piso en Granada en [Livix](/explore).`
+  },
+
+  {
+    id: 21,
+    slug: "guia-estudiantes-malaga",
+    title: "Guía para estudiantes en Málaga 2025-2026: estudia con sol y mar",
+    excerpt: "Málaga está en plena efervescencia universitaria y tecnológica. Guía completa para estudiantes que quieren vivir y estudiar en la Costa del Sol.",
+    date: "2026-03-06",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "malaga",
+    image: zonasUniversidad,
+    readTime: 6,
+    content: `Málaga se ha transformado en una de las ciudades más dinámicas de España. Además de su clima privilegiado y sus playas, la ciudad acoge a más de 40.000 estudiantes universitarios y está convirtiéndose en un hub tecnológico europeo.
+
+## Universidad de Málaga
+
+La Universidad de Málaga (UMA) concentra la mayoría de los estudiantes universitarios de la ciudad. Con campus en El Ejido y Teatinos, ofrece una amplia oferta de grados técnicos y de ciencias de la salud.
+
+## Barrios para estudiantes en Málaga
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Teatinos | 350–480€ | Junto al campus, barrio universitario |
+| Centro Histórico | 400–560€ | Vida cultural, tapas, mar |
+| El Palo | 320–440€ | Playa, ambiente tranquilo |
+| Cruz de Humilladero | 290–400€ | Económico, bien comunicado |
+| Carretera de Cádiz | 300–420€ | Precio-calidad |
+
+Busca habitación en Málaga en [Livix](/explore).`
+  },
+
+  {
+    id: 22,
+    slug: "guia-estudiantes-salamanca",
+    title: "Guía para estudiantes en Salamanca 2025-2026: la ciudad universitaria de España",
+    excerpt: "Salamanca es sinónimo de universidad. Con 800 años de historia académica, te contamos todo sobre vivir y estudiar en la ciudad dorada.",
+    date: "2026-03-07",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "salamanca",
+    image: zonasUniversidad,
+    readTime: 7,
+    content: `Salamanca es posiblemente la ciudad más universitaria de España. Fundada en 1218, la Universidad de Salamanca es la más antigua de la Península Ibérica. La ciudad entera gira alrededor de sus estudiantes: más de 30.000 universitarios conviven en una ciudad de apenas 145.000 habitantes.
+
+## Universidad de Salamanca (USAL)
+
+La USAL es referencia nacional e internacional, especialmente en Filología Hispánica, Derecho, Filosofía y Ciencias. Sus cursos de español para extranjeros son los más reconocidos del mundo hispanohablante.
+
+## Barrios para estudiantes en Salamanca
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Centro (Plaza Mayor) | 300–420€ | El corazón estudiantil |
+| San Bernardo | 260–380€ | El más popular entre universitarios |
+| Garrido | 240–340€ | Económico, bien comunicado |
+| Pizarrales | 230–320€ | El más asequible |
+| Buenos Aires | 250–360€ | Tranquilo, buena oferta |
+
+## Coste de vida en Salamanca
+
+Salamanca es muy asequible. Una habitación en piso compartido cuesta entre 230€ y 420€. El ambiente universitario hace que todo —ocio, restaurantes, cultura— esté adaptado al presupuesto estudiantil.
+
+Encuentra habitación en Salamanca en [Livix](/explore).`
+  },
+
+  {
+    id: 23,
+    slug: "guia-estudiantes-bilbao",
+    title: "Guía para estudiantes en Bilbao 2025-2026: el País Vasco desde dentro",
+    excerpt: "Bilbao combina oferta universitaria de primer nivel con una cultura única. Te contamos todo sobre vivir como estudiante en la capital vizcaína.",
+    date: "2026-03-08",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "bilbao",
+    image: zonasUniversidad,
+    readTime: 6,
+    content: `Bilbao es una ciudad que ha sabido reinventarse. De su pasado industrial ha emergido una metrópolis cultural y académica de primer nivel, con el Guggenheim como símbolo de su transformación. Los estudiantes que eligen Bilbao acceden a una de las mejores universidades de España en un entorno de ciudad compacta y con excelente transporte público.
+
+## Universidades en Bilbao
+
+- **UPV/EHU (Universidad del País Vasco)**: la principal universidad pública, con campus en Leioa y edificios en el centro de Bilbao
+- **Universidad de Deusto**: privada, de gran prestigio, especialmente en Derecho, Empresariales y Humanidades
+
+## Barrios para estudiantes en Bilbao
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Deusto | 380–520€ | Barrio universitario por excelencia |
+| Santutxu | 340–470€ | Ambiente de barrio, buena conexión |
+| Bilbao la Vieja | 320–450€ | Emergente, multicultural |
+| Indautxu | 420–580€ | Céntrico, comercial |
+| Rekalde | 300–420€ | Económico, bien comunicado |
+
+Busca habitación en Bilbao en [Livix](/explore).`
+  },
+
+  {
+    id: 24,
+    slug: "guia-estudiantes-pamplona",
+    title: "Guía para estudiantes en Pamplona 2025-2026: la ciudad foral universitaria",
+    excerpt: "Pamplona es mucho más que los Sanfermines. Con 25.000 estudiantes universitarios y una calidad de vida excelente, es una de las ciudades universitarias más valoradas del norte.",
+    date: "2026-03-09",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "pamplona",
+    image: zonasUniversidad,
+    readTime: 6,
+    content: `Pamplona es una ciudad de tamaño humano con una calidad de vida excepcional. Sus 25.000 estudiantes universitarios conviven en una ciudad compacta, segura y con uno de los mejores niveles de bienestar de España. El campus universitario es moderno y está perfectamente integrado en la ciudad.
+
+## Universidades en Pamplona
+
+- **Universidad de Navarra (UNAV)**: privada, una de las mejores universidades de España en investigación y medicina. Campus propio al sur de la ciudad
+- **Universidad Pública de Navarra (UPNA)**: pública, campus en Arrosadia con oferta técnica y de ciencias sociales
+
+## Barrios para estudiantes en Pamplona
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Txantrea | 280–390€ | Popular, bien comunicado |
+| II Ensanche | 320–440€ | Moderno, calidad de vida |
+| Casco Antiguo | 350–490€ | Histórico, vida cultural |
+| Rotxapea | 260–370€ | Económico, junto al campus UPNA |
+| Iturrama | 340–470€ | Tranquilo, familiar |
+
+Encuentra habitación en Pamplona en [Livix](/explore).`
+  },
+
+  {
+    id: 25,
+    slug: "guia-estudiantes-logrono",
+    title: "Guía para estudiantes en Logroño 2025-2026: la capital del Rioja universitario",
+    excerpt: "Logroño es una ciudad pequeña con gran calidad de vida y la Universidad de La Rioja como eje universitario. Ideal para quienes buscan una experiencia universitaria tranquila y asequible.",
+    date: "2026-03-10",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "logrono",
+    image: zonasUniversidad,
+    readTime: 5,
+    content: `Logroño es una de las ciudades con mejor calidad de vida de España según todos los índices. La capital riojana ofrece a sus estudiantes una experiencia universitaria tranquila, económica y de alto nivel en una ciudad donde todo está a 15 minutos andando.
+
+## Universidad de La Rioja (UR)
+
+La UR tiene campus en el corazón de Logroño. Destaca en Ingeniería Química, Turismo, Educación y Ciencias Empresariales. Con unos 7.000 estudiantes de grado, tiene una relación alumno-profesor muy favorable y una atención personalizada.
+
+## Barrios para estudiantes en Logroño
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Centro | 260–360€ | A 5 min del campus, vida cultural |
+| El Cubo | 240–330€ | Tranquilo, bien comunicado |
+| Yagüe | 220–300€ | El más económico |
+| Cascajos | 230–320€ | Nuevo, bien equipado |
+
+## Coste de vida en Logroño
+
+Logroño es una de las ciudades universitarias más baratas y con mejor calidad de vida. Una habitación cuesta entre 220€ y 360€. Y en el Casco Antiguo (Calle del Laurel) las tapas son una institución: por 1€ tienes pintxo + vino.
+
+Busca habitación en Logroño en [Livix](/explore).`
+  },
+
+  {
+    id: 26,
+    slug: "guia-estudiantes-santiago-de-compostela",
+    title: "Guía para estudiantes en Santiago de Compostela 2025-2026: el camino hacia tu carrera",
+    excerpt: "Santiago de Compostela combina historia milenaria con una vida universitaria intensa. Todo lo que necesitas saber para vivir y estudiar en la capital gallega.",
+    date: "2026-03-11",
+    dateModified: "2026-03-20",
+    author: "Equipo Livix",
+    category: "estudiante",
+    citySlug: "santiago",
+    image: zonasUniversidad,
+    readTime: 6,
+    content: `Santiago de Compostela es una ciudad Patrimonio de la Humanidad donde el Camino de Santiago y la vida universitaria se entremezclan de forma única. La USC (Universidade de Santiago de Compostela) es una de las universidades con más tradición de España y lleva más de cinco siglos formando universitarios.
+
+## Universidade de Santiago de Compostela (USC)
+
+Fundada en 1495, la USC es una de las universidades más antiguas e importantes de España. Con más de 30.000 estudiantes, destaca en Medicina, Farmacia, Derecho y Humanidades. Sus dos campus —Santiago y Lugo— acogen a alumnos de toda España y del extranjero.
+
+## Barrios para estudiantes en Santiago
+
+| Barrio | Precio habitación | Ventajas |
+|--------|-----------------|----------|
+| Ensanche | 300–420€ | Moderno, bien comunicado |
+| San Pedro | 280–390€ | Popular, cerca del campus sur |
+| Fontiñas | 260–370€ | Económico, residencial |
+| Casco Histórico | 380–520€ | La experiencia santiaguesa completa |
+| Vista Alegre | 250–350€ | Tranquilo, buen precio |
+
+## Coste de vida en Santiago
+
+Santiago es una ciudad universitaria asequible. Una habitación cuesta entre 250€ y 520€. La lluvia es parte de la experiencia, pero los porches del Casco Histórico te permiten movertep or la ciudad sin paraguas.
+
+Encuentra habitación en Santiago en [Livix](/explore).`
+  },
 ];
 
 export const categories = [
@@ -3563,4 +3971,20 @@ export const categories = [
   { id: "estudiante" as BlogCategory, label: "Vida Universitaria" },
   { id: "consejos" as BlogCategory, label: "Consejos" },
   { id: "eventos" as BlogCategory, label: "Eventos" },
+];
+
+// Categorías de ciudad para el blog (se generan dinámicamente desde CITIES en Blog.tsx)
+export const cityCategories: { id: BlogCityCategory; label: string }[] = [
+  { id: "zaragoza",  label: "Zaragoza" },
+  { id: "madrid",    label: "Madrid" },
+  { id: "barcelona", label: "Barcelona" },
+  { id: "sevilla",   label: "Sevilla" },
+  { id: "valencia",  label: "Valencia" },
+  { id: "granada",   label: "Granada" },
+  { id: "malaga",    label: "Málaga" },
+  { id: "salamanca", label: "Salamanca" },
+  { id: "bilbao",    label: "Bilbao" },
+  { id: "pamplona",  label: "Pamplona" },
+  { id: "logrono",   label: "Logroño" },
+  { id: "santiago",  label: "Santiago" },
 ];

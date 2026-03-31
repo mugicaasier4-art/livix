@@ -2,8 +2,10 @@
 import { Link } from "react-router-dom";
 import { cities } from "@/data/seo/cities";
 import { barrios } from "@/data/seo/barrios";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 export const SEOLinks = () => {
+  const activeCity = useCityOrDefault();
     // Group links by city (currently only Zaragoza, but scalable)
     const stats = {
         cities: Object.keys(cities).length,
@@ -14,7 +16,7 @@ export const SEOLinks = () => {
         <div className="border-t border-border mt-12 pt-12">
             <div className="container mx-auto px-4">
                 <h4 className="font-semibold mb-6 flex items-center gap-2">
-                    Explora Livix en Zaragoza
+                    Explora Livix en {activeCity.name}
                     <span className="text-xs font-normal text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
                         {stats.barrios} Barrios
                     </span>
@@ -23,7 +25,7 @@ export const SEOLinks = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-sm">
                     {/* Alquiler General */}
                     <div className="space-y-3">
-                        <h5 className="font-medium text-foreground/80">Alojamiento Zaragoza</h5>
+                        <h5 className="font-medium text-foreground/80">Alojamiento {activeCity.name}</h5>
                         <ul className="space-y-2">
                             <li><Link to="/residencias/zaragoza" className="text-muted-foreground hover:text-primary">Residencias de Estudiantes</Link></li>
                             <li><Link to="/habitaciones/zaragoza" className="text-muted-foreground hover:text-primary">Habitaciones en Alquiler</Link></li>

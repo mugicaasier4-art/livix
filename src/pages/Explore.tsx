@@ -13,6 +13,7 @@ import { ListingComparator } from "@/components/explore/ListingComparator";
 import ListingCardSkeleton from "@/components/explore/ListingCardSkeleton";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/contexts/I18nContext";
+import { useCityOrDefault } from "@/contexts/CityContext";
 import { usePreferences } from "@/contexts/PreferencesContext";
 import { useCompare } from "@/contexts/CompareContext";
 import { analytics } from "@/utils/analytics";
@@ -32,6 +33,7 @@ const Explore = () => {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
   const { listings, isLoading } = useListings();
+  const activeCity = useCityOrDefault();
   const { toggleLike } = useLikes();
   const isMobile = useIsMobile();
   const { mySquad, squadMembers } = useSquads();
@@ -92,9 +94,17 @@ const Explore = () => {
     genderPreference: 'any'
   });
 
-  // Convert residences to display format
+  // Convert residences to display format — filtradas por ciudad activa
   const residenceListings = useMemo(() => residences
-    .filter(r => r.status === 'active')
+    .filter(r => {
+      if (r.status !== 'active') return false;
+      // Filtrar por ciudad (comparar dirección/nombre con ciudad activa)
+      const addr = (r.address || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const name = (r.name || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const cityName = activeCity.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const cityId = activeCity.id.toLowerCase();
+      return addr.includes(cityName) || addr.includes(cityId) || name.includes(cityName);
+    })
     .map((residence, index) => ({
       id: 10000 + index,
       originalId: residence.id,
@@ -125,7 +135,7 @@ const Explore = () => {
       isResidence: true,
       residenceType: residence.type,
       residenceGender: residence.gender,
-    })), []);
+    })), [activeCity]);
 
   // Register listing refs for scroll-into-view
   const registerListingRef = useCallback((id: number, element: HTMLElement | null) => {
@@ -195,8 +205,16 @@ const Explore = () => {
     analytics.trackViewModeChanged(viewMode);
   }, [viewMode, propertyFilter, setSearchParams]);
 
-  // Convert pisos listings to display format
-  const pisoListings = useMemo(() => listings.map((listing, index) => ({
+  // Convert pisos listings to display format — filtrados por ciudad activa
+  const pisoListings = useMemo(() => listings
+    .filter(listing => {
+      // Filtrar por ciudad: comparar sin tildes ni mayúsculas
+      const listingCity = (listing.city || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const cityName = activeCity.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const cityId = activeCity.id.toLowerCase();
+      return listingCity.includes(cityName) || listingCity.includes(cityId);
+    })
+    .map((listing, index) => ({
     id: index + 1, // Display ID for UI purposes
     originalId: listing.id, // Keep original UUID for database operations
     title: listing.title,
@@ -229,7 +247,7 @@ const Explore = () => {
       listing.latitude || 41.6488
     ] as [number, number],
     isResidence: false,
-  })), [listings]);
+  })), [listings, activeCity]);
 
   // Combine and filter based on property type
   const allListings = useMemo(() => {

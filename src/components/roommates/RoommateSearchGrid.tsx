@@ -49,6 +49,7 @@ import {
     SheetDescription,
 } from "@/components/ui/sheet";
 import { Loader2 } from "lucide-react";
+import { useCityOrDefault } from "@/contexts/CityContext";
 
 /** Color-coded score badge helper */
 const CompatScoreBadge = ({ score, className = "" }: { score: number; className?: string }) => {
@@ -611,7 +612,11 @@ const ProfileDetail = ({ profile, compatibility, compatibilityResult, isLiked, o
 const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     // ── Fetch real profiles from Supabase ──
     const { profiles: dbProfiles, isLoading: profilesLoading } = usePublicRoommateProfiles();
-    const realProfiles = useMemo(() => dbProfiles.map(dbToMockRoommate), [dbProfiles]);
+    const activeCity = useCityOrDefault();
+    const realProfiles = useMemo(() => dbProfiles.map(p => ({
+        ...dbToMockRoommate(p),
+        location: p.preferred_location || activeCity.name,
+    })), [dbProfiles, activeCity.name]);
 
     // ── Real scoring hook ──
     const { myProfile } = useRoommateProfiles();

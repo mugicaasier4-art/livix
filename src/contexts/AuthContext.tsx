@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+// Note: useRef and useCallback are still used for rate limiting below
 import { supabase } from '@/integrations/supabase/client';
-import { User as SupabaseUser, Session } from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
 
 // Rate limiting: max 5 auth attempts per 5 minutes
 const AUTH_RATE_LIMIT = 5;
@@ -59,63 +60,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const initialSessionHandled = useRef(false);
 
   // Initialize auth state
   useEffect(() => {
-    // Set up auth state listener FIRST
+    let mounted = true;
+
+    // Helper: fetch profile and update state
+    const hydrateUser = async (s: Session) => {
+      try {
+        const userData = await fetchUserProfile(
+          s.user.id,
+          s.user.email ?? '',
+          (s.user.user_metadata as any)?.name ?? 'Usuario'
+        );
+        if (mounted) setUser(userData);
+      } catch (error) {
+        if (import.meta.env.DEV) console.error('Error fetching profile:', error);
+      }
+    };
+
+    // 1. Check existing session immediately (resolves isLoading)
+    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
+      if (!mounted) return;
+      setSession(s);
+      if (s?.user) await hydrateUser(s);
+      if (mounted) setIsLoading(false);
+    });
+
+    // 2. Listen for all future auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-
-        if (session?.user) {
-          // Skip if initial session already handled this user
-          if (initialSessionHandled.current) {
-            initialSessionHandled.current = false;
-            return;
-          }
-
-          try {
-            const userData = await fetchUserProfile(
-              session.user.id,
-              session.user.email ?? '',
-              (session.user.user_metadata as any)?.name ?? 'Usuario'
-            );
-            setUser(userData);
-          } catch (error) {
-            if (import.meta.env.DEV) {
-              console.error('Error fetching profile:', error);
-            }
-          }
+      async (_event, s) => {
+        if (!mounted) return;
+        setSession(s);
+        if (s?.user) {
+          await hydrateUser(s);
         } else {
           setUser(null);
         }
       }
     );
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-
-      if (session?.user) {
-        try {
-          initialSessionHandled.current = true;
-          const userData = await fetchUserProfile(
-            session.user.id,
-            session.user.email ?? '',
-            (session.user.user_metadata as any)?.name ?? 'Usuario'
-          );
-          setUser(userData);
-        } catch (error) {
-          if (import.meta.env.DEV) {
-            console.error('Error fetching profile:', error);
-          }
-        }
-      }
-      setIsLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const authAttemptsRef = useRef<number[]>([]);
