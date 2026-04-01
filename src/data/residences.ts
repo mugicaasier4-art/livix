@@ -25,7 +25,10 @@ export interface Residence {
   images?: string[]; // Gallery images
 }
 
-export const residences: Residence[] = [];
+import { isDemoMode } from '@/utils/isDemo';
+import { mockResidences } from './residences.mock';
+
+export const residences: Residence[] = isDemoMode() ? mockResidences : [];
 
 export const residenceTypes = [
   { value: 'all', label: 'Todos los tipos' },

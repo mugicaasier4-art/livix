@@ -66,4 +66,7 @@ const images = [
     'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop',
 ];
 
-export const mockRoommates: MockRoommate[] = [];
+import { isDemoMode } from '@/utils/isDemo';
+import { actualMockRoommates } from './mockRoommates.mock';
+
+export const mockRoommates: MockRoommate[] = isDemoMode() ? actualMockRoommates : [];
