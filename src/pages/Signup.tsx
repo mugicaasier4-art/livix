@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertCircle, GraduationCap, Building, CheckCircle2, Users, Shield, Star } from 'lucide-react';
+import { Loader2, AlertCircle, GraduationCap, Building, CheckCircle2, Users, Shield, Star, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -52,6 +52,7 @@ const Signup = () => {
   const { signup, isLoading } = useAuth();
   const navigate = useNavigate();
   const [studentCount, setStudentCount] = useState(0);
+  const [emailPendingConfirmation, setEmailPendingConfirmation] = useState<string | null>(null);
 
   useEffect(() => {
     supabase
@@ -90,16 +91,13 @@ const Signup = () => {
     try {
       const user = await signup(data.email, data.password, data.name, role);
 
-      // Show success message
       toast.success('¡Cuenta creada exitosamente!', {
         description: 'Bienvenido a Livix',
         duration: 3000,
       });
 
-      // Small delay to show the success message
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Redirect based on user role
       if (user.role === 'landlord') {
         navigate('/ll/onboarding');
       } else {
@@ -107,6 +105,12 @@ const Signup = () => {
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Error al crear la cuenta. Por favor, intenta de nuevo.';
+
+      // Caso especial: email pendiente de confirmación
+      if (errorMessage === 'NEEDS_EMAIL_CONFIRMATION') {
+        setEmailPendingConfirmation((document.getElementById('email') as HTMLInputElement)?.value || 'tu email');
+        return;
+      }
 
       setError('root', {
         type: 'manual',
@@ -119,6 +123,37 @@ const Signup = () => {
       });
     }
   };
+
+  // Pantalla de confirmación de email pendiente
+  if (emailPendingConfirmation) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-md mx-auto">
+            <Card>
+              <CardContent className="pt-8 pb-8 text-center space-y-4">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto">
+                  <Mail className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Confirma tu email</CardTitle>
+                <p className="text-muted-foreground text-sm">
+                  Hemos enviado un enlace de confirmación a{' '}
+                  <span className="font-medium text-foreground">{emailPendingConfirmation}</span>.
+                  Abre el email y haz clic en el enlace para activar tu cuenta.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  ¿No lo ves? Revisa la carpeta de spam o correo no deseado.
+                </p>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/login')}>
+                  Ir a iniciar sesión
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

@@ -31,29 +31,44 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
  * Fetches user profile and role from the database.
- * Single source of truth — used by both auth listener and getSession.
+ * If the trigger failed and the profile doesn't exist, creates it as fallback.
  */
 async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackName: string): Promise<User> {
   const [profileResult, roleResult] = await Promise.all([
-    supabase
-      .from('profiles')
-      .select('id, email, name')
-      .eq('id', userId)
-      .maybeSingle(),
-    supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .maybeSingle(),
+    supabase.from('profiles').select('id, email, name').eq('id', userId).maybeSingle(),
+    supabase.from('user_roles').select('role').eq('user_id', userId).maybeSingle(),
   ]);
 
   const resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
-  const profile = profileResult.data;
 
-  if (profile) {
-    return { id: profile.id, email: profile.email, name: profile.name, role: resolvedRole };
+  if (profileResult.data) {
+    return {
+      id: profileResult.data.id,
+      email: profileResult.data.email,
+      name: profileResult.data.name,
+      role: resolvedRole,
+    };
   }
-  return { id: userId, email: fallbackEmail, name: fallbackName, role: resolvedRole };
+
+  // Perfil no existe → el trigger falló. Crearlo desde el frontend como fallback.
+  const { data: newProfile } = await supabase
+    .from('profiles')
+    .upsert({ id: userId, email: fallbackEmail, name: fallbackName }, { onConflict: 'id' })
+    .select('id, email, name')
+    .maybeSingle();
+
+  if (!roleResult.data) {
+    await supabase
+      .from('user_roles')
+      .upsert({ user_id: userId, role: resolvedRole }, { onConflict: 'user_id,role' });
+  }
+
+  return {
+    id: userId,
+    email: newProfile?.email ?? fallbackEmail,
+    name: newProfile?.name ?? fallbackName,
+    role: resolvedRole,
+  };
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -191,7 +206,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       
       if (error) {
-        // Translate common Supabase errors to user-friendly Spanish messages
         if (error.message.includes('already registered')) {
           throw new Error('Este email ya está registrado. Por favor inicia sesión.');
         }
@@ -203,8 +217,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
         throw new Error(error.message || 'Error al crear la cuenta');
       }
-      
+
       if (!data.user) throw new Error('No se pudo crear la cuenta');
+
+      // Sin sesión = confirmación de email requerida
+      if (!data.session) {
+        setIsLoading(false);
+        throw new Error('NEEDS_EMAIL_CONFIRMATION');
+      }
       
       // Wait a bit for the trigger to create the profile and role
       await new Promise(resolve => setTimeout(resolve, 500));
