@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,12 +7,15 @@ import { Separator } from '@/components/ui/separator';
 import { Loader2, Phone } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SocialAuthProps {
   mode: 'login' | 'signup';
 }
 
 const SocialAuth = ({ mode }: SocialAuthProps) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [showPhoneInput, setShowPhoneInput] = useState(false);
@@ -22,10 +26,11 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
   const handleGoogleAuth = async () => {
     setIsGoogleLoading(true);
     try {
+      const returnTo = encodeURIComponent(window.location.pathname);
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: `${window.location.origin}/?returnTo=${returnTo}`,
         },
       });
       
@@ -85,7 +90,16 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       if (error) throw error;
       
       toast.success('¡Verificación exitosa!');
-      // Auth state change will handle redirect
+      // Give onAuthStateChange time to fire and set user state
+      await new Promise(resolve => setTimeout(resolve, 800));
+      // Navigate based on role (user state will be updated by AuthContext listener)
+      if (user?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (user?.role === 'landlord') {
+        navigate('/ll/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Código inválido';
       toast.error('Error', { description: message });

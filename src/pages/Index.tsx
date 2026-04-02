@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { SEOHead } from "@/components/seo/SEOHead";
 import Hero from "@/components/sections/Hero";
@@ -8,8 +10,21 @@ import FeaturedListings from "@/components/sections/FeaturedListings";
 import CategoryCTA from "@/components/sections/CategoryCTA";
 import TestimonialSection from "@/components/sections/TestimonialSection";
 import HomeFAQ from "@/components/sections/HomeFAQ";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // After Google OAuth redirect, restore the original destination
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get('returnTo');
+    if (returnTo && user) {
+      navigate(decodeURIComponent(returnTo), { replace: true });
+    }
+  }, [user, navigate]);
+
   return (
     <Layout>
       <SEOHead
