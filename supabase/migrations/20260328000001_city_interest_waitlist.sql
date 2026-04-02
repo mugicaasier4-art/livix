@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS public.city_interest_waitlist (
 );
 
 -- Index for querying by city
-CREATE INDEX idx_city_interest_city_slug ON public.city_interest_waitlist (city_slug);
+CREATE INDEX IF NOT EXISTS idx_city_interest_city_slug ON public.city_interest_waitlist (city_slug);
 
 -- Unique constraint to prevent duplicate signups
-CREATE UNIQUE INDEX idx_city_interest_unique ON public.city_interest_waitlist (email, city_slug);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_city_interest_unique ON public.city_interest_waitlist (email, city_slug);
 
 -- RLS
 ALTER TABLE public.city_interest_waitlist ENABLE ROW LEVEL SECURITY;
