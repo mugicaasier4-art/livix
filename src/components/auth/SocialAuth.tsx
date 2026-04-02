@@ -7,15 +7,12 @@ import { Separator } from '@/components/ui/separator';
 import { Loader2, Phone } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
-
 interface SocialAuthProps {
   mode: 'login' | 'signup';
 }
 
 const SocialAuth = ({ mode }: SocialAuthProps) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [showPhoneInput, setShowPhoneInput] = useState(false);
@@ -90,12 +87,13 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       if (error) throw error;
       
       toast.success('¡Verificación exitosa!');
-      // Give onAuthStateChange time to fire and set user state
       await new Promise(resolve => setTimeout(resolve, 800));
-      // Navigate based on role (user state will be updated by AuthContext listener)
-      if (user?.role === 'admin') {
+      // Read fresh session instead of stale closure
+      const { data: { session: freshSession } } = await supabase.auth.getSession();
+      const freshRole = (freshSession?.user?.user_metadata as any)?.role as string || 'student';
+      if (freshRole === 'admin') {
         navigate('/admin/dashboard');
-      } else if (user?.role === 'landlord') {
+      } else if (freshRole === 'landlord') {
         navigate('/ll/dashboard');
       } else {
         navigate('/');
