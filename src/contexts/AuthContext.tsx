@@ -76,6 +76,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (mounted) setUser(userData);
       } catch (error) {
         if (import.meta.env.DEV) console.error('Error fetching profile:', error);
+        if (mounted) setUser({
+          id: s.user.id,
+          email: s.user.email ?? '',
+          name: (s.user.user_metadata as any)?.name ?? 'Usuario',
+          role: ((s.user.user_metadata as any)?.role as UserRole) || 'student',
+        });
       }
     };
 
@@ -205,59 +211,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       
       if (!data.user) throw new Error('No se pudo crear la cuenta');
-      
-      // Wait a bit for the trigger to create the profile and role
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Get the created profile with retry logic
-      let profile = null;
-      let attempts = 0;
-      while (!profile && attempts < 3) {
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('id, email, name')
-          .eq('id', data.user.id)
-          .maybeSingle();
-        
-        if (profileData) {
-          profile = profileData;
-        } else {
-          await new Promise(resolve => setTimeout(resolve, 300));
-          attempts++;
-        }
+
+      // If email confirmation is pending, session is null — don't set user state
+      if (!data.session) {
+        setIsLoading(false);
+        throw new Error('CONFIRM_EMAIL');
       }
-      
-      // Get role with retry logic
-      let resolvedRole: UserRole = role;
-      attempts = 0;
-      while (attempts < 3) {
-        const { data: roleRow } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', data.user.id)
-          .maybeSingle();
-        
-        if (roleRow?.role) {
-          resolvedRole = roleRow.role as UserRole;
-          break;
-        } else {
-          await new Promise(resolve => setTimeout(resolve, 300));
-          attempts++;
-        }
-      }
-      
-      const userData: User = profile ? {
-        id: profile.id,
-        email: profile.email,
-        name: profile.name,
-        role: resolvedRole
-      } : {
-        id: data.user.id,
-        email: data.user.email ?? '',
-        name: name,
-        role: resolvedRole
-      };
-      
+
+      const userData = await fetchUserProfile(
+        data.user.id,
+        data.user.email ?? '',
+        name
+      );
       setUser(userData);
       setIsLoading(false);
       return userData;
