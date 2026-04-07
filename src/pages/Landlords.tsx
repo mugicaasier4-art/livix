@@ -568,7 +568,7 @@ const Landlords = () => {
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+          <div className={`grid gap-8 ${plans.length === 2 ? 'md:grid-cols-2 max-w-3xl' : 'md:grid-cols-3 max-w-5xl'} mx-auto`}>
             {plans.map((plan, index) => (
               <Card key={index} className={`relative ${plan.popular ? 'border-primary ring-2 ring-primary/20 scale-105' : ''}`}>
                 {plan.popular && (
