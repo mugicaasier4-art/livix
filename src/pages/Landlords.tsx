@@ -568,9 +568,9 @@ const Landlords = () => {
             </p>
           </div>
 
-          <div className={`grid gap-8 ${plans.length === 2 ? 'md:grid-cols-2 max-w-3xl' : 'md:grid-cols-3 max-w-5xl'} mx-auto`}>
+          <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
             {plans.map((plan, index) => (
-              <Card key={index} className={`relative ${plan.popular ? 'border-primary ring-2 ring-primary/20 scale-105' : ''}`}>
+              <Card key={index} className={`w-full sm:w-[320px] relative ${plan.popular ? 'border-primary ring-2 ring-primary/20 scale-105' : ''}`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-primary text-primary-foreground">
