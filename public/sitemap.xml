@@ -2,159 +2,249 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://livix.es/</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://livix.es/explore</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://livix.es/residences</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://livix.es/roommates</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://livix.es/blog</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://livix.es/about</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://livix.es/pricing</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://livix.es/propietarios</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://livix.es/estudiantes</loc>
-        <lastmod>2026-03-18</lastmod>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/1</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/guia-estudiantes-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/2</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/mejores-barrios-estudiantes-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/3</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/residencia-universitaria-o-piso-compartido</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/4</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/coste-vida-estudiantes-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/5</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/evitar-estafas-alquiler-estudiantes</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/6</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/alquilar-habitacion-zaragoza-paso-a-paso</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/7</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/residencia-vs-piso-compartido-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/8</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/guia-erasmus-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/9</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/precio-habitacion-zaragoza-por-barrios</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/10</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/mejores-residencias-universitarias-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/11</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/colegio-mayor-pedro-cerbuna-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/12</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/vivir-actur-estudiante-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/13</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/contrato-alquiler-estudiantes-clausulas</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://livix.es/blog/14</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://livix.es/blog/becas-ayudas-alojamiento-aragon</loc>
+        <lastmod>2026-04-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-    <url><loc>https://livix.es/residencias/zaragoza</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-    <url><loc>https://livix.es/colegios-mayores/zaragoza</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/delicias</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/delicias</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/actur</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/actur</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/centro</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/centro</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/las-fuentes</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/las-fuentes</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/romareda</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/romareda</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/habitaciones/zaragoza/san-jose</loc><lastmod>2026-03-18</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/pisos/zaragoza/san-jose</loc><lastmod>2026-03-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/san-francisco</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/rio-ebro</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-    <url><loc>https://livix.es/campus/usj</loc><lastmod>2026-03-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url>
+        <loc>https://livix.es/blog/beca-mec-2026-2027-requisitos-cuantias</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/alquilar-piso-estudiantes-zaragoza-guia-propietarios</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/cuanto-cobrar-alquiler-estudiantes-zaragoza</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/mejores-barrios-estudiantes-zaragoza-2026</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-madrid</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-barcelona</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-sevilla</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-valencia</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-granada</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-malaga</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-salamanca</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-bilbao</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-pamplona</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-logrono</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://livix.es/blog/guia-estudiantes-santiago-de-compostela</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url><loc>https://livix.es/residencias/zaragoza</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+    <url><loc>https://livix.es/colegios-mayores/zaragoza</loc><lastmod>2026-04-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/delicias</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/delicias</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/actur</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/actur</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/centro</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/centro</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/las-fuentes</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/las-fuentes</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/romareda</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/romareda</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/habitaciones/zaragoza/san-jose</loc><lastmod>2026-04-07</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/pisos/zaragoza/san-jose</loc><lastmod>2026-04-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/campus/san-francisco</loc><lastmod>2026-04-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/campus/rio-ebro</loc><lastmod>2026-04-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://livix.es/campus/usj</loc><lastmod>2026-04-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
