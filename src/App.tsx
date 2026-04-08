@@ -19,6 +19,7 @@ import { PreferencesProvider } from "@/contexts/PreferencesContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ScrollToTop from "@/components/ScrollToTop";
 import { ErrorBoundary, RouteErrorFallback } from "@/components/ErrorBoundary";
+import DemoBanner from "@/components/DemoBanner";
 
 // Eager loaded - critical path pages
 import Index from "./pages/Index";
@@ -167,6 +168,7 @@ const App = () => (
                   <TooltipProvider>
                     <Sonner />
                     <BrowserRouter>
+                      <DemoBanner />
                       <ReturnToHandler />
                       <CitySelectorOverlay />
                       <ScrollToTop />

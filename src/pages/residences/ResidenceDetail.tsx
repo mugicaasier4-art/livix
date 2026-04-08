@@ -7,9 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import {
   ArrowLeft, MapPin, Phone, Mail, Globe, Star,
-  Building2, Shield, Heart, Share2, ChevronLeft, ChevronRight
+  Building2, Shield, Heart, Share2, ChevronLeft, ChevronRight, Loader2
 } from 'lucide-react';
-import { residences } from '@/data/residences';
+import { useResidences } from '@/hooks/useResidences';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
@@ -28,6 +28,7 @@ const mapContainerStyle = {
 const ResidenceDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { residences, isLoading: residencesLoading } = useResidences();
   const residence = residences.find(r => r.id === id);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -75,6 +76,16 @@ const ResidenceDetail = () => {
     setIsAutoPlaying(false);
     setCurrentImageIndex(index);
   }, []);
+
+  if (residencesLoading) {
+    return (
+      <Layout>
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-[#5DB4EE]" />
+        </div>
+      </Layout>
+    );
+  }
 
   if (!residence) {
     return (
@@ -382,7 +393,7 @@ const ResidenceDetail = () => {
                     <Button
                       variant="outline"
                       className="w-full gap-2"
-                      onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${residence.coordinates![0]},${residence.coordinates![1]}`, '_blank')}
+                      onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${residence.coordinates![0]},${residence.coordinates![1]}`, '_blank', 'noopener,noreferrer')}
                     >
                       <MapPin className="h-4 w-4" />
                       Abrir en Google Maps
@@ -563,7 +574,7 @@ const ResidenceDetail = () => {
         {/* Mobile Sticky CTA */}
         <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
           <div className="flex gap-3">
-            <Button className="flex-1 gap-2" size="lg" onClick={() => window.open(residence.website, '_blank')}>
+            <Button className="flex-1 gap-2" size="lg" disabled={!residence.website} onClick={() => residence.website && window.open(residence.website, '_blank', 'noopener,noreferrer')}>
               <Globe className="h-5 w-5" />
               Más información
             </Button>

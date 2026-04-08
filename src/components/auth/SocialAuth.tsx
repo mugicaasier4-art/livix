@@ -1,28 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, Phone } from 'lucide-react';
+import { Loader2, Phone, Users, Home } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 interface SocialAuthProps {
   mode: 'login' | 'signup';
 }
 
 const SocialAuth = ({ mode }: SocialAuthProps) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [pendingRole, setPendingRole] = useState<'student' | 'landlord'>('student');
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [showPhoneInput, setShowPhoneInput] = useState(false);
   const [phone, setPhone] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
+  const [otpVerified, setOtpVerified] = useState(false);
+
+  useEffect(() => {
+    if (otpVerified && user) {
+      setOtpVerified(false);
+      if (user.role === 'admin') navigate('/admin/dashboard');
+      else if (user.role === 'landlord') navigate('/ll/dashboard');
+      else navigate('/');
+    }
+  }, [user, otpVerified, navigate]);
 
   const handleGoogleAuth = async () => {
     setIsGoogleLoading(true);
     try {
+      if (mode === 'signup') {
+        sessionStorage.setItem('livix_pending_role', pendingRole);
+      }
       const returnTo = encodeURIComponent(window.location.pathname);
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -30,9 +46,9 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
           redirectTo: `${window.location.origin}/?returnTo=${returnTo}`,
         },
       });
-      
       if (error) throw error;
     } catch (error) {
+      sessionStorage.removeItem('livix_pending_role');
       const message = error instanceof Error ? error.message : 'Error al conectar con Google';
       toast.error('Error de autenticación', { description: message });
       setIsGoogleLoading(false);
@@ -50,6 +66,9 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
     
     setIsPhoneLoading(true);
     try {
+      if (mode === 'signup') {
+        sessionStorage.setItem('livix_pending_role', pendingRole);
+      }
       const { error } = await supabase.auth.signInWithOtp({
         phone: formattedPhone,
       });
@@ -87,17 +106,7 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       if (error) throw error;
       
       toast.success('¡Verificación exitosa!');
-      await new Promise(resolve => setTimeout(resolve, 800));
-      // Read fresh session instead of stale closure
-      const { data: { session: freshSession } } = await supabase.auth.getSession();
-      const freshRole = (freshSession?.user?.user_metadata as any)?.role as string || 'student';
-      if (freshRole === 'admin') {
-        navigate('/admin/dashboard');
-      } else if (freshRole === 'landlord') {
-        navigate('/ll/dashboard');
-      } else {
-        navigate('/');
-      }
+      setOtpVerified(true);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Código inválido';
       toast.error('Error', { description: message });
@@ -116,6 +125,39 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       </div>
 
       <div className="grid gap-3">
+        {/* Role selector - shown before Google OAuth (signup only) */}
+        {mode === 'signup' && (
+          <div className="space-y-1.5">
+            <p className="text-xs text-muted-foreground text-center">Accedo como</p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setPendingRole('student')}
+                className={`flex items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-sm transition-colors ${
+                  pendingRole === 'student'
+                    ? 'border-[#5DB4EE] bg-[#5DB4EE]/10 text-[#5DB4EE] font-medium'
+                    : 'border-input text-muted-foreground hover:bg-accent'
+                }`}
+              >
+                <Users className="h-3.5 w-3.5" />
+                Estudiante
+              </button>
+              <button
+                type="button"
+                onClick={() => setPendingRole('landlord')}
+                className={`flex items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-sm transition-colors ${
+                  pendingRole === 'landlord'
+                    ? 'border-[#5DB4EE] bg-[#5DB4EE]/10 text-[#5DB4EE] font-medium'
+                    : 'border-input text-muted-foreground hover:bg-accent'
+                }`}
+              >
+                <Home className="h-3.5 w-3.5" />
+                Propietario
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Google Auth Button */}
         <Button
           type="button"

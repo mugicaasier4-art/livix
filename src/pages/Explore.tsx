@@ -25,7 +25,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useSquads } from "@/hooks/useSquads";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Users, Building2, X, MapIcon, List } from "lucide-react";
-import { residences } from "@/data/residences";
+import { useResidences } from "@/hooks/useResidences";
 import { Faculty } from "@/data/faculties";
 import { Filters } from "@/components/explore/FiltersSheet";
 
@@ -33,6 +33,7 @@ const Explore = () => {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
   const { listings, isLoading } = useListings();
+  const { residences } = useResidences();
   const activeCity = useCityOrDefault();
   const { toggleLike } = useLikes();
   const isMobile = useIsMobile();

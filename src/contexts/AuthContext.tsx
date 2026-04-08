@@ -39,7 +39,19 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
     supabase.from('user_roles').select('role').eq('user_id', userId).maybeSingle(),
   ]);
 
-  const resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
+  // Handle pending role from OAuth flow (Google OAuth can't pass metadata, so we store in sessionStorage)
+  // IMPORTANT: Only apply for NEW users (no existing role). Never change role of existing users.
+  const pendingRole = sessionStorage.getItem('livix_pending_role') as 'student' | 'landlord' | null;
+  let resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
+
+  if (pendingRole) {
+    sessionStorage.removeItem('livix_pending_role'); // Always clean up
+    // Only override role for new users (no existing role row)
+    if (!roleResult.data && ['student', 'landlord'].includes(pendingRole)) {
+      resolvedRole = pendingRole as UserRole;
+    }
+    // If user already has a role, ignore pendingRole — they're logging in, not signing up
+  }
 
   if (profileResult.data) {
     return {
@@ -60,7 +72,7 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
   if (!roleResult.data) {
     await supabase
       .from('user_roles')
-      .upsert({ user_id: userId, role: resolvedRole }, { onConflict: 'user_id,role' });
+      .upsert({ user_id: userId, role: resolvedRole }, { onConflict: 'user_id' });
   }
 
   return {

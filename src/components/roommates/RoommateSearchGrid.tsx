@@ -80,7 +80,6 @@ const defaultAvatars = [
 
 function dbToMockRoommate(p: PublicRoommateProfile): MockRoommate {
     const hash = p.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-    const lp = p.lifestyle_preferences as Record<string, number> | null;
     return {
         id: p.id,
         name: p.name,
@@ -98,11 +97,11 @@ function dbToMockRoommate(p: PublicRoommateProfile): MockRoommate {
         pets: p.pets_allowed ? 'Tiene mascota' : 'Sin mascotas',
         tags: (p.interests || []).slice(0, 3),
         lifeGraph: {
-            limpieza: lp?.limpieza ?? 3,
-            fiesta: lp?.fiesta ?? 3,
-            estudios: lp?.estudios ?? 3,
-            visitas: lp?.visitas ?? 3,
-            ruido: lp?.ruido ?? 3,
+            limpieza: p.cleanliness ?? 3,
+            ruido: p.noise_tolerance ?? 3,
+            fiesta: p.party_frequency ?? 3,
+            visitas: p.guest_frequency ?? 3,
+            estudios: p.intro_extro ?? 3,
         },
     };
 }
@@ -653,7 +652,27 @@ const RoommateSearchGrid = ({ onBack }: RoommateSearchGridProps) => {
     const [filterUniversity, setFilterUniversity] = useState("");
 
     // User's own profile stats (editable) — use saved profile if available
-    const [userStats, setUserStats] = useState<LifeGraphData>(() => getSavedLifeProfile() ?? { ...myLifeGraph });
+    const myLifeGraphReal: LifeGraphData = myProfile ? {
+        limpieza: myProfile.cleanliness ?? 3,
+        fiesta: myProfile.party_frequency ?? 3,
+        estudios: myProfile.intro_extro ?? 3,
+        visitas: myProfile.guest_frequency ?? 3,
+        ruido: myProfile.noise_tolerance ?? 3,
+    } : myLifeGraph;
+    const [userStats, setUserStats] = useState<LifeGraphData>(() => getSavedLifeProfile() ?? { ...myLifeGraphReal });
+
+    // Sync userStats with real profile when it loads (always prefer real data over localStorage)
+    useEffect(() => {
+        if (myProfile) {
+            setUserStats({
+                limpieza: myProfile.cleanliness ?? 3,
+                ruido: myProfile.noise_tolerance ?? 3,
+                fiesta: myProfile.party_frequency ?? 3,
+                visitas: myProfile.guest_frequency ?? 3,
+                estudios: myProfile.intro_extro ?? 3,
+            });
+        }
+    }, [myProfile]);
 
     // Messaging state
     const [chatProfile, setChatProfile] = useState<MockRoommate | null>(null);

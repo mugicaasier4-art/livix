@@ -44,7 +44,7 @@ import { useRoommateProfiles } from "@/hooks/useRoommateProfiles";
 const StudentOnboarding = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { createProfile } = useRoommateProfiles();
+  const { createProfile, myProfile } = useRoommateProfiles();
   const [currentStep, setCurrentStep] = useState(() => {
     const saved = localStorage.getItem('livix-onboarding-step');
     return saved ? parseInt(saved) : 0;
@@ -372,7 +372,7 @@ const StudentOnboarding = () => {
           : "Comenzaremos a buscar compañeros y alojamientos compatibles contigo"
       });
       
-      navigate("/roommates");
+      navigate("/roommates/quiz?from=onboarding");
     } catch (error) {
       console.error("Error saving profile:", error);
       toast.error("Error al guardar el perfil", {

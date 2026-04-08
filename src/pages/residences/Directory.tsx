@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, MapPin, Phone, Mail, Globe, Star, Filter, X, Building2 } from 'lucide-react';
-import { residences, residenceTypes, genderOptions, priceRanges, Residence } from '@/data/residences';
+import { Search, MapPin, Phone, Mail, Globe, Star, Filter, X, Building2, Loader2 } from 'lucide-react';
+import { residenceTypes, genderOptions, priceRanges, type Residence } from '@/data/residences';
+import { useResidences } from '@/hooks/useResidences';
 
 const ResidencesDirectory = () => {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ const ResidencesDirectory = () => {
   const [selectedGender, setSelectedGender] = useState('all');
   const [selectedPrice, setSelectedPrice] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
+
+  const { residences, isLoading } = useResidences({
+    type: selectedType !== 'all' ? selectedType : undefined,
+    gender: selectedGender !== 'all' ? selectedGender : undefined,
+  });
 
   const filteredResidences = useMemo(() => {
     return residences.filter(residence => {
@@ -30,29 +36,21 @@ const ResidencesDirectory = () => {
         }
       }
 
-      // Type filter
-      if (selectedType !== 'all' && residence.type !== selectedType) {
-        return false;
-      }
-
-      // Gender filter
-      if (selectedGender !== 'all' && residence.gender !== selectedGender) {
-        return false;
-      }
-
       // Price filter
       if (selectedPrice !== 'all') {
-        const [min, max] = selectedPrice.split('-').map(p => p === '+' ? Infinity : parseInt(p));
-        if (max === undefined) {
+        if (selectedPrice.endsWith('+')) {
+          const min = parseInt(selectedPrice);
           if (residence.priceRange.min < min) return false;
         } else {
-          if (residence.priceRange.min < min || residence.priceRange.max > max) return false;
+          const [min, max] = selectedPrice.split('-').map(Number);
+          // Show residences whose price range overlaps with the selected range
+          if (residence.priceRange.max < min || residence.priceRange.min > max) return false;
         }
       }
 
       return true;
     });
-  }, [searchQuery, selectedType, selectedGender, selectedPrice]);
+  }, [residences, searchQuery, selectedPrice]);
 
   const activeFiltersCount = [selectedType, selectedGender, selectedPrice].filter(f => f !== 'all').length;
 
@@ -207,7 +205,11 @@ const ResidencesDirectory = () => {
 
         {/* Results - Cluster View */}
         <div className="container mx-auto px-4 py-8">
-          {filteredResidences.length === 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-[#5DB4EE]" />
+            </div>
+          ) : filteredResidences.length === 0 ? (
             <div className="text-center py-16">
               <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium text-foreground mb-2">

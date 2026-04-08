@@ -23,6 +23,12 @@ export interface PublicRoommateProfile {
     name: string;
     avatar_url: string | null;
     is_verified: boolean;
+    // Direct lifestyle columns
+    cleanliness: number | null;
+    noise_tolerance: number | null;
+    guest_frequency: number | null;
+    intro_extro: number | null;
+    party_frequency: number | null;
 }
 
 /**
@@ -81,6 +87,11 @@ export const usePublicRoommateProfiles = () => {
                     name: userProfile?.name || 'Estudiante',
                     avatar_url: userProfile?.avatar_url || null,
                     is_verified: userProfile?.is_verified || false,
+                    cleanliness: profile.cleanliness ?? null,
+                    noise_tolerance: profile.noise_tolerance ?? null,
+                    guest_frequency: profile.guest_frequency ?? null,
+                    intro_extro: profile.intro_extro ?? null,
+                    party_frequency: profile.party_frequency ?? null,
                 };
             });
 

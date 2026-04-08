@@ -151,7 +151,7 @@ export const useRoommateProfiles = () => {
     try {
       const { data, error } = await supabase
         .from('roommate_profiles')
-        .insert([
+        .upsert([
           {
             user_id: user.id,
             faculty: profileData.faculty,
@@ -187,7 +187,7 @@ export const useRoommateProfiles = () => {
               JSON.stringify(profileData.lifestyle_preferences || {})
             ),
           },
-        ])
+        ], { onConflict: 'user_id' })
         .select()
         .single();
 
