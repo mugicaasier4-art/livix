@@ -1,10 +1,10 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { CityProvider } from "@/contexts/CityContext";
 import { CitySelectorOverlay } from "@/components/city/CitySelector";
@@ -134,6 +134,25 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const ReturnToHandler = () => {
+  const navigate = useNavigate();
+  const { user, isLoading } = useAuth();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get('returnTo');
+    if (returnTo && user && !isLoading) {
+      params.delete('returnTo');
+      const remaining = params.toString();
+      const cleanUrl = window.location.pathname + (remaining ? `?${remaining}` : '');
+      window.history.replaceState({}, '', cleanUrl);
+      navigate(decodeURIComponent(returnTo), { replace: true });
+    }
+  }, [user, isLoading, navigate]);
+
+  return null;
+};
+
 const App = () => (
   <ErrorBoundary>
   <QueryClientProvider client={queryClient}>
@@ -148,6 +167,7 @@ const App = () => (
                   <TooltipProvider>
                     <Sonner />
                     <BrowserRouter>
+                      <ReturnToHandler />
                       <CitySelectorOverlay />
                       <ScrollToTop />
                       <OnboardingProvider>
@@ -211,7 +231,11 @@ const App = () => (
                                 <Route path="/alquilar-piso-estudiantes/:barrio" element={<AlquilarBarrio />} />
 
                                 {/* Secret Premium Dashboard for Residences */}
-                                <Route path="/residences/admin-portal-x7k9" element={<ResidencesAdminPortal />} />
+                                <Route path="/residences/admin-portal-x7k9" element={
+                                  <ProtectedRoute allowedRoles={['admin']}>
+                                    <ResidencesAdminPortal />
+                                  </ProtectedRoute>
+                                } />
 
                                 {/* Protected Routes - Roommates */}
                                 <Route path="/roommates/create" element={
@@ -270,7 +294,11 @@ const App = () => (
                                     <LandlordOnboarding />
                                   </ProtectedRoute>
                                 } />
-                                <Route path="/ll/quick-onboarding" element={<QuickOnboarding />} />
+                                <Route path="/ll/quick-onboarding" element={
+                                  <ProtectedRoute allowedRoles={['landlord']}>
+                                    <QuickOnboarding />
+                                  </ProtectedRoute>
+                                } />
                                 <Route path="/ll/create-listing" element={
                                   <ProtectedRoute allowedRoles={['landlord']}>
                                     <CreateListing />

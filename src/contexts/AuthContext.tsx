@@ -9,11 +9,18 @@ const AUTH_RATE_WINDOW_MS = 5 * 60 * 1000;
 
 export type UserRole = 'student' | 'landlord' | 'admin';
 
+export interface UserMetadata {
+  name?: string;
+  role?: string;
+  avatar_url?: string;
+}
+
 export interface User {
   id: string;
   email: string;
   name: string;
   role: UserRole;
+  erasmus?: boolean;
 }
 
 interface AuthContextType {
@@ -71,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const userData = await fetchUserProfile(
           s.user.id,
           s.user.email ?? '',
-          (s.user.user_metadata as any)?.name ?? 'Usuario'
+          (s.user.user_metadata as UserMetadata)?.name ?? 'Usuario'
         );
         if (mounted) setUser(userData);
       } catch (error) {
@@ -79,27 +86,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (mounted) setUser({
           id: s.user.id,
           email: s.user.email ?? '',
-          name: (s.user.user_metadata as any)?.name ?? 'Usuario',
-          role: ((s.user.user_metadata as any)?.role as UserRole) || 'student',
+          name: (s.user.user_metadata as UserMetadata)?.name ?? 'Usuario',
+          role: ((s.user.user_metadata as UserMetadata)?.role as UserRole) || 'student',
         });
       }
     };
 
-    // 1. Check existing session immediately (resolves isLoading)
-    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
-      if (!mounted) return;
-      setSession(s);
-      if (s?.user) await hydrateUser(s);
-      if (mounted) setIsLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        const { data: { session: s } } = await supabase.auth.getSession();
+        if (!mounted) return;
+        setSession(s);
+        if (s?.user) await hydrateUser(s);
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    };
 
-    // 2. Listen for all future auth state changes
+    initializeAuth();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, s) => {
         if (!mounted) return;
         setSession(s);
         if (s?.user) {
+          setIsLoading(true);
           await hydrateUser(s);
+          if (mounted) setIsLoading(false);
         } else {
           setUser(null);
         }
@@ -163,7 +178,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userData = await fetchUserProfile(
         data.user.id,
         data.user.email ?? '',
-        (data.user.user_metadata as any)?.name ?? 'Usuario'
+        (data.user.user_metadata as UserMetadata)?.name ?? 'Usuario'
       );
 
       setUser(userData);

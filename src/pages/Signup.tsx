@@ -55,7 +55,7 @@ const Signup = () => {
 
   useEffect(() => {
     supabase
-      .from('profiles')
+      .from('user_roles')
       .select('*', { count: 'exact', head: true })
       .eq('role', 'student')
       .then(({ count }) => setStudentCount(count || 0));
@@ -111,6 +111,7 @@ const Signup = () => {
           description: 'Te hemos enviado un enlace de confirmación. Revisa tu bandeja de entrada.',
           duration: 6000,
         });
+        navigate('/login');
         return;
       }
 

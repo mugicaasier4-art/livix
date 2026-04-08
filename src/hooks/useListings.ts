@@ -4,6 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { validateImageFile } from '@/utils/fileValidation';
 import { resizeImage } from '@/utils/imageResize';
+import { isDemoMode } from '@/utils/isDemo';
+import { demoListings } from '@/data/demoListings';
 
 export interface Listing {
   id: string;
@@ -139,17 +141,20 @@ export const useListings = () => {
     }
   };
 
-  const fetchLandlordListings = async (landlordId: string) => {
+  const fetchLandlordListings = async (landlordId: string, page = 0, pageSize = 50): Promise<{ data: Listing[]; totalCount: number | null }> => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error, count } = await supabase
         .from('listings')
-        .select('*')
+        .select('*', { count: 'exact' })
         .eq('landlord_id', landlordId)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .range(page * pageSize, (page + 1) * pageSize - 1);
 
       if (error) throw error;
       setListings(data || []);
+      setHasMore((data || []).length === pageSize);
+      return { data: data || [], totalCount: count };
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error('Error fetching landlord listings:', error);
@@ -157,6 +162,7 @@ export const useListings = () => {
       toast.error('Error', {
         description: 'No se pudieron cargar tus pisos'
       });
+      return { data: [], totalCount: null };
     } finally {
       setIsLoading(false);
     }
@@ -349,6 +355,13 @@ export const useListings = () => {
   };
 
   useEffect(() => {
+    if (isDemoMode()) {
+      setListings(demoListings);
+      setIsLoading(false);
+      setHasMore(false);
+      return;
+    }
+
     fetchListings();
 
     // Set up realtime subscription
@@ -359,7 +372,8 @@ export const useListings = () => {
         {
           event: '*',
           schema: 'public',
-          table: 'listings'
+          table: 'listings',
+          filter: 'is_active=eq.true'
         },
         () => {
           fetchListings();

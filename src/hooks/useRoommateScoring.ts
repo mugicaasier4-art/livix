@@ -81,7 +81,7 @@ const BUDGET_OVERLAP_THRESHOLD = 0.2; // 20 %
  * as top-level properties.
  */
 export function hydrateScoringProfile(profile: RoommateProfile): ScoringProfile {
-  const lp = (profile as any).lifestyle_preferences as Record<string, unknown> | null | undefined;
+  const lp = (profile as RoommateProfile & { lifestyle_preferences?: Record<string, unknown> | null }).lifestyle_preferences;
   const hydrated: ScoringProfile = { ...profile };
 
   if (lp && typeof lp === 'object') {
@@ -214,22 +214,28 @@ function computeWeightedScore(
     const valA = a[dim.key] as number | null | undefined;
     const valB = b[dim.key] as number | null | undefined;
 
-    // Skip if either value is missing
-    if (valA == null || valB == null) continue;
+    const aIsNull = valA == null;
+    const bIsNull = valB == null;
+
+    if (aIsNull && bIsNull) continue;
+
+    const neutralValue = dim.circular ? 12 : Math.ceil(dim.maxRange / 2) + 1;
+    const effectiveA = aIsNull ? neutralValue : valA;
+    const effectiveB = bIsNull ? neutralValue : valB;
+    const weightMultiplier = (aIsNull || bIsNull) ? 0.5 : 1;
 
     let distance: number;
     if (dim.circular) {
-      distance = circularDistance(valA, valB);
+      distance = circularDistance(effectiveA, effectiveB);
     } else {
-      distance = Math.abs(valA - valB);
+      distance = Math.abs(effectiveA - effectiveB);
     }
 
-    // Cap distance at maxRange for score calculation
     const cappedDistance = Math.min(distance, dim.maxRange);
     const dimScore = (1 - cappedDistance / dim.maxRange) * 100;
 
-    weightedSum += dim.weight * dimScore;
-    totalWeight += dim.weight;
+    weightedSum += dim.weight * weightMultiplier * dimScore;
+    totalWeight += dim.weight * weightMultiplier;
 
     breakdown.push({
       dimension: dim.key as string,

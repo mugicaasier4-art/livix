@@ -317,7 +317,16 @@ const StudentOnboarding = () => {
         departureDate: formData.departureDate
       };
 
-      // Map form data to roommate profile structure
+      const sleepHourMap: Record<string, number> = {
+        'early': 22,
+        'normal': 23,
+        'late': 1,
+        'very_late': 3,
+      };
+
+      const scaleMap = (val: number, fromMax: number, toMax: number): number =>
+        Math.round((val / fromMax) * toMax) || 1;
+
       const profileData = {
         faculty: formData.faculty,
         year: formData.academicYear,
@@ -332,6 +341,21 @@ const StudentOnboarding = () => {
         gender_preference: formData.roommateGender || 'any',
         smoking_allowed: formData.smoking === 'yes' || formData.smoking === 'social',
         pets_allowed: formData.pets === 'have' || formData.pets === 'love' || formData.pets === 'like',
+        city: 'Zaragoza',
+        university: formData.university || null,
+        campus: null,
+        languages: formData.languages.length > 0 ? formData.languages : ['es'],
+        sleep_time: sleepHourMap[formData.sleepSchedule] ?? null,
+        cleanliness: scaleMap(formData.cleanlinessLevel[0], 10, 5) as number,
+        noise_tolerance: scaleMap(formData.noiseLevel[0], 10, 5) as number,
+        guest_frequency: formData.guests === 'always' ? 5 : formData.guests === 'sometimes' ? 3 : formData.guests === 'rarely' ? 1 : null,
+        intro_extro: scaleMap(formData.socialLevel[0], 10, 5) as number,
+        study_place: formData.studyHabits === 'home' ? 'home' as const : formData.studyHabits === 'library' ? 'library' as const : formData.studyHabits === 'cafe' ? 'cafe' as const : 'mixed' as const,
+        cooking: null,
+        expense_sharing: null,
+        party_frequency: formData.parties === 'often' ? 5 : formData.parties === 'sometimes' ? 3 : formData.parties === 'rarely' ? 1 : formData.parties === 'never' ? 1 : null,
+        hobbies: formData.interests.length > 0 ? formData.interests : [],
+        profile_completeness: 100,
         lifestyle_preferences: lifestylePreferences
       };
 
@@ -415,16 +439,64 @@ const StudentOnboarding = () => {
   const [showPhaseComplete, setShowPhaseComplete] = useState(false);
 
   const handlePartialSave = async () => {
-    // Clear localStorage and redirect
-    localStorage.removeItem('livix-onboarding-data');
-    localStorage.removeItem('livix-onboarding-step');
-    localStorage.removeItem('livix-onboarding-erasmus');
+    if (!user) {
+      navigate('/login');
+      return;
+    }
 
-    toast.success('Perfil básico guardado', {
-      description: 'Puedes completar el resto desde Configuración',
-      duration: 3000,
-    });
-    navigate('/explore');
+    setIsSaving(true);
+    try {
+      const partialProfile = {
+        faculty: formData.faculty || 'Sin especificar',
+        year: formData.academicYear || '1',
+        bio: formData.bio || '',
+        interests: formData.interests || [],
+        budget_min: formData.budgetRange[0] || 200,
+        budget_max: formData.budgetRange[1] || 500,
+        move_date: isErasmus && formData.arrivalDate ? formData.arrivalDate : new Date().toISOString().split('T')[0],
+        preferred_location: formData.location.join(', ') || 'Zaragoza',
+        is_active: true,
+        age: formData.age || null,
+        gender_preference: 'any',
+        smoking_allowed: false,
+        pets_allowed: false,
+        city: 'Zaragoza',
+        university: formData.university || null,
+        campus: null,
+        languages: ['es'],
+        sleep_time: null,
+        cleanliness: null,
+        noise_tolerance: null,
+        guest_frequency: null,
+        intro_extro: null,
+        study_place: null,
+        cooking: null,
+        expense_sharing: null,
+        party_frequency: null,
+        hobbies: [],
+        profile_completeness: 30,
+        lifestyle_preferences: {},
+      };
+
+      await createProfile(partialProfile);
+
+      localStorage.removeItem('livix-onboarding-data');
+      localStorage.removeItem('livix-onboarding-step');
+      localStorage.removeItem('livix-onboarding-erasmus');
+
+      toast.success('Perfil básico guardado', {
+        description: 'Puedes completar el resto desde Configuración',
+        duration: 3000,
+      });
+      navigate('/explore');
+    } catch (error) {
+      console.error('Error saving partial profile:', error);
+      toast.error('Error al guardar', {
+        description: 'Por favor, inténtalo de nuevo',
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const renderStepContent = () => {

@@ -1,9 +1,12 @@
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Leaf, Users, Eye, UtensilsCrossed, Moon, Scale, ArrowLeft, ArrowRight } from "lucide-react";
 import ShareButtons from "./ShareButtons";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 // --- Types & Constants ---
 
@@ -153,6 +156,8 @@ interface PersonalityQuizProps {
 }
 
 const PersonalityQuiz = ({ onComplete }: PersonalityQuizProps) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, Partial<Record<Dimension, number>>>>({});
   const [sliderValues, setSliderValues] = useState<Record<number, number>>({});
@@ -198,7 +203,7 @@ const PersonalityQuiz = ({ onComplete }: PersonalityQuizProps) => {
     }
   };
 
-  const finishQuiz = (allAnswers: Record<number, Partial<Record<Dimension, number>>>) => {
+  const finishQuiz = async (allAnswers: Record<number, Partial<Record<Dimension, number>>>) => {
     const totals: Record<Dimension, number> = { order: 0, social: 0, independence: 0, night: 0, cooking: 0 };
     Object.values(allAnswers).forEach((scores) => {
       (Object.entries(scores) as [Dimension, number][]).forEach(([dim, val]) => {
@@ -208,6 +213,14 @@ const PersonalityQuiz = ({ onComplete }: PersonalityQuizProps) => {
 
     const archetype = computeArchetype(totals);
     setResult(archetype);
+
+    if (user) {
+      const { error } = await supabase
+        .from('roommate_profiles')
+        .upsert({ user_id: user.id, personality_type: archetype }, { onConflict: 'user_id' });
+      if (error) console.error('Error saving personality_type:', error);
+    }
+
     onComplete?.(archetype, totals);
   };
 
@@ -253,7 +266,7 @@ const PersonalityQuiz = ({ onComplete }: PersonalityQuizProps) => {
           size="lg"
           onClick={() => {
             if (onComplete) return; // Already called
-            window.location.href = "/roommates/app";
+            navigate("/roommates/app");
           }}
         >
           Crear perfil en Livix

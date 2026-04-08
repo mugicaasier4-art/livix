@@ -119,11 +119,24 @@ export const ApplicationsProvider = ({ children }: { children: ReactNode }) => {
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('applications')
         .select('*, listings!inner(title, neighborhood, price)')
-        .eq('landlord_id', user.id)
-        .order('updated_at', { ascending: false });
+        .eq('landlord_id', user.id);
+
+      if (filters.status.length > 0) {
+        query = query.in('status', filters.status);
+      }
+      if (filters.listings.length > 0) {
+        query = query.in('listing_id', filters.listings);
+      }
+      if (filters.is_erasmus !== undefined) {
+        query = query.eq('is_erasmus', filters.is_erasmus);
+      }
+
+      const { data, error } = await query
+        .order('updated_at', { ascending: false })
+        .limit(200);
 
       if (error) throw error;
 
@@ -157,7 +170,7 @@ export const ApplicationsProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, filters.status, filters.listings, filters.is_erasmus]);
 
   useEffect(() => {
     fetchApplications();
@@ -300,11 +313,9 @@ export const ApplicationsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // ── Filter ────────────────────────────────────────────────────────
+  // missing_docs is a client-side filter: the DB query fetches all applications,
+  // then we filter here by checking whether the application has pending doc types.
   const filteredApplications = allApplications.filter(app => {
-    if (filters.status.length > 0 && !filters.status.includes(app.status)) return false;
-    if (filters.listings.length > 0 && !filters.listings.includes(app.listing_id)) return false;
-    if (filters.is_erasmus !== undefined && app.is_erasmus !== filters.is_erasmus) return false;
-
     if (filters.search.trim()) {
       const term = filters.search.toLowerCase();
       const searchable = [
@@ -314,6 +325,13 @@ export const ApplicationsProvider = ({ children }: { children: ReactNode }) => {
         app.student_email
       ].filter(Boolean).join(' ').toLowerCase();
       if (!searchable.includes(term)) return false;
+    }
+
+    if (filters.missing_docs.length > 0) {
+      const appDocs = selectedApplication?.id === app.id ? selectedApplication.docs : [];
+      const uploadedTypes = new Set(appDocs.map(d => d.type));
+      const hasMissing = filters.missing_docs.some(docType => !uploadedTypes.has(docType));
+      if (!hasMissing) return false;
     }
 
     return true;
