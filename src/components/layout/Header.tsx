@@ -240,7 +240,7 @@ const Header = () => {
           {/* Auth Section - Visible on tablet+ */}
           <div className="hidden md:flex items-center space-x-2">
             {user && <NotificationsDropdown />}
-            {user ? (
+            {user && (
               <DropdownMenu data-tour="profile-menu">
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="gap-2">
@@ -331,19 +331,6 @@ const Header = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            ) : (
-              <>
-                <Link to="/login">
-                  <Button variant="ghost" size="sm">
-                    Iniciar sesión
-                  </Button>
-                </Link>
-                <Link to="/signup">
-                  <Button size="sm">
-                    Crear cuenta gratis
-                  </Button>
-                </Link>
-              </>
             )}
           </div>
 
@@ -419,7 +406,7 @@ const Header = () => {
 
           <div className="h-px bg-border my-4" />
 
-          {user ? (
+          {user && (
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground py-2">
                 Hola, {user.name}
@@ -512,27 +499,6 @@ const Header = () => {
                 <LogOut className="h-5 w-5 mr-2" />
                 Salir
               </button>
-            </div>
-          ) : (
-            <div className="flex gap-3 pt-2">
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex-1"
-              >
-                <Button variant="outline" className="w-full">
-                  Iniciar sesión
-                </Button>
-              </Link>
-              <Link
-                to="/signup"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex-1"
-              >
-                <Button className="w-full">
-                  Crear cuenta gratis
-                </Button>
-              </Link>
             </div>
           )}
         {/* City selector mobile button */}
