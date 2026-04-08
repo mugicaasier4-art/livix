@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.es.livix.match",
+        "paths": ["/match/*", "/group/*", "/chat/*"]
+      }
+    ]
+  }
+}
