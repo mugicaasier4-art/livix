@@ -47,6 +47,47 @@ serve(async (req) => {
       })
     }
 
+    if (liked_id === user.id) {
+      return new Response(JSON.stringify({ error: 'Cannot like yourself' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    // Rate limiting: max 20 likes per 60 seconds
+    const serviceClientForRateLimit = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    )
+
+    const { count: recentLikes } = await serviceClientForRateLimit
+      .from('roommate_likes')
+      .select('*', { count: 'exact', head: true })
+      .eq('liker_id', user.id)
+      .gte('created_at', new Date(Date.now() - 60_000).toISOString())
+
+    if ((recentLikes ?? 0) >= 20) {
+      return new Response(JSON.stringify({ error: 'Rate limit exceeded. Slow down.' }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    // Verify the target profile exists and is active
+    const { data: targetProfile } = await serviceClientForRateLimit
+      .from('roommate_profiles')
+      .select('user_id')
+      .eq('user_id', liked_id)
+      .eq('is_active', true)
+      .maybeSingle()
+
+    if (!targetProfile) {
+      return new Response(JSON.stringify({ error: 'Profile not found or inactive' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
     // Service role client — bypasses RLS to hide pre-match likes from client
     const serviceClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
