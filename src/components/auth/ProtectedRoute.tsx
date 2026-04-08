@@ -51,13 +51,13 @@ const ProtectedRoute = ({
     );
   }
 
-  // TODO: restore auth guards — temporarily disabled to allow full access
-  // if (!user) {
-  //   return <Navigate to={redirectTo} state={{ from: location }} replace />;
-  // }
-  // if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-  //   return <Navigate to="/unauthorized" replace />;
-  // }
+  if (!user) {
+    return <Navigate to={redirectTo} state={{ from: location }} replace />;
+  }
+
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
 
   return <>{children}</>;
 };
