@@ -1,14 +1,14 @@
 /**
  * Utility to detect if the application is running in "Demo Mode" (mock data enabled).
- * 
+ *
  * Demo Mode is active if:
- * 1. Current hostname is a known demo/mock subdomain.
- * 2. Current environment is development (localhost).
- * 3. Vercel deployment branch contains "demo".
+ * 1. Env var VITE_DEMO_MODE=true is set explicitly.
+ * 2. Current hostname contains "demo" or "mock".
  */
 export const isDemoMode = (): boolean => {
-  // Always true for this dedicated branch
-  return true;
+  if (import.meta.env.VITE_DEMO_MODE === 'true') return true;
+  const hostname = window.location.hostname;
+  return hostname.includes('demo') || hostname.includes('mock');
 };
 
 export default isDemoMode;
