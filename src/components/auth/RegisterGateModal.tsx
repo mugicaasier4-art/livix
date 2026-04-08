@@ -23,6 +23,9 @@ const RegisterGateModal = ({
 }: RegisterGateModalProps) => {
     const navigate = useNavigate();
 
+    // TODO: restore — temporarily disabled to allow full access without registration
+    if (open) return null;
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md border-0 shadow-2xl">
