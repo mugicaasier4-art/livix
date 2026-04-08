@@ -1,10 +1,10 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { CityProvider } from "@/contexts/CityContext";
 import { CitySelectorOverlay } from "@/components/city/CitySelector";
@@ -59,14 +59,14 @@ const Unauthorized = lazy(() => import("./pages/Unauthorized"));
 const ListingDetail = lazy(() => import("./pages/ListingDetail"));
 const LandlordDashboard = lazy(() => import("./pages/landlord/Dashboard"));
 const LandlordOnboarding = lazy(() => import("./pages/landlord/Onboarding"));
-// const QuickOnboarding = lazy(() => import("./pages/landlord/QuickOnboarding")); // TODO: restore from feature/investor-demo
+const QuickOnboarding = lazy(() => import("./pages/landlord/QuickOnboarding"));
 const CreateListing = lazy(() => import("./pages/landlord/CreateListing"));
 const StudentOnboarding = lazy(() => import("./pages/student/Onboarding"));
 const StudentDashboard = lazy(() => import("./pages/student/Dashboard"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 const AdminQuickListing = lazy(() => import("./pages/admin/QuickListing"));
 const AdminBulkImport = lazy(() => import("./pages/admin/BulkImport"));
-// const AdminCRM = lazy(() => import("./pages/admin/CRM")); // TODO: restore from feature/investor-demo
+const AdminCRM = lazy(() => import("./pages/admin/CRM"));
 const Support = lazy(() => import("./pages/Support"));
 const SupportSubmit = lazy(() => import("./pages/support/Submit"));
 const SupportSuccess = lazy(() => import("./pages/support/Success"));
@@ -95,7 +95,7 @@ const PisosCity = lazy(() => import("./pages/seo/PisosCity"));
 const PisosBarrio = lazy(() => import("./pages/seo/PisosBarrio"));
 const CampusLanding = lazy(() => import("./pages/seo/CampusLanding"));
 const ColegiosMayoresCity = lazy(() => import("./pages/seo/ColegiosMayoresCity"));
-// const AlquilarBarrio = lazy(() => import("./pages/seo/AlquilarBarrio")); // TODO: restore from feature/investor-demo
+const AlquilarBarrio = lazy(() => import("./pages/seo/AlquilarBarrio"));
 
 // QueryClient singleton - created once outside component
 const queryClient = new QueryClient({
@@ -134,6 +134,25 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const ReturnToHandler = () => {
+  const navigate = useNavigate();
+  const { user, isLoading } = useAuth();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get('returnTo');
+    if (returnTo && user && !isLoading) {
+      params.delete('returnTo');
+      const remaining = params.toString();
+      const cleanUrl = window.location.pathname + (remaining ? `?${remaining}` : '');
+      window.history.replaceState({}, '', cleanUrl);
+      navigate(decodeURIComponent(returnTo), { replace: true });
+    }
+  }, [user, isLoading, navigate]);
+
+  return null;
+};
+
 const App = () => (
   <ErrorBoundary>
   <QueryClientProvider client={queryClient}>
@@ -148,6 +167,7 @@ const App = () => (
                   <TooltipProvider>
                     <Sonner />
                     <BrowserRouter>
+                      <ReturnToHandler />
                       <CitySelectorOverlay />
                       <ScrollToTop />
                       <OnboardingProvider>
@@ -208,10 +228,14 @@ const App = () => (
                                 <Route path="/pisos/:city/:barrio" element={<PisosBarrio />} />
                                 <Route path="/campus/:campus" element={<CampusLanding />} />
                                 <Route path="/colegios-mayores/:city" element={<ColegiosMayoresCity />} />
-                                {/* <Route path="/alquilar-piso-estudiantes/:barrio" element={<AlquilarBarrio />} /> */}
+                                <Route path="/alquilar-piso-estudiantes/:barrio" element={<AlquilarBarrio />} />
 
                                 {/* Secret Premium Dashboard for Residences */}
-                                <Route path="/residences/admin-portal-x7k9" element={<ResidencesAdminPortal />} />
+                                <Route path="/residences/admin-portal-x7k9" element={
+                                  <ProtectedRoute allowedRoles={['admin']}>
+                                    <ResidencesAdminPortal />
+                                  </ProtectedRoute>
+                                } />
 
                                 {/* Protected Routes - Roommates */}
                                 <Route path="/roommates/create" element={
@@ -270,7 +294,11 @@ const App = () => (
                                     <LandlordOnboarding />
                                   </ProtectedRoute>
                                 } />
-                                {/* <Route path="/ll/quick-onboarding" element={<QuickOnboarding />} /> */}
+                                <Route path="/ll/quick-onboarding" element={
+                                  <ProtectedRoute allowedRoles={['landlord']}>
+                                    <QuickOnboarding />
+                                  </ProtectedRoute>
+                                } />
                                 <Route path="/ll/create-listing" element={
                                   <ProtectedRoute allowedRoles={['landlord']}>
                                     <CreateListing />
@@ -335,11 +363,11 @@ const App = () => (
                                     <AdminBulkImport />
                                   </ProtectedRoute>
                                 } />
-                                {/* <Route path="/admin/crm" element={
+                                <Route path="/admin/crm" element={
                                   <ProtectedRoute allowedRoles={['admin']}>
                                     <AdminCRM />
                                   </ProtectedRoute>
-                                } /> */}
+                                } />
 
                                 {/* 404 - Must be last */}
                                 <Route path="/404" element={<NotFound />} />

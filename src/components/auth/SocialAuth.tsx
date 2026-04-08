@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,12 +7,12 @@ import { Separator } from '@/components/ui/separator';
 import { Loader2, Phone } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
 interface SocialAuthProps {
   mode: 'login' | 'signup';
 }
 
 const SocialAuth = ({ mode }: SocialAuthProps) => {
+  const navigate = useNavigate();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [showPhoneInput, setShowPhoneInput] = useState(false);
@@ -22,10 +23,11 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
   const handleGoogleAuth = async () => {
     setIsGoogleLoading(true);
     try {
+      const returnTo = encodeURIComponent(window.location.pathname);
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: `${window.location.origin}/?returnTo=${returnTo}`,
         },
       });
       
@@ -85,7 +87,17 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       if (error) throw error;
       
       toast.success('¡Verificación exitosa!');
-      // Auth state change will handle redirect
+      await new Promise(resolve => setTimeout(resolve, 800));
+      // Read fresh session instead of stale closure
+      const { data: { session: freshSession } } = await supabase.auth.getSession();
+      const freshRole = (freshSession?.user?.user_metadata as any)?.role as string || 'student';
+      if (freshRole === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (freshRole === 'landlord') {
+        navigate('/ll/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Código inválido';
       toast.error('Error', { description: message });

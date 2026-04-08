@@ -1,0 +1,4383 @@
+diff --git a/CLAUDE.md b/CLAUDE.md
+new file mode 100644
+index 0000000..145dcc6
+--- /dev/null
++++ b/CLAUDE.md
+@@ -0,0 +1,83 @@
++# Livix — Contexto del Proyecto
++
++## Que es Livix (CRITICO)
++- Marketplace B2C2B de **alojamiento universitario** en Espana
++- Conecta estudiantes (incluyendo Erasmus) con propietarios, inmobiliarias y residencias universitarias
++- Base: Zaragoza (35.000+ estudiantes), expansion a otras ciudades universitarias espanolas
++- NO es un portal de compraventa de vivienda, NO asesora en hipotecas, NO vende pisos
++
++## Modelo de negocio
++| Segmento | Precio |
++|----------|--------|
++| Estudiantes | Freemium (Premium 9,99 EUR/mes) |
++| Propietarios | Suscripcion 199-499 EUR/mes |
++| Residencias/inmobiliarias | Suscripcion 299-499 EUR/mes |
++
++## Stack tecnico
++- **Frontend:** React + TypeScript + Vite + Tailwind + shadcn/ui
++- **Backend:** Supabase (PostgreSQL + Auth + Storage + Edge Functions)
++- **Deploy:** Vercel (auto-deploy desde main)
++- **Lovable:** https://lovable.dev/projects/a66d4951-9a30-4dfd-8eab-8392f40d7045
++- **Internacionalizacion:** i18n (espanol + ingles)
++
++## Identidad visual
++- Colores: Azul primario `#5DB4EE`, Negro `#000000`, Blanco `#FFFFFF`
++- Fuente: Poppins (Bold / Black / Regular)
++- Estilo: Apple-inspired, minimalista
++- NO dark mode en frontends
++- Oscuro en carruseles de Instagram
++
++## Equipo
++- **Asier:** Fundador, desarrollo principal, marketing, estrategia
++- **Eneko:** Desarrollo, cambios en web
++- **Socio TikTok:** Responsable de TikTok/contenido video (puede estar inactivo)
++
++## Reglas de codigo
++- Idioma de codigo: ingles (variables, componentes, funciones, commits)
++- Idioma de contenido para usuario: espanol
++- Commit messages: descriptivos, ingles, prefijo convencional (feat/fix/chore/docs)
++- Respuestas de Claude: en espanol salvo codigo
++
++## Git Workflow
++- `main` = produccion (protegido, solo PRs)
++- Crear branches: `feature/nombre-descriptivo`, `fix/nombre-descriptivo`
++- PRs obligatorios para merge a main
++- No force push a main
++- Squash merge para historial limpio
++
++## Estado marketing (marzo 2026)
++- **Ambito:** Solo Zaragoza, no expansion multi-ciudad por ahora
++- **SEO:** Prioridad maxima. 8+ blog posts publicados, sitemap dinamico
++- **GA4:** Roto en produccion (CSP bloqueaba googletagmanager.com — verificar si ya arreglado en vercel.json)
++- **Email/CRM:** Brevo
++- **LinkedIn:** Automatizacion operativa (Python, Claude genera contenido, publica Lun/Mie/Vie 9:00 CET)
++- **TikTok:** Responsabilidad del socio (puede estar bloqueado por inaccion)
++- **Paid Ads:** No activos aun
++- **Pico critico:** Junio-septiembre (temporada de busqueda de alojamiento)
++
++## Estructura del proyecto
++```
++livix-main/           # Codigo fuente React
++linkedin_automation/  # Automatizacion LinkedIn (Python)
++scraper_leads/        # Scraping propietarios Zaragoza
++scraper_listings/     # Scraping anuncios
++tiktok_automation/    # Automatizacion TikTok
++crm_sheets/           # Google Sheets integration
++docs/                 # Documentacion interna
++```
++
++## Archivos clave
++- `vercel.json` — Deploy config, CSP headers, redirects, cache
++- `supabase/config.toml` — Config backend Supabase
++- `supabase/migrations/` — 60+ migraciones SQL
++- `generate-sitemap.js` — Genera sitemap.xml
++- `src/App.tsx` — Router principal
++- `src/data/` — Datos SEO, blog, campus, residencias
++- `src/schemas/` — Validacion Zod
++
++## Lo que NO hacer
++- No proponer expansion a otras ciudades (solo Zaragoza por ahora)
++- No tocar LinkedIn automation (ya funciona, solo escalar)
++- No asumir que TikTok esta activo
++- No crear dark mode
++- No usar anglicismos innecesarios en contenido usuario
+diff --git a/docs/ONBOARDING.md b/docs/ONBOARDING.md
+new file mode 100644
+index 0000000..5dded3f
+--- /dev/null
++++ b/docs/ONBOARDING.md
+@@ -0,0 +1,176 @@
++# Onboarding — Livix Development
++
++Guia para configurar el entorno de desarrollo completo de Livix.
++
++## 1. Clonar y arrancar el proyecto
++
++```bash
++git clone https://github.com/mugicaasier4-art/livix.git
++cd livix
++npm install
++```
++
++## 2. Variables de entorno
++
++Copia el template y rellena con los valores que te pase Asier por canal seguro (1Password / Signal):
++
++```bash
++cp .env.example .env
++```
++
++Variables necesarias:
++| Variable | Que es |
++|----------|--------|
++| `VITE_SUPABASE_PROJECT_ID` | ID del proyecto Supabase |
++| `VITE_SUPABASE_PUBLISHABLE_KEY` | Anon key (publica, RLS protege datos) |
++| `VITE_SUPABASE_URL` | URL del proyecto Supabase |
++| `VITE_GOOGLE_MAPS_API_KEY` | API key Google Maps |
++| `VITE_GA4_MEASUREMENT_ID` | ID de medicion Google Analytics 4 |
++
++## 3. Verificar que funciona
++
++```bash
++npm run dev
++# Abrir http://localhost:5173
++```
++
++## 4. Instalar Claude Code
++
++```bash
++npm install -g @anthropic-ai/claude-code
++```
++
++Necesitas una cuenta de Anthropic con plan activo. Claude Code leera automaticamente el `CLAUDE.md` del repo con todo el contexto del proyecto.
++
++## 5. Configurar Claude Code (opcional pero recomendado)
++
++### 5.1 Instrucciones personales
++
++Crea `~/.claude/CLAUDE.md` con tus preferencias:
++
++```markdown
++# Global Instructions — Eneko
++
++## User Preferences
++- Idioma principal: espanol (respuestas en espanol salvo codigo)
++- No emojis salvo que se pidan
++
++## Agents
++Los agentes en ~/.claude/agents/ se activan automaticamente segun su campo description.
++Lee ~/.claude/docs/auto-trigger-reference.md para la tabla completa.
++
++## Rules Engine
++Cuando me corrijas, append una regla a "Learned Rules".
++
++---
++
++## Learned Rules
++```
++
++### 5.2 Agentes compartidos
++
++Asier te pasara un zip (`eneko-claude-setup.zip`). Descomprime y copia:
++
++```bash
++# Desde donde descomprimiste el zip:
++mkdir -p ~/.claude/agents ~/.claude/docs ~/.claude/hooks
++
++cp agents/*.md ~/.claude/agents/
++cp docs/*.md ~/.claude/docs/
++cp hooks/*.sh ~/.claude/hooks/
++chmod +x ~/.claude/hooks/*.sh
++```
++
++Agentes incluidos:
++| Agente | Funcion |
++|--------|---------|
++| prompt-contracts | Define contratos (goal/constraints/format/failure) antes de implementar |
++| stochastic-consensus | Spawn N agentes para analizar un problema por consenso |
++| business-idea-evaluator | Evaluador de ideas de negocio |
++| reverse-prompting | Fuerza preguntas de clarificacion antes de empezar |
++| video-to-action | Extrae pasos ejecutables de videos YouTube |
++| context-optimizer | Optimiza tokens en sesiones largas |
++| agent-chatrooms | Debate entre agentes para decisiones de arquitectura |
++| subagent-verification | Verifica output con agentes revisores |
++
++### 5.3 Settings de Claude Code
++
++Crea `~/.claude/settings.json`:
++
++```json
++{
++  "hooks": {
++    "PreCompact": [
++      {
++        "matcher": "",
++        "hooks": [
++          {
++            "type": "command",
++            "command": "bash ~/.claude/hooks/pre-compact.sh",
++            "timeout": 5000
++          }
++        ]
++      }
++    ],
++    "UserPromptSubmit": [
++      {
++        "matcher": "",
++        "hooks": [
++          {
++            "type": "command",
++            "command": "bash ~/.claude/hooks/enrich-prompt.sh",
++            "timeout": 3000
++          }
++        ]
++      }
++    ]
++  },
++  "enabledPlugins": {
++    "skill-creator@claude-plugins-official": true,
++    "frontend-design@claude-plugins-official": true
++  },
++  "alwaysThinkingEnabled": true,
++  "mcpServers": {
++    "playwright": {
++      "command": "npx",
++      "args": ["-y", "@playwright/mcp@latest"]
++    }
++  }
++}
++```
++
++Los hooks hacen:
++- **PreCompact:** Indica que preservar al compactar contexto (decisiones, errores, estado)
++- **UserPromptSubmit:** Avisa si un prompt es demasiado corto (<12 palabras)
++
++## 6. Git Workflow
++
++```bash
++# Siempre empezar desde main actualizado
++git checkout main
++git pull
++
++# Crear branch
++git checkout -b feature/mi-cambio
++
++# Hacer cambios, commits
++git add archivos-modificados
++git commit -m "feat: descripcion del cambio"
++
++# Push y crear PR
++git push -u origin feature/mi-cambio
++# Crear PR en GitHub y pedir review
++```
++
++**Reglas:**
++- Nunca push directo a `main`
++- Commits en ingles con prefijo convencional: `feat/`, `fix/`, `chore/`, `docs/`
++- PRs obligatorios
++- Squash merge
++
++## 7. Recursos utiles
++
++- **Supabase Dashboard:** https://supabase.com/dashboard (pide acceso a Asier)
++- **Vercel Dashboard:** https://vercel.com (pide acceso a Asier)
++- **Lovable:** https://lovable.dev/projects/a66d4951-9a30-4dfd-8eab-8392f40d7045
++- **Documentacion interna:** `/docs/` en el repo
+diff --git a/src/components/seo/CityInterestForm.tsx b/src/components/seo/CityInterestForm.tsx
+new file mode 100644
+index 0000000..0eb9f99
+--- /dev/null
++++ b/src/components/seo/CityInterestForm.tsx
+@@ -0,0 +1,181 @@
++import { useState } from "react";
++import { Button } from "@/components/ui/button";
++import { Input } from "@/components/ui/input";
++import { Label } from "@/components/ui/label";
++import {
++  Select,
++  SelectContent,
++  SelectItem,
++  SelectTrigger,
++  SelectValue,
++} from "@/components/ui/select";
++import { useToast } from "@/hooks/use-toast";
++import { supabase } from "@/integrations/supabase/client";
++
++interface CityInterestFormProps {
++  citySlug: string;
++  cityName: string;
++}
++
++type UserType = "estudiante" | "propietario";
++
++export const CityInterestForm = ({ citySlug, cityName }: CityInterestFormProps) => {
++  const [email, setEmail] = useState("");
++  const [userType, setUserType] = useState<UserType | "">("");
++  const [isLoading, setIsLoading] = useState(false);
++  const [submitted, setSubmitted] = useState(false);
++  const [emailError, setEmailError] = useState("");
++  const { toast } = useToast();
++
++  const validateEmail = (value: string) => {
++    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
++    return re.test(value);
++  };
++
++  const handleSubmit = async (e: React.FormEvent) => {
++    e.preventDefault();
++    setEmailError("");
++
++    if (!validateEmail(email)) {
++      setEmailError("Introduce un email valido.");
++      return;
++    }
++
++    if (!userType) {
++      toast({
++        title: "Selecciona un tipo de usuario",
++        description: "Indica si eres estudiante o propietario.",
++        variant: "destructive",
++      });
++      return;
++    }
++
++    setIsLoading(true);
++
++    try {
++      const { error } = await (supabase as any)
++        .from("city_interest_waitlist")
++        .insert({ email, city_slug: citySlug, user_type: userType });
++
++      if (error) throw error;
++
++      setSubmitted(true);
++    } catch (err) {
++      toast({
++        title: "Error al registrarse",
++        description: "Algo ha fallado. Intentalo de nuevo en un momento.",
++        variant: "destructive",
++      });
++    } finally {
++      setIsLoading(false);
++    }
++  };
++
++  if (submitted) {
++    return (
++      <div className="bg-[#5DB4EE]/10 border border-[#5DB4EE]/30 rounded-2xl p-8 text-center">
++        <div className="w-12 h-12 rounded-full bg-[#5DB4EE] flex items-center justify-center mx-auto mb-4">
++          <svg
++            className="w-6 h-6 text-white"
++            fill="none"
++            stroke="currentColor"
++            viewBox="0 0 24 24"
++          >
++            <path
++              strokeLinecap="round"
++              strokeLinejoin="round"
++              strokeWidth={2}
++              d="M5 13l4 4L19 7"
++            />
++          </svg>
++        </div>
++        <h3 className="text-xl font-bold text-[#000] mb-2">Listo</h3>
++        <p className="text-gray-600">
++          Te avisaremos cuando Livix llegue a {cityName}.
++        </p>
++      </div>
++    );
++  }
++
++  return (
++    <form onSubmit={handleSubmit} className="space-y-4">
++      <div className="space-y-1">
++        <Label htmlFor="city-interest-email" className="text-sm font-medium text-[#000]">
++          Email
++        </Label>
++        <Input
++          id="city-interest-email"
++          type="email"
++          placeholder="tu@email.com"
++          value={email}
++          onChange={(e) => {
++            setEmail(e.target.value);
++            if (emailError) setEmailError("");
++          }}
++          required
++          disabled={isLoading}
++          className="border-gray-200 focus:border-[#5DB4EE] focus:ring-[#5DB4EE]"
++        />
++        {emailError && (
++          <p className="text-sm text-red-500">{emailError}</p>
++        )}
++      </div>
++
++      <div className="space-y-1">
++        <Label htmlFor="city-interest-type" className="text-sm font-medium text-[#000]">
++          Soy...
++        </Label>
++        <Select
++          value={userType}
++          onValueChange={(value) => setUserType(value as UserType)}
++          disabled={isLoading}
++        >
++          <SelectTrigger
++            id="city-interest-type"
++            className="border-gray-200 focus:border-[#5DB4EE] focus:ring-[#5DB4EE]"
++          >
++            <SelectValue placeholder="Selecciona una opcion" />
++          </SelectTrigger>
++          <SelectContent>
++            <SelectItem value="estudiante">Estudiante</SelectItem>
++            <SelectItem value="propietario">Propietario</SelectItem>
++          </SelectContent>
++        </Select>
++      </div>
++
++      <Button
++        type="submit"
++        disabled={isLoading}
++        className="w-full bg-[#5DB4EE] hover:bg-[#4aa3df] text-white font-semibold py-3 rounded-xl"
++      >
++        {isLoading ? (
++          <span className="flex items-center justify-center gap-2">
++            <svg
++              className="animate-spin h-4 w-4 text-white"
++              xmlns="http://www.w3.org/2000/svg"
++              fill="none"
++              viewBox="0 0 24 24"
++            >
++              <circle
++                className="opacity-25"
++                cx="12"
++                cy="12"
++                r="10"
++                stroke="currentColor"
++                strokeWidth="4"
++              />
++              <path
++                className="opacity-75"
++                fill="currentColor"
++                d="M4 12a8 8 0 018-8v8H4z"
++              />
++            </svg>
++            Enviando...
++          </span>
++        ) : (
++          "Avisarme"
++        )}
++      </Button>
++    </form>
++  );
++};
+diff --git a/src/components/seo/EmptyCityLanding.tsx b/src/components/seo/EmptyCityLanding.tsx
+new file mode 100644
+index 0000000..10e5b0c
+--- /dev/null
++++ b/src/components/seo/EmptyCityLanding.tsx
+@@ -0,0 +1,188 @@
++import { Link } from "react-router-dom";
++import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
++import { Button } from "@/components/ui/button";
++import { CitySEO } from "@/data/seo/cities";
++import { CityInterestForm } from "./CityInterestForm";
++
++interface EmptyCityLandingProps {
++  cityData: CitySEO;
++  citySlug: string;
++  pageType: "habitaciones" | "pisos" | "residencias" | "colegios-mayores";
++}
++
++const PAGE_LABELS: Record<EmptyCityLandingProps["pageType"], string> = {
++  habitaciones: "habitaciones",
++  pisos: "pisos",
++  residencias: "residencias",
++  "colegios-mayores": "colegios mayores",
++};
++
++export const EmptyCityLanding = ({
++  cityData,
++  citySlug,
++  pageType,
++}: EmptyCityLandingProps) => {
++  const pageLabel = PAGE_LABELS[pageType];
++
++  const faqs =
++    pageType === "pisos"
++      ? cityData.faqsPisos ?? cityData.faqs
++      : pageType === "residencias"
++      ? cityData.faqsResidencias ?? cityData.faqs
++      : pageType === "colegios-mayores"
++      ? cityData.faqsColegiosMayores ?? cityData.faqs
++      : cityData.faqs;
++
++  return (
++    <div className="bg-white min-h-screen font-[Poppins,sans-serif]">
++      {/* Hero Section */}
++      <section className="bg-gradient-to-b from-[#E8F5FD] to-white py-20 px-4">
++        <div className="container mx-auto px-4 text-center max-w-3xl">
++          <span className="inline-block text-sm font-semibold text-[#5DB4EE] uppercase tracking-widest mb-4">
++            Proximamente
++          </span>
++          <h1 className="text-4xl md:text-5xl font-black text-[#000] mb-4 leading-tight">
++            {cityData.name}
++          </h1>
++          <p className="text-xl text-gray-500 mb-2">
++            Proximamente en {cityData.name}
++          </p>
++          <p className="text-base text-gray-400 max-w-xl mx-auto">
++            Estamos trabajando para traer los mejores {pageLabel} para
++            estudiantes en {cityData.name}. Se el primero en saberlo.
++          </p>
++        </div>
++      </section>
++
++      {/* City Info Grid */}
++      <section className="container mx-auto px-4 py-12">
++        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
++          {/* Universities */}
++          <Card className="border border-gray-100 shadow-sm rounded-2xl">
++            <CardHeader className="pb-2">
++              <CardTitle className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
++                Universidades
++              </CardTitle>
++            </CardHeader>
++            <CardContent>
++              <ul className="space-y-2">
++                {cityData.universities.map((uni, i) => (
++                  <li key={i} className="flex items-start gap-2">
++                    <span className="mt-1.5 h-2 w-2 rounded-full bg-[#5DB4EE] shrink-0" />
++                    <span className="text-sm font-medium text-[#000]">{uni}</span>
++                  </li>
++                ))}
++              </ul>
++            </CardContent>
++          </Card>
++
++          {/* Average Price */}
++          <Card className="border border-gray-100 shadow-sm rounded-2xl">
++            <CardHeader className="pb-2">
++              <CardTitle className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
++                Precio medio
++              </CardTitle>
++            </CardHeader>
++            <CardContent>
++              <p className="text-3xl font-black text-[#5DB4EE]">
++                {cityData.avgPrice}
++              </p>
++              <p className="text-sm text-gray-400 mt-1">por habitacion/mes</p>
++            </CardContent>
++          </Card>
++
++          {/* Weather */}
++          <Card className="border border-gray-100 shadow-sm rounded-2xl">
++            <CardHeader className="pb-2">
++              <CardTitle className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
++                Clima
++              </CardTitle>
++            </CardHeader>
++            <CardContent>
++              <p className="text-sm text-[#000]">{cityData.weather}</p>
++            </CardContent>
++          </Card>
++        </div>
++      </section>
++
++      {/* Waitlist Form */}
++      <section className="container mx-auto px-4 py-8">
++        <div className="max-w-md mx-auto bg-white border border-gray-100 rounded-2xl shadow-sm p-8">
++          <h2 className="text-xl font-bold text-[#000] mb-2 text-center">
++            Avisame cuando haya alojamiento en {cityData.name}
++          </h2>
++          <p className="text-sm text-gray-400 text-center mb-6">
++            Sin spam. Solo te escribimos cuando tengamos {pageLabel} disponibles.
++          </p>
++          <CityInterestForm citySlug={citySlug} cityName={cityData.name} />
++        </div>
++      </section>
++
++      {/* Cross-links to active cities */}
++      <section className="bg-[#F7FBFF] py-12 mt-8">
++        <div className="container mx-auto px-4 text-center">
++          <h2 className="text-xl font-bold text-[#000] mb-2">
++            Mientras tanto, explora Zaragoza
++          </h2>
++          <p className="text-sm text-gray-400 mb-6 max-w-md mx-auto">
++            Zaragoza ya esta en Livix. Mas de 35.000 estudiantes y cientos de
++            alojamientos verificados.
++          </p>
++          <div className="flex flex-wrap justify-center gap-3">
++            <Link to="/habitaciones/zaragoza">
++              <Button
++                variant="default"
++                size="lg"
++                className="bg-[#5DB4EE] hover:bg-[#4aa3df] text-white rounded-xl font-semibold"
++              >
++                Habitaciones en Zaragoza
++              </Button>
++            </Link>
++            <Link to="/pisos/zaragoza">
++              <Button
++                variant="outline"
++                size="lg"
++                className="border-[#5DB4EE] text-[#5DB4EE] hover:bg-[#5DB4EE]/10 rounded-xl font-semibold"
++              >
++                Pisos en Zaragoza
++              </Button>
++            </Link>
++            <Link to="/residencias/zaragoza">
++              <Button
++                variant="outline"
++                size="lg"
++                className="border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl font-semibold"
++              >
++                Residencias en Zaragoza
++              </Button>
++            </Link>
++          </div>
++        </div>
++      </section>
++
++      {/* FAQs */}
++      {faqs && faqs.length > 0 && (
++        <section className="container mx-auto px-4 py-12">
++          <div className="max-w-3xl mx-auto">
++            <h2 className="text-2xl font-bold text-[#000] mb-6">
++              Preguntas frecuentes sobre {pageLabel} en {cityData.name}
++            </h2>
++            <div className="space-y-4">
++              {faqs.map((faq, index) => (
++                <div
++                  key={index}
++                  className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm"
++                >
++                  <h3 className="font-semibold text-[#000] mb-2">
++                    {faq.question}
++                  </h3>
++                  <p className="text-sm text-gray-500">{faq.answer}</p>
++                </div>
++              ))}
++            </div>
++          </div>
++        </section>
++      )}
++    </div>
++  );
++};
+diff --git a/src/data/listings.mock.ts b/src/data/listings.mock.ts
+new file mode 100644
+index 0000000..95453a5
+--- /dev/null
++++ b/src/data/listings.mock.ts
+@@ -0,0 +1,700 @@
++import apartment1 from "@/assets/apartment-1.jpg";
++import apartment2 from "@/assets/apartment-2.jpg";
++import apartment3 from "@/assets/apartment-3.jpg";
++
++export interface Listing {
++  id: number;
++  image: string;
++  images?: string[];
++  title: string;
++  location: string;
++  price: number;
++  roommates: number;
++  distance: string;
++  verified: boolean;
++  amenities: string[];
++  matchScore: number;
++  coordinates: [number, number];
++  erasmusFriendly?: boolean;
++  contractLanguage?: string;
++  duration?: string;
++  responseTime?: string;
++  landlordLanguages?: string[];
++  faculty?: string[];
++  furnished?: boolean;
++  allInclusive?: boolean;
++  englishContract?: boolean;
++  flexibleDeposit?: boolean;
++  smokingAllowed?: boolean;
++  genderPreference?: 'any' | 'male' | 'female' | 'mixed';
++  areaSqm?: number;
++  roomAreaSqm?: number;
++}
++
++export const mockListings: Listing[] = [
++  // ERASMUS-FRIENDLY LISTINGS (5)
++  {
++    id: 1,
++    image: apartment1,
++    title: "Habitación amueblada cerca Universidad - Erasmus welcome",
++    location: "Universidad, Zaragoza",
++    price: 340,
++    roommates: 3,
++    distance: "3 min caminando Filosofía",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Contrato inglés", "Cocina", "Lavadora"],
++    matchScore: 95,
++    coordinates: [-0.8773, 41.6561],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    duration: "5-6 meses",
++    responseTime: "< 2h",
++    landlordLanguages: ["Spanish", "English"],
++    faculty: ["filosofia", "derecho"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 2,
++    image: apartment2,
++    title: "Romareda International House - 4 nacionalidades",
++    location: "Romareda, Zaragoza",
++    price: 320,
++    roommates: 4,
++    distance: "12 min bus Ciencias",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Terraza", "Internacional", "Parking"],
++    matchScore: 92,
++    coordinates: [-0.8580, 41.6393],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN/FR",
++    duration: "4-6 meses",
++    responseTime: "< 1h",
++    landlordLanguages: ["Spanish", "English", "French"],
++    faculty: ["ciencias", "rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 3,
++    image: apartment3,
++    title: "Centro Histórico - El Tubo area Erasmus flat",
++    location: "Centro, Zaragoza",
++    price: 380,
++    roommates: 2,
++    distance: "8 min caminando Derecho",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Vida nocturna", "Histórico"],
++    matchScore: 94,
++    coordinates: [-0.8665, 41.6840],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN/IT",
++    duration: "5-6 meses",
++    responseTime: "< 3h",
++    landlordLanguages: ["Spanish", "English", "Italian"],
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 4,
++    image: apartment1,
++    title: "Actur Quiet Zone - Budget Erasmus friendly",
++    location: "Actur, Zaragoza",
++    price: 280,
++    roommates: 3,
++    distance: "25 min bus Río Ebro Campus",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Zona tranquila", "Económico"],
++    matchScore: 88,
++    coordinates: [-0.9100, 41.6800],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    duration: "4-6 meses",
++    responseTime: "< 4h",
++    landlordLanguages: ["Spanish", "English"],
++    faculty: ["rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 5,
++    image: apartment2,
++    title: "Delicias International - Mixed nationalities",
++    location: "Delicias, Zaragoza",
++    price: 300,
++    roommates: 3,
++    distance: "18 min bus Centro",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Terraza", "Internacional"],
++    matchScore: 89,
++    coordinates: [-0.8500, 41.6700],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN/DE",
++    duration: "5-6 meses",
++    responseTime: "< 2h",
++    landlordLanguages: ["Spanish", "English", "German"],
++    faculty: ["ciencias", "derecho"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: false
++  },
++
++  // NORMAL LISTINGS (3)
++  {
++    id: 6,
++    image: apartment3,
++    title: "Habitación individual con escritorio",
++    location: "Las Fuentes, Zaragoza",
++    price: 400,
++    roommates: 1,
++    distance: "20 min bus Universidad",
++    verified: true,
++    amenities: ["Escritorio", "WiFi", "Cocina", "Silencioso", "Baño privado"],
++    matchScore: 85,
++    coordinates: [-0.8900, 41.6600],
++    erasmusFriendly: false,
++    faculty: ["filosofia", "derecho"],
++    furnished: false,
++    allInclusive: false,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 7,
++    image: apartment1,
++    title: "Piso compartido con terraza - Oliver",
++    location: "Oliver, Zaragoza",
++    price: 350,
++    roommates: 2,
++    distance: "15 min caminando Centro",
++    verified: false,
++    amenities: ["Terraza", "WiFi", "Cocina", "Parking"],
++    matchScore: 78,
++    coordinates: [-0.8400, 41.6500],
++    erasmusFriendly: false,
++    faculty: ["derecho"],
++    furnished: false,
++    allInclusive: false,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 8,
++    image: apartment2,
++    title: "Estudio completo - San José",
++    location: "San José, Zaragoza",
++    price: 450,
++    roommates: 0,
++    distance: "22 min bus Río Ebro",
++    verified: true,
++    amenities: ["Estudio completo", "WiFi", "Cocina propia", "Aire acondicionado"],
++    matchScore: 82,
++    coordinates: [-0.8300, 41.6400],
++    erasmusFriendly: false,
++    faculty: ["rio-ebro"],
++    furnished: true,
++    allInclusive: false,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 9,
++    image: apartment1,
++    title: "Piso compartido con vistas - Torrero",
++    location: "Torrero, Zaragoza",
++    price: 295,
++    roommates: 3,
++    distance: "15 min bus Universidad",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "Terraza", "Vistas"],
++    matchScore: 86,
++    coordinates: [-0.8950, 41.6300],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    duration: "5-6 meses",
++    responseTime: "< 3h",
++    landlordLanguages: ["Spanish", "English"],
++    faculty: ["filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 10,
++    image: apartment3,
++    title: "Habitación luminosa - Casco Viejo",
++    location: "Casco Viejo, Zaragoza",
++    price: 365,
++    roommates: 2,
++    distance: "5 min caminando Centro",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Centro histórico", "Balcón"],
++    matchScore: 91,
++    coordinates: [-0.8788, 41.6548],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    duration: "4-6 meses",
++    responseTime: "< 2h",
++    landlordLanguages: ["Spanish", "English"],
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 11,
++    image: apartment2,
++    title: "Piso moderno - Gran Vía",
++    location: "Gran Vía, Zaragoza",
++    price: 410,
++    roommates: 2,
++    distance: "10 min bus Universidad",
++    verified: true,
++    amenities: ["WiFi", "Amueblado", "All-inclusive", "Ascensor", "Reformado"],
++    matchScore: 88,
++    coordinates: [-0.8650, 41.6490],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN/IT",
++    duration: "5-6 meses",
++    responseTime: "< 1h",
++    landlordLanguages: ["Spanish", "English", "Italian"],
++    faculty: ["derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: false
++  },
++  {
++    id: 12,
++    image: apartment1,
++    title: "Habitación en piso compartido - Arrabal",
++    location: "Arrabal, Zaragoza",
++    price: 270,
++    roommates: 4,
++    distance: "20 min bus Río Ebro",
++    verified: false,
++    amenities: ["WiFi", "Económico", "Cocina", "Zona tranquila"],
++    matchScore: 79,
++    coordinates: [-0.8820, 41.6650],
++    erasmusFriendly: false,
++    faculty: ["rio-ebro"],
++    furnished: false,
++    allInclusive: false,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++
++  // RESIDENCIAS Y COLEGIOS MAYORES (21)
++  {
++    id: 13,
++    image: apartment2,
++    title: "Colegio Mayor Pedro Cerbuna - Residencia Universitaria",
++    location: "Ciudad Universitaria, Zaragoza",
++    price: 450,
++    roommates: 0,
++    distance: "Campus San Francisco",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Salas de estudio", "WiFi", "Actividades culturales"],
++    matchScore: 90,
++    coordinates: [-0.8773, 41.6561],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["filosofia", "derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 14,
++    image: apartment1,
++    title: "Colegio Mayor Santa Isabel - Solo Mujeres",
++    location: "Ciudad Universitaria, Zaragoza",
++    price: 420,
++    roommates: 0,
++    distance: "Campus San Francisco",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Salas de estudio", "WiFi", "Solo mujeres"],
++    matchScore: 88,
++    coordinates: [-0.8780, 41.6555],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["filosofia", "derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 15,
++    image: apartment3,
++    title: "Colegio Mayor Cardenal Xavierre",
++    location: "Plaza San Francisco, Zaragoza",
++    price: 480,
++    roommates: 0,
++    distance: "Campus San Francisco",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Gimnasio", "WiFi", "Capilla"],
++    matchScore: 91,
++    coordinates: [-0.8765, 41.6548],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["filosofia", "derecho"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 16,
++    image: apartment2,
++    title: "Colegio Mayor Miraflores - Solo Hombres",
++    location: "San Vicente Mártir, Zaragoza",
++    price: 460,
++    roommates: 0,
++    distance: "15 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Salas de estudio", "WiFi", "Solo hombres"],
++    matchScore: 87,
++    coordinates: [-0.8690, 41.6520],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 17,
++    image: apartment1,
++    title: "Colegio Mayor Virgen del Carmen",
++    location: "José Luis Albareda, Zaragoza",
++    price: 440,
++    roommates: 0,
++    distance: "12 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Salas de estudio", "WiFi", "Actividades"],
++    matchScore: 89,
++    coordinates: [-0.8720, 41.6535],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["filosofia", "derecho"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 18,
++    image: apartment3,
++    title: "Colegio Mayor Peñalba - Solo Mujeres",
++    location: "Alar del Rey, Zaragoza",
++    price: 470,
++    roommates: 0,
++    distance: "10 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "Salas de estudio", "WiFi", "Solo mujeres"],
++    matchScore: 90,
++    coordinates: [-0.8700, 41.6542],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 19,
++    image: apartment2,
++    title: "Colegio Mayor Azaila",
++    location: "Vía Hispanidad, Zaragoza",
++    price: 410,
++    roommates: 0,
++    distance: "Campus San Francisco",
++    verified: true,
++    amenities: ["Comedor", "Biblioteca", "WiFi", "Salas de estudio"],
++    matchScore: 86,
++    coordinates: [-0.8785, 41.6568],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["filosofia", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 20,
++    image: apartment1,
++    title: "Residencia Nodis Zaragoza - Moderna y Equipada",
++    location: "Vía Univérsitas, Zaragoza",
++    price: 550,
++    roommates: 0,
++    distance: "5 min Campus San Francisco",
++    verified: true,
++    amenities: ["Gimnasio", "Coworking", "WiFi", "Cocina compartida", "Lavandería", "Terraza"],
++    matchScore: 94,
++    coordinates: [-0.8768, 41.6570],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["filosofia", "derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 21,
++    image: apartment3,
++    title: "Residencia Xior Zaragoza (Pontoneros)",
++    location: "Madre Rafols, Zaragoza",
++    price: 520,
++    roommates: 0,
++    distance: "8 min Universidad",
++    verified: true,
++    amenities: ["Gimnasio", "Coworking", "WiFi", "Cocina compartida", "Lavandería", "Zona común"],
++    matchScore: 93,
++    coordinates: [-0.8730, 41.6525],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["derecho", "ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 22,
++    image: apartment2,
++    title: "Residencia Univérsitas Zaragoza",
++    location: "Baltasar Gracián, Zaragoza",
++    price: 480,
++    roommates: 0,
++    distance: "10 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Salas de estudio", "Lavandería"],
++    matchScore: 88,
++    coordinates: [-0.8710, 41.6538],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 23,
++    image: apartment1,
++    title: "Residencia Safa Casablanca",
++    location: "Paseo Infantes España, Zaragoza",
++    price: 420,
++    roommates: 0,
++    distance: "20 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Capilla", "Instalaciones deportivas"],
++    matchScore: 85,
++    coordinates: [-0.8600, 41.6400],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["ciencias", "rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 24,
++    image: apartment3,
++    title: "Residencia Mi Casa Inn Goya Zaragoza",
++    location: "Plaza la Poesía, Zaragoza",
++    price: 500,
++    roommates: 0,
++    distance: "18 min Universidad",
++    verified: true,
++    amenities: ["Gimnasio", "Coworking", "WiFi", "Cocina compartida", "Lavandería"],
++    matchScore: 90,
++    coordinates: [-0.8550, 41.6450],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["ciencias", "rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 25,
++    image: apartment2,
++    title: "Residencia Trinitarias - Solo Mujeres",
++    location: "Calle Porvenir, Zaragoza",
++    price: 390,
++    roommates: 0,
++    distance: "12 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Capilla", "Salas de estudio", "Solo mujeres"],
++    matchScore: 86,
++    coordinates: [-0.8750, 41.6545],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 26,
++    image: apartment1,
++    title: "Residencia María Inmaculada - Solo Mujeres",
++    location: "Paseo Constitución, Zaragoza",
++    price: 400,
++    roommates: 0,
++    distance: "15 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Capilla", "Salas de estudio", "Solo mujeres"],
++    matchScore: 87,
++    coordinates: [-0.8788, 41.6580],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 27,
++    image: apartment3,
++    title: "Residencia Vivac - Aconfesional",
++    location: "Baltasar Gracián, Zaragoza",
++    price: 380,
++    roommates: 0,
++    distance: "10 min Universidad",
++    verified: true,
++    amenities: ["WiFi", "Cocina compartida", "Salas de estudio", "Aconfesional"],
++    matchScore: 84,
++    coordinates: [-0.8708, 41.6540],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: false,
++    englishContract: false,
++    flexibleDeposit: false
++  },
++  {
++    id: 28,
++    image: apartment2,
++    title: "Residencia Ramón Pignatelli - Pública DPZ",
++    location: "Jarque del Moncayo, Zaragoza",
++    price: 320,
++    roommates: 0,
++    distance: "15 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Biblioteca", "Salas de estudio", "Económico"],
++    matchScore: 92,
++    coordinates: [-0.8650, 41.6420],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["ciencias", "rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: true
++  },
++  {
++    id: 29,
++    image: apartment1,
++    title: "Residencia Juvenil Baltasar Gracián - IAJ",
++    location: "Franco y López, Zaragoza",
++    price: 280,
++    roommates: 0,
++    distance: "12 min Universidad",
++    verified: true,
++    amenities: ["WiFi", "Comedor", "Salas comunes", "Económico", "18-26 años"],
++    matchScore: 89,
++    coordinates: [-0.8705, 41.6532],
++    erasmusFriendly: true,
++    contractLanguage: "ES",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: true
++  },
++  {
++    id: 30,
++    image: apartment3,
++    title: "Residencia CPIFP Movera - FP y Universidad",
++    location: "Ctra de Pastriz, Movera",
++    price: 250,
++    roommates: 0,
++    distance: "30 min Universidad",
++    verified: true,
++    amenities: ["Comedor", "WiFi", "Salas de estudio", "Económico", "FP"],
++    matchScore: 80,
++    coordinates: [-0.8200, 41.6100],
++    erasmusFriendly: false,
++    contractLanguage: "ES",
++    faculty: ["ciencias"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: false,
++    flexibleDeposit: true
++  },
++  {
++    id: 31,
++    image: apartment2,
++    title: "Residencia Bravo! Students - Próxima Apertura 2026",
++    location: "Valle de Broto / José Atarés, Zaragoza",
++    price: 600,
++    roommates: 0,
++    distance: "15 min Universidad",
++    verified: true,
++    amenities: ["Gimnasio", "Coworking", "WiFi", "Cocina", "Nuevo", "Próximamente"],
++    matchScore: 95,
++    coordinates: [-0.9050, 41.6450],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["ciencias", "rio-ebro"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  },
++  {
++    id: 32,
++    image: apartment1,
++    title: "Be Live Residence Zaragoza - Coming Soon",
++    location: "Centro, Zaragoza",
++    price: 580,
++    roommates: 0,
++    distance: "8 min Universidad",
++    verified: true,
++    amenities: ["Gimnasio", "Coworking", "WiFi", "Nuevo", "Próximamente"],
++    matchScore: 94,
++    coordinates: [-0.8760, 41.6555],
++    erasmusFriendly: true,
++    contractLanguage: "ES/EN",
++    faculty: ["derecho", "filosofia"],
++    furnished: true,
++    allInclusive: true,
++    englishContract: true,
++    flexibleDeposit: true
++  }
++];
+\ No newline at end of file
+diff --git a/src/data/mockRoommates.mock.ts b/src/data/mockRoommates.mock.ts
+new file mode 100644
+index 0000000..b84c84e
+--- /dev/null
++++ b/src/data/mockRoommates.mock.ts
+@@ -0,0 +1,430 @@
++
++export interface LifeGraphData {
++    limpieza: number;    // 1-5
++    fiesta: number;      // 1-5
++    estudios: number;    // 1-5
++    visitas: number;     // 1-5
++    ruido: number;       // 1-5
++}
++
++export interface MockRoommate {
++    id: string;
++    name: string;
++    age: number;
++    gender: 'Hombre' | 'Mujer' | 'Otro';
++    studies: string;
++    university: string;
++    bio: string;
++    location: string;
++    interests: string[];
++    image: string;
++    verified: boolean;
++    moveDate: string;
++    smoking: 'No fumador' | 'Fumador' | 'Ocasional';
++    pets: 'Sin mascotas' | 'Tiene mascota' | 'Le gustan';
++    tags: string[];
++    lifeGraph: LifeGraphData;
++}
++
++// ── "My profile" spider values (used for compatibility sorting) ──
++export const myLifeGraph: LifeGraphData = {
++    limpieza: 4,
++    fiesta: 2,
++    estudios: 5,
++    visitas: 2,
++    ruido: 1,
++};
++
++// ── Compatibility calculator ──
++export function calculateCompatibility(a: LifeGraphData, b: LifeGraphData): number {
++    const keys: (keyof LifeGraphData)[] = ['limpieza', 'fiesta', 'estudios', 'visitas', 'ruido'];
++    const maxDistance = 20;
++    const distance = keys.reduce((sum, k) => sum + Math.abs(a[k] - b[k]), 0);
++    return Math.round(((maxDistance - distance) / maxDistance) * 100);
++}
++
++const images = [
++    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1521119989659-a83eee488058?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1554151228-14d9def656ec?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1522075469751-3a3694c60e9e?w=400&h=400&fit=crop',
++    'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop',
++];
++
++export const actualMockRoommates: MockRoommate[] = [
++    {
++        id: '1',
++        name: 'Carlos',
++        age: 21,
++        gender: 'Hombre',
++        studies: 'Ingeniería Informática',
++        university: 'UNIZAR',
++        bio: 'Soy una persona tranquila y ordenada. Me gusta jugar videojuegos y programar. Busco un piso cerca del Campus San Francisco.',
++        location: 'Universidad / Centro',
++        interests: ['Videojuegos', 'Programación', 'Cine', 'Tecnología'],
++        image: images[0],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Informática', '🎮 Gamer'],
++        lifeGraph: { limpieza: 4, fiesta: 2, estudios: 5, visitas: 2, ruido: 2 }
++    },
++    {
++        id: '2',
++        name: 'Laura',
++        age: 20,
++        gender: 'Mujer',
++        studies: 'Medicina',
++        university: 'UNIZAR',
++        bio: 'Estudio mucho así que necesito un ambiente tranquilo. Me gusta salir a correr por las mañanas y cocinar platos saludables.',
++        location: 'Centro',
++        interests: ['Running', 'Cocina', 'Lectura', 'Salud'],
++        image: images[1],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Le gustan',
++        tags: ['Medicina', '🐕 Dog Lover'],
++        lifeGraph: { limpieza: 5, fiesta: 2, estudios: 5, visitas: 2, ruido: 1 }
++    },
++    {
++        id: '3',
++        name: 'Pablo',
++        age: 22,
++        gender: 'Hombre',
++        studies: 'ADE',
++        university: 'USJ',
++        bio: 'Soy sociable y me gusta hacer planes los fines de semana. Busco compañeros con buen rollo para compartir piso.',
++        location: 'Actur',
++        interests: ['Fútbol', 'Fiesta', 'Viajes', 'Música'],
++        image: images[7],
++        verified: false,
++        moveDate: 'Septiembre',
++        smoking: 'Ocasional',
++        pets: 'Sin mascotas',
++        tags: ['ADE', '⚽ Deportista'],
++        lifeGraph: { limpieza: 3, fiesta: 5, estudios: 3, visitas: 4, ruido: 4 }
++    },
++    {
++        id: '4',
++        name: 'Ana',
++        age: 19,
++        gender: 'Mujer',
++        studies: 'Psicología',
++        university: 'UNIZAR',
++        bio: 'Me encanta el arte y la fotografía. Busco un piso luminoso y compañeros respetuosos.',
++        location: 'Romareda',
++        interests: ['Fotografía', 'Arte', 'Yoga', 'Naturaleza'],
++        image: images[3],
++        verified: true,
++        moveDate: 'Julio',
++        smoking: 'No fumador',
++        pets: 'Tiene mascota',
++        tags: ['Psicología', '📸 Fotógrafa'],
++        lifeGraph: { limpieza: 4, fiesta: 1, estudios: 4, visitas: 2, ruido: 1 }
++    },
++    {
++        id: '5',
++        name: 'David',
++        age: 23,
++        gender: 'Hombre',
++        studies: 'Máster Marketing',
++        university: 'ESIC',
++        bio: 'Trabajo y estudio. Busco ambiente tranquilo durante la semana. Me gusta el deporte y la vida sana.',
++        location: 'Universidad / Centro',
++        interests: ['Marketing', 'Gym', 'Nutrición', 'Emprendimiento'],
++        image: images[4],
++        verified: true,
++        moveDate: 'Agosto',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Marketing', '💪 Gym'],
++        lifeGraph: { limpieza: 5, fiesta: 3, estudios: 4, visitas: 2, ruido: 1 }
++    },
++    {
++        id: '6',
++        name: 'Elena',
++        age: 20,
++        gender: 'Mujer',
++        studies: 'Derecho',
++        university: 'UNIZAR',
++        bio: 'Soy organizada y limpia. Me gusta tener buena convivencia con mis compañeros.',
++        location: 'Universidad / Centro',
++        interests: ['Lectura', 'Política', 'Debate', 'Series'],
++        image: images[5],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Le gustan',
++        tags: ['Derecho', '📚 Lectora'],
++        lifeGraph: { limpieza: 5, fiesta: 3, estudios: 4, visitas: 3, ruido: 2 }
++    },
++    {
++        id: '7',
++        name: 'Javier',
++        age: 21,
++        gender: 'Hombre',
++        studies: 'Fisioterapia',
++        university: 'UNIZAR',
++        bio: 'Deportista y tranquilo. Paso mucho tiempo entrenando o estudiando. Busco compañeros que les guste la montaña.',
++        location: 'Delicias',
++        interests: ['Deporte', 'Anatomía', 'Escalada', 'Montaña'],
++        image: images[6],
++        verified: false,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Fisioterapia', '🧗 Escalador'],
++        lifeGraph: { limpieza: 4, fiesta: 2, estudios: 4, visitas: 2, ruido: 1 }
++    },
++    {
++        id: '8',
++        name: 'María',
++        age: 18,
++        gender: 'Mujer',
++        studies: 'Periodismo',
++        university: 'UNIZAR',
++        bio: 'Primer año en Zaragoza! Busco compañeros para descubrir la ciudad y hacer amistad.',
++        location: 'Centro',
++        interests: ['Escritura', 'Cultura', 'Museos', 'Redes Sociales'],
++        image: images[10],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Periodismo', '✍️ Escritora'],
++        lifeGraph: { limpieza: 3, fiesta: 4, estudios: 3, visitas: 4, ruido: 3 }
++    },
++    {
++        id: '9',
++        name: 'Alejandro',
++        age: 24,
++        gender: 'Hombre',
++        studies: 'Arquitectura',
++        university: 'UNIZAR',
++        bio: 'Paso muchas horas haciendo maquetas. Busco piso espacioso y tranquilo.',
++        location: 'Actur',
++        interests: ['Diseño', 'Dibujo', 'Música Indie', 'Conciertos'],
++        image: images[2],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'Fumador',
++        pets: 'Le gustan',
++        tags: ['Arquitectura', '🎵 Músico'],
++        lifeGraph: { limpieza: 3, fiesta: 4, estudios: 4, visitas: 3, ruido: 3 }
++    },
++    {
++        id: '10',
++        name: 'Sara',
++        age: 22,
++        gender: 'Mujer',
++        studies: 'Veterinaria',
++        university: 'UNIZAR',
++        bio: 'Amante de los animales. Tengo un gato muy tranquilo llamado Luna.',
++        location: 'Universidad / Centro',
++        interests: ['Animales', 'Naturaleza', 'Voluntariado', 'Senderismo'],
++        image: images[12],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Tiene mascota',
++        tags: ['Veterinaria', '🐱 Cat Lover'],
++        lifeGraph: { limpieza: 4, fiesta: 2, estudios: 4, visitas: 3, ruido: 2 }
++    },
++    {
++        id: '11',
++        name: 'Hugo',
++        age: 20,
++        gender: 'Hombre',
++        studies: 'Ing. Mecánica',
++        university: 'UNIZAR',
++        bio: 'Me gusta arreglar cosas y el mundo del motor. Busco compañeros sencillos.',
++        location: 'La Almozara',
++        interests: ['Coches', 'Mecánica', 'F1', 'Gaming'],
++        image: images[8],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Mecánica', '🏎️ Motor'],
++        lifeGraph: { limpieza: 3, fiesta: 3, estudios: 3, visitas: 2, ruido: 3 }
++    },
++    {
++        id: '12',
++        name: 'Lucía',
++        age: 21,
++        gender: 'Mujer',
++        studies: 'Bellas Artes',
++        university: 'UNIZAR',
++        bio: 'Creativa y algo desordenada en mi cuarto, pero limpia en zonas comunes.',
++        location: 'Casco Histórico',
++        interests: ['Pintura', 'Museos', 'Arte Urbano', 'Cine'],
++        image: images[9],
++        verified: false,
++        moveDate: 'Agosto',
++        smoking: 'Ocasional',
++        pets: 'Le gustan',
++        tags: ['Bellas Artes', '🎨 Artista'],
++        lifeGraph: { limpieza: 2, fiesta: 3, estudios: 4, visitas: 4, ruido: 2 }
++    },
++    {
++        id: '13',
++        name: 'Diego',
++        age: 25,
++        gender: 'Hombre',
++        studies: 'Doctorado Química',
++        university: 'CSIC',
++        bio: 'Muy centrado en mi investigación. Busco silencio y respeto.',
++        location: 'Centro',
++        interests: ['Ciencia', 'Ajedrez', 'Lectura', 'Documentales'],
++        image: images[15],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Química', '🧪 Investigador'],
++        lifeGraph: { limpieza: 5, fiesta: 1, estudios: 5, visitas: 1, ruido: 1 }
++    },
++    {
++        id: '14',
++        name: 'Carmen',
++        age: 19,
++        gender: 'Mujer',
++        studies: 'Enfermería',
++        university: 'USJ',
++        bio: 'Hago turnos en el hospital. Necesito descansar bien cuando estoy en casa.',
++        location: 'Valdespartera',
++        interests: ['Salud', 'Series', 'Café', 'Paseos'],
++        image: images[13],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Enfermería', '☕ Coffee Lover'],
++        lifeGraph: { limpieza: 5, fiesta: 2, estudios: 4, visitas: 1, ruido: 1 }
++    },
++    {
++        id: '15',
++        name: 'Rubén',
++        age: 22,
++        gender: 'Hombre',
++        studies: 'CCAFD',
++        university: 'UNIZAR',
++        bio: 'Me paso el día en la facultad de deporte. Vida activa y saludable.',
++        location: 'Universidad / Centro',
++        interests: ['Deporte', 'Entrenamiento', 'Nutrición', 'Baloncesto'],
++        image: images[16],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Deporte', '🏀 Baloncesto'],
++        lifeGraph: { limpieza: 4, fiesta: 3, estudios: 3, visitas: 3, ruido: 2 }
++    },
++    {
++        id: '16',
++        name: 'Marina',
++        age: 20,
++        gender: 'Mujer',
++        studies: 'Magisterio',
++        university: 'UNIZAR',
++        bio: 'Me encantan los niños y la educación. Soy paciente y alegre.',
++        location: 'Actur',
++        interests: ['Educación', 'Manualidades', 'Teatro', 'Música'],
++        image: images[17],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Le gustan',
++        tags: ['Magisterio', '🎭 Teatro'],
++        lifeGraph: { limpieza: 4, fiesta: 3, estudios: 4, visitas: 3, ruido: 2 }
++    },
++    {
++        id: '17',
++        name: 'Adrián',
++        age: 23,
++        gender: 'Hombre',
++        studies: 'Historia',
++        university: 'UNIZAR',
++        bio: 'Me gusta hablar de historia y política. Busco compañeros con conversación.',
++        location: 'Casco Histórico',
++        interests: ['Historia', 'Política', 'Libros', 'Debate'],
++        image: images[18],
++        verified: true,
++        moveDate: 'Octubre',
++        smoking: 'Fumador',
++        pets: 'Sin mascotas',
++        tags: ['Historia', '📖 Lector'],
++        lifeGraph: { limpieza: 3, fiesta: 3, estudios: 4, visitas: 2, ruido: 3 }
++    },
++    {
++        id: '18',
++        name: 'Patricia',
++        age: 21,
++        gender: 'Mujer',
++        studies: 'Biotecnología',
++        university: 'UNIZAR',
++        bio: 'Estudiosa pero me gusta salir los findes. Busco equilibrio entre estudio y diversión.',
++        location: 'Centro',
++        interests: ['Ciencia', 'Fiesta', 'Amigos', 'Viajes'],
++        image: images[19],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Biotecnología', '✈️ Viajera'],
++        lifeGraph: { limpieza: 4, fiesta: 4, estudios: 4, visitas: 3, ruido: 2 }
++    },
++    {
++        id: '19',
++        name: 'Jorge',
++        age: 22,
++        gender: 'Hombre',
++        studies: 'Derecho',
++        university: 'UNIZAR',
++        bio: 'Opositor a notarías en el futuro. Necesito silencio absoluto para estudiar.',
++        location: 'Centro',
++        interests: ['Leyes', 'Lectura', 'Orden', 'Silencio'],
++        image: images[11],
++        verified: true,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Sin mascotas',
++        tags: ['Derecho', '⚖️ Opositor'],
++        lifeGraph: { limpieza: 5, fiesta: 1, estudios: 5, visitas: 1, ruido: 1 }
++    },
++    {
++        id: '20',
++        name: 'Clara',
++        age: 19,
++        gender: 'Mujer',
++        studies: 'Marketing',
++        university: 'ESIC',
++        bio: 'Muy activa en redes sociales. Me gusta la moda y el diseño.',
++        location: 'Romareda',
++        interests: ['Moda', 'TikTok', 'Diseño', 'Tendencias'],
++        image: images[14],
++        verified: false,
++        moveDate: 'Septiembre',
++        smoking: 'No fumador',
++        pets: 'Le gustan',
++        tags: ['Marketing', '📱 Content Creator'],
++        lifeGraph: { limpieza: 3, fiesta: 4, estudios: 3, visitas: 4, ruido: 3 }
++    }
++];
+diff --git a/src/data/residences.mock.ts b/src/data/residences.mock.ts
+new file mode 100644
+index 0000000..a8ac646
+--- /dev/null
++++ b/src/data/residences.mock.ts
+@@ -0,0 +1,492 @@
++export interface Residence {
++  id: string;
++  name: string;
++  type: 'colegio_mayor_propio' | 'colegio_mayor_promovido' | 'colegio_mayor_privado' | 'residencia_privada' | 'residencia_publica' | 'residencia_especializada' | 'proyecto_futuro';
++  gender: 'mixto' | 'femenino' | 'masculino';
++  address: string;
++  city: string;
++  postalCode: string;
++  phone: string[];
++  email: string;
++  website?: string;
++  priceRange: {
++    min: number;
++    max: number;
++  };
++  capacity?: number;
++  services: string[];
++  coordinates?: [number, number]; // [lat, lng]
++  verified: boolean;
++  description: string;
++  status: 'active' | 'coming_soon' | 'in_construction';
++  rating: number; // 0-5
++  reviewCount: number;
++  highlight?: string; // Detalle destacado
++  images?: string[]; // Gallery images
++}
++
++export const mockResidences: Residence[] = [
++  // COLEGIOS MAYORES DE FUNDACIÓN PROPIA
++  {
++    id: 'cm-pedro-cerbuna',
++    name: 'Colegio Mayor Pedro Cerbuna',
++    type: 'colegio_mayor_propio',
++    gender: 'mixto',
++    address: 'C/ Pedro Cerbuna, 12',
++    city: 'Zaragoza',
++    postalCode: '50009',
++    phone: ['976762400'],
++    email: 'cerbuna@unizar.es',
++    website: 'https://cerbuna.unizar.es/',
++    priceRange: { min: 400, max: 800 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Salas de estudio', 'Actividades culturales'],
++    coordinates: [41.6488, -0.8891],
++    verified: true,
++    description: 'El principal colegio mayor de la Universidad de Zaragoza, situado en el corazón del Campus San Francisco.',
++    status: 'active',
++    rating: 4.5,
++    reviewCount: 127,
++    highlight: 'Centro del campus'
++  },
++  {
++    id: 'cm-santa-isabel',
++    name: 'Colegio Mayor Santa Isabel',
++    type: 'colegio_mayor_propio',
++    gender: 'femenino',
++    address: 'C/ Domingo Miral, s/n',
++    city: 'Zaragoza',
++    postalCode: '50009',
++    phone: ['976356100'],
++    email: '',
++    website: 'http://www.unizar.es/santa_isabel',
++    priceRange: { min: 380, max: 750 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Salas de estudio'],
++    coordinates: [41.6500, -0.8900],
++    verified: true,
++    description: 'Colegio Mayor femenino vinculado a la Universidad de Zaragoza.',
++    status: 'active',
++    rating: 4.3,
++    reviewCount: 89,
++    highlight: 'Solo mujeres'
++  },
++
++  // COLEGIOS MAYORES PROMOVIDOS
++  {
++    id: 'cm-cardenal-xavierre',
++    name: 'Colegio Mayor Cardenal Xavierre',
++    type: 'colegio_mayor_promovido',
++    gender: 'mixto',
++    address: 'Plaza San Francisco, 15',
++    city: 'Zaragoza',
++    postalCode: '50006',
++    phone: ['976791130', '699789450'],
++    email: 'xavierre@colegiomayorzaragoza.es',
++    website: 'https://www.colegiomayorzaragoza.es',
++    priceRange: { min: 420, max: 820 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Gimnasio', 'Capilla', 'Salas de estudio'],
++    coordinates: [41.6560, -0.8780],
++    verified: true,
++    description: 'Entidad privada promovida por Unizar, situada junto al Campus San Francisco.',
++    status: 'active',
++    rating: 4.6,
++    reviewCount: 156,
++    highlight: 'Gimnasio incluido'
++  },
++  {
++    id: 'cm-miraflores',
++    name: 'Colegio Mayor Miraflores',
++    type: 'colegio_mayor_promovido',
++    gender: 'masculino',
++    address: 'San Vicente Mártir, 7',
++    city: 'Zaragoza',
++    postalCode: '50008',
++    phone: ['976229367', '722857501'],
++    email: 'info@miraflores.es',
++    website: 'https://www.miraflores.es/',
++    priceRange: { min: 400, max: 800 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Capilla', 'Tutorías', 'Actividades deportivas'],
++    coordinates: [41.6580, -0.8750],
++    verified: true,
++    description: 'Colegio Mayor masculino con amplia tradición educativa.',
++    status: 'active',
++    rating: 4.4,
++    reviewCount: 102,
++    highlight: 'Solo hombres'
++  },
++  {
++    id: 'cm-virgen-carmen',
++    name: 'Colegio Mayor Virgen del Carmen',
++    type: 'colegio_mayor_promovido',
++    gender: 'mixto',
++    address: 'C/ José Luis Albareda, 23',
++    city: 'Zaragoza',
++    postalCode: '50004',
++    phone: ['976438999'],
++    email: 'cmucar@elcarmelo.es',
++    website: '',
++    priceRange: { min: 390, max: 780 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Capilla', 'Salas de estudio'],
++    coordinates: [41.6520, -0.8850],
++    verified: true,
++    description: 'Colegio Mayor mixto vinculado a la Orden del Carmen.',
++    status: 'active',
++    rating: 4.3,
++    reviewCount: 94,
++    highlight: 'Ambiente familiar'
++  },
++  {
++    id: 'cm-penalba',
++    name: 'Colegio Mayor Peñalba',
++    type: 'colegio_mayor_promovido',
++    gender: 'femenino',
++    address: 'C/ Alar del Rey, 20-22',
++    city: 'Zaragoza',
++    postalCode: '50006',
++    phone: ['976238597', '722857501'],
++    email: 'admisiones@cmpenalba.org',
++    website: 'https://www.cmpenalba.org/',
++    priceRange: { min: 410, max: 810 },
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Capilla', 'Tutorías', 'Actividades culturales'],
++    coordinates: [41.6540, -0.8770],
++    verified: true,
++    description: 'Colegio Mayor femenino con ambiente familiar y formación integral.',
++    status: 'active',
++    rating: 4.5,
++    reviewCount: 118,
++    highlight: 'Formación integral'
++  },
++
++  // COLEGIOS MAYORES PRIVADOS
++  {
++    id: 'cm-azaila',
++    name: 'Colegio Mayor Azaila',
++    type: 'colegio_mayor_privado',
++    gender: 'mixto',
++    address: 'Vía Hispanidad, 61',
++    city: 'Zaragoza',
++    postalCode: '50009',
++    phone: ['976249074'],
++    email: 'azaila@grupomestral.es',
++    website: '',
++    priceRange: { min: 380, max: 750 },
++    services: ['WiFi', 'Comedor', 'Salas de estudio', 'Actividades sociales'],
++    coordinates: [41.6490, -0.8820],
++    verified: false,
++    description: 'Colegio Mayor privado independiente de la Universidad.',
++    status: 'active',
++    rating: 4.0,
++    reviewCount: 67,
++    highlight: 'Independiente'
++  },
++
++  // RESIDENCIAS PRIVADAS
++  {
++    id: 'res-nodis',
++    name: 'Residencia Nodis Zaragoza',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'Vía Univérsitas, 26',
++    city: 'Zaragoza',
++    postalCode: '50009',
++    phone: ['684466061'],
++    email: 'reservas.zaragoza@nodis.es',
++    website: 'https://nodis.es/',
++    priceRange: { min: 547, max: 751 },
++    capacity: 200,
++    services: ['WiFi alta velocidad', 'Gimnasio', 'Smart TV', 'Kitchenette', 'Baño privado', 'Parking', 'Recepción 24h', 'Terraza', 'Lavandería'],
++    coordinates: [41.6550, -0.8800],
++    verified: true,
++    description: 'Residencia moderna de tipo PBSA, ubicada cerca del Campus San Francisco.',
++    status: 'active',
++    rating: 4.8,
++    reviewCount: 243,
++    highlight: 'Instalaciones premium'
++  },
++  {
++    id: 'res-xior-pontoneros',
++    name: 'Residencia Xior Zaragoza (Pontoneros)',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'C/ Madre Rafols, 4',
++    city: 'Zaragoza',
++    postalCode: '50004',
++    phone: ['663449398'],
++    email: 'zaragoza@xior.es',
++    website: 'https://xior.es/xior-residencia-estudiantes-zaragoza/',
++    priceRange: { min: 520, max: 780 },
++    services: ['WiFi', 'Gimnasio', 'Salas de estudio', 'Kitchenette', 'Lavandería', 'Recepción 24h', 'Terraza'],
++    coordinates: [41.6530, -0.8830],
++    verified: true,
++    description: 'Residencia moderna también conocida como "Residencia de estudiantes Pontoneros".',
++    status: 'active',
++    rating: 4.7,
++    reviewCount: 201,
++    highlight: 'Ubicación céntrica'
++  },
++  {
++    id: 'res-universitas',
++    name: 'Residencia Univérsitas Zaragoza',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'C/ Baltasar Gracián, 1',
++    city: 'Zaragoza',
++    postalCode: '50005',
++    phone: ['607477292', '976356791'],
++    email: 'residenciauniversitas@hotmail.com',
++    website: 'https://residenciauniversitas.com/',
++    priceRange: { min: 393, max: 817 },
++    capacity: 120,
++    services: ['WiFi gratis', 'Comedor', 'Sala TV', 'Cocina compartida', 'Lavandería', 'Salas estudio'],
++    coordinates: [41.6570, -0.8760],
++    verified: true,
++    description: 'Residencia privada ubicada en el centro, próxima al Campus San Francisco.',
++    status: 'active',
++    rating: 4.4,
++    reviewCount: 178,
++    highlight: 'Mejor precio/calidad'
++  },
++  {
++    id: 'res-safa-casablanca',
++    name: 'Residencia Safa Casablanca',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'Pº Infantes España, 3',
++    city: 'Zaragoza',
++    postalCode: '50012',
++    phone: ['976564000'],
++    email: 'residencia@csafa.com',
++    website: 'https://residenciasafacasablanca.com/',
++    priceRange: { min: 450, max: 750 },
++    services: ['WiFi', 'Comedor', 'Instalaciones deportivas', 'Biblioteca', 'Capilla'],
++    coordinates: [41.6480, -0.8750],
++    verified: true,
++    description: 'Residencia vinculada a las instalaciones del Colegio Sagrada Familia.',
++    status: 'active',
++    rating: 4.3,
++    reviewCount: 134,
++    highlight: 'Instalaciones deportivas'
++  },
++  {
++    id: 'res-micasainn-goya',
++    name: 'Residencia Mi Casa Inn Goya Zaragoza',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'Pl. la Poesía, 3',
++    city: 'Zaragoza',
++    postalCode: '50018',
++    phone: [],
++    email: '',
++    website: 'https://micasainn.com/residencias/zaragoza/',
++    priceRange: { min: 500, max: 800 },
++    services: ['WiFi', 'Gimnasio', 'Lavandería', 'Zonas comunes', 'Cocina equipada'],
++    coordinates: [41.6600, -0.8950],
++    verified: true,
++    description: 'Parte de una cadena nacional de residencias de estudiantes.',
++    status: 'active',
++    rating: 4.5,
++    reviewCount: 167,
++    highlight: 'Cadena nacional'
++  },
++  {
++    id: 'res-trinitarias',
++    name: 'Residencia Trinitarias',
++    type: 'residencia_privada',
++    gender: 'femenino',
++    address: 'C/ Porvenir, 5',
++    city: 'Zaragoza',
++    postalCode: '50006',
++    phone: ['876036661'],
++    email: 'residenciatrinitariaszgz@gmail.com',
++    website: 'https://aragonsocial.com/residencia-estudiantes-zaragoza/',
++    priceRange: { min: 360, max: 650 },
++    services: ['WiFi', 'Comedor', 'Capilla', 'Salas de estudio', 'Biblioteca'],
++    coordinates: [41.6545, -0.8785],
++    verified: true,
++    description: 'Residencia femenina situada en el centro de Zaragoza.',
++    status: 'active',
++    rating: 4.1,
++    reviewCount: 76,
++    highlight: 'Precio asequible'
++  },
++  {
++    id: 'res-maria-inmaculada',
++    name: 'Residencia María Inmaculada',
++    type: 'residencia_privada',
++    gender: 'femenino',
++    address: 'Pº Constitución, 19 triple',
++    city: 'Zaragoza',
++    postalCode: '50001',
++    phone: ['976222978'],
++    email: 'resid.zaragoza.es@religiosasmariainmaculada.org',
++    website: 'https://www.residenciainmaculadazaragoza.es',
++    priceRange: { min: 350, max: 640 },
++    services: ['WiFi', 'Comedor', 'Capilla', 'Biblioteca', 'Salas de estudio'],
++    coordinates: [41.6580, -0.8795],
++    verified: true,
++    description: 'Residencia destinada exclusivamente a estudiantes y trabajadoras jóvenes (16-25 años).',
++    status: 'active',
++    rating: 4.2,
++    reviewCount: 88,
++    highlight: 'Solo jóvenes 16-25'
++  },
++  {
++    id: 'res-vivac',
++    name: 'Residencia Vivac',
++    type: 'residencia_privada',
++    gender: 'mixto',
++    address: 'C/ Baltasar Gracián',
++    city: 'Zaragoza',
++    postalCode: '50005',
++    phone: ['630204068'],
++    email: 'angelinesval@gmail.com',
++    website: 'http://residencia-vivac.com/',
++    priceRange: { min: 340, max: 600 },
++    services: ['WiFi', 'Cocina compartida', 'Salas comunes'],
++    coordinates: [41.6570, -0.8760],
++    verified: true,
++    description: 'Residencia privada mixta y aconfesional en la zona centro.',
++    status: 'active',
++    rating: 3.9,
++    reviewCount: 54,
++    highlight: 'Aconfesional'
++  },
++
++  // RESIDENCIAS PÚBLICAS
++  {
++    id: 'res-pignatelli',
++    name: 'Residencia de Estudiantes Ramón Pignatelli',
++    type: 'residencia_publica',
++    gender: 'mixto',
++    address: 'C/ Jarque del Moncayo, 23',
++    city: 'Zaragoza',
++    postalCode: '50012',
++    phone: ['976348007'],
++    email: 'info@residenciapignatelli.es',
++    website: 'https://www.residenciapignatelli.es/',
++    priceRange: { min: 280, max: 550 },
++    capacity: 300,
++    services: ['WiFi', 'Comedor', 'Biblioteca', 'Salas de estudio', 'Instalaciones deportivas', 'Parking'],
++    coordinates: [41.6470, -0.8730],
++    verified: true,
++    description: 'Residencia pública de gran tamaño gestionada por la Diputación Provincial de Zaragoza (DPZ).',
++    status: 'active',
++    rating: 4.2,
++    reviewCount: 312,
++    highlight: 'Más económica'
++  },
++  {
++    id: 'res-baltasar-gracian',
++    name: 'Residencia Juvenil Baltasar Gracián',
++    type: 'residencia_publica',
++    gender: 'mixto',
++    address: 'C/ Franco y López, 4',
++    city: 'Zaragoza',
++    postalCode: '50005',
++    phone: ['976714000'],
++    email: 'infoyregistro@aragon.es',
++    website: 'http://www.aragon.es/iaj',
++    priceRange: { min: 250, max: 480 },
++    services: ['WiFi', 'Comedor', 'Salas comunes', 'Lavandería'],
++    coordinates: [41.6565, -0.8770],
++    verified: true,
++    description: 'Residencia pública gestionada por el Instituto Aragonés de la Juventud (IAJ), destinada a jóvenes de 18 a 26 años.',
++    status: 'active',
++    rating: 4.0,
++    reviewCount: 198,
++    highlight: 'Gestión pública IAJ'
++  },
++
++  // RESIDENCIAS ESPECIALIZADAS
++  {
++    id: 'res-cpifp-movera',
++    name: 'Residencia C.P.I.F.P. de Movera',
++    type: 'residencia_especializada',
++    gender: 'mixto',
++    address: 'Ctra de Pastriz, km 3,600',
++    city: 'Movera (Zaragoza)',
++    postalCode: '50194',
++    phone: ['638792757', '976586284'],
++    email: 'residencia@cpifpmovera.es',
++    website: 'https://www.cpifpmovera.es/Residencia',
++    priceRange: { min: 220, max: 420 },
++    services: ['WiFi', 'Comedor', 'Instalaciones deportivas', 'Biblioteca'],
++    coordinates: [41.6320, -0.9100],
++    verified: true,
++    description: 'Residencia vinculada al Centro Público Integrado de Formación Profesional Movera.',
++    status: 'active',
++    rating: 3.8,
++    reviewCount: 45,
++    highlight: 'FP especializada'
++  },
++
++  // PROYECTOS FUTUROS
++  {
++    id: 'res-bravo-students',
++    name: 'Residencia de estudiantes Bravo!',
++    type: 'proyecto_futuro',
++    gender: 'mixto',
++    address: 'C/ Valle de Broto esq. Av. José Atarés',
++    city: 'Zaragoza',
++    postalCode: '50018',
++    phone: [],
++    email: '',
++    website: 'https://bravostudents.com',
++    priceRange: { min: 550, max: 850 },
++    capacity: 676,
++    services: ['WiFi', 'Gimnasio', 'Salas de estudio', 'Zonas comunes', 'Lavandería', 'Parking'],
++    coordinates: [41.6380, -0.9050],
++    verified: true,
++    description: 'Proyecto de gran envergadura con 676 camas, próximo al recinto de la Expo 2008.',
++    status: 'in_construction',
++    rating: 0,
++    reviewCount: 0,
++    highlight: '676 plazas'
++  },
++  {
++    id: 'res-belive',
++    name: 'Be Live Residence Zaragoza',
++    type: 'proyecto_futuro',
++    gender: 'mixto',
++    address: 'Centro de Zaragoza',
++    city: 'Zaragoza',
++    postalCode: '50001',
++    phone: ['656581733'],
++    email: 'reservas@beliveresidence.com',
++    website: 'https://residenciaestudiantezaragoza.com/',
++    priceRange: { min: 500, max: 800 },
++    services: ['WiFi', 'Gimnasio', 'Salas de estudio', 'Zonas comunes', 'Recepción 24h'],
++    coordinates: [41.6561, -0.8773],
++    verified: true,
++    description: 'Nueva residencia en preparación en el centro de Zaragoza.',
++    status: 'coming_soon',
++    rating: 0,
++    reviewCount: 0,
++    highlight: 'Próxima apertura'
++  }
++];
++
++export const residenceTypes = [
++  { value: 'all', label: 'Todos los tipos' },
++  { value: 'colegio_mayor_propio', label: 'Colegio Mayor Propio' },
++  { value: 'colegio_mayor_promovido', label: 'Colegio Mayor Promovido' },
++  { value: 'colegio_mayor_privado', label: 'Colegio Mayor Privado' },
++  { value: 'residencia_privada', label: 'Residencia Privada' },
++  { value: 'residencia_publica', label: 'Residencia Pública' },
++  { value: 'residencia_especializada', label: 'Residencia Especializada' },
++  { value: 'proyecto_futuro', label: 'Próxima Apertura' }
++];
++
++export const genderOptions = [
++  { value: 'all', label: 'Todos' },
++  { value: 'mixto', label: 'Mixto' },
++  { value: 'femenino', label: 'Femenino' },
++  { value: 'masculino', label: 'Masculino' }
++];
++
++export const priceRanges = [
++  { value: 'all', label: 'Todos los precios' },
++  { value: '0-300', label: 'Hasta 300€' },
++  { value: '300-500', label: '300€ - 500€' },
++  { value: '500-700', label: '500€ - 700€' },
++  { value: '700+', label: 'Más de 700€' }
++];
+diff --git a/src/data/seo/barriosPropietarios.ts b/src/data/seo/barriosPropietarios.ts
+new file mode 100644
+index 0000000..6a32b51
+--- /dev/null
++++ b/src/data/seo/barriosPropietarios.ts
+@@ -0,0 +1,234 @@
++export interface BarrioPropietarioSEO {
++  slug: string;
++  name: string;
++  city: string;
++  title: string;
++  metaDescription: string;
++  h1: string;
++  demandText: string;
++  avgRent: string;
++  avgRentRoom: string;
++  occupancyRate: string;
++  nearbyUnis: string[];
++  studentDemand: string;
++  whyRentHere: string;
++  faqs: { question: string; answer: string }[];
++}
++
++export const barriosPropietarios: Record<string, BarrioPropietarioSEO> = {
++  delicias: {
++    slug: "delicias",
++    name: "Delicias",
++    city: "zaragoza",
++    title: "Alquilar piso a estudiantes en Delicias, Zaragoza | Livix",
++    metaDescription:
++      "Tienes un piso en Delicias? Alquilalo a estudiantes universitarios verificados. Sin comisiones, te buscamos inquilino. Demanda alta en la zona.",
++    h1: "Alquilar tu piso a estudiantes en Delicias, Zaragoza",
++    demandText:
++      "Delicias es el barrio mas demandado por estudiantes en Zaragoza. Su proximidad al tranvia, precios accesibles y ambiente multicultural atraen a cientos de universitarios cada septiembre.",
++    avgRent: "550-750€/mes",
++    avgRentRoom: "250-350€/mes",
++    occupancyRate: "94%",
++    nearbyUnis: [
++      "Campus San Francisco (20 min en tranvia)",
++      "Campus Rio Ebro (25 min en bus)",
++    ],
++    studentDemand: "Muy alta — zona mas buscada por precio/ubicacion",
++    whyRentHere: `
++      <p><strong>Delicias</strong> concentra la mayor demanda de alojamiento estudiantil de Zaragoza. Con mas de 35.000 estudiantes en la ciudad y un mercado donde la oferta no cubre la demanda, un piso en Delicias se alquila en dias.</p>
++      <p>La conexion directa por tranvia con ambos campus y los precios accesibles hacen que los estudiantes prioricen esta zona. Alquilar por habitaciones genera un <strong>30-40% mas de rentabilidad</strong> que alquilar el piso completo: 3 habitaciones a 300€ = 900€/mes frente a 650€ por piso completo.</p>
++    `,
++    faqs: [
++      {
++        question: "Cuanto puedo cobrar por mi piso en Delicias?",
++        answer:
++          "Un piso completo de 3 habitaciones en Delicias se alquila entre 550-750€/mes. Si alquilas por habitaciones, el rango es 250-350€ por habitacion, lo que genera mayor rentabilidad total (750-1.050€/mes por un piso de 3 hab).",
++      },
++      {
++        question: "Cuanto tarda en alquilarse un piso en Delicias?",
++        answer:
++          "Delicias es la zona con mayor demanda estudiantil. Un piso bien publicado y a precio de mercado se alquila en 1-2 semanas de media, especialmente en temporada alta (junio-septiembre).",
++      },
++      {
++        question: "Que tipo de contrato debo hacer?",
++        answer:
++          "Para estudiantes, lo mas habitual es un contrato de temporada (10-12 meses, de septiembre a junio/julio). No esta sujeto a la duracion minima de 5 anos de la LAU y recuperas el piso al final del curso.",
++      },
++    ],
++  },
++
++  centro: {
++    slug: "centro",
++    name: "Centro",
++    city: "zaragoza",
++    title: "Alquilar piso a estudiantes en el Centro de Zaragoza | Livix",
++    metaDescription:
++      "Alquila tu piso del centro de Zaragoza a estudiantes verificados. Maxima demanda, precios premium. Sin comisiones con Livix.",
++    h1: "Alquilar tu piso a estudiantes en el Centro de Zaragoza",
++    demandText:
++      "El centro historico es la zona premium para alojamiento estudiantil. La proximidad al Campus San Francisco y la vida universitaria generan una demanda constante durante todo el curso.",
++    avgRent: "650-900€/mes",
++    avgRentRoom: "320-420€/mes",
++    occupancyRate: "97%",
++    nearbyUnis: [
++      "Campus San Francisco (5-10 min a pie)",
++      "Facultad de Derecho, Economia, Filosofia",
++    ],
++    studentDemand: "Maxima — zona favorita de Erasmus y estudiantes nacionales",
++    whyRentHere: `
++      <p>El <strong>centro de Zaragoza</strong> es la ubicacion mas valorada por estudiantes, especialmente Erasmus. Con el Campus San Francisco a 5 minutos andando y toda la oferta cultural y de ocio, los pisos del centro tienen la tasa de ocupacion mas alta de la ciudad.</p>
++      <p>Los precios de alquiler son los mas altos de Zaragoza, lo que significa <strong>mayor rentabilidad para el propietario</strong>. Un piso de 3 habitaciones genera facilmente 960-1.260€/mes alquilando por habitacion.</p>
++    `,
++    faqs: [
++      {
++        question: "Cuanto puedo cobrar en el centro de Zaragoza?",
++        answer:
++          "El centro es la zona mas cara. Un piso completo de 3 hab se alquila por 650-900€/mes. Por habitaciones: 320-420€ cada una (960-1.260€/mes total). Los Erasmus con becas de 400-600€/mes suelen buscar habitacion individual.",
++      },
++      {
++        question: "Se alquila todo el ano o solo en curso?",
++        answer:
++          "La demanda principal es septiembre-junio, pero el centro tiene demanda durante todo el ano por turismo y movilidad academica. Muchos propietarios alquilan julio-agosto como apartamento vacacional.",
++      },
++      {
++        question: "Merece la pena alquilar a Erasmus?",
++        answer:
++          "Si. Los Erasmus suelen tener beca (cobro seguro), estancias de 5-10 meses y son muy activos buscando alojamiento en el centro. Livix verifica su matricula universitaria antes de ponerles en contacto contigo.",
++      },
++    ],
++  },
++
++  "san-jose": {
++    slug: "san-jose",
++    name: "San Jose",
++    city: "zaragoza",
++    title: "Alquilar piso a estudiantes en San Jose, Zaragoza | Livix",
++    metaDescription:
++      "Piso en San Jose? Alquilalo a estudiantes de ingenieria verificados. Alta demanda cerca del Campus Rio Ebro. Livix te busca inquilino gratis.",
++    h1: "Alquilar tu piso a estudiantes en San Jose, Zaragoza",
++    demandText:
++      "San Jose es el barrio preferido por estudiantes de ingenieria por su cercanía al Campus Rio Ebro y conexion directa por tranvia. Demanda estable todo el curso academico.",
++    avgRent: "500-700€/mes",
++    avgRentRoom: "230-350€/mes",
++    occupancyRate: "92%",
++    nearbyUnis: [
++      "Campus Rio Ebro / EINA (5-10 min en tranvia)",
++      "Campus San Francisco (5-10 min a pie)",
++    ],
++    studentDemand: "Alta — referencia para estudiantes de ingenieria",
++    whyRentHere: `
++      <p><strong>San Jose</strong> es el barrio de los ingenieros. La EINA (Escuela de Ingenieria y Arquitectura) en el Campus Rio Ebro esta a minutos en tranvia, y casi todos los estudiantes de carreras tecnicas buscan aqui.</p>
++      <p>Los precios son competitivos respecto al centro, pero la demanda es igual de fuerte. Un piso de 3 habitaciones genera <strong>690-1.050€/mes</strong> alquilando por habitacion. La estabilidad del inquilino ingeniero (carreras de 4-5 anos) significa menos rotacion.</p>
++    `,
++    faqs: [
++      {
++        question: "Que perfil de estudiante busca piso en San Jose?",
++        answer:
++          "Principalmente estudiantes de ingenieria (EINA), arquitectura y ciencias. Suelen ser estudiantes de carreras largas (4-5 anos), lo que significa inquilinos mas estables con menos rotacion anual.",
++      },
++      {
++        question: "Cuanto puedo cobrar en San Jose?",
++        answer:
++          "Piso completo de 3 hab: 500-700€/mes. Por habitacion: 230-350€ cada una. San Jose ofrece buena relacion calidad-precio tanto para el estudiante como para el propietario.",
++      },
++      {
++        question: "Hay demanda fuera de temporada?",
++        answer:
++          "La demanda principal es septiembre-junio, pero los estudiantes de ingenieria con TFG o practicas suelen quedarse en verano. Es habitual mantener ocupacion 10-11 meses al ano.",
++      },
++    ],
++  },
++
++  actur: {
++    slug: "actur",
++    name: "Actur",
++    city: "zaragoza",
++    title: "Alquilar piso a estudiantes en Actur, Zaragoza | Livix",
++    metaDescription:
++      "Alquila tu piso del Actur a estudiantes del Campus Rio Ebro. Barrio moderno, alta demanda. Livix te busca inquilino verificado gratis.",
++    h1: "Alquilar tu piso a estudiantes en Actur, Zaragoza",
++    demandText:
++      "Actur-Rey Fernando es un barrio moderno con gran demanda estudiantil. Su proximidad al Campus Rio Ebro y la linea de tranvia lo convierten en zona premium para estudiantes de ingenieria.",
++    avgRent: "600-800€/mes",
++    avgRentRoom: "280-380€/mes",
++    occupancyRate: "93%",
++    nearbyUnis: [
++      "Campus Rio Ebro (10 min a pie/bici)",
++      "EINA — Ingenieria y Arquitectura",
++    ],
++    studentDemand: "Alta — barrio moderno favorito de ingenieros",
++    whyRentHere: `
++      <p>El <strong>Actur</strong> es la zona residencial moderna de Zaragoza y la favorita de los estudiantes de ingenieria que prefieren pisos nuevos y bien equipados. El Campus Rio Ebro esta literalmente al lado, accesible a pie o en bici en 10 minutos.</p>
++      <p>Los pisos en Actur suelen ser mas nuevos, grandes y luminosos que en otras zonas, lo que permite cobrar un <strong>precio premium</strong>. 3 habitaciones a 330€ = 990€/mes. La calidad del barrio atrae a estudiantes con mayor poder adquisitivo.</p>
++    `,
++    faqs: [
++      {
++        question: "Cuanto puedo cobrar en Actur?",
++        answer:
++          "Actur tiene precios ligeramente por encima de la media. Piso completo: 600-800€/mes. Por habitacion: 280-380€. Los pisos nuevos y bien amueblados pueden alcanzar el rango alto facilmente.",
++      },
++      {
++        question: "Que ventaja tiene Actur frente a otros barrios?",
++        answer:
++          "Pisos mas modernos y grandes, cercanía directa al Campus Rio Ebro, zona tranquila con todos los servicios (Grancasa, Parque del Agua). Los estudiantes de ingenieria con presupuesto algo mayor eligen Actur.",
++      },
++      {
++        question: "Es buena inversion alquilar a estudiantes en Actur?",
++        answer:
++          "Si. La combinacion de alta demanda, pisos de calidad y estudiantes de carreras largas (5 anos) genera rentabilidad estable. La tasa de ocupacion supera el 93% durante el curso.",
++      },
++    ],
++  },
++
++  universidad: {
++    slug: "universidad",
++    name: "Universidad / Campus",
++    city: "zaragoza",
++    title:
++      "Alquilar piso a estudiantes en zona Universidad, Zaragoza | Livix",
++    metaDescription:
++      "Piso en zona Universidad de Zaragoza? Maxima demanda estudiantil. Livix te conecta con inquilinos verificados gratis. Sin comisiones.",
++    h1: "Alquilar tu piso a estudiantes en la zona Universidad de Zaragoza",
++    demandText:
++      "La zona Universidad engloba el entorno inmediato del Campus San Francisco — la ubicacion con mayor densidad de estudiantes de toda Zaragoza. Los pisos aqui se alquilan antes que en ninguna otra zona.",
++    avgRent: "600-850€/mes",
++    avgRentRoom: "300-400€/mes",
++    occupancyRate: "98%",
++    nearbyUnis: [
++      "Campus San Francisco (0-5 min a pie)",
++      "Derecho, Economia, Educacion, Filosofia",
++    ],
++    studentDemand: "Maxima — primera opcion para cualquier estudiante",
++    whyRentHere: `
++      <p>La <strong>zona Universidad</strong> es el epicentro del alojamiento estudiantil en Zaragoza. Con el Campus San Francisco literalmente en la puerta, cualquier piso aqui tiene demanda garantizada. La tasa de ocupacion del 98% habla por si sola.</p>
++      <p>Es la zona con <strong>menor tiempo de alquiler</strong>: un piso bien publicado se alquila en dias, no semanas. Los precios son altos y justificados por la ubicacion. Alquilar por habitacion maximiza la rentabilidad: 3 hab x 350€ = 1.050€/mes.</p>
++    `,
++    faqs: [
++      {
++        question: "Cuanto puedo cobrar en zona Universidad?",
++        answer:
++          "Es una de las zonas mas caras. Piso completo: 600-850€/mes. Por habitacion: 300-400€ (900-1.200€/mes por piso de 3 hab). La proximidad al campus justifica el premium.",
++      },
++      {
++        question: "Cuanto tarda en alquilarse?",
++        answer:
++          "Es la zona mas rapida. Un piso publicado en junio-julio se alquila en 3-7 dias de media. En septiembre, la demanda de ultima hora absorbe lo que quede inmediatamente.",
++      },
++      {
++        question: "Hay riesgo de que se quede vacio?",
++        answer:
++          "Minimo. La tasa de ocupacion en zona Universidad supera el 98% durante el curso. Incluso en verano, muchos estudiantes mantienen el piso para no perderlo de cara al siguiente ano.",
++      },
++    ],
++  },
++};
++
++export const getBarrioPropietario = (
++  slug: string
++): BarrioPropietarioSEO | undefined => {
++  return barriosPropietarios[slug];
++};
++
++export const getAllBarriosPropietarios = (): BarrioPropietarioSEO[] => {
++  return Object.values(barriosPropietarios);
++};
+diff --git a/src/data/seo/cityConfig.ts b/src/data/seo/cityConfig.ts
+new file mode 100644
+index 0000000..4a9712d
+--- /dev/null
++++ b/src/data/seo/cityConfig.ts
+@@ -0,0 +1,115 @@
++export interface CityConfig {
++  slug: string;
++  name: string;
++  isActive: boolean;
++  mapCenter: { lat: number; lng: number };
++  defaultZoom: number;
++  studentPopulation: number;
++}
++
++export const cityConfigs: Record<string, CityConfig> = {
++  zaragoza: {
++    slug: "zaragoza",
++    name: "Zaragoza",
++    isActive: true,
++    mapCenter: { lat: 41.6561, lng: -0.8773 },
++    defaultZoom: 13,
++    studentPopulation: 35000,
++  },
++  madrid: {
++    slug: "madrid",
++    name: "Madrid",
++    isActive: false,
++    mapCenter: { lat: 40.4168, lng: -3.7038 },
++    defaultZoom: 12,
++    studentPopulation: 300000,
++  },
++  barcelona: {
++    slug: "barcelona",
++    name: "Barcelona",
++    isActive: false,
++    mapCenter: { lat: 41.3874, lng: 2.1686 },
++    defaultZoom: 12,
++    studentPopulation: 220000,
++  },
++  valencia: {
++    slug: "valencia",
++    name: "Valencia",
++    isActive: false,
++    mapCenter: { lat: 39.4699, lng: -0.3763 },
++    defaultZoom: 13,
++    studentPopulation: 90000,
++  },
++  sevilla: {
++    slug: "sevilla",
++    name: "Sevilla",
++    isActive: false,
++    mapCenter: { lat: 37.3891, lng: -5.9845 },
++    defaultZoom: 13,
++    studentPopulation: 75000,
++  },
++  granada: {
++    slug: "granada",
++    name: "Granada",
++    isActive: false,
++    mapCenter: { lat: 37.1773, lng: -3.5986 },
++    defaultZoom: 14,
++    studentPopulation: 60000,
++  },
++  salamanca: {
++    slug: "salamanca",
++    name: "Salamanca",
++    isActive: false,
++    mapCenter: { lat: 40.9701, lng: -5.6635 },
++    defaultZoom: 14,
++    studentPopulation: 30000,
++  },
++  "santiago-de-compostela": {
++    slug: "santiago-de-compostela",
++    name: "Santiago de Compostela",
++    isActive: false,
++    mapCenter: { lat: 42.8782, lng: -8.5448 },
++    defaultZoom: 14,
++    studentPopulation: 25000,
++  },
++  malaga: {
++    slug: "malaga",
++    name: "Malaga",
++    isActive: false,
++    mapCenter: { lat: 36.7213, lng: -4.4214 },
++    defaultZoom: 13,
++    studentPopulation: 40000,
++  },
++  bilbao: {
++    slug: "bilbao",
++    name: "Bilbao",
++    isActive: false,
++    mapCenter: { lat: 43.2630, lng: -2.9350 },
++    defaultZoom: 13,
++    studentPopulation: 45000,
++  },
++  pamplona: {
++    slug: "pamplona",
++    name: "Pamplona",
++    isActive: false,
++    mapCenter: { lat: 42.8125, lng: -1.6458 },
++    defaultZoom: 14,
++    studentPopulation: 20000,
++  },
++  logrono: {
++    slug: "logrono",
++    name: "Logrono",
++    isActive: false,
++    mapCenter: { lat: 42.4627, lng: -2.4445 },
++    defaultZoom: 14,
++    studentPopulation: 8000,
++  },
++};
++
++export const getActiveCities = (): CityConfig[] =>
++  Object.values(cityConfigs).filter((c) => c.isActive);
++
++export const getAllCities = (): CityConfig[] => Object.values(cityConfigs);
++
++export const getCityConfig = (slug: string): CityConfig | undefined =>
++  cityConfigs[slug];
+diff --git a/src/hooks/useCRM.ts b/src/hooks/useCRM.ts
+new file mode 100644
+index 0000000..9d2c905
+--- /dev/null
++++ b/src/hooks/useCRM.ts
+@@ -0,0 +1,201 @@
++import { useState, useEffect } from "react";
++import { supabase } from "@/integrations/supabase/client";
++import { toast } from "sonner";
++
++export interface CRMLead {
++  id: string;
++  nombre: string;
++  telefono: string | null;
++  email: string | null;
++  tipo: "particular" | "agencia";
++  ciudad: string;
++  zona: string | null;
++  num_pisos: number;
++  precio_medio: number | null;
++  fuente: string;
++  estado: "nuevo" | "contactado" | "interesado" | "reunion" | "publicado" | "rechazado";
++  fecha_primer_contacto: string | null;
++  fecha_ultimo_contacto: string | null;
++  proximo_seguimiento: string | null;
++  responsable: string;
++  notas: string | null;
++  motivo_rechazo: string | null;
++  url_portal: string | null;
++  created_at: string;
++  updated_at: string;
++}
++
++export type CRMEstado = CRMLead["estado"];
++
++export const CRM_ESTADOS: { value: CRMEstado; label: string; color: string }[] = [
++  { value: "nuevo", label: "Nuevo", color: "bg-gray-100 text-gray-700" },
++  { value: "contactado", label: "Contactado", color: "bg-blue-100 text-blue-700" },
++  { value: "interesado", label: "Interesado", color: "bg-yellow-100 text-yellow-700" },
++  { value: "reunion", label: "Reunion", color: "bg-purple-100 text-purple-700" },
++  { value: "publicado", label: "Publicado", color: "bg-green-100 text-green-700" },
++  { value: "rechazado", label: "Rechazado", color: "bg-red-100 text-red-700" },
++];
++
++export const useCRM = () => {
++  const [leads, setLeads] = useState<CRMLead[]>([]);
++  const [isLoading, setIsLoading] = useState(false);
++
++  const fetchLeads = async () => {
++    setIsLoading(true);
++    try {
++      const { data, error } = await (supabase as any)
++        .from("crm_leads")
++        .select("*")
++        .order("created_at", { ascending: false });
++
++      if (error) throw error;
++      setLeads(data || []);
++    } catch (error) {
++      console.error("Error fetching CRM leads:", error);
++      toast.error("Error al cargar leads del CRM");
++    } finally {
++      setIsLoading(false);
++    }
++  };
++
++  const updateLead = async (id: string, updates: Partial<CRMLead>) => {
++    try {
++      const { error } = await (supabase as any)
++        .from("crm_leads")
++        .update(updates)
++        .eq("id", id);
++
++      if (error) throw error;
++
++      setLeads((prev) =>
++        prev.map((lead) => (lead.id === id ? { ...lead, ...updates } : lead))
++      );
++    } catch (error) {
++      console.error("Error updating lead:", error);
++      toast.error("Error al actualizar lead");
++      throw error;
++    }
++  };
++
++  const updateEstado = async (id: string, estado: CRMEstado) => {
++    const updates: Partial<CRMLead> = { estado };
++
++    if (estado === "contactado" || estado === "interesado" || estado === "reunion") {
++      updates.fecha_ultimo_contacto = new Date().toISOString();
++      // Find lead and set primer contacto if not set
++      const lead = leads.find((l) => l.id === id);
++      if (lead && !lead.fecha_primer_contacto) {
++        updates.fecha_primer_contacto = new Date().toISOString();
++      }
++    }
++
++    await updateLead(id, updates);
++    toast.success(`Lead movido a "${CRM_ESTADOS.find((e) => e.value === estado)?.label}"`);
++  };
++
++  const addNota = async (id: string, nota: string) => {
++    const lead = leads.find((l) => l.id === id);
++    const existing = lead?.notas || "";
++    const timestamp = new Date().toLocaleDateString("es-ES");
++    const newNotas = existing
++      ? `${existing}\n[${timestamp}] ${nota}`
++      : `[${timestamp}] ${nota}`;
++
++    await updateLead(id, { notas: newNotas });
++  };
++
++  const createLead = async (lead: Partial<CRMLead>) => {
++    try {
++      const { data, error } = await (supabase as any)
++        .from("crm_leads")
++        .insert(lead)
++        .select()
++        .single();
++
++      if (error) throw error;
++      setLeads((prev) => [data, ...prev]);
++      return data;
++    } catch (error) {
++      console.error("Error creating lead:", error);
++      toast.error("Error al crear lead");
++      throw error;
++    }
++  };
++
++  const importCSV = async (csvText: string) => {
++    const lines = csvText.trim().split("\n");
++    const header = lines[0].split(",").map((h) => h.trim().toLowerCase());
++
++    const newLeads: Partial<CRMLead>[] = [];
++
++    for (let i = 1; i < lines.length; i++) {
++      // Simple CSV parse (handles quoted commas)
++      const values: string[] = [];
++      let current = "";
++      let inQuotes = false;
++      for (const ch of lines[i]) {
++        if (ch === '"') {
++          inQuotes = !inQuotes;
++        } else if (ch === "," && !inQuotes) {
++          values.push(current.trim());
++          current = "";
++        } else {
++          current += ch;
++        }
++      }
++      values.push(current.trim());
++
++      const row: any = {};
++      header.forEach((h, idx) => {
++        row[h] = values[idx] || "";
++      });
++
++      if (!row.nombre && !row["nombre inmobiliaria"]) continue;
++
++      newLeads.push({
++        nombre: row.nombre || row["nombre inmobiliaria"] || "",
++        telefono: row.telefono || null,
++        email: row.email || null,
++        tipo: "agencia",
++        zona: row.zonas || row.zona || null,
++        num_pisos: parseInt(row.num_pisos || row["pisos_zona_uni"]) || 1,
++        precio_medio: parseInt(row.precio_medio) || null,
++        fuente: "scraper",
++        estado: "nuevo",
++        url_portal: row.urls_ejemplo || row.url_portal || null,
++      });
++    }
++
++    if (newLeads.length === 0) {
++      toast.error("No se encontraron leads validos en el CSV");
++      return 0;
++    }
++
++    const { error } = await (supabase as any).from("crm_leads").insert(newLeads);
++
++    if (error) {
++      console.error("Error importing CSV:", error);
++      toast.error("Error al importar CSV");
++      return 0;
++    }
++
++    await fetchLeads();
++    toast.success(`${newLeads.length} leads importados`);
++    return newLeads.length;
++  };
++
++  useEffect(() => {
++    fetchLeads();
++  }, []);
++
++  return {
++    leads,
++    isLoading,
++    fetchLeads,
++    updateLead,
++    updateEstado,
++    addNota,
++    createLead,
++    importCSV,
++  };
++};
+diff --git a/src/pages/Cities.tsx b/src/pages/Cities.tsx
+new file mode 100644
+index 0000000..3c01891
+--- /dev/null
++++ b/src/pages/Cities.tsx
+@@ -0,0 +1,112 @@
++import { Link } from "react-router-dom";
++import Layout from "@/components/layout/Layout";
++import { SEOHead } from "@/components/seo/SEOHead";
++import { Card, CardContent } from "@/components/ui/card";
++import { Badge } from "@/components/ui/badge";
++import { getAllCities, getActiveCities } from "@/data/seo/cityConfig";
++import { cities as citySEO } from "@/data/seo/cities";
++
++const Cities = () => {
++  const allCities = getAllCities();
++  const activeCitySlugs = new Set(getActiveCities().map((c) => c.slug));
++
++  // Active cities first, then coming soon
++  const sortedCities = [...allCities].sort((a, b) => {
++    if (a.isActive === b.isActive) return 0;
++    return a.isActive ? -1 : 1;
++  });
++
++  return (
++    <Layout>
++      <SEOHead
++        title="Ciudades Universitarias en España | Livix"
++        description="Encuentra alojamiento para estudiantes en las principales ciudades universitarias de España. Zaragoza, Madrid, Barcelona, Valencia y más."
++        canonicalUrl="https://livix.es/ciudades"
++      />
++
++      <main className="min-h-screen bg-white font-poppins">
++        <div className="max-w-6xl mx-auto px-4 py-12 sm:py-16">
++          {/* Header */}
++          <div className="mb-10">
++            <h1 className="text-3xl sm:text-4xl font-bold text-black mb-3">
++              Ciudades Universitarias
++            </h1>
++            <p className="text-gray-600 text-base sm:text-lg max-w-2xl">
++              Alojamiento para estudiantes en las principales ciudades universitarias de España.
++            </p>
++          </div>
++
++          {/* Grid */}
++          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
++            {sortedCities.map((city) => {
++              const seo = citySEO[city.slug];
++              const isActive = activeCitySlugs.has(city.slug);
++
++              return (
++                <Link
++                  key={city.slug}
++                  to={`/habitaciones/${city.slug}`}
++                  className="group block"
++                >
++                  <Card className="h-full border border-gray-200 hover:border-[#5DB4EE] hover:shadow-md transition-all duration-200 bg-white">
++                    <CardContent className="p-5">
++                      {/* City name + badge */}
++                      <div className="flex items-start justify-between gap-2 mb-3">
++                        <h2 className="text-lg font-semibold text-black group-hover:text-[#5DB4EE] transition-colors">
++                          {city.name}
++                        </h2>
++                        {isActive ? (
++                          <Badge
++                            className="shrink-0 bg-green-100 text-green-700 border-green-200 text-xs font-medium"
++                            variant="outline"
++                          >
++                            Activa
++                          </Badge>
++                        ) : (
++                          <Badge
++                            className="shrink-0 bg-gray-100 text-gray-500 border-gray-200 text-xs font-medium"
++                            variant="outline"
++                          >
++                            Próximamente
++                          </Badge>
++                        )}
++                      </div>
++
++                      {/* Universities */}
++                      {seo?.universities && seo.universities.length > 0 && (
++                        <ul className="mb-3 space-y-0.5">
++                          {seo.universities.slice(0, 3).map((uni) => (
++                            <li key={uni} className="text-sm text-gray-600 truncate">
++                              {uni}
++                            </li>
++                          ))}
++                          {seo.universities.length > 3 && (
++                            <li className="text-sm text-gray-400">
++                              +{seo.universities.length - 3} más
++                            </li>
++                          )}
++                        </ul>
++                      )}
++
++                      {/* Avg price */}
++                      {seo?.avgPrice && (
++                        <div className="flex items-center gap-1.5 mt-auto pt-2 border-t border-gray-100">
++                          <span className="text-xs text-gray-400">Precio medio</span>
++                          <span className="text-sm font-semibold text-[#5DB4EE]">
++                            {seo.avgPrice}/mes
++                          </span>
++                        </div>
++                      )}
++                    </CardContent>
++                  </Card>
++                </Link>
++              );
++            })}
++          </div>
++        </div>
++      </main>
++    </Layout>
++  );
++};
++
++export default Cities;
+diff --git a/src/pages/admin/CRM.tsx b/src/pages/admin/CRM.tsx
+new file mode 100644
+index 0000000..8772cf1
+--- /dev/null
++++ b/src/pages/admin/CRM.tsx
+@@ -0,0 +1,229 @@
++import { useState } from "react";
++import Layout from "@/components/layout/Layout";
++import { Button } from "@/components/ui/button";
++import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
++import { Input } from "@/components/ui/input";
++import { Textarea } from "@/components/ui/textarea";
++import { Badge } from "@/components/ui/badge";
++import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
++import { ArrowLeft, Upload, Phone, Mail, MapPin, Building2, StickyNote, Calendar } from "lucide-react";
++import { useCRM, CRMLead, CRM_ESTADOS, CRMEstado } from "@/hooks/useCRM";
++
++const CRM = () => {
++  const { leads, isLoading, updateEstado, addNota, importCSV } = useCRM();
++  const [importText, setImportText] = useState("");
++  const [showImport, setShowImport] = useState(false);
++  const [notaText, setNotaText] = useState("");
++  const [selectedLead, setSelectedLead] = useState<CRMLead | null>(null);
++
++  const handleImport = async () => {
++    const count = await importCSV(importText);
++    if (count > 0) {
++      setImportText("");
++      setShowImport(false);
++    }
++  };
++
++  const handleAddNota = async () => {
++    if (!selectedLead || !notaText.trim()) return;
++    await addNota(selectedLead.id, notaText.trim());
++    setNotaText("");
++    setSelectedLead(null);
++  };
++
++  const leadsByEstado = CRM_ESTADOS.reduce(
++    (acc, estado) => {
++      acc[estado.value] = leads.filter((l) => l.estado === estado.value);
++      return acc;
++    },
++    {} as Record<CRMEstado, CRMLead[]>
++  );
++
++  return (
++    <Layout>
++      <div className="container mx-auto px-4 py-8">
++        {/* Header */}
++        <div className="flex items-center justify-between mb-6">
++          <div>
++            <Button variant="ghost" size="sm" onClick={() => (window.location.href = "/admin/dashboard")}>
++              <ArrowLeft className="mr-2 h-4 w-4" />
++              Panel admin
++            </Button>
++            <h1 className="text-2xl font-bold text-foreground mt-2">CRM Propietarios</h1>
++            <p className="text-muted-foreground text-sm">{leads.length} leads en pipeline</p>
++          </div>
++          <Button onClick={() => setShowImport(!showImport)} variant="outline">
++            <Upload className="mr-2 h-4 w-4" />
++            Importar CSV
++          </Button>
++        </div>
++
++        {/* Import panel */}
++        {showImport && (
++          <Card className="mb-6">
++            <CardContent className="p-4">
++              <p className="text-sm text-muted-foreground mb-2">
++                Pega el contenido de <code>leads_llamar_prioridad.csv</code> aqui:
++              </p>
++              <Textarea
++                rows={6}
++                value={importText}
++                onChange={(e) => setImportText(e.target.value)}
++                placeholder="prioridad,nombre,telefono,email,num_pisos,..."
++                className="font-mono text-xs mb-3"
++              />
++              <div className="flex gap-2">
++                <Button onClick={handleImport} disabled={!importText.trim()}>
++                  Importar
++                </Button>
++                <Button variant="ghost" onClick={() => setShowImport(false)}>
++                  Cancelar
++                </Button>
++              </div>
++            </CardContent>
++          </Card>
++        )}
++
++        {/* Kanban board */}
++        {isLoading ? (
++          <div className="text-center py-12 text-muted-foreground">Cargando...</div>
++        ) : (
++          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
++            {CRM_ESTADOS.map((estado) => (
++              <div key={estado.value}>
++                <div className="flex items-center gap-2 mb-3">
++                  <Badge className={estado.color}>{estado.label}</Badge>
++                  <span className="text-xs text-muted-foreground">{leadsByEstado[estado.value]?.length || 0}</span>
++                </div>
++                <div className="space-y-2 min-h-[200px]">
++                  {(leadsByEstado[estado.value] || []).map((lead) => (
++                    <LeadCard
++                      key={lead.id}
++                      lead={lead}
++                      onChangeEstado={updateEstado}
++                      onAddNota={(lead) => setSelectedLead(lead)}
++                    />
++                  ))}
++                </div>
++              </div>
++            ))}
++          </div>
++        )}
++
++        {/* Nota dialog */}
++        <Dialog open={!!selectedLead} onOpenChange={(open) => !open && setSelectedLead(null)}>
++          <DialogContent>
++            <DialogHeader>
++              <DialogTitle>Nota para {selectedLead?.nombre}</DialogTitle>
++            </DialogHeader>
++            {selectedLead?.notas && (
++              <div className="bg-muted/50 rounded p-3 text-xs whitespace-pre-wrap max-h-40 overflow-y-auto">
++                {selectedLead.notas}
++              </div>
++            )}
++            <Textarea
++              value={notaText}
++              onChange={(e) => setNotaText(e.target.value)}
++              placeholder="Anadir nota..."
++              rows={3}
++            />
++            <Button onClick={handleAddNota} disabled={!notaText.trim()}>
++              Guardar nota
++            </Button>
++          </DialogContent>
++        </Dialog>
++      </div>
++    </Layout>
++  );
++};
++
++function LeadCard({
++  lead,
++  onChangeEstado,
++  onAddNota,
++}: {
++  lead: CRMLead;
++  onChangeEstado: (id: string, estado: CRMEstado) => void;
++  onAddNota: (lead: CRMLead) => void;
++}) {
++  const nextEstado = getNextEstado(lead.estado);
++
++  return (
++    <Card className="text-xs">
++      <CardContent className="p-3 space-y-2">
++        <div className="font-medium text-sm truncate" title={lead.nombre}>
++          {lead.tipo === "agencia" && <Building2 className="inline h-3 w-3 mr-1 text-primary" />}
++          {lead.nombre}
++        </div>
++
++        {lead.telefono && (
++          <a href={`tel:${lead.telefono}`} className="flex items-center gap-1 text-primary hover:underline">
++            <Phone className="h-3 w-3" />
++            {lead.telefono}
++          </a>
++        )}
++
++        {lead.email && (
++          <a href={`mailto:${lead.email}`} className="flex items-center gap-1 text-muted-foreground hover:underline truncate">
++            <Mail className="h-3 w-3 flex-shrink-0" />
++            <span className="truncate">{lead.email}</span>
++          </a>
++        )}
++
++        {lead.zona && (
++          <div className="flex items-center gap-1 text-muted-foreground">
++            <MapPin className="h-3 w-3" />
++            {lead.zona}
++          </div>
++        )}
++
++        {lead.num_pisos > 1 && (
++          <div className="text-muted-foreground">{lead.num_pisos} pisos</div>
++        )}
++
++        {lead.proximo_seguimiento && (
++          <div className="flex items-center gap-1 text-orange-600">
++            <Calendar className="h-3 w-3" />
++            {new Date(lead.proximo_seguimiento).toLocaleDateString("es-ES")}
++          </div>
++        )}
++
++        <div className="flex gap-1 pt-1">
++          {nextEstado && (
++            <Button
++              size="sm"
++              variant="outline"
++              className="h-6 text-[10px] px-2 flex-1"
++              onClick={() => onChangeEstado(lead.id, nextEstado)}
++            >
++              → {CRM_ESTADOS.find((e) => e.value === nextEstado)?.label}
++            </Button>
++          )}
++          <Button
++            size="sm"
++            variant="ghost"
++            className="h-6 w-6 p-0"
++            onClick={() => onAddNota(lead)}
++            title="Anadir nota"
++          >
++            <StickyNote className="h-3 w-3" />
++          </Button>
++        </div>
++      </CardContent>
++    </Card>
++  );
++}
++
++function getNextEstado(current: CRMEstado): CRMEstado | null {
++  const flow: Record<CRMEstado, CRMEstado | null> = {
++    nuevo: "contactado",
++    contactado: "interesado",
++    interesado: "reunion",
++    reunion: "publicado",
++    publicado: null,
++    rechazado: null,
++  };
++  return flow[current];
++}
++
++export default CRM;
+diff --git a/src/pages/landlord/QuickOnboarding.tsx b/src/pages/landlord/QuickOnboarding.tsx
+new file mode 100644
+index 0000000..b3abeee
+--- /dev/null
++++ b/src/pages/landlord/QuickOnboarding.tsx
+@@ -0,0 +1,370 @@
++import { useState } from "react";
++import { useNavigate, useSearchParams } from "react-router-dom";
++import Layout from "@/components/layout/Layout";
++import { SEOHead } from "@/components/seo/SEOHead";
++import { Button } from "@/components/ui/button";
++import { Input } from "@/components/ui/input";
++import { Label } from "@/components/ui/label";
++import { Textarea } from "@/components/ui/textarea";
++import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
++import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
++import { Progress } from "@/components/ui/progress";
++import { ArrowRight, ArrowLeft, CheckCircle, Home, User } from "lucide-react";
++import { useAuth } from "@/contexts/AuthContext";
++import { supabase } from "@/integrations/supabase/client";
++import { toast } from "sonner";
++
++const ZONAS = [
++  "Delicias", "Centro", "San Jose", "Universidad / Campus",
++  "Actur", "Romareda", "Las Fuentes", "La Almozara", "Torrero", "Otra",
++];
++
++const QuickOnboarding = () => {
++  const navigate = useNavigate();
++  const [searchParams] = useSearchParams();
++  const { user, signup } = useAuth();
++  const [step, setStep] = useState(user ? 2 : 1);
++  const [isSubmitting, setIsSubmitting] = useState(false);
++
++  // Step 1: Account
++  const [account, setAccount] = useState({
++    nombre: searchParams.get("nombre") || "",
++    email: searchParams.get("email") || "",
++    telefono: searchParams.get("telefono") || "",
++    password: "",
++  });
++
++  // Step 2: Listing
++  const [listing, setListing] = useState({
++    zona: searchParams.get("zona") || "",
++    property_type: "apartment",
++    bedrooms: "2",
++    price: searchParams.get("precio") || "",
++    title: "",
++    description: "",
++  });
++
++  const handleCreateAccount = async () => {
++    if (!account.nombre || !account.email || !account.password) {
++      toast.error("Nombre, email y contrasena son obligatorios");
++      return;
++    }
++    if (account.password.length < 6) {
++      toast.error("La contrasena debe tener al menos 6 caracteres");
++      return;
++    }
++
++    setIsSubmitting(true);
++    try {
++      await signup(account.email, account.password, account.nombre, "landlord");
++      toast.success("Cuenta creada. Ahora publica tu piso.");
++      setStep(2);
++    } catch (err: any) {
++      toast.error(err.message || "Error al crear la cuenta");
++    } finally {
++      setIsSubmitting(false);
++    }
++  };
++
++  const handlePublishListing = async () => {
++    if (!listing.price || !listing.zona) {
++      toast.error("Precio y zona son obligatorios");
++      return;
++    }
++
++    const currentUser = user;
++    if (!currentUser) {
++      toast.error("Debes crear una cuenta primero");
++      setStep(1);
++      return;
++    }
++
++    setIsSubmitting(true);
++    try {
++      const autoTitle = listing.title ||
++        `${listing.property_type === "room" ? "Habitacion" : listing.property_type === "studio" ? "Estudio" : "Piso"} en ${listing.zona}`;
++
++      const { error } = await (supabase as any).from("listings").insert({
++        landlord_id: currentUser.id,
++        title: autoTitle,
++        description: listing.description || "",
++        address: listing.zona,
++        neighborhood: listing.zona,
++        city: "Zaragoza",
++        price: parseFloat(listing.price),
++        available_from: "2026-09-01",
++        property_type: listing.property_type,
++        bedrooms: parseInt(listing.bedrooms) || 2,
++        bathrooms: 1,
++        is_furnished: true,
++        has_wifi: true,
++        has_heating: true,
++        has_elevator: false,
++        has_ac: false,
++        has_parking: false,
++        allows_pets: false,
++        has_washing_machine: false,
++        utilities_included: false,
++        images: [],
++        is_active: true,
++        source: "quick_onboarding",
++      });
++
++      if (error) throw error;
++
++      toast.success("Piso publicado!");
++      setStep(3);
++    } catch (err: any) {
++      toast.error(err.message || "Error al publicar");
++    } finally {
++      setIsSubmitting(false);
++    }
++  };
++
++  return (
++    <Layout>
++      <SEOHead
++        title="Publica tu piso en 2 minutos | Livix"
++        description="Crea tu cuenta y publica tu piso para estudiantes en Zaragoza en menos de 2 minutos."
++      />
++
++      <div className="container mx-auto px-4 py-8 md:py-12">
++        <div className="max-w-lg mx-auto">
++          {/* Progress */}
++          <div className="mb-8">
++            <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
++              <span>{step >= 3 ? "Completado" : `Paso ${step} de 2`}</span>
++              <span>{step >= 3 ? "100" : step === 1 ? "0" : "50"}%</span>
++            </div>
++            <Progress value={step >= 3 ? 100 : step === 1 ? 0 : 50} />
++          </div>
++
++          {/* Step 1: Create Account */}
++          {step === 1 && (
++            <Card>
++              <CardHeader>
++                <div className="flex items-center gap-3">
++                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
++                    <User className="h-5 w-5 text-primary" />
++                  </div>
++                  <div>
++                    <CardTitle>Crea tu cuenta</CardTitle>
++                    <CardDescription>30 segundos. Solo necesitamos lo basico.</CardDescription>
++                  </div>
++                </div>
++              </CardHeader>
++              <CardContent className="space-y-4">
++                <div>
++                  <Label htmlFor="nombre">Nombre *</Label>
++                  <Input
++                    id="nombre"
++                    placeholder="Tu nombre"
++                    value={account.nombre}
++                    onChange={(e) => setAccount({ ...account, nombre: e.target.value })}
++                    required
++                  />
++                </div>
++                <div>
++                  <Label htmlFor="email">Email *</Label>
++                  <Input
++                    id="email"
++                    type="email"
++                    placeholder="tu@email.com"
++                    value={account.email}
++                    onChange={(e) => setAccount({ ...account, email: e.target.value })}
++                    required
++                  />
++                </div>
++                <div>
++                  <Label htmlFor="telefono">Telefono</Label>
++                  <Input
++                    id="telefono"
++                    type="tel"
++                    placeholder="600 123 456"
++                    value={account.telefono}
++                    onChange={(e) => setAccount({ ...account, telefono: e.target.value })}
++                  />
++                </div>
++                <div>
++                  <Label htmlFor="password">Contrasena *</Label>
++                  <Input
++                    id="password"
++                    type="password"
++                    placeholder="Minimo 6 caracteres"
++                    value={account.password}
++                    onChange={(e) => setAccount({ ...account, password: e.target.value })}
++                    required
++                  />
++                </div>
++                <Button
++                  className="w-full"
++                  size="lg"
++                  onClick={handleCreateAccount}
++                  disabled={isSubmitting}
++                >
++                  {isSubmitting ? "Creando cuenta..." : "Continuar"}
++                  {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
++                </Button>
++                <p className="text-xs text-muted-foreground text-center">
++                  Ya tienes cuenta?{" "}
++                  <a href="/login?redirect=/ll/quick-onboarding" className="text-primary hover:underline">
++                    Inicia sesion
++                  </a>
++                </p>
++              </CardContent>
++            </Card>
++          )}
++
++          {/* Step 2: Listing Details */}
++          {step === 2 && (
++            <Card>
++              <CardHeader>
++                <div className="flex items-center gap-3">
++                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
++                    <Home className="h-5 w-5 text-primary" />
++                  </div>
++                  <div>
++                    <CardTitle>Datos de tu piso</CardTitle>
++                    <CardDescription>Lo minimo para publicar. Puedes completar despues.</CardDescription>
++                  </div>
++                </div>
++              </CardHeader>
++              <CardContent className="space-y-4">
++                <div>
++                  <Label>Zona *</Label>
++                  <Select
++                    value={listing.zona}
++                    onValueChange={(v) => setListing({ ...listing, zona: v })}
++                  >
++                    <SelectTrigger>
++                      <SelectValue placeholder="Selecciona zona" />
++                    </SelectTrigger>
++                    <SelectContent>
++                      {ZONAS.map((z) => (
++                        <SelectItem key={z} value={z}>{z}</SelectItem>
++                      ))}
++                    </SelectContent>
++                  </Select>
++                </div>
++
++                <div className="grid grid-cols-3 gap-3">
++                  <div>
++                    <Label>Tipo</Label>
++                    <Select
++                      value={listing.property_type}
++                      onValueChange={(v) => setListing({ ...listing, property_type: v })}
++                    >
++                      <SelectTrigger>
++                        <SelectValue />
++                      </SelectTrigger>
++                      <SelectContent>
++                        <SelectItem value="apartment">Piso</SelectItem>
++                        <SelectItem value="room">Habitacion</SelectItem>
++                        <SelectItem value="studio">Estudio</SelectItem>
++                      </SelectContent>
++                    </Select>
++                  </div>
++                  <div>
++                    <Label>Habitaciones</Label>
++                    <Select
++                      value={listing.bedrooms}
++                      onValueChange={(v) => setListing({ ...listing, bedrooms: v })}
++                    >
++                      <SelectTrigger>
++                        <SelectValue />
++                      </SelectTrigger>
++                      <SelectContent>
++                        {["1", "2", "3", "4", "5"].map((n) => (
++                          <SelectItem key={n} value={n}>{n}</SelectItem>
++                        ))}
++                      </SelectContent>
++                    </Select>
++                  </div>
++                  <div>
++                    <Label>Precio/mes *</Label>
++                    <Input
++                      type="number"
++                      placeholder="400"
++                      min="0"
++                      value={listing.price}
++                      onChange={(e) => setListing({ ...listing, price: e.target.value })}
++                      required
++                    />
++                  </div>
++                </div>
++
++                <div>
++                  <Label>Titulo (opcional)</Label>
++                  <Input
++                    placeholder="Se genera automaticamente si lo dejas vacio"
++                    value={listing.title}
++                    onChange={(e) => setListing({ ...listing, title: e.target.value })}
++                  />
++                </div>
++
++                <div>
++                  <Label>Descripcion (opcional)</Label>
++                  <Textarea
++                    rows={3}
++                    placeholder="Algo sobre tu piso: reformado, luminoso, cerca del tranvia..."
++                    value={listing.description}
++                    onChange={(e) => setListing({ ...listing, description: e.target.value })}
++                  />
++                </div>
++
++                <div className="flex gap-3">
++                  <Button
++                    variant="outline"
++                    onClick={() => setStep(1)}
++                    disabled={!!user}
++                  >
++                    <ArrowLeft className="mr-2 h-4 w-4" />
++                    Atras
++                  </Button>
++                  <Button
++                    className="flex-1"
++                    size="lg"
++                    onClick={handlePublishListing}
++                    disabled={isSubmitting}
++                  >
++                    {isSubmitting ? "Publicando..." : "Publicar piso"}
++                    {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
++                  </Button>
++                </div>
++
++                <p className="text-xs text-muted-foreground text-center">
++                  Puedes anadir fotos y mas detalles despues desde tu panel.
++                </p>
++              </CardContent>
++            </Card>
++          )}
++
++          {/* Step 3: Success */}
++          {step === 3 && (
++            <Card className="border-primary/20">
++              <CardContent className="p-8 text-center">
++                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mx-auto">
++                  <CheckCircle className="h-8 w-8 text-green-600" />
++                </div>
++                <h3 className="text-xl font-bold text-foreground mb-2">Piso publicado!</h3>
++                <p className="text-muted-foreground mb-6">
++                  Tu piso ya esta visible para estudiantes. Anade fotos desde tu panel para recibir mas solicitudes.
++                </p>
++                <div className="flex flex-col gap-3">
++                  <Button onClick={() => navigate("/ll/listings")} size="lg">
++                    Ir a mi panel
++                  </Button>
++                  <Button variant="outline" onClick={() => { setStep(2); setListing({ ...listing, title: "", description: "", price: "" }); }}>
++                    Publicar otro piso
++                  </Button>
++                </div>
++              </CardContent>
++            </Card>
++          )}
++        </div>
++      </div>
++    </Layout>
++  );
++};
++
++export default QuickOnboarding;
+diff --git a/src/pages/seo/AlquilarBarrio.tsx b/src/pages/seo/AlquilarBarrio.tsx
+new file mode 100644
+index 0000000..9027456
+--- /dev/null
++++ b/src/pages/seo/AlquilarBarrio.tsx
+@@ -0,0 +1,482 @@
++import { useState } from "react";
++import { useParams, Navigate, Link } from "react-router-dom";
++import Layout from "@/components/layout/Layout";
++import { SEOHead } from "@/components/seo/SEOHead";
++import { BreadcrumbSEO } from "@/components/seo/BreadcrumbSEO";
++import { Button } from "@/components/ui/button";
++import { Card, CardContent } from "@/components/ui/card";
++import { Input } from "@/components/ui/input";
++import { Label } from "@/components/ui/label";
++import { Checkbox } from "@/components/ui/checkbox";
++import { Badge } from "@/components/ui/badge";
++import DOMPurify from "dompurify";
++import {
++  Euro,
++  Home,
++  TrendingUp,
++  GraduationCap,
++  ArrowRight,
++  CheckCircle,
++  ChevronDown,
++  Phone,
++} from "lucide-react";
++import { supabase } from "@/integrations/supabase/client";
++import { toast } from "sonner";
++import {
++  getBarrioPropietario,
++  getAllBarriosPropietarios,
++} from "@/data/seo/barriosPropietarios";
++
++const SANITIZE_CONFIG = {
++  ALLOWED_TAGS: ["p", "strong", "em", "ul", "ol", "li", "a", "h3", "br"],
++  ALLOWED_ATTR: ["href", "title", "target", "rel"],
++};
++
++const AlquilarBarrio = () => {
++  const { barrio } = useParams<{ barrio: string }>();
++  const data = getBarrioPropietario(barrio || "");
++
++  const [isSubmitting, setIsSubmitting] = useState(false);
++  const [submitted, setSubmitted] = useState(false);
++  const [form, setForm] = useState({
++    nombre: "",
++    email: "",
++    telefono: "",
++    habitaciones: "",
++    precio_orientativo: "",
++    acepta_comunicaciones: false,
++  });
++
++  if (!data) {
++    return <Navigate to="/404" replace />;
++  }
++
++  const handleSubmit = async (e: React.FormEvent) => {
++    e.preventDefault();
++    if (!form.nombre || !form.telefono) {
++      toast.error("Nombre y telefono son obligatorios");
++      return;
++    }
++    if (!form.acepta_comunicaciones) {
++      toast.error("Debes aceptar recibir comunicaciones");
++      return;
++    }
++
++    setIsSubmitting(true);
++    try {
++      const { error } = await (supabase as any)
++        .from("landlord_leads")
++        .insert({
++          nombre: form.nombre,
++          email: form.email || null,
++          telefono: form.telefono,
++          zona: data.name,
++          habitaciones: form.habitaciones
++            ? parseInt(form.habitaciones)
++            : null,
++          precio_orientativo: form.precio_orientativo
++            ? parseInt(form.precio_orientativo)
++            : null,
++        });
++      if (error) throw error;
++      setSubmitted(true);
++      toast.success("Datos recibidos. Te contactamos en menos de 24 horas.");
++    } catch {
++      toast.error("Error al enviar. Intentalo de nuevo.");
++    } finally {
++      setIsSubmitting(false);
++    }
++  };
++
++  const otherBarrios = getAllBarriosPropietarios().filter(
++    (b) => b.slug !== barrio
++  );
++
++  const structuredData = [
++    {
++      "@context": "https://schema.org",
++      "@type": "WebPage",
++      name: data.title,
++      description: data.metaDescription,
++      url: `https://livix.es/alquilar-piso-estudiantes/${data.slug}`,
++    },
++    ...(data.faqs.length
++      ? [
++          {
++            "@context": "https://schema.org",
++            "@type": "FAQPage",
++            mainEntity: data.faqs.map((faq) => ({
++              "@type": "Question",
++              name: faq.question,
++              acceptedAnswer: {
++                "@type": "Answer",
++                text: faq.answer,
++              },
++            })),
++          },
++        ]
++      : []),
++  ];
++
++  return (
++    <Layout>
++      <SEOHead
++        title={data.title}
++        description={data.metaDescription}
++        canonical={`https://livix.es/alquilar-piso-estudiantes/${data.slug}`}
++        structuredData={structuredData}
++      />
++
++      {/* Hero */}
++      <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary via-primary/95 to-primary/85">
++        <div className="container mx-auto px-4 relative z-10">
++          <div className="max-w-3xl mx-auto text-center text-white">
++            <BreadcrumbSEO
++              items={[
++                { label: "Inicio", path: "/" },
++                { label: "Propietarios", path: "/propietarios" },
++                {
++                  label: data.name,
++                  path: `/alquilar-piso-estudiantes/${data.slug}`,
++                },
++              ]}
++            />
++
++            <h1 className="text-3xl md:text-5xl font-bold font-poppins mb-4 mt-6 leading-tight">
++              {data.h1}
++            </h1>
++
++            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
++              {data.demandText}
++            </p>
++
++            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-xl mx-auto">
++              <div>
++                <div className="text-xl md:text-2xl font-bold">
++                  {data.avgRent}
++                </div>
++                <div className="text-xs text-white/80">Piso completo</div>
++              </div>
++              <div>
++                <div className="text-xl md:text-2xl font-bold">
++                  {data.avgRentRoom}
++                </div>
++                <div className="text-xs text-white/80">Por habitacion</div>
++              </div>
++              <div>
++                <div className="text-xl md:text-2xl font-bold">
++                  {data.occupancyRate}
++                </div>
++                <div className="text-xs text-white/80">Ocupacion</div>
++              </div>
++              <div>
++                <div className="text-xl md:text-2xl font-bold">0EUR</div>
++                <div className="text-xs text-white/80">Coste Livix</div>
++              </div>
++            </div>
++
++            <Button
++              size="lg"
++              className="mt-8 bg-white text-primary hover:bg-white/90"
++              onClick={() =>
++                document
++                  .getElementById("formulario")
++                  ?.scrollIntoView({ behavior: "smooth" })
++              }
++            >
++              Quiero alquilar mi piso
++              <ArrowRight className="ml-2 h-4 w-4" />
++            </Button>
++          </div>
++        </div>
++      </section>
++
++      {/* Datos de la zona */}
++      <section className="py-12 md:py-16 bg-background">
++        <div className="container mx-auto px-4 max-w-4xl">
++          <div className="grid md:grid-cols-4 gap-4 mb-10">
++            <Card className="border-0 bg-surface-elevated">
++              <CardContent className="p-5 text-center">
++                <Euro className="h-6 w-6 text-primary mx-auto mb-2" />
++                <div className="text-xs text-muted-foreground">
++                  Precio medio
++                </div>
++                <div className="font-bold">{data.avgRent}</div>
++              </CardContent>
++            </Card>
++            <Card className="border-0 bg-surface-elevated">
++              <CardContent className="p-5 text-center">
++                <Home className="h-6 w-6 text-primary mx-auto mb-2" />
++                <div className="text-xs text-muted-foreground">
++                  Por habitacion
++                </div>
++                <div className="font-bold">{data.avgRentRoom}</div>
++              </CardContent>
++            </Card>
++            <Card className="border-0 bg-surface-elevated">
++              <CardContent className="p-5 text-center">
++                <TrendingUp className="h-6 w-6 text-primary mx-auto mb-2" />
++                <div className="text-xs text-muted-foreground">Ocupacion</div>
++                <div className="font-bold">{data.occupancyRate}</div>
++              </CardContent>
++            </Card>
++            <Card className="border-0 bg-surface-elevated">
++              <CardContent className="p-5 text-center">
++                <GraduationCap className="h-6 w-6 text-primary mx-auto mb-2" />
++                <div className="text-xs text-muted-foreground">Demanda</div>
++                <div className="font-bold text-sm">{data.studentDemand}</div>
++              </CardContent>
++            </Card>
++          </div>
++
++          {/* Universidades cercanas */}
++          <div className="bg-muted/20 rounded-xl p-6 mb-10">
++            <h2 className="font-semibold mb-3 flex items-center gap-2">
++              <GraduationCap className="h-5 w-5 text-primary" />
++              Universidades cercanas a {data.name}
++            </h2>
++            <ul className="space-y-2">
++              {data.nearbyUnis.map((uni, i) => (
++                <li
++                  key={i}
++                  className="text-sm text-muted-foreground flex items-start gap-2"
++                >
++                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
++                  {uni}
++                </li>
++              ))}
++            </ul>
++          </div>
++
++          {/* Texto SEO */}
++          <div
++            className="prose prose-neutral max-w-none mb-10"
++            dangerouslySetInnerHTML={{
++              __html: DOMPurify.sanitize(data.whyRentHere, SANITIZE_CONFIG),
++            }}
++          />
++        </div>
++      </section>
++
++      {/* Formulario inline */}
++      <section className="py-12 md:py-16 bg-muted/30" id="formulario">
++        <div className="container mx-auto px-4">
++          <div className="max-w-lg mx-auto">
++            <div className="text-center mb-8">
++              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
++                Alquila tu piso en {data.name}
++              </h2>
++              <p className="text-muted-foreground">
++                Dejanos tus datos y te contactamos en menos de 24 horas. Sin
++                compromiso.
++              </p>
++            </div>
++
++            {submitted ? (
++              <Card className="border-primary/20">
++                <CardContent className="p-8 text-center">
++                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mx-auto">
++                    <CheckCircle className="h-8 w-8 text-green-600" />
++                  </div>
++                  <h3 className="text-xl font-bold text-foreground mb-2">
++                    Datos recibidos
++                  </h3>
++                  <p className="text-muted-foreground mb-4">
++                    Te contactamos en menos de 24 horas para hablar sobre tu
++                    piso en {data.name}.
++                  </p>
++                  <Button
++                    className="w-full mb-3"
++                    size="lg"
++                    onClick={() => {
++                      const params = new URLSearchParams();
++                      if (form.nombre) params.set("nombre", form.nombre);
++                      if (form.email) params.set("email", form.email);
++                      if (form.telefono)
++                        params.set("telefono", form.telefono);
++                      params.set("zona", data.name);
++                      if (form.precio_orientativo)
++                        params.set("precio", form.precio_orientativo);
++                      window.location.href = `/ll/quick-onboarding?${params.toString()}`;
++                    }}
++                  >
++                    Publicar mi piso ahora
++                    <ArrowRight className="ml-2 h-4 w-4" />
++                  </Button>
++                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
++                    <Phone className="h-4 w-4" />
++                    <span>O espera y te contactamos nosotros</span>
++                  </div>
++                </CardContent>
++              </Card>
++            ) : (
++              <Card>
++                <CardContent className="p-6 md:p-8">
++                  <form onSubmit={handleSubmit} className="space-y-5">
++                    <div>
++                      <Label htmlFor="nombre">Nombre completo *</Label>
++                      <Input
++                        id="nombre"
++                        placeholder="Tu nombre"
++                        value={form.nombre}
++                        onChange={(e) =>
++                          setForm({ ...form, nombre: e.target.value })
++                        }
++                        required
++                      />
++                    </div>
++                    <div>
++                      <Label htmlFor="telefono">Telefono *</Label>
++                      <Input
++                        id="telefono"
++                        type="tel"
++                        placeholder="600 123 456"
++                        value={form.telefono}
++                        onChange={(e) =>
++                          setForm({ ...form, telefono: e.target.value })
++                        }
++                        required
++                      />
++                    </div>
++                    <div>
++                      <Label htmlFor="email">Email</Label>
++                      <Input
++                        id="email"
++                        type="email"
++                        placeholder="tu@email.com"
++                        value={form.email}
++                        onChange={(e) =>
++                          setForm({ ...form, email: e.target.value })
++                        }
++                      />
++                    </div>
++                    <div className="grid grid-cols-2 gap-4">
++                      <div>
++                        <Label htmlFor="habitaciones">Habitaciones</Label>
++                        <Input
++                          id="habitaciones"
++                          type="number"
++                          placeholder="3"
++                          min="1"
++                          max="10"
++                          value={form.habitaciones}
++                          onChange={(e) =>
++                            setForm({ ...form, habitaciones: e.target.value })
++                          }
++                        />
++                      </div>
++                      <div>
++                        <Label htmlFor="precio">Precio orient. (EUR/mes)</Label>
++                        <Input
++                          id="precio"
++                          type="number"
++                          placeholder="400"
++                          min="0"
++                          value={form.precio_orientativo}
++                          onChange={(e) =>
++                            setForm({
++                              ...form,
++                              precio_orientativo: e.target.value,
++                            })
++                          }
++                        />
++                      </div>
++                    </div>
++                    <div className="flex items-start gap-2 pt-2">
++                      <Checkbox
++                        id="acepta"
++                        checked={form.acepta_comunicaciones}
++                        onCheckedChange={(checked) =>
++                          setForm({
++                            ...form,
++                            acepta_comunicaciones: checked === true,
++                          })
++                        }
++                      />
++                      <Label
++                        htmlFor="acepta"
++                        className="text-xs text-muted-foreground leading-tight cursor-pointer"
++                      >
++                        Acepto que Livix me contacte para informarme sobre el
++                        servicio. Puedo darme de baja en cualquier momento.
++                      </Label>
++                    </div>
++                    <Button
++                      type="submit"
++                      size="lg"
++                      className="w-full"
++                      disabled={isSubmitting}
++                    >
++                      {isSubmitting
++                        ? "Enviando..."
++                        : "Quiero que me contacteis"}
++                      {!isSubmitting && (
++                        <ArrowRight className="ml-2 h-4 w-4" />
++                      )}
++                    </Button>
++                  </form>
++                </CardContent>
++              </Card>
++            )}
++          </div>
++        </div>
++      </section>
++
++      {/* FAQs */}
++      {data.faqs.length > 0 && (
++        <section className="py-12 md:py-16 bg-background">
++          <div className="container mx-auto px-4 max-w-2xl">
++            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
++              Preguntas frecuentes sobre alquilar en {data.name}
++            </h2>
++            <div className="space-y-4">
++              {data.faqs.map((faq, i) => (
++                <details key={i} className="group">
++                  <summary className="flex items-center justify-between cursor-pointer p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
++                    <span className="font-medium text-foreground text-sm md:text-base">
++                      {faq.question}
++                    </span>
++                    <ChevronDown className="h-4 w-4 text-muted-foreground group-open:rotate-180 transition-transform" />
++                  </summary>
++                  <p className="px-4 pb-4 pt-2 text-sm text-muted-foreground leading-relaxed">
++                    {faq.answer}
++                  </p>
++                </details>
++              ))}
++            </div>
++          </div>
++        </section>
++      )}
++
++      {/* Otros barrios */}
++      {otherBarrios.length > 0 && (
++        <section className="py-8 bg-muted/20 border-t">
++          <div className="container mx-auto px-4">
++            <h3 className="font-semibold mb-4 text-center">
++              Alquilar en otros barrios de Zaragoza
++            </h3>
++            <div className="flex flex-wrap justify-center gap-2">
++              {otherBarrios.map((b) => (
++                <Link
++                  key={b.slug}
++                  to={`/alquilar-piso-estudiantes/${b.slug}`}
++                >
++                  <Button variant="ghost" size="sm">
++                    {b.name}
++                  </Button>
++                </Link>
++              ))}
++              <Link to="/propietarios">
++                <Button variant="outline" size="sm">
++                  Ver todas las zonas
++                </Button>
++              </Link>
++            </div>
++          </div>
++        </section>
++      )}
++    </Layout>
++  );
++};
++
++export default AlquilarBarrio;
+diff --git a/src/utils/isDemo.ts b/src/utils/isDemo.ts
+new file mode 100644
+index 0000000..2f18519
+--- /dev/null
++++ b/src/utils/isDemo.ts
+@@ -0,0 +1,39 @@
++/**
++ * Utility to detect if the application is running in "Demo Mode" (mock data enabled).
++ * 
++ * Demo Mode is active if:
++ * 1. Current hostname is a known demo/mock subdomain.
++ * 2. Current environment is development (localhost).
++ * 3. Vercel deployment branch contains "demo".
++ */
++export const isDemoMode = (): boolean => {
++  if (typeof window === 'undefined') return false;
++
++  const hostname = window.location.hostname;
++  
++  // Known demo subdomains
++  const demoDomains = [
++    'demo.livix.es',
++    'mock.livix.es',
++    'admin-demo.livix.es',
++  ];
++
++  if (demoDomains.includes(hostname)) return true;
++
++  // Local development
++  if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
++
++  // Vercel preview deployments for branch 'demo'
++  // Pattern: livix-main-git-demo-username.vercel.app
++  if (hostname.includes('-git-demo-') || hostname.includes('.vercel.app') && hostname.startsWith('demo-')) {
++    return true;
++  }
++
++  // Check URL params for manual override (useful for specific tests)
++  const urlParams = new URLSearchParams(window.location.search);
++  if (urlParams.get('demo') === 'true') return true;
++
++  return false;
++};
++
++export default isDemoMode;
+diff --git a/supabase/functions/notify-new-lead/index.ts b/supabase/functions/notify-new-lead/index.ts
+new file mode 100644
+index 0000000..1f27e53
+--- /dev/null
++++ b/supabase/functions/notify-new-lead/index.ts
+@@ -0,0 +1,132 @@
++import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
++
++/**
++ * Edge Function: notify-new-lead
++ *
++ * Triggered by a Supabase Database Webhook on INSERT to landlord_leads.
++ * Sends an email notification to the Livix team when a new landlord lead comes in.
++ *
++ * Setup:
++ * 1. Deploy this function: supabase functions deploy notify-new-lead
++ * 2. Create a Database Webhook in Supabase Dashboard:
++ *    - Table: landlord_leads
++ *    - Events: INSERT
++ *    - Type: Supabase Edge Function
++ *    - Function: notify-new-lead
++ * 3. Set env var NOTIFY_EMAIL (defaults to the hardcoded email below)
++ */
++
++const NOTIFY_EMAIL = Deno.env.get("NOTIFY_EMAIL") || "asier@livix.es";
++
++interface WebhookPayload {
++  type: "INSERT";
++  table: string;
++  record: {
++    id: string;
++    nombre: string;
++    email: string | null;
++    telefono: string;
++    zona: string | null;
++    habitaciones: number | null;
++    precio_orientativo: number | null;
++    created_at: string;
++  };
++  schema: string;
++}
++
++Deno.serve(async (req) => {
++  // This function is called by Supabase Database Webhooks (server-to-server)
++  // No CORS needed, no auth header needed (webhook secret handles auth)
++
++  if (req.method !== "POST") {
++    return new Response("Method not allowed", { status: 405 });
++  }
++
++  try {
++    const payload: WebhookPayload = await req.json();
++
++    if (payload.type !== "INSERT" || payload.table !== "landlord_leads") {
++      return new Response("Ignored: not a landlord_leads INSERT", { status: 200 });
++    }
++
++    const lead = payload.record;
++
++    // Build notification message
++    const subject = `Nuevo lead propietario: ${lead.nombre}`;
++    const body = [
++      `Nombre: ${lead.nombre}`,
++      `Telefono: ${lead.telefono}`,
++      lead.email ? `Email: ${lead.email}` : null,
++      lead.zona ? `Zona: ${lead.zona}` : null,
++      lead.habitaciones ? `Habitaciones: ${lead.habitaciones}` : null,
++      lead.precio_orientativo ? `Precio orientativo: ${lead.precio_orientativo} EUR/mes` : null,
++      ``,
++      `Fecha: ${new Date(lead.created_at).toLocaleString("es-ES", { timeZone: "Europe/Madrid" })}`,
++      ``,
++      `Responde en <1h para maximizar conversion.`,
++    ]
++      .filter(Boolean)
++      .join("\n");
++
++    // Option 1: Use Supabase's built-in email (via auth admin)
++    // Option 2: Use a third-party email service
++    // Option 3: Log to console (for now) + insert into a notifications table
++
++    // For now: log the notification and insert into a simple log table
++    // This can be upgraded to email/WhatsApp later
++    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
++    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
++    const supabase = createClient(supabaseUrl, supabaseKey);
++
++    // Log the notification
++    console.log(`=== NEW LEAD NOTIFICATION ===`);
++    console.log(`To: ${NOTIFY_EMAIL}`);
++    console.log(`Subject: ${subject}`);
++    console.log(body);
++    console.log(`=============================`);
++
++    // Try to send email via Supabase Auth (admin API)
++    // This sends a "magic link" style email - not ideal but works as a notification
++    // For production: integrate with Resend, SendGrid, or similar
++    try {
++      const resendKey = Deno.env.get("RESEND_API_KEY");
++      if (resendKey) {
++        // If Resend is configured, send a proper email
++        const emailRes = await fetch("https://api.resend.com/emails", {
++          method: "POST",
++          headers: {
++            "Authorization": `Bearer ${resendKey}`,
++            "Content-Type": "application/json",
++          },
++          body: JSON.stringify({
++            from: "Livix <notificaciones@livix.es>",
++            to: [NOTIFY_EMAIL],
++            subject: subject,
++            text: body,
++          }),
++        });
++
++        if (emailRes.ok) {
++          console.log("Email sent via Resend");
++        } else {
++          console.error("Resend error:", await emailRes.text());
++        }
++      } else {
++        console.log("RESEND_API_KEY not set — email not sent. Lead logged to console only.");
++      }
++    } catch (emailError) {
++      console.error("Email send failed:", emailError);
++    }
++
++    return new Response(
++      JSON.stringify({ success: true, lead_id: lead.id, notified: NOTIFY_EMAIL }),
++      { status: 200, headers: { "Content-Type": "application/json" } }
++    );
++  } catch (error) {
++    console.error("Error processing webhook:", error);
++    return new Response(
++      JSON.stringify({ error: "Internal server error" }),
++      { status: 500, headers: { "Content-Type": "application/json" } }
++    );
++  }
++});
+diff --git a/supabase/migrations/20260324000001_listings_source_fields.sql b/supabase/migrations/20260324000001_listings_source_fields.sql
+new file mode 100644
+index 0000000..6efd1e9
+--- /dev/null
++++ b/supabase/migrations/20260324000001_listings_source_fields.sql
+@@ -0,0 +1,12 @@
++-- Add source tracking fields to listings for seed content management
++ALTER TABLE listings ADD COLUMN IF NOT EXISTS source TEXT DEFAULT 'manual';
++ALTER TABLE listings ADD COLUMN IF NOT EXISTS is_seed BOOLEAN DEFAULT false;
++ALTER TABLE listings ADD COLUMN IF NOT EXISTS source_url TEXT;
++
++-- Add email to landlord_leads for automated follow-up sequences
++ALTER TABLE landlord_leads ADD COLUMN IF NOT EXISTS email TEXT;
++
++COMMENT ON COLUMN listings.source IS 'Origin of listing: manual, bulk_import, scraper, converted';
++COMMENT ON COLUMN listings.is_seed IS 'True if listing is seed content (not from a real registered landlord)';
++COMMENT ON COLUMN listings.source_url IS 'Original URL if listing was imported from an external portal';
++COMMENT ON COLUMN landlord_leads.email IS 'Email for automated follow-up sequences';
+diff --git a/supabase/migrations/20260324000002_crm_leads_table.sql b/supabase/migrations/20260324000002_crm_leads_table.sql
+new file mode 100644
+index 0000000..2bcb383
+--- /dev/null
++++ b/supabase/migrations/20260324000002_crm_leads_table.sql
+@@ -0,0 +1,54 @@
++-- CRM pipeline for tracking landlord/agency leads
++CREATE TABLE IF NOT EXISTS crm_leads (
++  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
++  nombre TEXT NOT NULL,
++  telefono TEXT,
++  email TEXT,
++  tipo TEXT NOT NULL DEFAULT 'particular' CHECK (tipo IN ('particular', 'agencia')),
++  ciudad TEXT DEFAULT 'Zaragoza',
++  zona TEXT,
++  num_pisos INTEGER DEFAULT 1,
++  precio_medio INTEGER,
++  fuente TEXT DEFAULT 'scraper' CHECK (fuente IN ('scraper', 'web', 'referido', 'linkedin', 'puerta_fria', 'otro')),
++  estado TEXT NOT NULL DEFAULT 'nuevo' CHECK (estado IN ('nuevo', 'contactado', 'interesado', 'reunion', 'publicado', 'rechazado')),
++  fecha_primer_contacto TIMESTAMPTZ,
++  fecha_ultimo_contacto TIMESTAMPTZ,
++  proximo_seguimiento DATE,
++  responsable TEXT DEFAULT 'Asier',
++  notas TEXT,
++  motivo_rechazo TEXT,
++  url_portal TEXT,
++  created_at TIMESTAMPTZ DEFAULT now(),
++  updated_at TIMESTAMPTZ DEFAULT now()
++);
++
++-- Enable RLS
++ALTER TABLE crm_leads ENABLE ROW LEVEL SECURITY;
++
++-- Only admins can access CRM
++CREATE POLICY "Admins can do everything on crm_leads"
++  ON crm_leads
++  FOR ALL
++  USING (
++    EXISTS (
++      SELECT 1 FROM user_roles
++      WHERE user_roles.user_id = auth.uid()
++      AND user_roles.role = 'admin'
++    )
++  );
++
++-- Auto-update updated_at
++CREATE OR REPLACE FUNCTION update_crm_leads_updated_at()
++RETURNS TRIGGER AS $$
++BEGIN
++  NEW.updated_at = now();
++  RETURN NEW;
++END;
++$$ LANGUAGE plpgsql;
++
++CREATE TRIGGER crm_leads_updated_at
++  BEFORE UPDATE ON crm_leads
++  FOR EACH ROW
++  EXECUTE FUNCTION update_crm_leads_updated_at();
++
++COMMENT ON TABLE crm_leads IS 'CRM pipeline for tracking landlord and agency outreach';
+diff --git a/supabase/migrations/20260328000001_city_interest_waitlist.sql b/supabase/migrations/20260328000001_city_interest_waitlist.sql
+new file mode 100644
+index 0000000..19a0f3a
+--- /dev/null
++++ b/supabase/migrations/20260328000001_city_interest_waitlist.sql
+@@ -0,0 +1,38 @@
++-- City interest waitlist for pre-launch cities
++CREATE TABLE IF NOT EXISTS public.city_interest_waitlist (
++    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
++    email text NOT NULL,
++    city_slug text NOT NULL,
++    user_type text NOT NULL DEFAULT 'student',
++    created_at timestamptz NOT NULL DEFAULT now(),
++    CONSTRAINT valid_user_type CHECK (user_type IN ('student', 'landlord'))
++);
++
++-- Index for querying by city
++CREATE INDEX idx_city_interest_city_slug ON public.city_interest_waitlist (city_slug);
++
++-- Unique constraint to prevent duplicate signups
++CREATE UNIQUE INDEX idx_city_interest_unique ON public.city_interest_waitlist (email, city_slug);
++
++-- RLS
++ALTER TABLE public.city_interest_waitlist ENABLE ROW LEVEL SECURITY;
++
++-- Anyone can insert (public waitlist signup)
++CREATE POLICY "Anyone can sign up for city waitlist"
++    ON public.city_interest_waitlist
++    FOR INSERT
++    TO anon, authenticated
++    WITH CHECK (true);
++
++-- Only admins can read
++CREATE POLICY "Admins can read waitlist"
++    ON public.city_interest_waitlist
++    FOR SELECT
++    TO authenticated
++    USING (
++        EXISTS (
++            SELECT 1 FROM public.user_roles
++            WHERE user_roles.user_id = auth.uid()
++            AND user_roles.role = 'admin'
++        )
++    );

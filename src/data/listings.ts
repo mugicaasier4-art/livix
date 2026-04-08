@@ -2,33 +2,10 @@ import apartment1 from "@/assets/apartment-1.jpg";
 import apartment2 from "@/assets/apartment-2.jpg";
 import apartment3 from "@/assets/apartment-3.jpg";
 
-export interface MockListing {
-  id: number;
-  image: string;
-  images?: string[];
-  title: string;
-  location: string;
-  price: number;
-  roommates: number;
-  distance: string;
-  verified: boolean;
-  amenities: string[];
-  matchScore: number;
-  coordinates: [number, number];
-  erasmusFriendly?: boolean;
-  contractLanguage?: string;
-  duration?: string;
-  responseTime?: string;
-  landlordLanguages?: string[];
-  faculty?: string[];
-  furnished?: boolean;
-  allInclusive?: boolean;
-  englishContract?: boolean;
-  flexibleDeposit?: boolean;
-  smokingAllowed?: boolean;
-  genderPreference?: 'any' | 'male' | 'female' | 'mixed';
-  areaSqm?: number;
-  roomAreaSqm?: number;
-}
+// MockListing interface is now imported from listings.mock
 
-export const zaragozaListings: MockListing[] = [];
+import { isDemoMode } from '@/utils/isDemo';
+import { mockListings, Listing } from './listings.mock';
+
+export type { Listing as MockListing };
+export const zaragozaListings: Listing[] = isDemoMode() ? mockListings : [];

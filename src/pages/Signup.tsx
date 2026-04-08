@@ -56,7 +56,7 @@ const Signup = () => {
 
   useEffect(() => {
     supabase
-      .from('profiles')
+      .from('user_roles')
       .select('*', { count: 'exact', head: true })
       .eq('role', 'student')
       .then(({ count }) => setStudentCount(count || 0));
@@ -104,6 +104,15 @@ const Signup = () => {
         navigate('/onboarding/student');
       }
     } catch (err) {
+      if (err instanceof Error && err.message === 'CONFIRM_EMAIL') {
+        toast.success('¡Revisa tu email!', {
+          description: 'Te hemos enviado un enlace de confirmación. Revisa tu bandeja de entrada.',
+          duration: 6000,
+        });
+        navigate('/login');
+        return;
+      }
+
       const errorMessage = err instanceof Error ? err.message : 'Error al crear la cuenta. Por favor, intenta de nuevo.';
 
       // Caso especial: email pendiente de confirmación
