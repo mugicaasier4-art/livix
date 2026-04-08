@@ -236,17 +236,6 @@ const Header = () => {
             </DropdownMenu>
           </nav>
 
-          {/* City Selector Button - Visible on tablet+ */}
-          <div className="hidden md:flex items-center">
-            <button
-              onClick={() => setCityChangerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-            >
-              <MapPin className="h-4 w-4" />
-              {selectedCity ? selectedCity.name : "Elige ciudad"}
-              <ChevronDown className="h-3 w-3" />
-            </button>
-          </div>
 
           {/* Auth Section - Visible on tablet+ */}
           <div className="hidden md:flex items-center space-x-2">
