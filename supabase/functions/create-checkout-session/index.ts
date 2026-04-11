@@ -16,8 +16,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": Deno.env.get("ALLOWED_ORIGIN") || "https://livix.es",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 Deno.serve(async (req) => {
@@ -86,17 +87,38 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    if (success_url && typeof success_url === "string" && !success_url.startsWith("https://")) {
-      return new Response(JSON.stringify({ error: "success_url must use HTTPS" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const ALLOWED_REDIRECT_DOMAINS = new Set(["livix.es", "www.livix.es", "checkout.stripe.com"]);
+    if (success_url && typeof success_url === "string") {
+      try {
+        const hostname = new URL(success_url).hostname;
+        if (!ALLOWED_REDIRECT_DOMAINS.has(hostname)) {
+          return new Response(JSON.stringify({ error: "success_url domain not allowed" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+      } catch {
+        return new Response(JSON.stringify({ error: "success_url is not a valid URL" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
-    if (cancel_url && typeof cancel_url === "string" && !cancel_url.startsWith("https://")) {
-      return new Response(JSON.stringify({ error: "cancel_url must use HTTPS" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (cancel_url && typeof cancel_url === "string") {
+      try {
+        const hostname = new URL(cancel_url).hostname;
+        if (!ALLOWED_REDIRECT_DOMAINS.has(hostname)) {
+          return new Response(JSON.stringify({ error: "cancel_url domain not allowed" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+      } catch {
+        return new Response(JSON.stringify({ error: "cancel_url is not a valid URL" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
     // Verify the caller is creating a session for themselves

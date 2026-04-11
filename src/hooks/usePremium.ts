@@ -117,8 +117,8 @@ export const usePremium = () => {
         // Validate redirect URL - only allow trusted domains
         try {
           const redirectUrl = new URL(data.url);
-          const trustedDomains = ['checkout.stripe.com', 'stripe.com', 'livix.es', 'www.livix.es', ...(import.meta.env.DEV ? ['localhost'] : [])];
-          if (trustedDomains.some(d => redirectUrl.hostname === d || redirectUrl.hostname.endsWith('.' + d))) {
+          const trustedDomains = new Set(['checkout.stripe.com', 'stripe.com', 'livix.es', 'www.livix.es', ...(import.meta.env.DEV ? ['localhost'] : [])]);
+          if (trustedDomains.has(redirectUrl.hostname)) {
             window.location.href = data.url;
           } else {
             console.error('Untrusted redirect URL blocked:', redirectUrl.hostname);
