@@ -103,19 +103,7 @@
     ],
     "rewrites": [
         {
-            "source": "/llms.txt",
-            "destination": "/llms.txt"
-        },
-        {
-            "source": "/robots.txt",
-            "destination": "/robots.txt"
-        },
-        {
-            "source": "/sitemap.xml",
-            "destination": "/sitemap.xml"
-        },
-        {
-            "source": "/(.*)",
+            "source": "/((?!llms\\.txt|robots\\.txt|sitemap\\.xml|image-sitemap\\.xml|manifest\\.json|favicon\\.png|logo\\.png|og-livix\\.jpg|a02d1f3919e649d59bfda0dd9ec318b1\\.txt).*)",
             "destination": "/index.html"
         }
     ]
