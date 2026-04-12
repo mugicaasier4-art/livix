@@ -48,14 +48,32 @@ const HabitacionesCity = () => {
             "item": {
                 "@type": "Accommodation",
                 "name": listing.title,
+                "url": `https://livix.es/listing/${listing.id}`,
                 "address": {
                     "@type": "PostalAddress",
                     "addressLocality": cityData.name,
+                    "addressRegion": "Aragon",
                     "addressCountry": "ES"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": listing.price,
+                    "priceCurrency": "EUR",
+                    "availability": "https://schema.org/InStock"
                 }
             }
         }))
     };
+
+    const aggregateOfferSchema = cityData.avgPrice ? {
+        "@context": "https://schema.org",
+        "@type": "AggregateOffer",
+        "name": `Habitaciones para estudiantes en ${cityData.name}`,
+        "lowPrice": 200,
+        "highPrice": 500,
+        "priceCurrency": "EUR",
+        "offerCount": filteredListings.length
+    } : null;
 
     const faqSchema = faqs.length > 0 ? {
         "@context": "https://schema.org",
@@ -70,7 +88,7 @@ const HabitacionesCity = () => {
         }))
     } : null;
 
-    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
+    const structuredData = [itemListSchema, aggregateOfferSchema, faqSchema].filter(Boolean);
 
     return (
         <Layout>

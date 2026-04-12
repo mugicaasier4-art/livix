@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { useCityOrDefault } from "@/contexts/CityContext";
 import DOMPurify from "dompurify";
 import Layout from "@/components/layout/Layout";
@@ -213,18 +214,20 @@ const BlogPost = () => {
       "@type": "WebPage",
       "@id": `https://livix.es/blog/${post.slug}`
     },
-    "author": [
-      {
-        "@type": "Person",
-        "name": "Equipo Editorial Livix",
-        "url": "https://livix.es/about"
-      },
-      {
+    "author": {
+      "@type": "Person",
+      "name": "Asier Mugica",
+      "url": "https://livix.es/about",
+      "jobTitle": "Fundador de Livix",
+      "description": "Fundador de Livix, marketplace de alojamiento universitario. Experto en proptech y vivienda estudiantil en Espana.",
+      "knowsAbout": ["alojamiento universitario", "proptech", "vivienda estudiantil"],
+      "sameAs": ["https://www.linkedin.com/in/asiermugica"],
+      "worksFor": {
         "@type": "Organization",
         "name": "Livix",
         "url": "https://livix.es"
       }
-    ],
+    },
     "publisher": {
       "@type": "Organization",
       "name": "Livix",
@@ -232,8 +235,71 @@ const BlogPost = () => {
         "@type": "ImageObject",
         "url": "https://livix.es/logo.png"
       }
+    },
+    "articleSection": categoryLabel,
+    "keywords": [post.category, "alojamiento estudiantes", "zaragoza", post.citySlug || "espana"].filter(Boolean),
+    "wordCount": post.content.split(/\s+/).length,
+    "inLanguage": "es",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", ".blog-excerpt"]
     }
   };
+
+  // BreadcrumbList schema for navigation
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://livix.es"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://livix.es/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": `https://livix.es/blog/${post.slug}`
+      }
+    ]
+  };
+
+  // Extract FAQ items from content (lines starting with ### that are questions)
+  const faqItems = post.content
+    .split('\n')
+    .filter(line => line.match(/^#{2,3}\s.*\?/))
+    .map(line => {
+      const question = line.replace(/^#{2,3}\s/, '').trim();
+      // Get the paragraph after the question heading
+      const idx = post.content.indexOf(line);
+      const afterQuestion = post.content.substring(idx + line.length).trim();
+      const answer = afterQuestion.split(/\n\n/)[0]?.replace(/^#+\s/gm, '').trim() || '';
+      return { question, answer };
+    })
+    .filter(item => item.answer.length > 20);
+
+  const faqSchema = faqItems.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  } : null;
+
+  const allSchemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
 
   return (
     <Layout>
@@ -242,8 +308,15 @@ const BlogPost = () => {
         description={post.excerpt}
         canonical={`https://livix.es/blog/${post.slug}`}
         ogType="article"
-        structuredData={articleSchema}
+        structuredData={allSchemas}
+        noIndex={post.noIndex}
       />
+      <Helmet>
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:modified_time" content={post.dateModified || post.date} />
+        <meta property="article:author" content="Asier Mugica" />
+        <meta property="article:section" content={categoryLabel} />
+      </Helmet>
       <div className="min-h-screen bg-background">
         {/* Hero Image */}
         <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden">

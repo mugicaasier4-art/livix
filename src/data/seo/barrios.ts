@@ -9,7 +9,11 @@ export interface BarrioSEO {
     transport: string[];
     nearbyLandmarks: string[];
     avgPrice: string;
+    avgPriceLow: number;
+    avgPriceHigh: number;
     studentRating: number; // 1-5
+    coordinates: { lat: number; lng: number };
+    distanceToCampus: { campus: string; campusSlug: string; time: string; mode: string }[];
     longDescription?: string;
     faqs?: { question: string; answer: string }[];
 }
@@ -34,7 +38,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "Centro histórico (10 min)"
         ],
         avgPrice: "250-350€/mes",
+        avgPriceLow: 250,
+        avgPriceHigh: 350,
         studentRating: 4.2,
+        coordinates: { lat: 41.6488, lng: -0.9029 },
+        distanceToCampus: [
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "20 min", mode: "tranvia" },
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "35 min", mode: "transporte publico" }
+        ],
         longDescription: `
             <p>El barrio de <strong>Delicias</strong> es, sin duda, el corazón multicultural de Zaragoza. Para los estudiantes, representa la opción inteligente: precios muy competitivos a solo 10-15 minutos andando de la universidad.</p>
             <p>La Calle Delicias es una de las arterias comerciales más vivas de la ciudad, donde encontrarás desde supermercados hasta tiendas locales. Además, la cercanía a la Estación Intermodal hace que sea perfecto si planeas viajar los fines de semana.</p>
@@ -64,7 +75,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "Centro Comercial Grancasa (15 min)"
         ],
         avgPrice: "280-380€/mes",
+        avgPriceLow: 280,
+        avgPriceHigh: 380,
         studentRating: 4.5,
+        coordinates: { lat: 41.6719, lng: -0.8879 },
+        distanceToCampus: [
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "10 min", mode: "a pie" },
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "25 min", mode: "tranvia" }
+        ],
         longDescription: `
             <p><strong>Actur</strong> (Actuaciones Urbanísticas Urgentes) es el barrio moderno por excelencia. Calles anchas, zonas verdes como el Parque del Agua y el centro comercial Grancasa definen esta zona.</p>
             <p>Es la "casa" de los ingenieros, ya que el Campus Río Ebro se encuentra en su extremo norte. Los pisos aquí son más nuevos, grandes y luminosos que en el centro.</p>
@@ -93,7 +111,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "El Tubo (zona de tapas)"
         ],
         avgPrice: "320-420€/mes",
+        avgPriceLow: 320,
+        avgPriceHigh: 420,
         studentRating: 4.7,
+        coordinates: { lat: 41.6560, lng: -0.8773 },
+        distanceToCampus: [
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "5-10 min", mode: "a pie" },
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "20-25 min", mode: "tranvia" }
+        ],
         longDescription: `
             <h3>Vivir en el centro de Zaragoza como estudiante</h3>
             <p>El <strong>centro histórico de Zaragoza</strong> es el corazón de la ciudad y una de las zonas más deseadas por los estudiantes universitarios, especialmente por quienes buscan tenerlo todo a un paso. Aquí se concentra la mayor parte de la vida cultural, gastronómica y de ocio de la capital aragonesa. La emblemática <strong>Plaza del Pilar</strong>, con la Basílica del Pilar y la catedral de La Seo, marca el epicentro de un casco histórico lleno de historia y encanto. La <strong>Calle Alfonso</strong>, principal arteria comercial, conecta la plaza con el Paseo de la Independencia, ofreciendo tiendas, cafeterías y servicios a cada paso. Y a escasos metros se encuentra <strong>El Tubo</strong>, la zona de bares y tapas más famosa de Zaragoza, donde podrás disfrutar de la gastronomía local con tus compañeros de piso.</p>
@@ -128,7 +153,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "Centro (15 min en bus)"
         ],
         avgPrice: "200-300€/mes",
+        avgPriceLow: 200,
+        avgPriceHigh: 300,
         studentRating: 3.8,
+        coordinates: { lat: 41.6498, lng: -0.8640 },
+        distanceToCampus: [
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "15 min", mode: "autobus" },
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "30 min", mode: "transporte publico" }
+        ],
         longDescription: `
             <h3>Las Fuentes: alojamiento económico para estudiantes en Zaragoza</h3>
             <p><strong>Las Fuentes</strong> es un barrio residencial situado al este del centro de Zaragoza, junto al río Ebro. Es una de las opciones más económicas para los estudiantes que buscan alojamiento en la ciudad, con precios que lo sitúan entre los barrios más asequibles de la capital aragonesa. Las habitaciones en piso compartido se encuentran en un rango de <strong>200-300€/mes</strong>, cifras difíciles de igualar en zonas más céntricas. El barrio cuenta con un ambiente tranquilo y familiar, perfecto para quienes prefieren un entorno sosegado donde poder estudiar sin distracciones.</p>
@@ -164,7 +196,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "Campus San Francisco (15 min)"
         ],
         avgPrice: "300-400€/mes",
+        avgPriceLow: 300,
+        avgPriceHigh: 400,
         studentRating: 4.3,
+        coordinates: { lat: 41.6408, lng: -0.8853 },
+        distanceToCampus: [
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "10-15 min", mode: "a pie o autobus" },
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "25 min", mode: "transporte publico" }
+        ],
         longDescription: `
             <h3>Romareda: calidad de vida para estudiantes en Zaragoza</h3>
             <p><strong>Romareda</strong> es uno de los barrios residenciales más valorados de Zaragoza, situado en la zona sur de la ciudad. Conocido por albergar el <strong>estadio de La Romareda</strong>, sede del Real Zaragoza, este barrio combina tranquilidad, seguridad y una excelente calidad de vida. Sus calles amplias y bien cuidadas, junto a la cercanía al <strong>Parque Grande José Antonio Labordeta</strong> —el pulmón verde de la ciudad—, hacen de Romareda un entorno ideal para estudiantes que buscan un ambiente sosegado donde poder concentrarse en sus estudios sin renunciar a los servicios urbanos.</p>
@@ -200,7 +239,14 @@ export const barrios: Record<string, BarrioSEO> = {
             "Mercado de San José"
         ],
         avgPrice: "250-350€/mes",
+        avgPriceLow: 250,
+        avgPriceHigh: 350,
         studentRating: 4.4,
+        coordinates: { lat: 41.6440, lng: -0.8825 },
+        distanceToCampus: [
+            { campus: "Campus San Francisco", campusSlug: "san-francisco", time: "5-10 min", mode: "a pie" },
+            { campus: "Campus Rio Ebro", campusSlug: "rio-ebro", time: "15 min", mode: "tranvia" }
+        ],
         longDescription: `
             <h3>San José: barrio universitario con carácter propio</h3>
             <p><strong>San José</strong> es un barrio popular situado al sur del centro de Zaragoza, con un marcado <strong>ambiente tradicional</strong> que lo diferencia de otras zonas de la ciudad. Sus calles conservan el espíritu de barrio de toda la vida: comercios de proximidad, panaderías, bares locales y un trato cercano entre vecinos. Para los estudiantes, San José representa una de las opciones con mejor <strong>relación calidad-precio</strong> de Zaragoza, con habitaciones en piso compartido entre <strong>230-350€/mes</strong>. El barrio dispone de una amplia oferta de pisos compartidos, muchos de ellos reformados y bien equipados, lo que facilita encontrar alojamiento adaptado a distintos presupuestos.</p>

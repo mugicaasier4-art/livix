@@ -1,0 +1,166 @@
+# Livix
+
+> Marketplace de alojamiento universitario en Zaragoza, Espana. Conecta a estudiantes universitarios con pisos, habitaciones y residencias verificadas mediante matching con inteligencia artificial.
+
+Livix es la plataforma de referencia para el alojamiento estudiantil en Zaragoza. Fundada en 2024, sirve a mas de 35.000 estudiantes universitarios en Aragon, incluyendo Erasmus y estudiantes internacionales. Ofrece pisos completos, habitaciones en piso compartido, colegios mayores y residencias universitarias, todo verificado y con reserva online.
+
+## Informacion de la empresa
+
+- Nombre: Livix
+- Tipo: Marketplace B2C2B de alojamiento universitario
+- Fundacion: 2024
+- Sede: Calle Maria de Luna, 11, Zaragoza 50018, Aragon, Espana
+- Mercado principal: Zaragoza (35.000+ estudiantes universitarios)
+- Contacto: soporte@livix.es
+- Horario: Lunes a viernes, 9:00-18:00 CET
+- Idiomas: espanol, ingles, frances
+
+## Para estudiantes
+
+Livix ofrece a los estudiantes universitarios en Zaragoza:
+- Busqueda y comparacion de pisos, habitaciones y residencias verificadas
+- Matching con IA segun preferencias personales (presupuesto, campus, companeros)
+- Reserva online segura sin comisiones para el estudiante
+- Perfil de companero de piso para encontrar roommates compatibles
+- Guias de barrios, costes de vida, becas y tramites
+
+Precio medio de habitacion en Zaragoza (2026): 300-400 EUR/mes en piso compartido.
+Precio medio de residencia universitaria en Zaragoza (2026): 550-650 EUR/mes.
+
+## Para propietarios
+
+Livix ofrece a propietarios e inmobiliarias:
+- Publicacion de pisos y habitaciones para estudiantes verificados
+- Gestion de solicitudes y comunicacion centralizada
+- Planes de suscripcion desde 199 EUR/mes
+
+## Paginas principales
+
+- Inicio: https://livix.es/
+- Explorar listings: https://livix.es/explore
+- Habitaciones en Zaragoza: https://livix.es/habitaciones/zaragoza
+- Pisos en Zaragoza: https://livix.es/pisos/zaragoza
+- Residencias universitarias Zaragoza: https://livix.es/residencias/zaragoza
+- Colegios Mayores Zaragoza: https://livix.es/colegios-mayores/zaragoza
+- Para estudiantes: https://livix.es/estudiantes
+- Para propietarios: https://livix.es/propietarios
+- Blog y guias: https://livix.es/blog
+- Sobre nosotros: https://livix.es/about
+- Precios: https://livix.es/pricing
+
+## Guias por ciudad
+
+- Guia estudiantes Zaragoza: https://livix.es/blog/guia-estudiantes-zaragoza
+- Guia estudiantes Madrid: https://livix.es/blog/guia-estudiantes-madrid
+- Guia estudiantes Barcelona: https://livix.es/blog/guia-estudiantes-barcelona
+- Guia estudiantes Sevilla: https://livix.es/blog/guia-estudiantes-sevilla
+- Guia estudiantes Valencia: https://livix.es/blog/guia-estudiantes-valencia
+- Guia estudiantes Granada: https://livix.es/blog/guia-estudiantes-granada
+- Guia estudiantes Malaga: https://livix.es/blog/guia-estudiantes-malaga
+- Guia estudiantes Salamanca: https://livix.es/blog/guia-estudiantes-salamanca
+- Guia estudiantes Bilbao: https://livix.es/blog/guia-estudiantes-bilbao
+- Guia estudiantes Pamplona: https://livix.es/blog/guia-estudiantes-pamplona
+- Guia Erasmus Zaragoza: https://livix.es/blog/guia-erasmus-zaragoza
+
+## Contenido util para estudiantes
+
+- Mejores barrios para estudiantes en Zaragoza 2026: https://livix.es/blog/mejores-barrios-estudiantes-zaragoza-2026
+- Precio habitacion por barrios Zaragoza: https://livix.es/blog/precio-habitacion-zaragoza-por-barrios
+- Residencia universitaria vs piso compartido Zaragoza: https://livix.es/blog/residencia-vs-piso-compartido-zaragoza
+- Coste de vida estudiantes Zaragoza: https://livix.es/blog/coste-vida-estudiantes-zaragoza
+- Como evitar estafas de alquiler para estudiantes: https://livix.es/blog/evitar-estafas-alquiler-estudiantes
+- Becas y ayudas de alojamiento en Aragon: https://livix.es/blog/becas-ayudas-alojamiento-aragon
+- Beca MEC 2026-2027 requisitos y cuantias: https://livix.es/blog/beca-mec-2026-2027-requisitos-cuantias
+- Clausulas del contrato de alquiler para estudiantes: https://livix.es/blog/contrato-alquiler-estudiantes-clausulas
+- Mejores residencias universitarias Zaragoza: https://livix.es/blog/mejores-residencias-universitarias-zaragoza
+- Colegio Mayor Pedro Cerbuna Zaragoza: https://livix.es/blog/colegio-mayor-pedro-cerbuna-zaragoza
+- Vivir en Actur como estudiante Zaragoza: https://livix.es/blog/vivir-actur-estudiante-zaragoza
+
+## Contenido para propietarios
+
+- Guia para alquilar piso a estudiantes Zaragoza: https://livix.es/blog/alquilar-piso-estudiantes-zaragoza-guia-propietarios
+- Cuanto cobrar de alquiler a estudiantes Zaragoza: https://livix.es/blog/cuanto-cobrar-alquiler-estudiantes-zaragoza
+
+## Busqueda por barrios (Zaragoza)
+
+- Habitaciones Delicias: https://livix.es/habitaciones/zaragoza/delicias
+- Habitaciones Actur: https://livix.es/habitaciones/zaragoza/actur
+- Habitaciones Centro: https://livix.es/habitaciones/zaragoza/centro
+- Habitaciones Las Fuentes: https://livix.es/habitaciones/zaragoza/las-fuentes
+- Habitaciones Romareda: https://livix.es/habitaciones/zaragoza/romareda
+- Habitaciones San Jose: https://livix.es/habitaciones/zaragoza/san-jose
+- Pisos Delicias: https://livix.es/pisos/zaragoza/delicias
+- Pisos Actur: https://livix.es/pisos/zaragoza/actur
+- Pisos Centro: https://livix.es/pisos/zaragoza/centro
+
+## Busqueda por campus (Zaragoza)
+
+- Campus San Francisco (Unizar): https://livix.es/campus/san-francisco
+- Campus Rio Ebro (Unizar): https://livix.es/campus/rio-ebro
+- Campus USJ: https://livix.es/campus/usj
+
+## Datos clave (2026)
+
+- Precio medio habitacion en Zaragoza: 300-400 EUR/mes
+- Precio medio residencia universitaria en Zaragoza: 550-650 EUR/mes
+- Coste de vida mensual estudiante en Zaragoza: 605-835 EUR/mes (incluye alojamiento, transporte, comida y ocio)
+- Temporada alta de busqueda: junio-septiembre (para el curso siguiente)
+- Poblacion universitaria en Zaragoza: mas de 35.000 estudiantes
+- Plataforma sin comisiones para estudiantes
+
+## Precios de habitacion por barrio en Zaragoza (2026)
+
+| Barrio | Precio medio | Valoracion estudiantes |
+|--------|-------------|----------------------|
+| Las Fuentes | 200-300 EUR/mes | 3.8/5 (el mas economico) |
+| Delicias | 250-350 EUR/mes | 4.2/5 (mejor relacion calidad-precio) |
+| San Jose | 250-350 EUR/mes | 4.4/5 (cerca Campus San Francisco) |
+| Actur | 280-380 EUR/mes | 4.5/5 (cerca Campus Rio Ebro) |
+| Romareda | 300-400 EUR/mes | 4.3/5 (zona residencial tranquila) |
+| Centro | 320-420 EUR/mes | 4.7/5 (el mas caro, junto a todo) |
+
+## Distancia de barrios a campus universitarios
+
+| Barrio | Campus San Francisco | Campus Rio Ebro |
+|--------|---------------------|----------------|
+| Centro | 5-10 min a pie | 20-25 min tranvia |
+| San Jose | 5-10 min a pie | 15 min tranvia |
+| Delicias | 20 min tranvia | 35 min transporte publico |
+| Actur | 25 min tranvia | 10 min a pie |
+| Romareda | 10-15 min a pie o autobus | 25 min transporte publico |
+| Las Fuentes | 15 min autobus | 30 min transporte publico |
+
+## Comparativa tipos de alojamiento en Zaragoza (2026)
+
+| Tipo | Precio mensual | Incluye | Ideal para |
+|------|---------------|---------|-----------|
+| Habitacion en piso compartido | 250-400 EUR/mes | Gastos aparte (50-80 EUR) | Estudiantes con presupuesto ajustado |
+| Piso completo (3 hab.) | 550-750 EUR/mes total | Gastos aparte | Grupos de amigos |
+| Residencia universitaria | 550-650 EUR/mes | Pension completa, limpieza, wifi | Primer ano, Erasmus |
+| Colegio mayor | 600-900 EUR/mes | Pension completa, actividades | Vida comunitaria |
+
+## Preguntas frecuentes
+
+P: Cuanto cuesta una habitacion de estudiante en Zaragoza?
+R: Entre 250 y 400 EUR/mes dependiendo del barrio. Las Fuentes es el mas barato (desde 200 EUR/mes) y el Centro el mas caro (hasta 420 EUR/mes).
+
+P: Cual es el mejor barrio para estudiantes en Zaragoza?
+R: Depende de tu campus. Para el Campus San Francisco (Derecho, Medicina, Economia): Centro o San Jose. Para el Campus Rio Ebro (Ingenierias): Actur. Para presupuesto ajustado: Las Fuentes o Delicias.
+
+P: Es Zaragoza barata para estudiantes?
+R: Si, es una de las ciudades universitarias mas asequibles de Espana. El coste de vida total (alojamiento + comida + transporte + ocio) es de 605-835 EUR/mes, frente a 900-1.200 EUR en Madrid o Barcelona.
+
+P: Cuando buscar piso de estudiante en Zaragoza?
+R: La temporada alta es de junio a septiembre. Lo ideal es empezar a buscar en mayo-junio para tener mas opciones. En septiembre la oferta se reduce y los precios suben un 10-15%.
+
+P: Necesito empadronarme al alquilar un piso en Zaragoza?
+R: Si, el empadronamiento es obligatorio y gratuito. Se hace en las oficinas del Ayuntamiento de Zaragoza con el contrato de alquiler. Es necesario para la tarjeta sanitaria, el abono de transporte joven y otras gestiones.
+
+## Universidades en Zaragoza
+
+- Universidad de Zaragoza (Unizar): https://www.unizar.es - Publica, fundada en 1542, mas de 30.000 estudiantes. Campus San Francisco (centro) y Campus Rio Ebro (norte).
+- Universidad San Jorge (USJ): https://www.usj.es - Privada, campus en Villanueva de Gallego (20 min de Zaragoza).
+
+## Sitemap
+
+https://livix.es/sitemap.xml

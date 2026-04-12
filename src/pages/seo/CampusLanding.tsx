@@ -37,6 +37,33 @@ const CampusLanding = () => {
     const structuredData: object[] = [
         {
             "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": campusData.name,
+            "url": campusData.universityUrl,
+            "department": campusData.faculties.map(f => ({
+                "@type": "EducationalOrganization",
+                "name": f
+            })),
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Zaragoza",
+                "addressRegion": "Aragon",
+                "addressCountry": "ES"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": campusData.coordinates.lat,
+                "longitude": campusData.coordinates.lng
+            },
+            "parentOrganization": {
+                "@type": "CollegeOrUniversity",
+                "name": campusData.university,
+                "url": campusData.universityUrl,
+                "sameAs": campusData.sameAs
+            }
+        },
+        {
+            "@context": "https://schema.org",
             "@type": "ItemList",
             "name": campusData.h1,
             "description": campusData.metaDescription,
@@ -47,10 +74,19 @@ const CampusLanding = () => {
                 "item": {
                     "@type": "Accommodation",
                     "name": listing.title,
+                    "url": `https://livix.es/listing/${listing.id}`,
                     "address": {
                         "@type": "PostalAddress",
-                        "addressLocality": campusData.city,
+                        "addressLocality": "Zaragoza",
+                        "addressRegion": "Aragon",
+                        "addressCountry": "ES",
                         "streetAddress": listing.address
+                    },
+                    "offers": {
+                        "@type": "Offer",
+                        "price": listing.price,
+                        "priceCurrency": "EUR",
+                        "availability": "https://schema.org/InStock"
                     }
                 }
             }))

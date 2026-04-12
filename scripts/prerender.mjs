@@ -19,6 +19,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST_DIR = join(__dirname, "..", "dist");
 const PORT = 45678;
 
+let successCount = 0;
+let failCount = 0;
+const failedRoutes = [];
+
 // Rutas SEO a prerenderizar (sincronizadas con sitemap.xml)
 const SEO_ROUTES = [
   // Páginas principales
@@ -32,12 +36,35 @@ const SEO_ROUTES = [
   "/erasmus/guide",
   "/erasmus/housing",
   "/blog",
-  "/blog/1",
-  "/blog/2",
-  "/blog/3",
-  "/blog/4",
-  "/blog/5",
-  "/blog/6",
+  "/blog/guia-estudiantes-zaragoza",
+  "/blog/mejores-barrios-estudiantes-zaragoza",
+  "/blog/residencia-universitaria-o-piso-compartido",
+  "/blog/coste-vida-estudiantes-zaragoza",
+  "/blog/evitar-estafas-alquiler-estudiantes",
+  "/blog/alquilar-habitacion-zaragoza-paso-a-paso",
+  "/blog/residencia-vs-piso-compartido-zaragoza",
+  "/blog/guia-erasmus-zaragoza",
+  "/blog/precio-habitacion-zaragoza-por-barrios",
+  "/blog/mejores-residencias-universitarias-zaragoza",
+  "/blog/colegio-mayor-pedro-cerbuna-zaragoza",
+  "/blog/vivir-actur-estudiante-zaragoza",
+  "/blog/contrato-alquiler-estudiantes-clausulas",
+  "/blog/becas-ayudas-alojamiento-aragon",
+  "/blog/beca-mec-2026-2027-requisitos-cuantias",
+  "/blog/alquilar-piso-estudiantes-zaragoza-guia-propietarios",
+  "/blog/cuanto-cobrar-alquiler-estudiantes-zaragoza",
+  "/blog/mejores-barrios-estudiantes-zaragoza-2026",
+  "/blog/guia-estudiantes-madrid",
+  "/blog/guia-estudiantes-barcelona",
+  "/blog/guia-estudiantes-sevilla",
+  "/blog/guia-estudiantes-valencia",
+  "/blog/guia-estudiantes-granada",
+  "/blog/guia-estudiantes-malaga",
+  "/blog/guia-estudiantes-salamanca",
+  "/blog/guia-estudiantes-bilbao",
+  "/blog/guia-estudiantes-pamplona",
+  "/blog/guia-estudiantes-logrono",
+  "/blog/guia-estudiantes-santiago-de-compostela",
   "/residences",
   "/residences/directory",
   "/roommates",
@@ -138,6 +165,16 @@ async function prerenderRoute(browser, route) {
     // Obtener el HTML completo renderizado
     const html = await page.content();
 
+    // Validate content has real text (not just empty shell)
+    const textContent = html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const wordCount = textContent.split(' ').length;
+    if (wordCount < 50) {
+      console.warn(`  ⚠ ${route}: only ${wordCount} words (may be empty render)`);
+      failCount++;
+      failedRoutes.push(route);
+      return;
+    }
+
     // Determinar la ruta del archivo de salida
     let outputPath;
     if (route === "/") {
@@ -149,8 +186,11 @@ async function prerenderRoute(browser, route) {
     }
 
     writeFileSync(outputPath, html, "utf-8");
+    successCount++;
     console.log(`  ✓ ${route}`);
   } catch (err) {
+    failCount++;
+    failedRoutes.push(route);
     console.error(`  ✗ ${route}: ${err.message}`);
   } finally {
     await page.close();
@@ -183,10 +223,24 @@ async function main() {
     await Promise.all(batch.map((route) => prerenderRoute(browser, route)));
   }
 
+  if (failedRoutes.length > 0) {
+    console.log(`\n⚠ Failed routes (${failedRoutes.length}):`);
+    failedRoutes.forEach(r => console.log(`  - ${r}`));
+  }
+
+  const total = successCount + failCount;
+  const failRate = total > 0 ? failCount / total : 0;
+  if (failRate > 0.2) {
+    console.error(`\n❌ FAIL: ${failCount}/${total} routes failed (${(failRate * 100).toFixed(1)}%). Build aborted.`);
+    await browser.close();
+    server.close();
+    process.exit(1);
+  }
+
   await browser.close();
   server.close();
 
-  console.log(`\n✅ ${SEO_ROUTES.length} rutas prerenderizadas en dist/\n`);
+  console.log(`\n✅ ${successCount}/${total} rutas prerenderizadas en dist/\n`);
 }
 
 main().catch((err) => {

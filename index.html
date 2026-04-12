@@ -33,6 +33,9 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
+    <!-- Canonical -->
+    <link rel="canonical" href="https://livix.es/" />
+
     <!-- Hreflang -->
     <link rel="alternate" hreflang="es" href="https://livix.es/" />
     <link rel="alternate" hreflang="en" href="https://livix.es/en/" />
@@ -45,63 +48,55 @@
     <meta name="twitter:description" content="Pisos, habitaciones y residencias para estudiantes en Zaragoza. Compara y reserva online." />
     <meta name="twitter:image" content="https://livix.es/og-livix.jpg" />
 
-    <!-- Organization Schema -->
+    <!-- Unified Organization + LocalBusiness Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness"],
       "name": "Livix",
+      "alternateName": "Livix.es",
       "url": "https://livix.es",
-      "logo": "https://livix.es/logo.png",
-      "description": "Marketplace de alojamiento universitario en España. Conectamos estudiantes con pisos, habitaciones y residencias verificadas.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://livix.es/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://livix.es/og-livix.jpg",
+      "description": "Marketplace de alojamiento universitario en Espana. Conectamos estudiantes con pisos, habitaciones y residencias verificadas en Zaragoza.",
+      "foundingDate": "2024-01-01",
+      "founder": {
+        "@type": "Person",
+        "name": "Asier Mugica",
+        "url": "https://livix.es/about",
+        "jobTitle": "Fundador de Livix",
+        "sameAs": ["https://www.linkedin.com/in/asiermugica"]
+      },
       "sameAs": [
-        "https://www.instagram.com/livix.es",
-        "https://www.linkedin.com/company/livix",
-        "https://twitter.com/livix"
+        "https://www.instagram.com/livix.es/",
+        "https://www.linkedin.com/company/livix-es/",
+        "https://x.com/livix_es",
+        "https://www.tiktok.com/@livix.es"
       ],
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Calle Maria de Luna, 11",
         "addressLocality": "Zaragoza",
-        "addressRegion": "Aragón",
+        "postalCode": "50018",
+        "addressRegion": "Aragon",
         "addressCountry": "ES"
       },
-      "foundingDate": "2024",
-      "availableLanguage": ["Spanish", "English", "French"],
-      "areaServed": {
-        "@type": "Country",
-        "name": "Spain"
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.6836,
+        "longitude": -0.8885
       },
+      "email": "soporte@livix.es",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
         "email": "soporte@livix.es",
         "availableLanguage": ["Spanish", "English"]
-      }
-    }
-    </script>
-
-    <!-- LocalBusiness Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Livix",
-      "description": "Marketplace de alojamiento universitario en Zaragoza. Pisos, habitaciones y residencias para estudiantes.",
-      "url": "https://livix.es",
-      "logo": "https://livix.es/favicon.png",
-      "image": "https://livix.es/og-livix.jpg",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Calle María de Luna, 11",
-        "addressLocality": "Zaragoza",
-        "postalCode": "50018",
-        "addressRegion": "Aragón",
-        "addressCountry": "ES"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "41.6836",
-        "longitude": "-0.8885"
       },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
@@ -109,8 +104,14 @@
         "opens": "09:00",
         "closes": "18:00"
       },
-      "priceRange": "€€",
-      "sameAs": ["https://www.instagram.com/livix.es/", "https://www.linkedin.com/company/livix-es/"]
+      "priceRange": "EUR",
+      "areaServed": {
+        "@type": "City",
+        "name": "Zaragoza",
+        "sameAs": "https://es.wikipedia.org/wiki/Zaragoza"
+      },
+      "availableLanguage": ["Spanish", "English", "French"],
+      "knowsAbout": ["alojamiento universitario", "pisos estudiantes", "residencias universitarias", "habitaciones estudiantes Zaragoza"]
     }
     </script>
 

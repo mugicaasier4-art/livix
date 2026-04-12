@@ -1,13 +1,32 @@
 import Layout from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MapPin, Heart, Users, Shield, GraduationCap, Target } from "lucide-react";
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Asier Mugica",
+  "url": "https://livix.es/about",
+  "jobTitle": "Fundador de Livix",
+  "description": "Fundador de Livix, marketplace de alojamiento universitario en Espana.",
+  "worksFor": { "@type": "Organization", "name": "Livix", "url": "https://livix.es" },
+  "knowsAbout": ["alojamiento universitario", "proptech", "inteligencia artificial", "startups"],
+  "sameAs": ["https://www.linkedin.com/in/asiermugica"]
+};
+
 const About = () => {
   return (
     <Layout>
+      <SEOHead
+        title="Sobre Livix — Marketplace de alojamiento universitario en Zaragoza"
+        description="Livix es un marketplace de alojamiento universitario fundado en 2024 en Zaragoza. Conecta a mas de 35.000 estudiantes con pisos, habitaciones y residencias verificadas sin comisiones."
+        canonical="https://livix.es/about"
+        structuredData={personSchema}
+      />
       <div className="container mx-auto px-4 py-16 max-w-4xl">
         {/* Hero */}
         <div className="text-center mb-16">
@@ -18,6 +37,9 @@ const About = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Livix nació de la frustración real de buscar alojamiento como estudiante:
             anuncios falsos, precios inflados, intermediarios innecesarios y cero transparencia.
+          </p>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto mt-4">
+            Livix, fundado en 2024 en Zaragoza, es un marketplace de alojamiento universitario que conecta a estudiantes con pisos, habitaciones y residencias verificadas. La plataforma sirve a mas de 35.000 estudiantes universitarios en Aragon, incluyendo Erasmus e internacionales. Ofrece busqueda gratuita sin comisiones para estudiantes, con precios de habitacion desde 200 EUR/mes.
           </p>
         </div>
 

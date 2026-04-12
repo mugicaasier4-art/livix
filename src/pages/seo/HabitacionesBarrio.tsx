@@ -39,6 +39,22 @@ const HabitacionesBarrio = () => {
     const structuredData: object[] = [
         {
             "@context": "https://schema.org",
+            "@type": "Place",
+            "name": `${barrioData.name}, Zaragoza`,
+            "description": barrioData.introText,
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": barrioData.coordinates.lat,
+                "longitude": barrioData.coordinates.lng
+            },
+            "containedInPlace": {
+                "@type": "City",
+                "name": "Zaragoza",
+                "sameAs": "https://es.wikipedia.org/wiki/Zaragoza"
+            }
+        },
+        {
+            "@context": "https://schema.org",
             "@type": "ItemList",
             "name": barrioData.h1,
             "description": description,
@@ -49,13 +65,31 @@ const HabitacionesBarrio = () => {
                 "item": {
                     "@type": "Accommodation",
                     "name": listing.title,
+                    "url": `https://livix.es/listing/${listing.id}`,
                     "address": {
                         "@type": "PostalAddress",
                         "addressLocality": "Zaragoza",
+                        "addressRegion": "Aragon",
+                        "addressCountry": "ES",
                         "streetAddress": listing.address
+                    },
+                    "offers": {
+                        "@type": "Offer",
+                        "price": listing.price,
+                        "priceCurrency": "EUR",
+                        "availability": "https://schema.org/InStock"
                     }
                 }
             }))
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "AggregateOffer",
+            "name": `Habitaciones en ${barrioData.name}, Zaragoza`,
+            "lowPrice": barrioData.avgPriceLow,
+            "highPrice": barrioData.avgPriceHigh,
+            "priceCurrency": "EUR",
+            "offerCount": filteredListings.length
         },
         ...(barrioData.faqs?.length ? [{
             "@context": "https://schema.org",

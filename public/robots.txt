@@ -33,6 +33,110 @@ Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /unauthorized
 
+User-agent: GPTBot
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /ll/
+Disallow: /admin/
+Disallow: /student/
+Disallow: /onboarding/
+Disallow: /settings
+Disallow: /profile
+Disallow: /bookings
+Disallow: /messages
+Disallow: /favorites
+Disallow: /login
+Disallow: /signup
+
 User-agent: Twitterbot
 Allow: /
 

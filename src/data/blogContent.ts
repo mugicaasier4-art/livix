@@ -31,6 +31,7 @@ export interface BlogPost {
   image: string;
   content: string;
   readTime: number;
+  noIndex?: boolean;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -41,7 +42,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Todo lo que necesitas saber para vivir en Zaragoza como estudiante: transporte, ocio, universidades, barrios y coste de vida.",
     date: "2026-02-15",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "estudiante",
     citySlug: "zaragoza",
     image: zonasUniversidad,
@@ -50,7 +51,9 @@ export const blogPosts: BlogPost[] = [
 
 En esta guía completa te contamos todo lo que necesitas saber para vivir en Zaragoza como estudiante universitario.
 
-## Universidades en Zaragoza
+## Que universidades hay en Zaragoza para estudiantes?
+
+Zaragoza cuenta con dos universidades principales: la [Universidad de Zaragoza](https://www.unizar.es) (publica, fundada en 1542, con mas de 30.000 estudiantes) y la Universidad San Jorge (privada). Unizar tiene dos campus principales: San Francisco en el centro y Rio Ebro al norte.
 
 Zaragoza cuenta con dos grandes universidades que atraen estudiantes de toda España y del extranjero:
 
@@ -61,12 +64,14 @@ Zaragoza cuenta con dos grandes universidades que atraen estudiantes de toda Esp
 
 **Universidad San Jorge (USJ)** es la universidad privada, situada en Villanueva de Gállego, a las afueras de Zaragoza. Ofrece grados en Comunicación, Arquitectura, Ciencias de la Salud y más.
 
-## Transporte para estudiantes
+## Como moverse por Zaragoza como estudiante?
+
+Zaragoza tiene un sistema de transporte eficiente y economico. El tranvia (linea 1) conecta los dos campus universitarios. El abono joven mensual cuesta unos 30 EUR/mes e incluye bus y tranvia ilimitado.
 
 Una de las grandes ventajas de Zaragoza es que es muy manejable. Muchos estudiantes se mueven en bicicleta o incluso andando.
 
 ### Tranvía
-La línea de tranvía conecta el centro con el Actur y es el medio de transporte estrella para estudiantes del [Campus Río Ebro](/campus/rio-ebro). El abono joven cuesta menos de 30€ al mes.
+La línea del [tranvia de Zaragoza](https://www.tranviasdezaragoza.es) conecta el centro con el Actur y es el medio de transporte estrella para estudiantes del [Campus Río Ebro](/campus/rio-ebro). El abono joven cuesta menos de 30€ al mes.
 
 ### Autobús urbano
 La red de autobuses cubre toda la ciudad. Las líneas más usadas por estudiantes son la Ci1 y Ci2 (circulares) y las que conectan Delicias con el centro.
@@ -77,7 +82,9 @@ Zaragoza tiene una de las mejores redes de carril bici de España. El servicio B
 ### A pie
 Una de las grandes ventajas de Zaragoza frente a otras ciudades universitarias es que puedes recorrerla a pie. La distancia entre el [Campus San Francisco](/campus/san-francisco) y el centro es de apenas 10 minutos caminando, y barrios como Romareda o San José están a un paseo agradable de las principales facultades.
 
-## Coste de vida en Zaragoza
+## Cuanto cuesta vivir en Zaragoza como estudiante?
+
+El coste de vida mensual de un estudiante en Zaragoza oscila entre 605 y 835 EUR, incluyendo alojamiento (300-400 EUR), comida (150-200 EUR), transporte (30 EUR) y ocio (50-100 EUR). Es una de las ciudades universitarias mas asequibles de Espana.
 
 Zaragoza es significativamente más barata que Madrid o Barcelona. Estos son los gastos medios mensuales de un estudiante:
 
@@ -133,7 +140,7 @@ Similar a la residencia pero con mayor vida social y actividades culturales. Los
 Cuando llegues a Zaragoza, hay una serie de trámites administrativos que deberías completar lo antes posible para que tu estancia sea cómoda y legal:
 
 ### Empadronamiento
-Es obligatorio empadronarte en el Ayuntamiento de Zaragoza. Necesitarás tu DNI o pasaporte, el contrato de alquiler y un formulario de solicitud. El empadronamiento es imprescindible para acceder a la tarjeta sanitaria, solicitar becas autonómicas y votar en elecciones municipales si eres ciudadano europeo.
+Es obligatorio empadronarte en el [Ayuntamiento de Zaragoza](https://www.zaragoza.es). Necesitarás tu DNI o pasaporte, el contrato de alquiler y un formulario de solicitud. El empadronamiento es imprescindible para acceder a la tarjeta sanitaria, solicitar becas autonómicas y votar en elecciones municipales si eres ciudadano europeo.
 
 ### Tarjeta sanitaria
 Si vienes de otra comunidad autónoma, solicita el traslado de tu expediente sanitario al Centro de Salud más cercano a tu domicilio. Si eres estudiante Erasmus, asegúrate de tener la Tarjeta Sanitaria Europea (TSE) vigente.
@@ -177,7 +184,7 @@ Zaragoza te espera con los brazos abiertos. Es una ciudad que enamora a quien la
     excerpt: "Delicias, Actur, Centro... Analizamos los barrios más populares entre universitarios: precios, transporte y ambiente.",
     date: "2026-02-20",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     citySlug: "zaragoza",
     image: pisosEstudiante,
@@ -354,7 +361,7 @@ En Livix puedes buscar [habitaciones en Zaragoza](/habitaciones/zaragoza) filtra
     excerpt: "Comparamos pros, contras y precios de vivir en una residencia vs compartir piso como estudiante en Zaragoza.",
     date: "2026-02-25",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     image: deportesClubs,
     readTime: 6,
@@ -491,7 +498,7 @@ Si optas por piso compartido, busca con tiempo (a partir de mayo para el curso s
     excerpt: "Desglose completo de gastos mensuales: alquiler, comida, transporte, ocio y trucos para ahorrar en Zaragoza.",
     date: "2026-03-01",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "consejos",
     citySlug: "zaragoza",
     image: ahorrarDinero,
@@ -667,7 +674,7 @@ Zaragoza te permite vivir bien como estudiante sin arruinarte. Con un poco de pl
     excerpt: "Las 10 señales de alarma que debes conocer antes de alquilar. Protégete de estafas inmobiliarias y alquila seguro.",
     date: "2026-03-03",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "legalidad",
     image: checklistAlquiler,
     readTime: 6,
@@ -763,11 +770,11 @@ Asegúrate de que el contrato incluye:
 
 Si ya has sido víctima de una estafa:
 
-1. **Denuncia en la Policía Nacional**: lleva todas las pruebas (conversaciones, recibos, anuncios)
+1. **Denuncia en la [Policia Nacional](https://www.policia.es/)**: lleva todas las pruebas (conversaciones, recibos, anuncios)
 2. **Denuncia en la plataforma** donde encontraste el anuncio
 3. **Contacta con tu banco** si hiciste transferencia (pueden intentar recuperar el dinero)
 4. **Avisa a otros estudiantes** en foros y redes sociales
-5. **Consulta con la OMIC** (Oficina Municipal de Información al Consumidor) de Zaragoza
+5. **Consulta con la [OMIC de Zaragoza](https://www.zaragoza.es/sede/portal/consumo/)** (Oficina Municipal de Información al Consumidor)
 
 ## Plataformas seguras para buscar piso
 
@@ -777,7 +784,7 @@ Si ya has sido víctima de una estafa:
 
 Es fundamental que conozcas tus derechos legales antes de firmar cualquier contrato:
 
-### Ley de Arrendamientos Urbanos (LAU)
+### [Ley de Arrendamientos Urbanos (LAU)](https://www.boe.es/buscar/act.php?id=BOE-A-1994-26003)
 La LAU es la ley que regula los alquileres en España. Estos son los puntos clave que te afectan como estudiante:
 
 - **Duración mínima del contrato**: 5 años si el arrendador es persona física, 7 años si es empresa. Sin embargo, como inquilino puedes rescindir a partir de los 6 primeros meses con 30 días de preaviso.
@@ -827,7 +834,7 @@ Buscar piso puede ser estresante, pero con precaución y sentido común puedes e
     excerpt: "Guía práctica desde la búsqueda hasta la firma del contrato. Todo lo que necesitas saber para alquilar tu primera habitación.",
     date: "2026-03-05",
     dateModified: "2026-03-08",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     citySlug: "zaragoza",
     image: gestionTiempo,
@@ -1039,7 +1046,7 @@ Alquilar tu primera habitación es un paso importante hacia la independencia. Co
     excerpt: "Comparamos en detalle residencias universitarias y pisos compartidos en Zaragoza: precios, servicios, estilo de vida y cuál te conviene según tu perfil.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     citySlug: "zaragoza",
     image: pisosEstudiante,
@@ -1200,7 +1207,7 @@ Si necesitas ayuda para encontrar alojamiento en Zaragoza, ya sea residencia o p
     excerpt: "Todo lo que necesitas como estudiante Erasmus en Zaragoza: cómo encontrar alojamiento, tramitar el NIE, presupuesto mensual y consejos para disfrutar al máximo tu experiencia.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "estudiante",
     citySlug: "zaragoza",
     image: zonasUniversidad,
@@ -1395,12 +1402,14 @@ Zaragoza es una ciudad que enamora a los Erasmus. El tamaño perfecto para mover
     excerpt: "Descubre cuánto cuesta una habitación en cada barrio de Zaragoza en 2026. Datos actualizados de precios, comparativas y consejos para encontrar la mejor relación calidad-precio.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     citySlug: "zaragoza",
     image: pisosEstudiante,
     readTime: 8,
-    content: `¿Cuánto cuesta una habitación en Zaragoza? Es la primera pregunta que se hace cualquier estudiante que busca piso. La respuesta depende, sobre todo, del barrio. En Zaragoza los precios de habitación varían significativamente de una zona a otra, y conocer estas diferencias puede ahorrarte cientos de euros al año.
+    content: `**Metodologia:** Los datos de precios de este articulo estan basados en el analisis de mas de 500 anuncios activos en Zaragoza procesados por el sistema de Livix durante marzo 2026. Las fuentes incluyen listados de [Idealista](https://www.idealista.com/alquiler-habitacion/zaragoza-zaragoza/), Fotocasa, Pisos.com y Milanuncios, verificados y actualizados semanalmente.
+
+¿Cuánto cuesta una habitación en Zaragoza? Es la primera pregunta que se hace cualquier estudiante que busca piso. La respuesta depende, sobre todo, del barrio. En Zaragoza los precios de habitación varían significativamente de una zona a otra, y conocer estas diferencias puede ahorrarte cientos de euros al año.
 
 En este artículo te mostramos el precio de habitación en Zaragoza desglosado por barrios, con datos actualizados a marzo de 2026.
 
@@ -1540,7 +1549,7 @@ Explora ahora las [habitaciones disponibles en Zaragoza](/habitaciones/zaragoza)
     excerpt: "Ranking actualizado de las mejores residencias universitarias en Zaragoza: precios, servicios, ubicación y opiniones de estudiantes para ayudarte a elegir.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     citySlug: "zaragoza",
     image: zonasUniversidad,
@@ -1807,7 +1816,7 @@ También puedes usar nuestro [buscador de compañeros de piso](/roommates) para 
     excerpt: "Todo sobre el Colegio Mayor Pedro Cerbuna: habitaciones, precios, proceso de admisión, actividades y vida diaria junto al Campus San Francisco.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "estudiante",
     citySlug: "zaragoza",
     image: tecnicasEstudio,
@@ -2076,7 +2085,7 @@ Sea cual sea tu elección, lo importante es que investigues bien antes de decidi
     excerpt: "Guía completa del Actur: precios de alquiler, transporte a la universidad, servicios, ocio y todo lo que necesitas saber para vivir en este barrio.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "consejos",
     citySlug: "zaragoza",
     image: gestionTiempo,
@@ -2275,7 +2284,7 @@ Explora todas las opciones de [alojamiento para estudiantes en Zaragoza](/explor
     excerpt: "Las 7 cláusulas más importantes de un contrato de alquiler para estudiantes en España. Protege tus derechos y evita sorpresas desagradables.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "legalidad",
     image: checklistAlquiler,
     readTime: 9,
@@ -2287,7 +2296,7 @@ En esta guía analizamos las **7 cláusulas que debes revisar** en cualquier **c
 
 ## Antes de empezar: tipos de contrato
 
-En España, el alquiler de vivienda se regula por la **Ley de Arrendamientos Urbanos (LAU)**. Existen dos tipos principales de contrato que afectan a estudiantes:
+En España, el alquiler de vivienda se regula por la **[LAU](https://www.boe.es/buscar/act.php?id=BOE-A-1994-26003)** (Ley de Arrendamientos Urbanos). Existen dos tipos principales de contrato que afectan a estudiantes:
 
 ### Contrato de vivienda habitual
 - Duración mínima de 5 años (si el propietario es persona física) o 7 años (si es empresa)
@@ -2357,7 +2366,7 @@ La fianza es probablemente el tema que más conflictos genera en un **contrato d
 ### Qué dice la ley
 
 - La fianza legal es de **1 mes de renta** para vivienda habitual y **2 meses** para uso distinto
-- El propietario **debe depositar la fianza** en el organismo oficial de su comunidad autónoma (en Aragón, la DGA)
+- El propietario **debe depositar la fianza** en el organismo oficial de su comunidad autónoma (en Aragón, la [Gobierno de Aragon](https://www.aragon.es/))
 - Al finalizar el contrato, la fianza debe devolverse en un plazo de **30 días** salvo que existan desperfectos justificados
 
 ### Garantías adicionales
@@ -2544,7 +2553,7 @@ Encuentra [pisos con propietarios verificados en Zaragoza](/pisos/zaragoza) a tr
     excerpt: "Guía completa de becas MEC, ayudas de la DGA, subvenciones municipales y becas Erasmus+ para cubrir gastos de alojamiento universitario en Aragón.",
     date: "2026-03-18",
     dateModified: "2026-03-18",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "becas",
     citySlug: "zaragoza",
     image: ahorrarDinero,
@@ -2555,7 +2564,7 @@ Por suerte, existen múltiples **becas de alojamiento en Aragón** que pueden cu
 
 ## 1. Becas MEC (Ministerio de Educación): la más importante
 
-La beca del Ministerio de Educación y Formación Profesional (comúnmente llamada "beca MEC") es la principal fuente de financiación para estudiantes en España. Aunque no es exclusiva para alojamiento, incluye un componente específico de **residencia** que es fundamental para estudiantes desplazados.
+La beca del [Ministerio de Educacion](https://www.educacionyfp.gob.es/servicios-al-ciudadano/catalogo/estudiantes/becas-ayudas.html) y Formación Profesional (comúnmente llamada "beca MEC") es la principal fuente de financiación para estudiantes en España. Aunque no es exclusiva para alojamiento, incluye un componente específico de **residencia** que es fundamental para estudiantes desplazados.
 
 ### Componentes de la beca MEC relevantes para alojamiento
 
@@ -2615,7 +2624,7 @@ Solicita la beca MEC **siempre**, aunque no estés seguro de cumplir los requisi
 
 ## 2. Ayudas de la DGA (Diputación General de Aragón)
 
-La Comunidad Autónoma de Aragón ofrece sus propias **becas de alojamiento en Aragón** a través del Departamento de Educación, Cultura y Deporte de la DGA.
+La Comunidad Autónoma de Aragón ofrece sus propias **becas de alojamiento en Aragón** a través del Departamento de Educación, Cultura y Deporte de la [DGA - Becas Aragon](https://educa.aragon.es/becas).
 
 ### Becas de la DGA para estudiantes universitarios
 
@@ -2834,7 +2843,7 @@ Y para encontrar el alojamiento que se ajuste a tu presupuesto, explora las opci
     excerpt: "Todo sobre la beca MEC 2026-2027: requisitos académicos y económicos, cuantías, plazos, errores comunes y proceso paso a paso. Actualizado marzo 2026.",
     date: "2026-03-19",
     dateModified: "2026-03-19",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "becas",
     image: ahorrarDinero,
     readTime: 18,
@@ -3185,7 +3194,7 @@ Ahora que sabes exactamente cómo pedir tu beca MEC 2026-2027, el siguiente paso
     excerpt: "Todo lo que necesitas saber para alquilar tu piso a universitarios en Zaragoza: precios por barrio, contratos, ventajas fiscales y como encontrar inquilinos verificados.",
     date: "2026-03-24",
     dateModified: "2026-03-24",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "propietarios",
     image: pisosEstudiante,
     readTime: 10,
@@ -3348,7 +3357,7 @@ Las primeras 50 plazas son gratuitas. [Registrate ahora](/propietarios).`
     excerpt: "Precios reales de alquiler a universitarios en cada barrio de Zaragoza. Tabla comparativa, rentabilidad por habitacion y factores que suben o bajan el precio.",
     date: "2026-03-24",
     dateModified: "2026-03-24",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "propietarios",
     image: pisosEstudiante,
     readTime: 7,
@@ -3461,7 +3470,7 @@ Si ya sabes cuanto cobrar, el siguiente paso es publicar tu piso donde los estud
     excerpt: "Analizamos los barrios mas populares entre universitarios en Zaragoza con datos reales de precios, distancia a campus y calidad de vida.",
     date: "2026-03-28",
     dateModified: "2026-03-28",
-    author: "Equipo Livix",
+    author: "Asier Mugica",
     category: "pisos",
     image: zonasUniversidad,
     readTime: 12,
@@ -3588,6 +3597,7 @@ En [Livix](/) puedes filtrar pisos por barrio, precio y distancia a tu campus. T
     citySlug: "madrid",
     image: zonasUniversidad,
     readTime: 9,
+    noIndex: true,
     content: `Madrid es la ciudad universitaria más grande de España, con más de 300.000 estudiantes repartidos entre la Complutense, la UAM, la UC3M, la Carlos III y decenas de centros privados. Vivir aquí como estudiante es una experiencia única, pero también requiere planificación: los precios son significativamente más altos que en otras ciudades universitarias.
 
 ## Universidades en Madrid
@@ -3627,6 +3637,7 @@ Busca tu alojamiento en Madrid en [Livix](/explore) y compara precios verificado
     citySlug: "barcelona",
     image: zonasUniversidad,
     readTime: 8,
+    noIndex: true,
     content: `Barcelona es una de las ciudades universitarias más internacionales de Europa. Con más de 250.000 estudiantes, acoge cada año a miles de erasmus y estudiantes de todo el mundo gracias a sus universidades de referencia y su calidad de vida.
 
 ## Universidades en Barcelona
@@ -3666,6 +3677,7 @@ Encuentra habitación en Barcelona en [Livix](/explore) con precios verificados 
     citySlug: "sevilla",
     image: zonasUniversidad,
     readTime: 7,
+    noIndex: true,
     content: `Sevilla recibe cada año a miles de estudiantes Erasmus de toda Europa, convirtiéndola en una de las ciudades universitarias más internacionales de España. La calidad de vida, el clima y los precios relativamente asequibles la hacen muy atractiva.
 
 ## Universidades en Sevilla
@@ -3702,6 +3714,7 @@ Busca habitación en Sevilla en [Livix](/explore).`
     citySlug: "valencia",
     image: zonasUniversidad,
     readTime: 7,
+    noIndex: true,
     content: `Valencia combina una excelente oferta universitaria con una calidad de vida envidiable: playa, clima mediterráneo y precios más razonables que Madrid o Barcelona. No es casualidad que cada año más estudiantes elijan Valencia para su formación universitaria.
 
 ## Universidades en Valencia
@@ -3739,6 +3752,7 @@ Encuentra tu habitación en Valencia en [Livix](/explore).`
     citySlug: "granada",
     image: zonasUniversidad,
     readTime: 7,
+    noIndex: true,
     content: `Granada es probablemente la ciudad universitaria más pura de España. Con más de 55.000 estudiantes para una población de apenas 230.000 habitantes, los universitarios son parte fundamental de la vida y la cultura de la ciudad. Las tapas gratis, el Albaicín y el ambiente estudiantil hacen de Granada un destino único.
 
 ## Universidad de Granada
@@ -3774,6 +3788,7 @@ Busca tu piso en Granada en [Livix](/explore).`
     citySlug: "malaga",
     image: zonasUniversidad,
     readTime: 6,
+    noIndex: true,
     content: `Málaga se ha transformado en una de las ciudades más dinámicas de España. Además de su clima privilegiado y sus playas, la ciudad acoge a más de 40.000 estudiantes universitarios y está convirtiéndose en un hub tecnológico europeo.
 
 ## Universidad de Málaga
@@ -3805,6 +3820,7 @@ Busca habitación en Málaga en [Livix](/explore).`
     citySlug: "salamanca",
     image: zonasUniversidad,
     readTime: 7,
+    noIndex: true,
     content: `Salamanca es posiblemente la ciudad más universitaria de España. Fundada en 1218, la Universidad de Salamanca es la más antigua de la Península Ibérica. La ciudad entera gira alrededor de sus estudiantes: más de 30.000 universitarios conviven en una ciudad de apenas 145.000 habitantes.
 
 ## Universidad de Salamanca (USAL)
@@ -3840,6 +3856,7 @@ Encuentra habitación en Salamanca en [Livix](/explore).`
     citySlug: "bilbao",
     image: zonasUniversidad,
     readTime: 6,
+    noIndex: true,
     content: `Bilbao es una ciudad que ha sabido reinventarse. De su pasado industrial ha emergido una metrópolis cultural y académica de primer nivel, con el Guggenheim como símbolo de su transformación. Los estudiantes que eligen Bilbao acceden a una de las mejores universidades de España en un entorno de ciudad compacta y con excelente transporte público.
 
 ## Universidades en Bilbao
@@ -3872,6 +3889,7 @@ Busca habitación en Bilbao en [Livix](/explore).`
     citySlug: "pamplona",
     image: zonasUniversidad,
     readTime: 6,
+    noIndex: true,
     content: `Pamplona es una ciudad de tamaño humano con una calidad de vida excepcional. Sus 25.000 estudiantes universitarios conviven en una ciudad compacta, segura y con uno de los mejores niveles de bienestar de España. El campus universitario es moderno y está perfectamente integrado en la ciudad.
 
 ## Universidades en Pamplona
@@ -3904,6 +3922,7 @@ Encuentra habitación en Pamplona en [Livix](/explore).`
     citySlug: "logrono",
     image: zonasUniversidad,
     readTime: 5,
+    noIndex: true,
     content: `Logroño es una de las ciudades con mejor calidad de vida de España según todos los índices. La capital riojana ofrece a sus estudiantes una experiencia universitaria tranquila, económica y de alto nivel en una ciudad donde todo está a 15 minutos andando.
 
 ## Universidad de La Rioja (UR)
@@ -3938,6 +3957,7 @@ Busca habitación en Logroño en [Livix](/explore).`
     citySlug: "santiago",
     image: zonasUniversidad,
     readTime: 6,
+    noIndex: true,
     content: `Santiago de Compostela es una ciudad Patrimonio de la Humanidad donde el Camino de Santiago y la vida universitaria se entremezclan de forma única. La USC (Universidade de Santiago de Compostela) es una de las universidades con más tradición de España y lleva más de cinco siglos formando universitarios.
 
 ## Universidade de Santiago de Compostela (USC)

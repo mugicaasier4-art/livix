@@ -320,7 +320,18 @@ const ListingDetail = () => {
         "@type": "Offer",
         "price": mockListing.price,
         "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": mockListing.price,
+          "priceCurrency": "EUR",
+          "unitText": "MONTH",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitCode": "MON"
+          }
+        }
       }
     };
 

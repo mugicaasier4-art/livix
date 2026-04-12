@@ -1,6 +1,6 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    "buildCommand": "npm run build:sitemap && npm run build",
+    "buildCommand": "npm run build:seo",
     "outputDirectory": "dist",
     "framework": "vite",
     "trailingSlash": false,
@@ -102,6 +102,18 @@
         { "source": "/blog/15", "destination": "/blog/beca-mec-2026-2027-requisitos-cuantias", "statusCode": 301 }
     ],
     "rewrites": [
+        {
+            "source": "/llms.txt",
+            "destination": "/llms.txt"
+        },
+        {
+            "source": "/robots.txt",
+            "destination": "/robots.txt"
+        },
+        {
+            "source": "/sitemap.xml",
+            "destination": "/sitemap.xml"
+        },
         {
             "source": "/(.*)",
             "destination": "/index.html"

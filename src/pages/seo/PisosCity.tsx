@@ -47,13 +47,31 @@ const PisosCity = () => {
             "item": {
                 "@type": "Apartment",
                 "name": listing.title,
+                "url": `https://livix.es/listing/${listing.id}`,
                 "address": {
                     "@type": "PostalAddress",
                     "addressLocality": cityData.name,
+                    "addressRegion": "Aragon",
                     "addressCountry": "ES"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": listing.price,
+                    "priceCurrency": "EUR",
+                    "availability": "https://schema.org/InStock"
                 }
             }
         }))
+    };
+
+    const aggregateOfferSchema = {
+        "@context": "https://schema.org",
+        "@type": "AggregateOffer",
+        "name": `Pisos para estudiantes en ${cityData.name}`,
+        "lowPrice": 450,
+        "highPrice": 900,
+        "priceCurrency": "EUR",
+        "offerCount": filteredListings.length
     };
 
     const faqSchema = faqs.length > 0 ? {
@@ -69,7 +87,7 @@ const PisosCity = () => {
         }))
     } : null;
 
-    const structuredData = faqSchema ? [itemListSchema, faqSchema] : itemListSchema;
+    const structuredData = [itemListSchema, aggregateOfferSchema, faqSchema].filter(Boolean);
 
     return (
         <Layout>
