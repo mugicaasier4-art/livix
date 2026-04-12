@@ -416,8 +416,8 @@ const MapView = ({
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={listings.length === 0 ? cityCenter : GOOGLE_MAPS_CONFIG.defaultCenter}
-        zoom={listings.length === 0 ? activeCity.zoom : 13}
+        center={cityCenter}
+        zoom={activeCity.zoom}
         options={mapOptions}
         onLoad={onLoad}
         onUnmount={onUnmount}

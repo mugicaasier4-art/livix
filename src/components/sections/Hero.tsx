@@ -26,7 +26,7 @@ const Hero = () => {
 
     const params = new URLSearchParams();
     if (accommodationType) {
-      params.set('type', accommodationType);
+      params.set('tipo', accommodationType);
     }
 
     navigate(`/explore?${params.toString()}`);
@@ -157,9 +157,8 @@ const Hero = () => {
                         <SelectValue placeholder="Tipo de alojamiento" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="habitacion">Habitación</SelectItem>
-                        <SelectItem value="piso">Piso completo</SelectItem>
-                        <SelectItem value="residencia">Residencia</SelectItem>
+                        <SelectItem value="pisos">Habitación / Piso</SelectItem>
+                        <SelectItem value="residencias">Residencia</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
