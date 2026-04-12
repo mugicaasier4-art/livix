@@ -9,11 +9,39 @@
  * Uso: npm run build && node scripts/prerender.mjs
  */
 
-import puppeteer from "puppeteer";
 import { createServer } from "http";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+
+async function launchBrowser() {
+  // Try full puppeteer first (works locally, has bundled Chrome)
+  try {
+    const puppeteer = await import("puppeteer");
+    console.log("Using puppeteer (local)");
+    return await puppeteer.default.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+  } catch {
+    // Fallback to @sparticuz/chromium (works in Vercel/Lambda/CI)
+    try {
+      const chromium = await import("@sparticuz/chromium");
+      const puppeteerCore = await import("puppeteer-core");
+      const execPath = await chromium.default.executablePath();
+      console.log("Using @sparticuz/chromium (CI)");
+      return await puppeteerCore.default.launch({
+        args: chromium.default.args,
+        executablePath: execPath,
+        headless: chromium.default.headless,
+      });
+    } catch (err) {
+      console.error(`No browser available for prerender: ${err.message}`);
+      console.log("Skipping prerender. Pages served as SPA.");
+      return null;
+    }
+  }
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST_DIR = join(__dirname, "..", "dist");
@@ -210,11 +238,13 @@ async function main() {
   const server = await startServer();
   console.log(`📦 Servidor local en http://localhost:${PORT}\n`);
 
-  // Iniciar Puppeteer
-  const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  // Iniciar browser (chromium para CI/Vercel, puppeteer para local)
+  const browser = await launchBrowser();
+  if (!browser) {
+    console.log("⚠ Prerender skipped (no browser). Static files served as SPA.");
+    server.close();
+    process.exit(0);
+  }
 
   // Prerenderizar en lotes de 4 para no saturar
   const BATCH_SIZE = 4;
