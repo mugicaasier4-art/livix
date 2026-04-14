@@ -43,7 +43,7 @@ const SocialAuth = ({ mode }: SocialAuthProps) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/?returnTo=${returnTo}`,
+          redirectTo: `${window.location.origin}/auth/callback?returnTo=${returnTo}`,
         },
       });
       if (error) throw error;

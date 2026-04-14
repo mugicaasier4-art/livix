@@ -27,6 +27,7 @@ import Explore from "./pages/Explore";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import AuthCallback from "./pages/AuthCallback";
 
 // Lazy loaded - non-critical pages
 const Pricing = lazy(() => import("./pages/Pricing"));
@@ -184,6 +185,7 @@ const App = () => (
                                 <Route path="/explore" element={<Explore />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/signup" element={<Signup />} />
+                                <Route path="/auth/callback" element={<AuthCallback />} />
 
                                 {/* Public Routes - Lazy Loaded */}
                                 <Route path="/pricing" element={<Pricing />} />
