@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { City, CITIES, DEFAULT_CITY_ID, getCityById } from "@/data/cities";
+import { analytics } from "@/utils/analytics";
 
 const STORAGE_KEY = "livix_selected_city";
 
@@ -28,6 +29,7 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
     const city = getCityById(cityId);
     if (!city) return;
     setSelectedCity(city);
+    analytics.track('city_selected', { city_id: cityId, city_name: city.name });
     try {
       localStorage.setItem(STORAGE_KEY, cityId);
     } catch {
