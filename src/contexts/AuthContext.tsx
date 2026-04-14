@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useRef, useCallback, Re
 // Note: useRef and useCallback are still used for rate limiting below
 import { supabase } from '@/integrations/supabase/client';
 import { Session } from '@supabase/supabase-js';
+import { toast } from 'sonner';
 
 // Rate limiting: max 5 auth attempts per 5 minutes
 const AUTH_RATE_LIMIT = 5;
@@ -72,7 +73,7 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
   if (!roleResult.data) {
     await supabase
       .from('user_roles')
-      .upsert({ user_id: userId, role: resolvedRole }, { onConflict: 'user_id' });
+      .upsert({ user_id: userId, role: resolvedRole }, { onConflict: 'user_id,role' });
   }
 
   return {
@@ -102,7 +103,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         );
         if (mounted) setUser(userData);
       } catch (error) {
-        if (import.meta.env.DEV) console.error('Error fetching profile:', error);
+        console.error('Error fetching profile:', error);
+        if (mounted) toast.error('Error al cargar tu perfil. Recarga la página.');
       }
     };
 
@@ -111,6 +113,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!mounted) return;
       setSession(s);
       if (s?.user) await hydrateUser(s);
+      if (mounted) setIsLoading(false);
+    }).catch((error) => {
+      console.error('getSession error:', error);
       if (mounted) setIsLoading(false);
     });
 

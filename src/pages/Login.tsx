@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import Layout from '@/components/layout/Layout';
@@ -27,10 +28,19 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 const Login = () => {
-  const { login, isLoading } = useAuth();
+  const { login, isLoading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+
+  // Redirect already-logged-in users (e.g. after Google OAuth callback)
+  useEffect(() => {
+    if (!isLoading && user) {
+      if (user.role === 'admin') navigate('/admin/dashboard', { replace: true });
+      else if (user.role === 'landlord') navigate('/ll/dashboard', { replace: true });
+      else navigate('/', { replace: true });
+    }
+  }, [user, isLoading, navigate]);
 
   const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema)
