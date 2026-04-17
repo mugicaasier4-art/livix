@@ -153,6 +153,73 @@ const ListingDetail = () => {
     }
   }, [searchParams, isLoading, dbListing]);
 
+  // SEO: Structured data — must be called unconditionally (Rules of Hooks), uses null guard
+  const listingStructuredData = useMemo(() => {
+    if (!dbListing) return null;
+    const amenities: string[] = [];
+    if (dbListing.has_wifi) amenities.push('WiFi');
+    if (dbListing.has_heating) amenities.push('Calefacción');
+    if (dbListing.has_ac) amenities.push('Aire acondicionado');
+    if (dbListing.has_elevator) amenities.push('Ascensor');
+    if (dbListing.has_parking) amenities.push('Parking');
+    if ((dbListing as any).has_washing_machine) amenities.push('Lavadora');
+    if (dbListing.is_furnished) amenities.push('Amueblado');
+    if (dbListing.allows_pets) amenities.push('Mascotas permitidas');
+    if (dbListing.utilities_included) amenities.push('Gastos incluidos');
+
+    const structuredData: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "Accommodation",
+      "name": dbListing.title || 'Alojamiento',
+      "description": dbListing.description || '',
+      "url": `https://livix.es/listing/${dbListing.id}`,
+      "image": dbListing.images || [],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": dbListing.city || dbListing.location || "Zaragoza",
+        "addressRegion": "Aragon",
+        "addressCountry": "ES",
+        ...(dbListing.address ? { "streetAddress": dbListing.address } : {})
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": dbListing.price || 0,
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": dbListing.price || 0,
+          "priceCurrency": "EUR",
+          "unitText": "MONTH",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitCode": "MON"
+          }
+        }
+      }
+    };
+
+    if (dbListing.bedrooms) structuredData["numberOfRooms"] = dbListing.bedrooms;
+    if (dbListing.size) {
+      structuredData["floorSize"] = {
+        "@type": "QuantitativeValue",
+        "value": dbListing.size,
+        "unitCode": "MTK"
+      };
+    }
+    if (dbListing.bathrooms) structuredData["numberOfBathroomsTotal"] = dbListing.bathrooms;
+    if (amenities.length > 0) {
+      structuredData["amenityFeature"] = amenities.map(amenity => ({
+        "@type": "LocationFeatureSpecification",
+        "name": amenity,
+        "value": true
+      }));
+    }
+
+    return structuredData;
+  }, [dbListing]);
+
   // Show loading state with skeleton
   if (isLoading) {
     return (
@@ -299,68 +366,6 @@ const ListingDetail = () => {
   };
 
   const baseListing = mockListing;
-
-  // SEO: Structured data for this listing
-  const listingStructuredData = useMemo(() => {
-    const structuredData: Record<string, unknown> = {
-      "@context": "https://schema.org",
-      "@type": "Accommodation",
-      "name": mockListing.title,
-      "description": mockListing.description,
-      "url": `https://livix.es/listing/${mockListing.id}`,
-      "image": mockListing.images,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": dbListing.city || dbListing.location || mockListing.location || "Zaragoza",
-        "addressRegion": "Aragon",
-        "addressCountry": "ES",
-        ...(dbListing.address ? { "streetAddress": dbListing.address } : {})
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": mockListing.price,
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": mockListing.price,
-          "priceCurrency": "EUR",
-          "unitText": "MONTH",
-          "referenceQuantity": {
-            "@type": "QuantitativeValue",
-            "value": 1,
-            "unitCode": "MON"
-          }
-        }
-      }
-    };
-
-    if (mockListing.bedrooms) {
-      structuredData["numberOfRooms"] = mockListing.bedrooms;
-    }
-
-    if (dbListing.size) {
-      structuredData["floorSize"] = {
-        "@type": "QuantitativeValue",
-        "value": dbListing.size,
-        "unitCode": "MTK"
-      };
-    }
-
-    if (mockListing.bathrooms) {
-      structuredData["numberOfBathroomsTotal"] = mockListing.bathrooms;
-    }
-
-    if (mockListing.amenities && mockListing.amenities.length > 0) {
-      structuredData["amenityFeature"] = mockListing.amenities.map(amenity => ({
-        "@type": "LocationFeatureSpecification",
-        "name": amenity,
-        "value": true
-      }));
-    }
-
-    return structuredData;
-  }, [mockListing, dbListing]);
 
   const seoTitle = `${mockListing.title} en ${mockListing.location || 'Zaragoza'} - ${mockListing.price}\u20AC/mes | Livix`;
   const seoDescription = `Alquila ${mockListing.title} en ${mockListing.location || 'Zaragoza'}. ${mockListing.price}\u20AC/mes.${mockListing.bedrooms ? ` ${mockListing.bedrooms} habitaciones.` : ''} Verificado en Livix - Alojamiento universitario.`;
