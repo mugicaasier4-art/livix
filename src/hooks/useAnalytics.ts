@@ -142,12 +142,11 @@ export const useAnalytics = (days: number = 30) => {
 // Track listing view
 export const trackListingView = async (listingId: string, sessionId?: string) => {
   try {
+    const { data: { user } } = await supabase.auth.getUser();
     await supabase.from('listing_views').insert({
       listing_id: listingId,
-      viewer_id: (await supabase.auth.getUser()).data.user?.id || null,
+      user_id: user?.id || null,
       session_id: sessionId || crypto.randomUUID(),
-      referrer: document.referrer,
-      user_agent: navigator.userAgent,
     });
   } catch (error) {
     console.error('Error tracking listing view:', error);
