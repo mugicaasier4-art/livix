@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
-// Note: useRef and useCallback are still used for rate limiting below
 import { supabase } from '@/integrations/supabase/client';
 import { Session } from '@supabase/supabase-js';
 import { toast } from 'sonner';
@@ -25,6 +24,7 @@ interface AuthContextType {
   logout: () => void;
   requestPasswordReset: (email: string) => Promise<void>;
   updatePassword: (newPassword: string) => Promise<void>;
+  refreshUser: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -47,11 +47,23 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
 
   if (pendingRole) {
     sessionStorage.removeItem('livix_pending_role'); // Always clean up
-    // Only override role for new users (no existing role row)
-    if (!roleResult.data && ['student', 'landlord'].includes(pendingRole)) {
-      resolvedRole = pendingRole as UserRole;
+    if (['student', 'landlord'].includes(pendingRole)) {
+      if (!roleResult.data) {
+        // Trigger missed — set role directly
+        resolvedRole = pendingRole as UserRole;
+      } else if (roleResult.data.role === 'student' && pendingRole === 'landlord') {
+        // Trigger created 'student' but user chose landlord on signup — upgrade via UPDATE
+        const { error: upgradeError } = await supabase
+          .from('user_roles')
+          .update({ role: 'landlord' })
+          .eq('user_id', userId);
+        if (!upgradeError) {
+          resolvedRole = 'landlord';
+        } else {
+          console.error('Failed to upgrade role to landlord:', upgradeError);
+        }
+      }
     }
-    // If user already has a role, ignore pendingRole — they're logging in, not signing up
   }
 
   if (profileResult.data) {
@@ -64,11 +76,15 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
   }
 
   // Perfil no existe → el trigger falló. Crearlo desde el frontend como fallback.
-  const { data: newProfile } = await supabase
+  const { data: newProfile, error: upsertError } = await supabase
     .from('profiles')
     .upsert({ id: userId, email: fallbackEmail, name: fallbackName }, { onConflict: 'id' })
     .select('id, email, name')
     .maybeSingle();
+
+  if (upsertError) {
+    console.error('Profile fallback upsert failed:', upsertError);
+  }
 
   if (!roleResult.data) {
     await supabase
@@ -112,8 +128,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     supabase.auth.getSession().then(async ({ data: { session: s } }) => {
       if (!mounted) return;
       setSession(s);
-      if (s?.user) await hydrateUser(s);
-      if (mounted) setIsLoading(false);
+      try {
+        if (s?.user) await hydrateUser(s);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
     }).catch((error) => {
       console.error('getSession error:', error);
       if (mounted) setIsLoading(false);
@@ -137,6 +156,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       subscription.unsubscribe();
     };
   }, []);
+
+  const refreshUser = useCallback(async (): Promise<void> => {
+    if (!session?.user) return;
+    try {
+      const userData = await fetchUserProfile(
+        session.user.id,
+        session.user.email ?? '',
+        (session.user.user_metadata as any)?.name ?? 'Usuario'
+      );
+      setUser(userData);
+    } catch (error) {
+      console.error('Error refreshing user:', error);
+    }
+  }, [session]);
 
   const authAttemptsRef = useRef<number[]>([]);
 
@@ -345,6 +378,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logout,
     requestPasswordReset,
     updatePassword,
+    refreshUser,
     isLoading
   };
 

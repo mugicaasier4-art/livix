@@ -13,13 +13,13 @@ export interface ProfileData {
 }
 
 export const useProfile = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [isUpdating, setIsUpdating] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
 
   const updateProfile = async (data: Partial<ProfileData>) => {
     if (!user) throw new Error('No autenticado');
-    
+
     setIsUpdating(true);
     try {
       const { error } = await supabase
@@ -29,11 +29,13 @@ export const useProfile = () => {
 
       if (error) throw error;
 
+      await refreshUser();
+
       toast.success('Perfil actualizado', {
         description: 'Tus cambios se guardaron correctamente',
       });
     } catch (error) {
-      if (import.meta.env.DEV) console.error('Error updating profile:', error);
+      console.error('Error updating profile:', error);
       toast.error('Error al actualizar perfil', {
         description: 'No se pudo actualizar el perfil',
       });
@@ -74,7 +76,7 @@ export const useProfile = () => {
 
       return publicUrl;
     } catch (error) {
-      if (import.meta.env.DEV) console.error('Error uploading avatar:', error);
+      console.error('Error uploading avatar:', error);
       toast.error('Error al subir imagen', {
         description: 'No se pudo subir la imagen',
       });
