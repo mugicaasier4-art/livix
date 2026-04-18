@@ -34,6 +34,8 @@ Deno.serve(async (req: Request) => {
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         Accept: "image/*",
       },
+      signal: AbortSignal.timeout(8000),
+      redirect: "error",
     });
 
     if (!response.ok) {
@@ -44,7 +46,10 @@ Deno.serve(async (req: Request) => {
     }
 
     const body = response.body;
-    const contentType = response.headers.get("content-type") || "image/jpeg";
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.startsWith("image/")) {
+      return new Response("Not an image", { status: 502 });
+    }
 
     return new Response(body, {
       headers: {

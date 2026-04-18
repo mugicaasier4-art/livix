@@ -6,3 +6,6 @@
 CREATE POLICY "profiles_public_read"
   ON public.profiles FOR SELECT
   USING (true);
+
+-- anon role needs SELECT grant; without it PostgREST returns 401 even with a permissive RLS policy
+GRANT SELECT ON public.profiles TO anon;
