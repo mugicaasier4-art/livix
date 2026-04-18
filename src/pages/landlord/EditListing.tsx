@@ -79,7 +79,8 @@ const EditListing = () => {
           smoking_allowed: listing.smoking_allowed,
           gender_preference: listing.gender_preference,
         })
-        .eq('id', id);
+        .eq('id', id)
+        .eq('landlord_id', user!.id);
 
       if (error) throw error;
 

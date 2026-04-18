@@ -42,21 +42,25 @@ export const usePublicRoommateProfiles = () => {
     const { user } = useAuth();
 
     const fetchProfiles = async () => {
+        // Security: roommate profiles contain PII (age, budget, lifestyle data).
+        // Require authentication before fetching — DB RLS also enforces this.
+        if (!user) {
+            setProfiles([]);
+            setIsLoading(false);
+            return;
+        }
+
         setIsLoading(true);
         try {
-            let query = supabase
+            const query = supabase
                 .from('roommate_profiles')
                 .select(`
           *,
           profiles!roommate_profiles_user_id_profiles_fkey(name, avatar_url, is_verified)
         `)
                 .eq('is_active', true)
+                .neq('user_id', user.id)
                 .order('created_at', { ascending: false });
-
-            // Exclude current user's profile if logged in
-            if (user) {
-                query = query.neq('user_id', user.id);
-            }
 
             const { data, error } = await query;
 

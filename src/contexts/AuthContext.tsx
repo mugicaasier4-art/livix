@@ -41,29 +41,19 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
   ]);
 
   // Handle pending role from OAuth flow (Google OAuth can't pass metadata, so we store in sessionStorage)
-  // IMPORTANT: Only apply for NEW users (no existing role). Never change role of existing users.
+  // SECURITY: Only apply pendingRole for NEW users with no existing role in DB.
+  // Never auto-upgrade existing users via sessionStorage — this prevents role escalation via XSS.
   const pendingRole = sessionStorage.getItem('livix_pending_role') as 'student' | 'landlord' | null;
   let resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
 
   if (pendingRole) {
     sessionStorage.removeItem('livix_pending_role'); // Always clean up
-    if (['student', 'landlord'].includes(pendingRole)) {
-      if (!roleResult.data) {
-        // Trigger missed — set role directly
-        resolvedRole = pendingRole as UserRole;
-      } else if (roleResult.data.role === 'student' && pendingRole === 'landlord') {
-        // Trigger created 'student' but user chose landlord on signup — upgrade via UPDATE
-        const { error: upgradeError } = await supabase
-          .from('user_roles')
-          .update({ role: 'landlord' })
-          .eq('user_id', userId);
-        if (!upgradeError) {
-          resolvedRole = 'landlord';
-        } else {
-          console.error('Failed to upgrade role to landlord:', upgradeError);
-        }
-      }
+    if (['student', 'landlord'].includes(pendingRole) && !roleResult.data) {
+      // Only applies when no role exists yet (trigger missed on new user creation)
+      resolvedRole = pendingRole as UserRole;
     }
+    // NOTE: Role upgrades (student → landlord) must go through an explicit
+    // server-side verification flow, not via sessionStorage.
   }
 
   if (profileResult.data) {

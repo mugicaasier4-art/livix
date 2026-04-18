@@ -28,10 +28,6 @@ const ProtectedRoute = ({
     return () => clearTimeout(timer);
   }, [isLoading]);
 
-  if (isDemoMode()) {
-    return <>{children}</>;
-  }
-
   if (isLoading && timedOut) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
@@ -55,7 +51,9 @@ const ProtectedRoute = ({
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+  // In demo mode: skip role enforcement but authentication is still required (checked above).
+  // This prevents anonymous access to protected routes on demo deployments.
+  if (!isDemoMode() && allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
     return <Navigate to="/unauthorized" replace />;
   }
 

@@ -286,18 +286,8 @@ export const useApplications = () => {
 
       if (uploadError) throw uploadError;
 
-      // Use signed URL for private documents (1 hour expiry)
-      const { data: signedUrlData } = await supabase.storage
-        .from('application-docs')
-        .createSignedUrl(fileName, 3600);
-
-      const documentUrl = signedUrlData?.signedUrl || '';
-
-      // Create document record with storage path (not signed URL, which expires)
-      const { data: { publicUrl } } = supabase.storage
-        .from('application-docs')
-        .getPublicUrl(fileName);
-
+      // Store the file path in DB (not the signed URL, which expires after 1 hour).
+      // Signed URLs are generated on-demand when the document needs to be viewed.
       const { error: docError } = await supabase
         .from('application_documents')
         .insert({
