@@ -85,7 +85,17 @@ const ColegiosMayoresCity = () => {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {colegios.map((cm) => (
-                        <Card key={cm.slug} className="hover:shadow-lg transition-shadow">
+                        <Card key={cm.slug} className="hover:shadow-lg transition-shadow overflow-hidden">
+                            {cm.imageUrl && (
+                                <div className="h-44 overflow-hidden">
+                                    <img
+                                        src={cm.imageUrl}
+                                        alt={`${cm.name} - fachada`}
+                                        className="w-full h-full object-cover"
+                                        loading="lazy"
+                                    />
+                                </div>
+                            )}
                             <CardHeader>
                                 <div className="flex justify-between items-start">
                                     <span className={`text-xs px-2 py-1 rounded-full ${cm.type === 'Mixto' ? 'bg-purple-100 text-purple-700' :
@@ -94,10 +104,13 @@ const ColegiosMayoresCity = () => {
                                         }`}>
                                         {cm.type}
                                     </span>
+                                    {cm.priceFrom && (
+                                        <span className="text-sm font-semibold text-primary">desde {cm.priceFrom}€/mes</span>
+                                    )}
                                 </div>
                                 <CardTitle className="text-xl mt-2">{cm.name}</CardTitle>
                             </CardHeader>
-                            <CardContent >
+                            <CardContent>
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-2 text-sm text-muted-foreground">
                                         <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
@@ -121,6 +134,17 @@ const ColegiosMayoresCity = () => {
                                             )}
                                         </ul>
                                     </div>
+
+                                    {cm.website && (
+                                        <a
+                                            href={cm.website}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-block text-xs text-primary hover:underline mt-1"
+                                        >
+                                            Ver web oficial →
+                                        </a>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>
