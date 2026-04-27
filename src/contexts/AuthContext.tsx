@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+// Note: useRef and useCallback are still used for rate limiting below
 import { supabase } from '@/integrations/supabase/client';
 import { Session } from '@supabase/supabase-js';
-import { toast } from 'sonner';
 
 // Rate limiting: max 5 auth attempts per 5 minutes
 const AUTH_RATE_LIMIT = 5;
@@ -24,7 +24,6 @@ interface AuthContextType {
   logout: () => void;
   requestPasswordReset: (email: string) => Promise<void>;
   updatePassword: (newPassword: string) => Promise<void>;
-  refreshUser: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -40,21 +39,7 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
     supabase.from('user_roles').select('role').eq('user_id', userId).maybeSingle(),
   ]);
 
-  // Handle pending role from OAuth flow (Google OAuth can't pass metadata, so we store in sessionStorage)
-  // SECURITY: Only apply pendingRole for NEW users with no existing role in DB.
-  // Never auto-upgrade existing users via sessionStorage — this prevents role escalation via XSS.
-  const pendingRole = sessionStorage.getItem('livix_pending_role') as 'student' | 'landlord' | null;
-  let resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
-
-  if (pendingRole) {
-    sessionStorage.removeItem('livix_pending_role'); // Always clean up
-    if (['student', 'landlord'].includes(pendingRole) && !roleResult.data) {
-      // Only applies when no role exists yet (trigger missed on new user creation)
-      resolvedRole = pendingRole as UserRole;
-    }
-    // NOTE: Role upgrades (student → landlord) must go through an explicit
-    // server-side verification flow, not via sessionStorage.
-  }
+  const resolvedRole: UserRole = (roleResult.data?.role as UserRole) || 'student';
 
   if (profileResult.data) {
     return {
@@ -66,15 +51,11 @@ async function fetchUserProfile(userId: string, fallbackEmail: string, fallbackN
   }
 
   // Perfil no existe → el trigger falló. Crearlo desde el frontend como fallback.
-  const { data: newProfile, error: upsertError } = await supabase
+  const { data: newProfile } = await supabase
     .from('profiles')
     .upsert({ id: userId, email: fallbackEmail, name: fallbackName }, { onConflict: 'id' })
     .select('id, email, name')
     .maybeSingle();
-
-  if (upsertError) {
-    console.error('Profile fallback upsert failed:', upsertError);
-  }
 
   if (!roleResult.data) {
     await supabase
@@ -99,7 +80,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let mounted = true;
 
-    // Helper: fetch profile and update state
+    // Helper: fetch profile and update state.
+    // Falls back to session data so the user is never logged out due to a DB error.
     const hydrateUser = async (s: Session) => {
       try {
         const userData = await fetchUserProfile(
@@ -109,29 +91,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         );
         if (mounted) setUser(userData);
       } catch (error) {
-        console.error('Error fetching profile:', error);
-        if (mounted) toast.error('Error al cargar tu perfil. Recarga la página.');
+        if (import.meta.env.DEV) console.error('Error fetching profile:', error);
+        // Fallback: keep the user logged in using session metadata
+        if (mounted) {
+          setUser({
+            id: s.user.id,
+            email: s.user.email ?? '',
+            name: (s.user.user_metadata as any)?.name ?? 'Usuario',
+            role: ((s.user.user_metadata as any)?.role as UserRole) ?? 'student',
+          });
+        }
       }
     };
 
-    // 1. Check existing session immediately (resolves isLoading)
-    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
-      if (!mounted) return;
-      setSession(s);
-      try {
-        if (s?.user) await hydrateUser(s);
-      } finally {
-        if (mounted) setIsLoading(false);
-      }
-    }).catch((error) => {
-      console.error('getSession error:', error);
-      if (mounted) setIsLoading(false);
-    });
-
-    // 2. Listen for all future auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, s) => {
+    // 1. Initial session check via getSession() — reads localStorage synchronously
+    //    and resolves isLoading. This is the single trigger for hydrateUser on load.
+    supabase.auth.getSession()
+      .then(async ({ data: { session: s } }) => {
         if (!mounted) return;
+        setSession(s);
+        if (s?.user) await hydrateUser(s);
+        if (mounted) setIsLoading(false);
+      })
+      .catch(() => {
+        // Network error or localStorage failure — always resolve loading
+        if (mounted) setIsLoading(false);
+      });
+
+    // 2. Subsequent auth state changes only (SIGNED_IN, SIGNED_OUT, TOKEN_REFRESHED…).
+    //    INITIAL_SESSION is intentionally skipped: it would race with getSession() above
+    //    and cause concurrent hydrateUser() calls producing non-deterministic role state.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, s) => {
+        if (!mounted) return;
+        // Skip INITIAL_SESSION — already handled by getSession() above.
+        if (event === 'INITIAL_SESSION') return;
+
         setSession(s);
         if (s?.user) {
           await hydrateUser(s);
@@ -146,20 +141,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       subscription.unsubscribe();
     };
   }, []);
-
-  const refreshUser = useCallback(async (): Promise<void> => {
-    if (!session?.user) return;
-    try {
-      const userData = await fetchUserProfile(
-        session.user.id,
-        session.user.email ?? '',
-        (session.user.user_metadata as any)?.name ?? 'Usuario'
-      );
-      setUser(userData);
-    } catch (error) {
-      console.error('Error refreshing user:', error);
-    }
-  }, [session]);
 
   const authAttemptsRef = useRef<number[]>([]);
 
@@ -368,7 +349,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logout,
     requestPasswordReset,
     updatePassword,
-    refreshUser,
     isLoading
   };
 
