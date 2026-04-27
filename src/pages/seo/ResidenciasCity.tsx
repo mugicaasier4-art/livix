@@ -8,6 +8,9 @@ import ListingCard from "@/components/ui/listing-card";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
 import { EmptyCityLanding } from "@/components/seo/EmptyCityLanding";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { MapPin, CheckCircle, ExternalLink } from "lucide-react";
+import { residenciasEstudiantes } from "@/data/seo/residenciasEstudiantes";
 
 const ResidenciasCity = () => {
     const { city } = useParams<{ city: string }>();
@@ -22,10 +25,15 @@ const ResidenciasCity = () => {
 
     const { listings, isLoading } = useListings();
 
-    // Filter for residencias in this city
+    // Filter for residencias in this city (Supabase — incluye los destacados is_premium)
     const residencias = listings.filter(
         l => l.city.toLowerCase() === normalizedCity &&
             (l.property_type === 'residencia' || l.title.toLowerCase().includes('residencia'))
+    );
+
+    // Residencias estáticas (lista general, sin destacados)
+    const residenciasEstaticas = Object.values(residenciasEstudiantes).filter(
+        r => r.city === normalizedCity
     );
 
     const title = `Residencias de Estudiantes en ${cityData.name} | Livix`;
@@ -138,6 +146,85 @@ const ResidenciasCity = () => {
                     </div>
                 ) : (
                     <EmptyCityLanding cityData={cityData} citySlug={normalizedCity} pageType="residencias" />
+                )}
+
+                {/* Lista general de residencias de estudiantes */}
+                {residenciasEstaticas.length > 0 && (
+                    <section className="mt-12">
+                        <h2 className="text-2xl font-bold mb-2">Más residencias en {cityData.name}</h2>
+                        <p className="text-muted-foreground mb-6 text-sm">
+                            Otras opciones de residencias de estudiantes disponibles en la ciudad.
+                        </p>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {residenciasEstaticas.map((res) => (
+                                <Card key={res.slug} className="hover:shadow-lg transition-shadow overflow-hidden">
+                                    {res.imageUrl && (
+                                        <div className="h-44 overflow-hidden">
+                                            <img
+                                                src={res.imageUrl}
+                                                alt={`${res.name} - Zaragoza`}
+                                                className="w-full h-full object-cover"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    )}
+                                    <CardHeader>
+                                        <div className="flex justify-between items-start">
+                                            <span className={`text-xs px-2 py-1 rounded-full ${res.type === 'Mixto' ? 'bg-purple-100 text-purple-700' :
+                                                res.type === 'Femenino' ? 'bg-pink-100 text-pink-700' :
+                                                    'bg-blue-100 text-blue-700'
+                                                }`}>
+                                                {res.type}
+                                            </span>
+                                            {res.priceFrom && (
+                                                <span className="text-sm font-semibold text-primary">
+                                                    desde {res.priceFrom}€/mes
+                                                </span>
+                                            )}
+                                        </div>
+                                        <CardTitle className="text-xl mt-2">{res.name}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                                                <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
+                                                <span>{res.address}</span>
+                                            </div>
+
+                                            <p className="text-sm text-foreground/80">
+                                                {res.description}
+                                            </p>
+
+                                            <div className="border-t pt-4">
+                                                <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                                                    <CheckCircle className="h-4 w-4 text-green-500" /> Servicios
+                                                </h4>
+                                                <ul className="text-sm text-muted-foreground space-y-1">
+                                                    {res.facilities.slice(0, 4).map((f, i) => (
+                                                        <li key={i}>• {f}</li>
+                                                    ))}
+                                                    {res.facilities.length > 4 && (
+                                                        <li className="text-xs italic">+ {res.facilities.length - 4} más</li>
+                                                    )}
+                                                </ul>
+                                            </div>
+
+                                            {res.website && (
+                                                <a
+                                                    href={res.website}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-1"
+                                                >
+                                                    Ver web oficial <ExternalLink className="h-3 w-3" />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+                    </section>
                 )}
 
                 <section className="mt-16">

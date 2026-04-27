@@ -12,6 +12,8 @@ import RegisterGateModal from "@/components/auth/RegisterGateModal";
 import apartment1 from "@/assets/apartment-1.jpg";
 import apartment2 from "@/assets/apartment-2.jpg";
 import apartment3 from "@/assets/apartment-3.jpg";
+import { residenciasEstudiantes } from "@/data/seo/residenciasEstudiantes";
+import { colegiosMayores } from "@/data/seo/colegiosMayores";
 import {
   Carousel,
   CarouselContent,
@@ -29,6 +31,10 @@ const Residences = () => {
   const { user } = useAuth();
   const [showGate, setShowGate] = useState(false);
   const { residences: allResidences } = useResidences();
+
+  // Datos estáticos para Zaragoza (extendibles a otras ciudades cuando proceda)
+  const staticResidencias = Object.values(residenciasEstudiantes).filter(r => r.city === "zaragoza");
+  const staticColegios = Object.values(colegiosMayores).filter(r => r.city === "zaragoza");
 
   const handleResidenceClick = (e: React.MouseEvent, path: string) => {
     if (!user) {
@@ -360,6 +366,7 @@ const Residences = () => {
 
             <TabsContent value="residencias">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Destacados de Supabase (is_premium) */}
                 {allResidences
                   .filter(r => r.type === 'residencia_privada' || r.type === 'residencia_publica')
                   .map((residence) => (
@@ -386,130 +393,182 @@ const Residences = () => {
                             </Badge>
                           )}
                         </div>
-
                         <CardContent className="p-4">
-                          <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">
-                            {residence.name}
-                          </h3>
-
+                          <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">{residence.name}</h3>
                           <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
                             <MapPin className="w-4 h-4" />
                             <span className="line-clamp-1">{residence.address}</span>
                           </div>
-
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-1">
                               {Array.from({ length: 5 }).map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className={`w-3.5 h-3.5 text-foreground ${i < Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`}
-                                  strokeWidth={1.5}
-                                />
+                                <Star key={i} className={`w-3.5 h-3.5 text-foreground ${i < Math.floor(residence.rating) ? 'fill-[#FFC107]' : 'fill-transparent'}`} strokeWidth={1.5} />
                               ))}
-                              <span className="text-sm text-muted-foreground ml-1">
-                                {residence.rating > 0 ? residence.rating : 'Nuevo'}
-                              </span>
+                              <span className="text-sm text-muted-foreground ml-1">{residence.rating > 0 ? residence.rating : 'Nuevo'}</span>
                             </div>
                             <div className="text-right">
-                              <div className="text-lg font-bold text-primary">
-                                {residence.priceRange.min}€
-                              </div>
+                              <div className="text-lg font-bold text-primary">{residence.priceRange.min}€</div>
                               <div className="text-xs text-muted-foreground">desde/mes</div>
                             </div>
                           </div>
-
                           <div className="flex flex-wrap gap-1 mb-3">
                             {residence.services.slice(0, 3).map((service, idx) => (
-                              <Badge key={idx} variant="secondary" className="text-xs">
-                                {service}
-                              </Badge>
+                              <Badge key={idx} variant="secondary" className="text-xs">{service}</Badge>
                             ))}
                           </div>
-
-                          <Button className="w-full" variant="outline" size="sm">
-                            Ver detalles
-                          </Button>
+                          <Button className="w-full" variant="outline" size="sm">Ver detalles</Button>
                         </CardContent>
                       </Card>
                     </Link>
                   ))}
+
+                {/* Lista general de residencias estáticas */}
+                {staticResidencias.map((res) => (
+                  <Card key={res.slug} className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+                    <div className="relative">
+                      <img
+                        src={res.imageUrl || apartment1}
+                        alt={res.name}
+                        className="w-full h-[200px] object-cover"
+                        width={400}
+                        height={200}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <Badge className="absolute top-2 left-2 bg-purple-600 text-white text-xs">
+                        {res.type}
+                      </Badge>
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">{res.name}</h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
+                        <MapPin className="w-4 h-4" />
+                        <span className="line-clamp-1">{res.address}</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm text-muted-foreground">Residencia de estudiantes</span>
+                        <div className="text-right">
+                          {res.priceFrom ? (
+                            <>
+                              <div className="text-lg font-bold text-primary">{res.priceFrom}€</div>
+                              <div className="text-xs text-muted-foreground">desde/mes</div>
+                            </>
+                          ) : (
+                            <div className="text-sm text-muted-foreground">Consultar</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {res.facilities.slice(0, 3).map((f, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs">{f}</Badge>
+                        ))}
+                      </div>
+                      {res.website ? (
+                        <a href={res.website} target="_blank" rel="noopener noreferrer" className="block">
+                          <Button className="w-full" variant="outline" size="sm">Ver web oficial</Button>
+                        </a>
+                      ) : (
+                        <Button className="w-full" variant="outline" size="sm" disabled>Próximamente en Livix</Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </TabsContent>
 
             <TabsContent value="colegios">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Colegios mayores de Supabase (si los hay) */}
                 {allResidences
                   .filter(r => r.type.includes('colegio_mayor'))
                   .map((residence) => (
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <div className="relative">
-                          <img
-                            src={residence.images?.[0] || apartment2}
-                            alt={residence.name}
-                            className="w-full h-[200px] object-cover"
-                            width={400}
-                            height={200}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                          {residence.verified && (
-                            <Badge className="absolute top-2 left-2 bg-primary text-white text-xs">
-                              Verificado
-                            </Badge>
-                          )}
-                          {residence.highlight && (
-                            <Badge className="absolute top-2 right-2 bg-system-orange text-white text-xs">
-                              {residence.highlight}
-                            </Badge>
-                          )}
+                          <img src={residence.images?.[0] || apartment2} alt={residence.name} className="w-full h-[200px] object-cover" width={400} height={200} loading="lazy" decoding="async" />
+                          {residence.verified && <Badge className="absolute top-2 left-2 bg-primary text-white text-xs">Verificado</Badge>}
+                          {residence.highlight && <Badge className="absolute top-2 right-2 bg-system-orange text-white text-xs">{residence.highlight}</Badge>}
                         </div>
-
                         <CardContent className="p-4">
-                          <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">
-                            {residence.name}
-                          </h3>
-
+                          <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">{residence.name}</h3>
                           <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
                             <MapPin className="w-4 h-4" />
                             <span className="line-clamp-1">{residence.address}</span>
                           </div>
-
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-1">
                               {Array.from({ length: 5 }).map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className={`w-3.5 h-3.5 ${i < Math.floor(residence.rating) ? 'fill-[#FFC107] text-[#FFC107]' : 'text-muted'}`}
-                                />
+                                <Star key={i} className={`w-3.5 h-3.5 ${i < Math.floor(residence.rating) ? 'fill-[#FFC107] text-[#FFC107]' : 'text-muted'}`} />
                               ))}
-                              <span className="text-sm text-muted-foreground ml-1">
-                                {residence.rating > 0 ? residence.rating : 'Nuevo'}
-                              </span>
+                              <span className="text-sm text-muted-foreground ml-1">{residence.rating > 0 ? residence.rating : 'Nuevo'}</span>
                             </div>
                             <div className="text-right">
-                              <div className="text-lg font-bold text-primary">
-                                {residence.priceRange.min}€
-                              </div>
+                              <div className="text-lg font-bold text-primary">{residence.priceRange.min}€</div>
                               <div className="text-xs text-muted-foreground">desde/mes</div>
                             </div>
                           </div>
-
                           <div className="flex flex-wrap gap-1 mb-3">
                             {residence.services.slice(0, 3).map((service, idx) => (
-                              <Badge key={idx} variant="secondary" className="text-xs">
-                                {service}
-                              </Badge>
+                              <Badge key={idx} variant="secondary" className="text-xs">{service}</Badge>
                             ))}
                           </div>
-
-                          <Button className="w-full" variant="outline" size="sm">
-                            Ver detalles
-                          </Button>
+                          <Button className="w-full" variant="outline" size="sm">Ver detalles</Button>
                         </CardContent>
                       </Card>
                     </Link>
                   ))}
+
+                {/* Colegios mayores estáticos */}
+                {staticColegios.map((cm) => (
+                  <Card key={cm.slug} className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+                    <div className="relative">
+                      <img
+                        src={cm.imageUrl || apartment2}
+                        alt={cm.name}
+                        className="w-full h-[200px] object-cover"
+                        width={400}
+                        height={200}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <Badge className={`absolute top-2 left-2 text-white text-xs ${cm.type === 'Mixto' ? 'bg-purple-600' : cm.type === 'Femenino' ? 'bg-pink-600' : 'bg-blue-600'}`}>
+                        {cm.type}
+                      </Badge>
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2">{cm.name}</h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
+                        <MapPin className="w-4 h-4" />
+                        <span className="line-clamp-1">{cm.address}</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm text-muted-foreground">Colegio Mayor</span>
+                        <div className="text-right">
+                          {cm.priceFrom ? (
+                            <>
+                              <div className="text-lg font-bold text-primary">{cm.priceFrom}€</div>
+                              <div className="text-xs text-muted-foreground">desde/mes</div>
+                            </>
+                          ) : (
+                            <div className="text-sm text-muted-foreground">Consultar</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {cm.facilities.slice(0, 3).map((f, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs">{f}</Badge>
+                        ))}
+                      </div>
+                      {cm.website ? (
+                        <a href={cm.website} target="_blank" rel="noopener noreferrer" className="block">
+                          <Button className="w-full" variant="outline" size="sm">Ver web oficial</Button>
+                        </a>
+                      ) : (
+                        <Button className="w-full" variant="outline" size="sm" disabled>Próximamente en Livix</Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </TabsContent>
           </Tabs>
