@@ -45,7 +45,7 @@ export const residenciasEstudiantes: Record<string, ResidenciaEstudianteSEO> = {
         priceFrom: 525,
         phone: "628 435 372",
         website: "https://www.kadora.es",
-        imageUrl: "https://www.educalive.com/blog/wp-content/uploads/2026/01/2-1-1024x585.jpg"
+        imageUrl: "https://kadora.es/wp-content/uploads/2025/07/Ka-Crema@2x-e1752841071773-1024x659.webp"
     },
     "nodis-zaragoza": {
         slug: "nodis-zaragoza",
@@ -59,7 +59,7 @@ export const residenciasEstudiantes: Record<string, ResidenciaEstudianteSEO> = {
         priceFrom: 525,
         phone: "684 466 061",
         website: "https://nodis.es",
-        imageUrl: "https://www.educalive.com/blog/wp-content/uploads/2026/01/2-1-1024x585.jpg"
+        imageUrl: "https://uniscopio.com/wp-content/uploads/2022/07/nodis-zaragoza.jpg"
     },
     "odalys-campus-zaragoza": {
         slug: "odalys-campus-zaragoza",
@@ -114,6 +114,7 @@ export const residenciasEstudiantes: Record<string, ResidenciaEstudianteSEO> = {
         priceFrom: 441,
         phone: "976 306 692",
         email: "balta@aragon.es",
+        imageUrl: "https://uniscopio.com/wp-content/uploads/2022/07/fachada-residencia-baltasar-gracian.jpg",
         isPublic: true
     },
     "mi-casa-inn-goya": {

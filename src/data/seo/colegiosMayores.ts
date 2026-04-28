@@ -74,7 +74,8 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         priceFrom: 650,
         phone: "976 217 647",
         email: "info@colegiomayoranunciata.es",
-        website: "https://colegiomayoranunciata.es"
+        website: "https://colegiomayoranunciata.es",
+        imageUrl: "https://www.consejocolegiosmayores.es/wp-content/uploads/2016/12/130129192225-500x333.jpg"
     },
     "miraflores": {
         slug: "miraflores",
@@ -104,7 +105,8 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         priceTo: 590,
         phone: "976 438 999",
         email: "cmu.carmelo@unizar.es",
-        website: "https://cmuvirgendelcarmen.es"
+        website: "https://cmuvirgendelcarmen.es",
+        imageUrl: "https://cmuvirgendelcarmen.es/wp-content/uploads/colegio-mayor-universitario-zaragoza-13.jpg"
     },
     "azaila": {
         slug: "azaila",
@@ -117,7 +119,8 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         capacity: 66,
         phone: "976 249 074",
         email: "info@cm-azaila.es",
-        website: "https://cm-azaila.es"
+        website: "https://cm-azaila.es",
+        imageUrl: "https://uniscopio.com/wp-content/uploads/2022/07/edificio-colegio-mayor-azaila.jpg"
     },
     "penalba": {
         slug: "penalba",
@@ -130,6 +133,7 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         capacity: 62,
         phone: "976 238 596",
         email: "info@cmpenalba.org",
-        website: "https://cmpenalba.org"
+        website: "https://cmpenalba.org",
+        imageUrl: "https://www.consejocolegiosmayores.es/wp-content/uploads/2020/05/TERRAZA-500x292.jpg"
     }
 };
