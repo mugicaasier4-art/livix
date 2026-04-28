@@ -69,13 +69,25 @@ const ReviewsSection = ({ reviews }: Props) => {
                     {review.text}
                   </p>
 
-                  <div className="mt-6 border-t border-black/5 pt-5">
-                    <div className="font-poppins text-base font-semibold text-foreground">
-                      {review.author}
+                  <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-poppins text-sm font-bold text-white"
+                      style={{
+                        background: `linear-gradient(135deg, ${idx % 2 === 0 ? '#B8902F' : '#5DB4EE'} 0%, ${idx % 2 === 0 ? '#8B6F1F' : '#3a8fc0'} 100%)`,
+                      }}
+                    >
+                      {review.author.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase()}
                     </div>
-                    {review.university && (
-                      <div className="mt-0.5 text-sm text-muted-foreground">{review.university}</div>
-                    )}
+                    <div className="min-w-0">
+                      <div className="font-poppins text-base font-semibold text-foreground">
+                        {review.author}
+                      </div>
+                      {review.university && (
+                        <div className="mt-0.5 truncate text-sm text-muted-foreground">
+                          {review.university}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

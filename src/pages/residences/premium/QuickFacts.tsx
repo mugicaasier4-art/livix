@@ -39,15 +39,23 @@ const Fact = ({ icon: Icon, value, label, delay }: FactProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-80px' }}
     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-    className="flex flex-col items-start gap-3"
+    className="flex flex-col items-start gap-4"
   >
-    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
+    <span
+      className="flex h-12 w-12 items-center justify-center rounded-full"
+      style={{
+        background: 'linear-gradient(135deg, rgba(184,144,47,0.12) 0%, rgba(139,111,31,0.08) 100%)',
+        color: '#8B6F1F',
+      }}
+    >
       <Icon className="h-5 w-5" strokeWidth={1.75} />
     </span>
-    <div className="font-poppins text-4xl font-black leading-none tracking-tight text-foreground md:text-5xl">
+    <div className="font-poppins text-[42px] font-black leading-[0.95] tracking-tight text-foreground md:text-[56px]">
       {value}
     </div>
-    <div className="text-sm font-medium text-muted-foreground">{label}</div>
+    <div className="text-[13px] font-medium uppercase tracking-wider text-muted-foreground">
+      {label}
+    </div>
   </motion.div>
 );
 

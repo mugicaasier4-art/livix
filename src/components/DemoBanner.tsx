@@ -3,11 +3,11 @@ import { isDemoMode } from '@/utils/isDemo';
 export const DemoBanner = () => {
   if (!isDemoMode()) return null;
   return (
-    <div className="w-full bg-amber-50 border-b border-amber-200 text-center py-1.5 text-xs text-amber-700 font-medium">
-      Modo Demo — Estás viendo datos de ejemplo.{' '}
-      <a href="https://livix.es" className="underline hover:text-amber-900">
-        Ir a la app real
-      </a>
+    <div className="w-full bg-foreground/95 backdrop-blur-sm text-center py-2 text-[11px] tracking-wider uppercase text-white/85">
+      <span className="inline-flex items-center gap-2">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#E5BE5C]" />
+        <span className="font-medium">Vista previa Livix · Datos de muestra</span>
+      </span>
     </div>
   );
 };

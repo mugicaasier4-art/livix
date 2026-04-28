@@ -154,18 +154,17 @@ const PremiumHero = ({ residence, onScrollToGallery, onBook }: Props) => {
         onClick={onScrollToGallery}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/70 transition-colors hover:text-white md:flex"
+        transition={{ delay: 1.4, duration: 0.6 }}
+        className="group absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 transition-colors md:flex"
         aria-label="Ver galería"
       >
-        <span>Desplaza para descubrir</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          className="inline-flex"
-        >
-          <ArrowDown className="h-4 w-4" strokeWidth={1.5} />
-        </motion.span>
+        <span className="relative block h-10 w-[1px] overflow-hidden bg-white/20">
+          <motion.span
+            className="absolute left-0 top-0 block h-1/2 w-full bg-white/80"
+            animate={{ y: ['-100%', '200%'] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </span>
       </motion.button>
     </section>
   );

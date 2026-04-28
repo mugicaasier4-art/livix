@@ -97,20 +97,24 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
             className="pointer-events-auto fixed right-6 top-28 z-30 hidden w-[340px] xl:block"
           >
             <Card className="relative overflow-hidden border-black/5 shadow-2xl">
+              <span
+                className="absolute inset-x-0 top-0 z-10 h-[3px]"
+                style={{ background: 'linear-gradient(90deg, #B8902F 0%, #E5BE5C 50%, #B8902F 100%)' }}
+              />
               <button
                 type="button"
                 onClick={handleDismiss}
                 aria-label="Cerrar"
-                className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"
+                className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"
               >
                 <X className="h-4 w-4" />
               </button>
-              <div className="bg-gradient-to-br from-primary to-[#3a8fc0] p-5 pr-12 text-white">
-                <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest">
-                  <Sparkles className="h-3.5 w-3.5" />
+              <div className="bg-gradient-to-br from-primary to-[#3a8fc0] p-5 pr-12 pt-6 text-white">
+                <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
+                  <Sparkles className="h-3.5 w-3.5" style={{ color: '#E5BE5C' }} />
                   Premium · Reserva ahora
                 </div>
-                <div className="mt-3 font-poppins text-3xl font-black leading-none">
+                <div className="mt-3 font-poppins text-[34px] font-black leading-none tracking-tight">
                   {formatPrice(residence.priceRange.min)}
                   <span className="ml-1 text-sm font-medium text-white/80">/mes IVA inc.</span>
                 </div>
@@ -172,19 +176,28 @@ const BookingDialog = ({ open, onOpenChange, residence }: DialogProps) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle className="font-poppins text-2xl font-black">Solicitud enviada</DialogTitle>
-        <DialogDescription className="text-base">
-          En entornos de producción este formulario integraría el motor de reservas. Para esta demo,
-          tu solicitud quedaría registrada en {residence.name} y nuestro equipo respondería en menos
-          de 24 horas a {residence.email}.
+        <div
+          className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
+          style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
+        >
+          <Sparkles className="h-3 w-3" /> Reserva Premium
+        </div>
+        <DialogTitle className="font-poppins text-2xl font-black leading-tight">
+          Reserva tu plaza en {residence.name}
+        </DialogTitle>
+        <DialogDescription className="text-base leading-relaxed">
+          En la versión real conectamos este formulario con el motor de reservas de la
+          residencia. Para esta vista previa, tu solicitud llegaría a{' '}
+          <span className="font-medium text-foreground">{residence.email}</span> y un agente
+          de Livix responde en menos de 24 horas.
         </DialogDescription>
       </DialogHeader>
-      <div className="rounded-xl bg-primary/5 p-4 text-sm leading-relaxed text-foreground">
-        <strong className="block font-semibold">Próximos pasos en producción:</strong>
-        <ul className="mt-2 list-disc pl-5 text-muted-foreground">
-          <li>Confirmación inmediata por email</li>
-          <li>Selector de habitación con disponibilidad real</li>
-          <li>Pago seguro de fianza con Stripe</li>
+      <div className="rounded-xl border border-black/5 bg-[#FAFAF7] p-4 text-sm leading-relaxed text-foreground">
+        <strong className="block font-semibold text-foreground">Lo que pasa después:</strong>
+        <ul className="mt-2 space-y-1 text-muted-foreground">
+          <li>· Confirmación inmediata por email</li>
+          <li>· Selector de habitación con disponibilidad real</li>
+          <li>· Pago seguro de fianza con Stripe</li>
         </ul>
       </div>
       <Button onClick={() => onOpenChange(false)} className="w-full">

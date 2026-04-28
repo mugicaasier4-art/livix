@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { X, Home } from "lucide-react";
+import { isDemoMode } from "@/utils/isDemo";
 
 const PROMPT_SESSION_KEY = "livix_login_prompt_shown";
 const DELAY_MS = 30_000;
@@ -13,10 +14,8 @@ const LoginPrompt = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Don't show if already authenticated or still loading
     if (isLoading || user) return;
-
-    // Only once per browser session
+    if (isDemoMode()) return;
     if (sessionStorage.getItem(PROMPT_SESSION_KEY)) return;
 
     const timer = setTimeout(() => {

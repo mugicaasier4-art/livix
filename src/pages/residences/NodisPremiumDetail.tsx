@@ -92,21 +92,29 @@ const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-poppins text-2xl font-black">
-              Solicitud de reserva
+            <div
+              className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
+              style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
+            >
+              Reserva Premium
+            </div>
+            <DialogTitle className="font-poppins text-2xl font-black leading-tight">
+              Reserva una visita en {residence.name}
             </DialogTitle>
-            <DialogDescription className="text-base">
-              En producción, este flujo llevaría al motor de reservas conectado a {residence.email}.
-              En esta demo, simulamos el envío para mostrar la experiencia premium.
+            <DialogDescription className="text-base leading-relaxed">
+              En la versión real conectamos este flujo con el motor de reservas de la residencia.
+              Para esta vista previa, tu solicitud llegaría a{' '}
+              <span className="font-medium text-foreground">{residence.email}</span> y nuestro
+              equipo responde en menos de 24 horas.
             </DialogDescription>
           </DialogHeader>
-          <div className="rounded-xl bg-primary/5 p-4 text-sm leading-relaxed text-foreground">
-            <strong className="block font-semibold">¿Qué pasaría a continuación?</strong>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
-              <li>Confirmación inmediata por email</li>
-              <li>Selector de habitación con disponibilidad real</li>
-              <li>Pago seguro de fianza con Stripe</li>
-              <li>Acceso a tu panel de residente en Livix</li>
+          <div className="rounded-xl border border-black/5 bg-[#FAFAF7] p-4 text-sm leading-relaxed text-foreground">
+            <strong className="block font-semibold text-foreground">Lo que pasa después:</strong>
+            <ul className="mt-2 space-y-1 text-muted-foreground">
+              <li>· Confirmación inmediata por email</li>
+              <li>· Selector de habitación con disponibilidad real</li>
+              <li>· Pago seguro de fianza con Stripe</li>
+              <li>· Acceso a tu panel de residente en Livix</li>
             </ul>
           </div>
           <Button onClick={() => setBookingOpen(false)} className="w-full">
