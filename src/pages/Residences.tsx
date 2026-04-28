@@ -31,10 +31,21 @@ const Residences = () => {
   const { user } = useAuth();
   const [showGate, setShowGate] = useState(false);
   const { residences: allResidences } = useResidences();
+  const [selectedCity, setSelectedCity] = useState("zaragoza");
 
-  // Datos estáticos para Zaragoza (extendibles a otras ciudades cuando proceda)
-  const staticResidencias = Object.values(residenciasEstudiantes).filter(r => r.city === "zaragoza");
-  const staticColegios = Object.values(colegiosMayores).filter(r => r.city === "zaragoza");
+  const cityNames: Record<string, string> = {
+    zaragoza: "Zaragoza",
+    granada: "Granada",
+  };
+
+  const availableCities = [...new Set([
+    ...Object.values(residenciasEstudiantes).map(r => r.city),
+    ...Object.values(colegiosMayores).map(r => r.city),
+  ])].sort();
+
+  const staticResidencias = Object.values(residenciasEstudiantes).filter(r => r.city === selectedCity);
+  const staticColegios = Object.values(colegiosMayores).filter(r => r.city === selectedCity);
+  const cityResidences = allResidences.filter(r => r.city?.toLowerCase() === selectedCity);
 
   const handleResidenceClick = (e: React.MouseEvent, path: string) => {
     if (!user) {
@@ -116,13 +127,13 @@ const Residences = () => {
           </div>
 
           {/* Featured Card */}
-          {allResidences[0] && (
+          {cityResidences[0] && (
           <div className="max-w-3xl mx-auto mb-12">
-            <Link to={`/residences/${allResidences[0].id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${allResidences[0].id}`)}>
+            <Link to={`/residences/${cityResidences[0].id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${cityResidences[0].id}`)}>
               <Card className="overflow-hidden border-2 border-accent shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
                 <div className="relative">
                   <img
-                    src={allResidences[0].images?.[0] || apartment1}
+                    src={cityResidences[0].images?.[0] || apartment1}
                     alt="Residencia destacada"
                     className="w-full h-[280px] object-cover"
                     width={800}
@@ -151,7 +162,7 @@ const Residences = () => {
                   </div>
 
                   <h3 className="text-xl font-bold text-foreground mb-2">
-                    {allResidences[0].name}
+                    {cityResidences[0].name}
                   </h3>
 
                   <div className="flex items-center gap-2 mb-3">
@@ -189,7 +200,7 @@ const Residences = () => {
             {isMobile ? (
               /* Mobile: Vertical list with horizontal cards */
               <div className="space-y-4">
-                {allResidences
+                {cityResidences
                   .filter(r => r.verified && r.status === 'active')
                   .slice(0, 6)
                   .map((residence) => (
@@ -260,7 +271,7 @@ const Residences = () => {
               /* Desktop: Carousel */
               <Carousel className="w-full max-w-6xl mx-auto">
                 <CarouselContent className="-ml-2 md:-ml-4">
-                  {allResidences
+                  {cityResidences
                     .filter(r => r.verified && r.status === 'active')
                     .slice(0, 6)
                     .map((residence) => (
@@ -351,11 +362,24 @@ const Residences = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-foreground md:text-4xl">
-              Residencias oficiales en Zaragoza
+              Residencias oficiales en {cityNames[selectedCity]}
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Descubre todas las opciones disponibles
             </p>
+            <div className="flex justify-center gap-2 mt-6 flex-wrap">
+              {availableCities.map(city => (
+                <Button
+                  key={city}
+                  variant={selectedCity === city ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCity(city)}
+                  className="capitalize"
+                >
+                  {cityNames[city] ?? city}
+                </Button>
+              ))}
+            </div>
           </div>
 
           <Tabs defaultValue="residencias" className="w-full">
@@ -367,7 +391,7 @@ const Residences = () => {
             <TabsContent value="residencias">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {/* Destacados de Supabase (is_premium) */}
-                {allResidences
+                {cityResidences
                   .filter(r => r.type === 'residencia_privada' || r.type === 'residencia_publica')
                   .map((residence) => (
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
@@ -479,7 +503,7 @@ const Residences = () => {
             <TabsContent value="colegios">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {/* Colegios mayores de Supabase (si los hay) */}
-                {allResidences
+                {cityResidences
                   .filter(r => r.type.includes('colegio_mayor'))
                   .map((residence) => (
                     <Link key={residence.id} to={`/residences/${residence.id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${residence.id}`)}>
