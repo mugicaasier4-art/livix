@@ -23,6 +23,60 @@ export interface Residence {
   reviewCount: number;
   highlight?: string; // Detalle destacado
   images?: string[]; // Gallery images
+  isPremium?: boolean; // Cliente del plan Premium de Livix (render landing extendida)
+  tagline?: string;
+  heroImage?: string;
+  galleryCategories?: PremiumGalleryCategory[];
+  roomTypes?: PremiumRoomType[];
+  nearbyUniversities?: PremiumNearbyUniversity[];
+  allInclusive?: string[];
+  demoReviews?: PremiumDemoReview[];
+  faqs?: PremiumFaq[];
+  whatsapp?: string;
+  instagram?: string;
+  bookingUrl?: string;
+  buildings?: PremiumBuilding[];
+}
+
+export interface PremiumGalleryCategory {
+  id: string;
+  label: string;
+  images: string[];
+}
+
+export interface PremiumRoomType {
+  name: string;
+  size?: string;
+  priceFrom: number;
+  image?: string;
+  description?: string;
+  includes?: string[];
+}
+
+export interface PremiumNearbyUniversity {
+  name: string;
+  distance: string;
+  mode: 'walk' | 'bike' | 'metro' | 'bus' | 'car' | 'tram' | 'transit';
+  building?: string;
+}
+
+export interface PremiumDemoReview {
+  author: string;
+  rating: number;
+  text: string;
+  university?: string;
+}
+
+export interface PremiumFaq {
+  q: string;
+  a: string;
+}
+
+export interface PremiumBuilding {
+  label: string;
+  address: string;
+  postalCode: string;
+  coordinates: [number, number];
 }
 
 import { isDemoMode } from '@/utils/isDemo';

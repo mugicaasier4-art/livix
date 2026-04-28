@@ -1,0 +1,179 @@
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Calendar, BedDouble, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Card, CardContent } from '@/components/ui/card';
+import type { Residence } from '@/data/residences';
+
+const useIsBelowXl = () => {
+  const [below, setBelow] = useState(() =>
+    typeof window === 'undefined' ? false : window.innerWidth < 1280,
+  );
+  useEffect(() => {
+    const onResize = () => setBelow(window.innerWidth < 1280);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return below;
+};
+
+const formatPrice = (n: number) =>
+  new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+
+const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
+  const isBelowXl = useIsBelowXl();
+  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    setVisible(y > (typeof window !== 'undefined' ? window.innerHeight * 0.6 : 600));
+  });
+
+  const handleSubmit = () => setOpen(true);
+
+  if (isBelowXl) {
+    return (
+      <>
+        <AnimatePresence>
+          {visible && (
+            <motion.div
+              key="mobile-bar"
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed bottom-0 left-0 right-0 z-40 border-t border-black/5 bg-white/95 px-4 py-3 backdrop-blur-xl"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                    Desde
+                  </div>
+                  <div className="font-poppins text-xl font-black leading-none text-foreground">
+                    {formatPrice(residence.priceRange.min)}
+                    <span className="text-sm font-medium text-muted-foreground">/mes</span>
+                  </div>
+                </div>
+                <Button onClick={handleSubmit} size="lg" className="h-12 px-6 font-semibold">
+                  Reservar
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <BookingDialog open={open} onOpenChange={setOpen} residence={residence} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <AnimatePresence>
+        {visible && (
+          <motion.div
+            key="desktop-card"
+            initial={{ x: 32, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 32, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-auto fixed right-6 top-28 z-30 hidden w-[340px] xl:block"
+          >
+            <Card className="overflow-hidden border-black/5 shadow-2xl">
+              <div className="bg-gradient-to-br from-primary to-[#3a8fc0] p-5 text-white">
+                <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Premium · Reserva ahora
+                </div>
+                <div className="mt-3 font-poppins text-3xl font-black leading-none">
+                  {formatPrice(residence.priceRange.min)}
+                  <span className="ml-1 text-sm font-medium text-white/80">/mes IVA inc.</span>
+                </div>
+              </div>
+
+              <CardContent className="space-y-4 p-5">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Llegada" placeholder="Sept 2026" icon={<Calendar className="h-4 w-4" />} />
+                  <Field label="Salida" placeholder="Jun 2027" icon={<Calendar className="h-4 w-4" />} />
+                </div>
+                <Field
+                  label="Tipo de habitación"
+                  placeholder={residence.roomTypes?.[0]?.name ?? 'Estudio individual'}
+                  icon={<BedDouble className="h-4 w-4" />}
+                />
+
+                <Button onClick={handleSubmit} size="lg" className="h-12 w-full text-base font-semibold">
+                  Reservar ahora
+                </Button>
+
+                <p className="text-center text-xs text-muted-foreground">
+                  Reserva 100% reembolsable los primeros 7 días.
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <BookingDialog open={open} onOpenChange={setOpen} residence={residence} />
+    </>
+  );
+};
+
+interface FieldProps {
+  label: string;
+  placeholder: string;
+  icon: React.ReactNode;
+}
+
+const Field = ({ label, placeholder, icon }: FieldProps) => (
+  <div className="rounded-xl border border-black/10 bg-[#FAFAFA] px-3 py-2 transition-colors hover:border-primary/40">
+    <div className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+      {label}
+    </div>
+    <div className="mt-0.5 flex items-center gap-2 text-sm font-medium text-foreground">
+      <span className="text-muted-foreground">{icon}</span>
+      <span>{placeholder}</span>
+    </div>
+  </div>
+);
+
+interface DialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  residence: Residence;
+}
+
+const BookingDialog = ({ open, onOpenChange, residence }: DialogProps) => (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent className="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle className="font-poppins text-2xl font-black">Solicitud enviada</DialogTitle>
+        <DialogDescription className="text-base">
+          En entornos de producción este formulario integraría el motor de reservas. Para esta demo,
+          tu solicitud quedaría registrada en {residence.name} y nuestro equipo respondería en menos
+          de 24 horas a {residence.email}.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="rounded-xl bg-primary/5 p-4 text-sm leading-relaxed text-foreground">
+        <strong className="block font-semibold">Próximos pasos en producción:</strong>
+        <ul className="mt-2 list-disc pl-5 text-muted-foreground">
+          <li>Confirmación inmediata por email</li>
+          <li>Selector de habitación con disponibilidad real</li>
+          <li>Pago seguro de fianza con Stripe</li>
+        </ul>
+      </div>
+      <Button onClick={() => onOpenChange(false)} className="w-full">
+        Entendido
+      </Button>
+    </DialogContent>
+  </Dialog>
+);
+
+export default StickyBookingWidget;

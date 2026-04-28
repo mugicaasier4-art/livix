@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { type Residence } from '@/data/residences';
+import { mockResidences } from '@/data/residences.mock';
+import { isDemoMode } from '@/utils/isDemo';
 
 interface ResidenceFilters {
   type?: string;
@@ -61,14 +63,40 @@ const convertToResidence = (row: ResidenceRow): Residence => ({
   reviewCount: row.review_count || 0,
   highlight: row.highlight || undefined,
   images: row.images || [],
+  isPremium: row.is_premium ?? undefined,
 });
 
+const sortPremiumFirst = (list: Residence[]): Residence[] =>
+  [...list].sort((a, b) => {
+    const ap = a.isPremium ? 1 : 0;
+    const bp = b.isPremium ? 1 : 0;
+    if (ap !== bp) return bp - ap;
+    return (b.rating ?? 0) - (a.rating ?? 0);
+  });
+
+const filterMock = (list: Residence[], filters?: ResidenceFilters): Residence[] =>
+  list.filter((r) => {
+    if (r.type === 'proyecto_futuro') return false;
+    if (filters?.type && filters.type !== 'all' && r.type !== filters.type) return false;
+    if (filters?.gender && filters.gender !== 'all' && r.gender !== filters.gender) return false;
+    if (filters?.priceMax && r.priceRange.min > filters.priceMax) return false;
+    return true;
+  });
+
 export const useResidences = (filters?: ResidenceFilters) => {
-  const [residences, setResidences] = useState<Residence[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [residences, setResidences] = useState<Residence[]>(() =>
+    isDemoMode() ? sortPremiumFirst(filterMock(mockResidences, filters)) : []
+  );
+  const [isLoading, setIsLoading] = useState(!isDemoMode());
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (isDemoMode()) {
+      setResidences(sortPremiumFirst(filterMock(mockResidences, filters)));
+      setIsLoading(false);
+      return;
+    }
+
     const fetchResidences = async () => {
       try {
         setIsLoading(true);

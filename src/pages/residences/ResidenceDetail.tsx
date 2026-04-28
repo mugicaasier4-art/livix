@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { GOOGLE_MAPS_CONFIG } from '@/config/maps';
+import NodisPremiumDetail from './NodisPremiumDetail';
 
 // Default images if residence has no images
 import apartment1 from '@/assets/apartment-1.jpg';
@@ -101,6 +102,10 @@ const ResidenceDetail = () => {
         </div>
       </Layout>
     );
+  }
+
+  if (residence.isPremium) {
+    return <NodisPremiumDetail residence={residence} />;
   }
 
   const handleSave = () => {

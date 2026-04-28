@@ -113,7 +113,10 @@ const Residences = () => {
           {allResidences[0] && (
           <div className="max-w-3xl mx-auto mb-12">
             <Link to={`/residences/${allResidences[0].id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${allResidences[0].id}`)}>
-              <Card className="overflow-hidden border-2 border-accent shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
+              <Card
+                className="overflow-hidden border-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+                style={allResidences[0].isPremium ? { borderColor: '#C9A03A' } : undefined}
+              >
                 <div className="relative">
                   <img
                     src={allResidences[0].images?.[0] || apartment1}
@@ -125,12 +128,22 @@ const Residences = () => {
                     decoding="async"
                   />
                   <div className="absolute top-4 left-4 right-4 flex flex-col sm:flex-row sm:justify-between">
-                    <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold border-0 shadow-md w-fit">
-                      <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
-                      Residencia Destacada
-                    </Badge>
+                    {allResidences[0].isPremium ? (
+                      <Badge
+                        className="border-0 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold shadow-md w-fit"
+                        style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}
+                      >
+                        <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
+                        Plan Premium · Livix
+                      </Badge>
+                    ) : (
+                      <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold border-0 shadow-md w-fit">
+                        <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
+                        Residencia Destacada
+                      </Badge>
+                    )}
                     <Badge className="bg-system-orange text-white px-3 py-1.5 text-xs sm:text-sm font-bold w-fit">
-                      ¡Últimas 3 habitaciones!
+                      ¡Últimas plazas para 2026!
                     </Badge>
                   </div>
                 </div>

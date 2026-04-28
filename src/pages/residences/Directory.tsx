@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, MapPin, Phone, Mail, Globe, Star, Filter, X, Building2, Loader2 } from 'lucide-react';
+import { Search, MapPin, Phone, Mail, Globe, Star, Filter, X, Building2, Loader2, Crown } from 'lucide-react';
 import { residenceTypes, genderOptions, priceRanges, type Residence } from '@/data/residences';
 import { useResidences } from '@/hooks/useResidences';
 
@@ -227,9 +227,22 @@ const ResidencesDirectory = () => {
               {filteredResidences.map(residence => (
                 <Card
                   key={residence.id}
-                  className="hover:shadow-lg transition-all cursor-pointer hover:scale-105"
+                  className={`hover:shadow-lg transition-all cursor-pointer hover:scale-105 ${
+                    residence.isPremium
+                      ? 'relative overflow-hidden border-2 shadow-md'
+                      : ''
+                  }`}
+                  style={residence.isPremium ? { borderColor: '#C9A03A' } : undefined}
                   onClick={() => navigate(`/residences/${residence.id}`)}
                 >
+                  {residence.isPremium && (
+                    <div
+                      className="absolute right-0 top-0 z-10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-md"
+                      style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)', borderBottomLeftRadius: '12px' }}
+                    >
+                      Premium
+                    </div>
+                  )}
                   <CardContent className="p-5">
                     {/* Header with Rating */}
                     <div className="flex items-start justify-between gap-2 mb-3">
@@ -238,15 +251,22 @@ const ResidencesDirectory = () => {
                           {residence.name}
                         </h3>
                         {residence.status === 'active' && residence.reviewCount > 0 && (
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 flex-wrap">
                             <Star className="h-4 w-4 fill-[#FFC107] text-[#FFC107]" />
                             <span className="font-semibold text-sm">{residence.rating}</span>
                             <span className="text-xs text-muted-foreground">
                               ({residence.reviewCount})
                             </span>
-                            <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white border-0 shadow-md">
-                              Destacada
-                            </Badge>
+                            {residence.isPremium ? (
+                              <Badge className="border-0 text-white shadow-md" style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}>
+                                <Crown className="mr-1 h-3 w-3" />
+                                Livix Premium
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white border-0 shadow-md">
+                                Destacada
+                              </Badge>
+                            )}
                           </div>
                         )}
                       </div>
