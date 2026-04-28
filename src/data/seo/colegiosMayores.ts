@@ -135,5 +135,132 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         email: "info@cmpenalba.org",
         website: "https://cmpenalba.org",
         imageUrl: "https://www.consejocolegiosmayores.es/wp-content/uploads/2020/05/TERRAZA-500x292.jpg"
+    },
+
+    // --- GRANADA ---
+    "isabel-la-catolica-granada": {
+        slug: "isabel-la-catolica-granada",
+        name: "CM Isabel la Católica",
+        city: "granada",
+        type: "Mixto",
+        address: "C/ Rector López Argüeta, 8, 18001 Granada",
+        description: "Colegio Mayor propio de la Universidad de Granada. 112 plazas en pleno centro histórico, con créditos ECTS culturales, comedor y actividades deportivas. Referente universitario desde su fundación.",
+        facilities: ["Comedor", "ECTS culturales", "Deportes", "Atención 24h", "WiFi", "Salas de estudio"],
+        capacity: 112,
+        phone: "958 244 164",
+        email: "cmisabel@ugr.es",
+        website: "https://cmisabel.ugr.es",
+        imageUrl: "https://residenciasuniversitarias.es/wp-content/uploads/2022/01/colegio-mayor-isabel-la-catolica-1-584x438.jpg"
+    },
+    "jesus-maria-granada": {
+        slug: "jesus-maria-granada",
+        name: "CM Jesús-María",
+        city: "granada",
+        type: "Mixto",
+        address: "C/ Profesor Clavera, 8, Campus Cartuja, Granada",
+        description: "Colegio Mayor adscrito a la UGR desde 1968 en el Campus de Cartuja. Incluye comedor, capilla, paneles solares, actividades teatrales y deportivas con ECTS reconocidos.",
+        facilities: ["Comedor", "Capilla", "Teatro", "Deporte", "ECTS", "Paneles solares", "WiFi"],
+        phone: "958 161 554",
+        email: "secretariacmjm@jesus-maria.net",
+        website: "https://colegiomayorjesusmaria.org"
+    },
+    "santa-maria-granada": {
+        slug: "santa-maria-granada",
+        name: "CM Santa María",
+        city: "granada",
+        type: "Femenino",
+        address: "C/ San Jerónimo, 33, 18001 Granada",
+        description: "Colegio Mayor femenino promovido por las Esclavas del Sagrado Corazón, en pleno centro histórico de Granada. Formación académica, deportes, voluntariado y formación espiritual.",
+        facilities: ["Actividades académicas", "Deportes", "Voluntariado", "Formación espiritual", "WiFi"],
+        website: "https://colegiomayorsantamaria.com"
+    },
+    "san-bartolome-santiago-granada": {
+        slug: "san-bartolome-santiago-granada",
+        name: "Real CM San Bartolomé y Santiago",
+        city: "granada",
+        type: "Mixto",
+        address: "C/ San Jerónimo, 31, 18001 Granada",
+        description: "El Colegio Mayor más antiguo de España en activo, fundado en 1649. Palacio renacentista del siglo XVII en el centro histórico de Granada. Actividades culturales y deportivas de primer nivel.",
+        facilities: ["Palacio renacentista s.XVII", "Actividades culturales", "Deportes", "WiFi", "Salas de estudio"],
+        phone: "958 279 850",
+        website: "https://realcolegiomayor.es"
+    },
+    "albayzin-granada": {
+        slug: "albayzin-granada",
+        name: "CM Albayzín",
+        city: "granada",
+        type: "Mixto",
+        address: "Av. Fuente Nueva, 5, Campus Fuentenueva, Granada",
+        description: "Colegio Mayor adscrito a la UGR, fundado en 1945, junto al Campus de Fuentenueva. Pensión completa, limpieza diaria y amplias salas de estudio con WiFi. Precio anual 9.370 €.",
+        facilities: ["Pensión completa", "Limpieza diaria", "WiFi", "Salas de estudio"],
+        priceFrom: 781,
+        phone: "958 272 962",
+        email: "direccion@colegiomayoralbayzin.es",
+        website: "https://colegiomayoralbayzin.com"
+    },
+    "santo-domingo-granada": {
+        slug: "santo-domingo-granada",
+        name: "CM Santo Domingo",
+        city: "granada",
+        type: "Mixto",
+        address: "Plaza Santo Domingo, 4, 18010 Granada",
+        description: "Colegio Mayor con 70 plazas en el corazón de Granada, reconocido oficialmente en 1980. Comedor propio, salas de estudio, zona deportiva y ricas actividades culturales.",
+        facilities: ["Comedor", "Salas de estudio", "Zona deportiva", "Actividades culturales", "WiFi"],
+        capacity: 70,
+        phone: "958 227 455",
+        email: "secretaria@cmsantodomingo.es",
+        website: "https://cmsantodomingo.es"
+    },
+    "santa-cruz-la-real-granada": {
+        slug: "santa-cruz-la-real-granada",
+        name: "CM Santa Cruz La Real",
+        city: "granada",
+        type: "Mixto",
+        address: "Plaza Santo Domingo, 6, 18010 Granada",
+        description: "Colegio Mayor mixto junto a la Plaza Santo Domingo. Habitaciones individuales con baño completo y pensión completa incluida. Ambiente académico en pleno centro histórico de Granada.",
+        facilities: ["Habitaciones individuales con baño", "Pensión completa", "WiFi", "Salas de estudio"],
+        phone: "958 527 684",
+        email: "info@santacruzlareal.es",
+        website: "https://colegiomayormixtogranada.es"
+    },
+    "alsajara-granada": {
+        slug: "alsajara-granada",
+        name: "CM Alsajara",
+        city: "granada",
+        type: "Femenino",
+        address: "C/ Arandas, 3, 18001 Granada",
+        description: "Colegio Mayor femenino en el centro de Granada, con ambiente familiar y formación cultural y profesional. Habitaciones individuales y triples. Adscrito a la UGR.",
+        facilities: ["Habitaciones individuales y triples", "Formación cultural", "Formación profesional", "WiFi", "Comedor"],
+        phone: "958 271 554",
+        email: "cmalsajara@gmail.com",
+        website: "https://alsajara.es",
+        imageUrl: "https://residenciasuniversitarias.es/wp-content/uploads/2022/01/colegio-mayor-alsajara-3.jpg"
+    },
+    "cardenal-cisneros-granada": {
+        slug: "cardenal-cisneros-granada",
+        name: "CM Cardenal Cisneros",
+        city: "granada",
+        type: "Mixto",
+        address: "C/ Neptuno, 5, Campus Ronda, Granada",
+        description: "Colegio Mayor franciscano con 196 plazas y pensión completa incluida (desayuno, comida y cena). Habitaciones individuales con baño. Referente en relación calidad-precio en Granada.",
+        facilities: ["Pensión completa (desayuno+comida+cena)", "196 hab. individuales con baño", "WiFi", "Salas de estudio"],
+        capacity: 196,
+        priceFrom: 666,
+        phone: "958 253 150",
+        email: "cisneros@ugr.es",
+        website: "https://colegiomayorcisneros.es",
+        imageUrl: "https://residenciasuniversitarias.es/wp-content/uploads/2022/01/colegio-mayor-cardenal-cisneros-3-584x438.jpg"
+    },
+    "garnata-granada": {
+        slug: "garnata-granada",
+        name: "CM Gárnata",
+        city: "granada",
+        type: "Mixto",
+        address: "C/ Arabial, 81, Campus Fuentenueva, Granada",
+        description: "Pequeño y familiar Colegio Mayor adscrito a la UGR con solo 31 plazas. Comedor casero, lavandería, salas de estudio, capilla y terraza. Trato muy personalizado.",
+        facilities: ["Comedor casero", "Lavandería", "Salas de estudio", "Capilla", "Terraza", "WiFi"],
+        capacity: 31,
+        priceFrom: 740,
+        website: "https://ugr.es/~garnata/"
     }
 };
