@@ -9,6 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import RegisterGateModal from "@/components/auth/RegisterGateModal";
+import { isDemoMode } from "@/utils/isDemo";
 import apartment1 from "@/assets/apartment-1.jpg";
 import apartment2 from "@/assets/apartment-2.jpg";
 import apartment3 from "@/assets/apartment-3.jpg";
@@ -31,7 +32,7 @@ const Residences = () => {
   const { residences: allResidences } = useResidences();
 
   const handleResidenceClick = (e: React.MouseEvent, path: string) => {
-    if (!user) {
+    if (!user && !isDemoMode()) {
       e.preventDefault();
       setShowGate(true);
       return;
@@ -131,7 +132,7 @@ const Residences = () => {
                     {allResidences[0].isPremium ? (
                       <Badge
                         className="border-0 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold shadow-md w-fit"
-                        style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}
+                        style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
                       >
                         <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
                         Plan Premium · Livix

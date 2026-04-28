@@ -51,7 +51,7 @@ const PremiumNav = ({ residenceName, onAnchorClick, onBook }: Props) => {
               </span>
               <span
                 className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white"
-                style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
               >
                 <Crown className="h-2.5 w-2.5" strokeWidth={2.5} />
                 Premium

@@ -238,7 +238,7 @@ const ResidencesDirectory = () => {
                   {residence.isPremium && (
                     <div
                       className="absolute right-0 top-0 z-10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-md"
-                      style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)', borderBottomLeftRadius: '12px' }}
+                      style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)', borderBottomLeftRadius: '12px' }}
                     >
                       Premium
                     </div>
@@ -258,7 +258,7 @@ const ResidencesDirectory = () => {
                               ({residence.reviewCount})
                             </span>
                             {residence.isPremium ? (
-                              <Badge className="border-0 text-white shadow-md" style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}>
+                              <Badge className="border-0 text-white shadow-md" style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}>
                                 <Crown className="mr-1 h-3 w-3" />
                                 Livix Premium
                               </Badge>

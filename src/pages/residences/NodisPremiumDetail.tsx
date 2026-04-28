@@ -63,29 +63,27 @@ const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
         onBook={openBooking}
       />
 
-      <div className="xl:pr-[372px]">
-        <QuickFacts residence={residence} />
+      <QuickFacts residence={residence} />
 
-        <PremiumGallery
-          categories={residence.galleryCategories}
-          fallbackImages={residence.images}
-          residenceName={residence.name}
-        />
+      <PremiumGallery
+        categories={residence.galleryCategories}
+        fallbackImages={residence.images}
+        residenceName={residence.name}
+      />
 
-        <RoomTypes rooms={residence.roomTypes} bookingUrl={residence.bookingUrl} />
+      <RoomTypes rooms={residence.roomTypes} bookingUrl={residence.bookingUrl} />
 
-        <AmenitiesGrid services={residence.services} />
+      <AmenitiesGrid services={residence.services} />
 
-        <AllInclusiveBanner items={residence.allInclusive} />
+      <AllInclusiveBanner items={residence.allInclusive} />
 
-        <LocationSection residence={residence} />
+      <LocationSection residence={residence} />
 
-        <VirtualTourCTA bookingUrl={residence.bookingUrl} />
+      <VirtualTourCTA bookingUrl={residence.bookingUrl} />
 
-        <ReviewsSection reviews={residence.demoReviews} />
+      <ReviewsSection reviews={residence.demoReviews} />
 
-        <FAQAccordion faqs={residence.faqs} />
-      </div>
+      <FAQAccordion faqs={residence.faqs} />
 
       <ContactFooter residence={residence} />
 

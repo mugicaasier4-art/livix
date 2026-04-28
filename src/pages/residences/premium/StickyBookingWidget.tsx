@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Calendar, BedDouble, Sparkles } from 'lucide-react';
+import { Calendar, BedDouble, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -30,6 +30,7 @@ const formatPrice = (n: number) =>
 const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
   const isBelowXl = useIsBelowXl();
   const [visible, setVisible] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
 
@@ -38,12 +39,13 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
   });
 
   const handleSubmit = () => setOpen(true);
+  const handleDismiss = () => setDismissed(true);
 
   if (isBelowXl) {
     return (
       <>
         <AnimatePresence>
-          {visible && (
+          {visible && !dismissed && (
             <motion.div
               key="mobile-bar"
               initial={{ y: 100, opacity: 0 }}
@@ -53,7 +55,7 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
               className="fixed bottom-0 left-0 right-0 z-40 border-t border-black/5 bg-white/95 px-4 py-3 backdrop-blur-xl"
             >
               <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                     Desde
                   </div>
@@ -62,9 +64,17 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
                     <span className="text-sm font-medium text-muted-foreground">/mes</span>
                   </div>
                 </div>
-                <Button onClick={handleSubmit} size="lg" className="h-12 px-6 font-semibold">
+                <Button onClick={handleSubmit} size="lg" className="h-12 px-5 font-semibold">
                   Reservar
                 </Button>
+                <button
+                  type="button"
+                  onClick={handleDismiss}
+                  aria-label="Cerrar"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
               </div>
             </motion.div>
           )}
@@ -77,7 +87,7 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
   return (
     <>
       <AnimatePresence>
-        {visible && (
+        {visible && !dismissed && (
           <motion.div
             key="desktop-card"
             initial={{ x: 32, opacity: 0 }}
@@ -86,8 +96,16 @@ const StickyBookingWidget = ({ residence }: { residence: Residence }) => {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="pointer-events-auto fixed right-6 top-28 z-30 hidden w-[340px] xl:block"
           >
-            <Card className="overflow-hidden border-black/5 shadow-2xl">
-              <div className="bg-gradient-to-br from-primary to-[#3a8fc0] p-5 text-white">
+            <Card className="relative overflow-hidden border-black/5 shadow-2xl">
+              <button
+                type="button"
+                onClick={handleDismiss}
+                aria-label="Cerrar"
+                className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="bg-gradient-to-br from-primary to-[#3a8fc0] p-5 pr-12 text-white">
                 <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest">
                   <Sparkles className="h-3.5 w-3.5" />
                   Premium · Reserva ahora

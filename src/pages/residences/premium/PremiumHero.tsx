@@ -57,7 +57,7 @@ const PremiumHero = ({ residence, onScrollToGallery, onBook }: Props) => {
             </span>
             <span
               className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white shadow-md backdrop-blur"
-              style={{ background: 'linear-gradient(135deg, #C9A03A 0%, #E5BE5C 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
             >
               <Crown className="h-3 w-3" strokeWidth={2.5} />
               Plan Premium
