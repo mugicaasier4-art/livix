@@ -56,3 +56,4 @@ gen_final_sql.py
 *.njsproj
 *.sln
 *.sw?
+.vercel

@@ -153,24 +153,15 @@ const TILE_PATTERN: Array<'big' | 'small'> = ['big', 'small', 'small', 'small', 
 
 const GalleryGrid = ({ images, residenceName, onOpen }: GridProps) => {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }}
-      className="grid auto-rows-[120px] grid-cols-2 gap-3 md:auto-rows-[180px] md:grid-cols-3 md:gap-4 lg:auto-rows-[210px]"
-    >
+    <div className="grid auto-rows-[120px] grid-cols-2 gap-3 md:auto-rows-[180px] md:grid-cols-3 md:gap-4 lg:auto-rows-[210px]">
       {images.map((src, index) => {
         const tile = TILE_PATTERN[index % TILE_PATTERN.length];
         const isBig = tile === 'big';
         return (
-          <motion.button
+          <button
             key={src + index}
             type="button"
             onClick={() => onOpen(index)}
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-            }}
             className={cn(
               'group relative overflow-hidden rounded-2xl bg-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-primary',
               isBig ? 'col-span-2 row-span-2 md:col-span-2 md:row-span-2' : ''
@@ -188,10 +179,10 @@ const GalleryGrid = ({ images, residenceName, onOpen }: GridProps) => {
             <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100">
               <Expand className="h-4 w-4" />
             </span>
-          </motion.button>
+          </button>
         );
       })}
-    </motion.div>
+    </div>
   );
 };
 
