@@ -3,7 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
 import ExitIntentPopup from "@/components/common/ExitIntentPopup";
-import BackToTopFAB from "@/components/ui/BackToTopFAB";
 import LoginPrompt from "@/components/auth/LoginPrompt";
 
 interface LayoutProps {
@@ -28,7 +27,6 @@ const Layout = ({ children }: LayoutProps) => {
         <Footer />
       </div>
       <MobileBottomNav />
-      <BackToTopFAB />
       <ExitIntentPopup />
       <LoginPrompt />
     </div>
