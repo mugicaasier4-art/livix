@@ -1,11 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import {
-  MapPin, Footprints, Bike, TrainFront, Bus, Car as CarIcon, TramFront, Loader2, type LucideIcon,
+  MapPin, Footprints, Bike, TrainFront, Bus, Car as CarIcon, TramFront, Loader2, ExternalLink, type LucideIcon,
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
 import { GOOGLE_MAPS_CONFIG } from '@/config/maps';
 import type { Residence, PremiumNearbyUniversity } from '@/data/residences';
 
@@ -22,10 +23,20 @@ const MODE_ICONS: Record<PremiumNearbyUniversity['mode'], LucideIcon> = {
 const mapContainerStyle = { width: '100%', height: '100%' };
 
 const LocationSection = ({ residence }: { residence: Residence }) => {
-  const { isLoaded } = useJsApiLoader({
+  const apiKey = GOOGLE_MAPS_CONFIG.apiKey;
+  const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: GOOGLE_MAPS_CONFIG.apiKey,
+    googleMapsApiKey: apiKey,
   });
+  const [timedOut, setTimedOut] = useState(false);
+
+  useEffect(() => {
+    if (isLoaded || loadError) return;
+    const t = setTimeout(() => setTimedOut(true), 6000);
+    return () => clearTimeout(t);
+  }, [isLoaded, loadError]);
+
+  const showFallback = !apiKey || !!loadError || (timedOut && !isLoaded);
 
   const buildings = residence.buildings ?? [];
   const hasBuildings = buildings.length > 0;
@@ -69,7 +80,7 @@ const LocationSection = ({ residence }: { residence: Residence }) => {
             className="overflow-hidden rounded-3xl border border-black/5 bg-white shadow-lg lg:col-span-3"
           >
             <div className="relative h-[420px] w-full md:h-[520px]">
-              {isLoaded ? (
+              {isLoaded && !showFallback ? (
                 <GoogleMap
                   mapContainerStyle={mapContainerStyle}
                   center={center}
@@ -96,6 +107,41 @@ const LocationSection = ({ residence }: { residence: Residence }) => {
                     />
                   ) : null}
                 </GoogleMap>
+              ) : showFallback ? (
+                <div
+                  className="relative flex h-full w-full flex-col items-center justify-center gap-4 bg-cover bg-center p-8 text-center"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(rgba(248,248,248,0.85), rgba(248,248,248,0.85)), url(https://maps.googleapis.com/maps/api/staticmap?size=1&zoom=1)',
+                  }}
+                >
+                  <div
+                    className="flex h-14 w-14 items-center justify-center rounded-full"
+                    style={{ background: 'rgba(93,180,238,0.12)', color: '#5DB4EE' }}
+                  >
+                    <MapPin className="h-7 w-7" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <div className="font-poppins text-lg font-bold text-foreground">
+                      {residence.address}
+                    </div>
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      {residence.postalCode} {residence.city}
+                    </div>
+                  </div>
+                  <Button asChild variant="outline" size="lg" className="mt-2 h-12 gap-2">
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        `${residence.address} ${residence.city}`,
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Ver en Google Maps
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-[#F0F0F0]">
                   <Loader2 className="h-6 w-6 animate-spin text-primary" />

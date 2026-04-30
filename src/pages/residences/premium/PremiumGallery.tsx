@@ -44,7 +44,7 @@ const PremiumGallery = ({ categories, fallbackImages, residenceName }: Props) =>
   return (
     <section id="gallery" className="bg-white py-20 md:py-28">
       <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-2xl">
+        <div className="max-w-2xl">
           <span className="text-sm font-medium uppercase tracking-widest text-primary">Galería</span>
           <h2 className="mt-3 font-poppins text-4xl font-black leading-tight tracking-tight text-foreground md:text-5xl">
             Mira de cerca cómo es vivir aquí.
@@ -52,7 +52,7 @@ const PremiumGallery = ({ categories, fallbackImages, residenceName }: Props) =>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-10">
-          <TabsList className="mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-black/5 bg-white p-1 shadow-sm">
+          <TabsList className="mr-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-black/5 bg-white p-1 shadow-sm">
             {effectiveCategories.map((cat) => (
               <TabsTrigger
                 key={cat.id}
@@ -144,16 +144,24 @@ interface GridProps {
   onOpen: (index: number) => void;
 }
 
+// Tile sizing pattern repeats every 6 images and produces a clean 3-col grid:
+// row 1: [BIG (2x2)] [small] [small]
+// row 2:           [small] [small]
+// row 3: [small] [small] [small]
+// no orphans because every block of 6 fills 2 full rows of the 3-column grid.
+const TILE_PATTERN: Array<'big' | 'small'> = ['big', 'small', 'small', 'small', 'small', 'small'];
+
 const GalleryGrid = ({ images, residenceName, onOpen }: GridProps) => {
   return (
     <motion.div
       initial="hidden"
       animate="visible"
       variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }}
-      className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
+      className="grid auto-rows-[120px] grid-cols-2 gap-3 md:auto-rows-[180px] md:grid-cols-3 md:gap-4 lg:auto-rows-[210px]"
     >
       {images.map((src, index) => {
-        const isFeatured = index % 7 === 0;
+        const tile = TILE_PATTERN[index % TILE_PATTERN.length];
+        const isBig = tile === 'big';
         return (
           <motion.button
             key={src + index}
@@ -165,7 +173,7 @@ const GalleryGrid = ({ images, residenceName, onOpen }: GridProps) => {
             }}
             className={cn(
               'group relative overflow-hidden rounded-2xl bg-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-primary',
-              isFeatured ? 'col-span-2 row-span-2 aspect-[16/12] md:aspect-[4/3]' : 'aspect-[4/3]'
+              isBig ? 'col-span-2 row-span-2 md:col-span-2 md:row-span-2' : ''
             )}
             aria-label={`Imagen ${index + 1} de ${residenceName}`}
           >

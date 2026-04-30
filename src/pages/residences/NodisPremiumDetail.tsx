@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { SEOHead } from '@/components/seo/SEOHead';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import PremiumHero from './premium/PremiumHero';
 import PremiumNav from './premium/PremiumNav';
 import QuickFacts from './premium/QuickFacts';
@@ -17,11 +9,12 @@ import RoomTypes from './premium/RoomTypes';
 import AmenitiesGrid from './premium/AmenitiesGrid';
 import AllInclusiveBanner from './premium/AllInclusiveBanner';
 import LocationSection from './premium/LocationSection';
-import VirtualTourCTA from './premium/VirtualTourCTA';
 import ReviewsSection from './premium/ReviewsSection';
 import FAQAccordion from './premium/FAQAccordion';
 import StickyBookingWidget from './premium/StickyBookingWidget';
 import ContactFooter from './premium/ContactFooter';
+import RequestInfoDialog from './premium/RequestInfoDialog';
+import WhatsAppFloat from './premium/WhatsAppFloat';
 import type { Residence } from '@/data/residences';
 
 const scrollToId = (id: string) => {
@@ -33,20 +26,30 @@ const scrollToId = (id: string) => {
 };
 
 const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [requestOpen, setRequestOpen] = useState(false);
+  const [prefillRoom, setPrefillRoom] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [residence.id]);
 
-  const openBooking = useCallback(() => setBookingOpen(true), []);
+  const openRequest = useCallback(() => {
+    setPrefillRoom(undefined);
+    setRequestOpen(true);
+  }, []);
+
+  const openRequestForRoom = useCallback((roomName: string) => {
+    setPrefillRoom(roomName);
+    setRequestOpen(true);
+  }, []);
+
   const goToGallery = useCallback(() => scrollToId('gallery'), []);
   const handleAnchor = useCallback((id: string) => scrollToId(id), []);
 
   return (
     <Layout>
       <SEOHead
-        title={`${residence.name} | Premium en Livix`}
+        title={`${residence.name} | Livix`}
         description={residence.tagline ?? residence.description}
         canonical={`https://livix.es/residences/${residence.id}`}
       />
@@ -54,13 +57,13 @@ const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
       <PremiumNav
         residenceName={residence.name}
         onAnchorClick={handleAnchor}
-        onBook={openBooking}
+        onBook={openRequest}
       />
 
       <PremiumHero
         residence={residence}
         onScrollToGallery={goToGallery}
-        onBook={openBooking}
+        onBook={openRequest}
       />
 
       <QuickFacts residence={residence} />
@@ -71,15 +74,13 @@ const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
         residenceName={residence.name}
       />
 
-      <RoomTypes rooms={residence.roomTypes} bookingUrl={residence.bookingUrl} />
+      <RoomTypes rooms={residence.roomTypes} onRequestInfo={openRequestForRoom} />
 
       <AmenitiesGrid services={residence.services} />
 
       <AllInclusiveBanner items={residence.allInclusive} />
 
       <LocationSection residence={residence} />
-
-      <VirtualTourCTA bookingUrl={residence.bookingUrl} />
 
       <ReviewsSection reviews={residence.demoReviews} />
 
@@ -89,39 +90,14 @@ const NodisPremiumDetail = ({ residence }: { residence: Residence }) => {
 
       <StickyBookingWidget residence={residence} />
 
-      <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <div
-              className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"
-              style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
-            >
-              Reserva Premium
-            </div>
-            <DialogTitle className="font-poppins text-2xl font-black leading-tight">
-              Reserva una visita en {residence.name}
-            </DialogTitle>
-            <DialogDescription className="text-base leading-relaxed">
-              En la versión real conectamos este flujo con el motor de reservas de la residencia.
-              Para esta vista previa, tu solicitud llegaría a{' '}
-              <span className="font-medium text-foreground">{residence.email}</span> y nuestro
-              equipo responde en menos de 24 horas.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="rounded-xl border border-black/5 bg-[#FAFAF7] p-4 text-sm leading-relaxed text-foreground">
-            <strong className="block font-semibold text-foreground">Lo que pasa después:</strong>
-            <ul className="mt-2 space-y-1 text-muted-foreground">
-              <li>· Confirmación inmediata por email</li>
-              <li>· Selector de habitación con disponibilidad real</li>
-              <li>· Pago seguro de fianza con Stripe</li>
-              <li>· Acceso a tu panel de residente en Livix</li>
-            </ul>
-          </div>
-          <Button onClick={() => setBookingOpen(false)} className="w-full">
-            Entendido
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <WhatsAppFloat whatsapp={residence.whatsapp} residenceName={residence.name} />
+
+      <RequestInfoDialog
+        open={requestOpen}
+        onOpenChange={setRequestOpen}
+        residence={residence}
+        prefillRoom={prefillRoom}
+      />
     </Layout>
   );
 };

@@ -33,12 +33,22 @@ const PremiumHero = ({ residence, onScrollToGallery, onBook }: Props) => {
         </motion.div>
       )}
 
-      {/* Gradient overlays */}
+      {/* Gradient overlays — vertical for global readability */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 88%, rgba(0,0,0,0.7) 100%)',
+            'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.65) 88%, rgba(0,0,0,0.78) 100%)',
+        }}
+        aria-hidden
+      />
+
+      {/* Radial spotlight behind text block (lower-left) for guaranteed contrast */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 18% 78%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%)',
         }}
         aria-hidden
       />
@@ -60,7 +70,7 @@ const PremiumHero = ({ residence, onScrollToGallery, onBook }: Props) => {
               style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
             >
               <Crown className="h-3 w-3" strokeWidth={2.5} />
-              Plan Premium
+              La mejor residencia · {residence.city}
             </span>
           </motion.div>
         </div>
@@ -123,7 +133,7 @@ const PremiumHero = ({ residence, onScrollToGallery, onBook }: Props) => {
                 size="lg"
                 className="h-14 bg-white px-8 text-base font-semibold text-foreground shadow-xl hover:bg-white/90"
               >
-                Reservar visita
+                Pide más info
               </Button>
               <Button
                 onClick={onScrollToGallery}

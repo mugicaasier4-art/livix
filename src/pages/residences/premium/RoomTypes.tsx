@@ -10,10 +10,10 @@ const formatPrice = (n: number) =>
 
 interface Props {
   rooms?: PremiumRoomType[];
-  bookingUrl?: string;
+  onRequestInfo?: (roomName: string) => void;
 }
 
-const RoomTypes = ({ rooms, bookingUrl }: Props) => {
+const RoomTypes = ({ rooms, onRequestInfo }: Props) => {
   if (!rooms || rooms.length === 0) return null;
 
   return (
@@ -97,11 +97,14 @@ const RoomTypes = ({ rooms, bookingUrl }: Props) => {
                         <span className="text-sm font-medium text-muted-foreground"> /mes</span>
                       </div>
                     </div>
-                    <Button asChild size="lg" className="h-12 px-6 font-semibold">
-                      <a href={bookingUrl ?? '#booking'} target="_blank" rel="noopener noreferrer">
-                        Ver disponibilidad
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </a>
+                    <Button
+                      type="button"
+                      size="lg"
+                      className="h-12 px-6 font-semibold"
+                      onClick={() => onRequestInfo?.(room.name)}
+                    >
+                      Pide info de esta habitación
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
                 </div>

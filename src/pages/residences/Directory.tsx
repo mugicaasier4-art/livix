@@ -232,7 +232,7 @@ const ResidencesDirectory = () => {
                       ? 'relative overflow-hidden border-2 shadow-md'
                       : ''
                   }`}
-                  style={residence.isPremium ? { borderColor: '#C9A03A' } : undefined}
+                  style={residence.isPremium ? { borderColor: '#B8902F' } : undefined}
                   onClick={() => navigate(`/residences/${residence.id}`)}
                 >
                   {residence.isPremium && (
@@ -240,7 +240,7 @@ const ResidencesDirectory = () => {
                       className="absolute right-0 top-0 z-10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white shadow-md"
                       style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)', borderBottomLeftRadius: '12px' }}
                     >
-                      Premium
+                      Top valorada
                     </div>
                   )}
                   <CardContent className="p-5">
@@ -260,7 +260,7 @@ const ResidencesDirectory = () => {
                             {residence.isPremium ? (
                               <Badge className="border-0 text-white shadow-md" style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}>
                                 <Crown className="mr-1 h-3 w-3" />
-                                Livix Premium
+                                Top valorada
                               </Badge>
                             ) : (
                               <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white border-0 shadow-md">

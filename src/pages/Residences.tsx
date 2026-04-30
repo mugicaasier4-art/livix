@@ -116,7 +116,7 @@ const Residences = () => {
             <Link to={`/residences/${allResidences[0].id}`} className="block" onClick={(e) => handleResidenceClick(e, `/residences/${allResidences[0].id}`)}>
               <Card
                 className="overflow-hidden border-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
-                style={allResidences[0].isPremium ? { borderColor: '#C9A03A' } : undefined}
+                style={allResidences[0].isPremium ? { borderColor: '#B8902F' } : undefined}
               >
                 <div className="relative">
                   <img
@@ -135,7 +135,7 @@ const Residences = () => {
                         style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
                       >
                         <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 inline" />
-                        Plan Premium · Livix
+                        Top valorada · {allResidences[0].city.split(',')[0]}
                       </Badge>
                     ) : (
                       <Badge className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1.5 text-xs sm:text-sm font-semibold border-0 shadow-md w-fit">

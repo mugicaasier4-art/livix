@@ -54,7 +54,7 @@ const PremiumNav = ({ residenceName, onAnchorClick, onBook }: Props) => {
                 style={{ background: 'linear-gradient(135deg, #B8902F 0%, #8B6F1F 100%)' }}
               >
                 <Crown className="h-2.5 w-2.5" strokeWidth={2.5} />
-                Premium
+                #1
               </span>
               <span className="hidden text-sm text-muted-foreground md:inline">
                 · {residenceName}
@@ -76,7 +76,7 @@ const PremiumNav = ({ residenceName, onAnchorClick, onBook }: Props) => {
 
             <div className="flex items-center gap-2">
               <Button onClick={onBook} className="h-10 px-5 font-semibold">
-                Reservar
+                Pide info
               </Button>
               <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
                 <SheetTrigger asChild>
@@ -97,7 +97,7 @@ const PremiumNav = ({ residenceName, onAnchorClick, onBook }: Props) => {
                       </button>
                     ))}
                     <Button onClick={() => { setDrawerOpen(false); onBook(); }} className="mt-4 h-12 font-semibold">
-                      Reservar
+                      Pide más info
                     </Button>
                   </div>
                 </SheetContent>
