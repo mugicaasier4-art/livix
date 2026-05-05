@@ -262,5 +262,20 @@ export const colegiosMayores: Record<string, ColegioMayorSEO> = {
         capacity: 31,
         priceFrom: 740,
         website: "https://ugr.es/~garnata/"
+    },
+
+    // --- MÁLAGA ---
+    "arunda-malaga": {
+        slug: "arunda-malaga",
+        name: "CM Arunda",
+        city: "malaga",
+        type: "Femenino",
+        address: "C/ Manuel de Falla, 1, Barriada La Paz, Málaga",
+        description: "Colegio Mayor femenino gestionado por Obra Social Unicaja. 99 plazas en Barriada La Paz con pensión completa (sin desayuno), actividades deportivas y culturales.",
+        facilities: ["Habitaciones dobles", "Pensión completa (sin desayuno)", "Biblioteca", "Deportes", "Lavandería", "WiFi"],
+        capacity: 99,
+        priceFrom: 385,
+        phone: "952 171 600",
+        email: "cmarunda@obrasocialunicaja.com"
     }
 };

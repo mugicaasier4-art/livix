@@ -16,14 +16,17 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, Menu, ChevronDown, X, Heart, User, Settings, UserCircle, Home, MessageSquare, BedDouble, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
-import { useCity } from "@/contexts/CityContext";
+import { useCity, useCityOrDefault } from "@/contexts/CityContext";
+import { CITIES } from "@/data/cities";
 import livixLogo from "@/assets/livix-logo.png";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { selectedCity } = useCity();
+  const { selectedCity, setCity } = useCity();
+  const activeCity = useCityOrDefault();
+  const availableCities = CITIES.filter(c => c.available);
   const [cityChangerOpen, setCityChangerOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -230,6 +233,32 @@ const Header = () => {
                     <Link to={item.href} className="w-full">
                       {item.label}
                     </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* City selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-primary">
+                  <MapPin className="h-3.5 w-3.5 text-primary" />
+                  {activeCity.name}
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="z-50 bg-background border border-border shadow-lg min-w-[160px]">
+                {availableCities.map((city) => (
+                  <DropdownMenuItem
+                    key={city.id}
+                    onSelect={() => setCity(city.id)}
+                    className={cn(
+                      "cursor-pointer",
+                      city.id === activeCity.id && "font-semibold text-primary"
+                    )}
+                  >
+                    <span className="mr-2">{city.emoji}</span>
+                    {city.name}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

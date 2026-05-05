@@ -8,6 +8,7 @@ import { Building, Users, Shield, Wifi, Car, Utensils, ArrowRight, Star, MapPin,
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCityOrDefault } from "@/contexts/CityContext";
 import RegisterGateModal from "@/components/auth/RegisterGateModal";
 import apartment1 from "@/assets/apartment-1.jpg";
 import apartment2 from "@/assets/apartment-2.jpg";
@@ -31,17 +32,8 @@ const Residences = () => {
   const { user } = useAuth();
   const [showGate, setShowGate] = useState(false);
   const { residences: allResidences } = useResidences();
-  const [selectedCity, setSelectedCity] = useState("zaragoza");
-
-  const cityNames: Record<string, string> = {
-    zaragoza: "Zaragoza",
-    granada: "Granada",
-  };
-
-  const availableCities = [...new Set([
-    ...Object.values(residenciasEstudiantes).map(r => r.city),
-    ...Object.values(colegiosMayores).map(r => r.city),
-  ])].sort();
+  const activeCity = useCityOrDefault();
+  const selectedCity = activeCity.id.toLowerCase();
 
   const staticResidencias = Object.values(residenciasEstudiantes).filter(r => r.city === selectedCity);
   const staticColegios = Object.values(colegiosMayores).filter(r => r.city === selectedCity);
@@ -76,8 +68,8 @@ const Residences = () => {
   return (
     <Layout>
       <SEOHead
-        title="Residencias Universitarias en Zaragoza para Estudiantes | Livix"
-        description="Encuentra las mejores residencias universitarias en Zaragoza. Compara precios, servicios y ubicación. Reserva online tu plaza con Livix."
+        title={`Residencias Universitarias en ${activeCity.name} para Estudiantes | Livix`}
+        description={`Encuentra las mejores residencias universitarias en ${activeCity.name}. Compara precios, servicios y ubicación. Reserva online tu plaza con Livix.`}
         canonical="https://livix.es/residences"
       />
       {/* Hero Section */}
@@ -100,7 +92,7 @@ const Residences = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-white/90 mb-8">
-              Descubre las mejores residencias universitarias en Zaragoza.
+              Descubre las mejores residencias universitarias en {activeCity.name}.
               Ambiente estudiantil, servicios completos y ubicaciones perfectas.
             </p>
 
@@ -122,7 +114,7 @@ const Residences = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-foreground md:text-5xl mb-2">
-              Encuentra tu Residencia Ideal en Zaragoza
+              Encuentra tu Residencia Ideal en {activeCity.name}
             </h2>
           </div>
 
@@ -362,24 +354,11 @@ const Residences = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-foreground md:text-4xl">
-              Residencias oficiales en {cityNames[selectedCity]}
+              Residencias oficiales en {activeCity.name}
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Descubre todas las opciones disponibles
             </p>
-            <div className="flex justify-center gap-2 mt-6 flex-wrap">
-              {availableCities.map(city => (
-                <Button
-                  key={city}
-                  variant={selectedCity === city ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCity(city)}
-                  className="capitalize"
-                >
-                  {cityNames[city] ?? city}
-                </Button>
-              ))}
-            </div>
           </div>
 
           <Tabs defaultValue="residencias" className="w-full">
